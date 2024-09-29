@@ -28,11 +28,11 @@ public class UI_Base : MonoBehaviour
             //하위 캑체들을 순회하면서 일치하는 object를 찾음
             if (typeof(T) == typeof(GameObject))
             {
-                objects[i] = Util.FindChild(gameObject, names[i], true);
+                objects[i] = UI_Util.FindChild(gameObject, names[i], true);
             }
             else
             {
-                objects[i] = Util.FindChild<T>(gameObject, names[i], true);
+                objects[i] = UI_Util.FindChild<T>(gameObject, names[i], true);
             }
         }
     }
@@ -41,7 +41,7 @@ public class UI_Base : MonoBehaviour
     //클릭을 가장 많이 사용하기 때문에 기본값을 클릭으로 함
     public static void AddUIEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
-        UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
+        UI_EventHandler evt = UI_Util.GetOrAddComponent<UI_EventHandler>(go);
 
         switch (type)
         { 

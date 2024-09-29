@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager
+public class UI_ResourceManager
 {
     public T Load<T>(string path) where T : Object
     { 

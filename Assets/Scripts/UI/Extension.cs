@@ -9,7 +9,7 @@ public static class Extension
 {
     public static T GatOrAddComponent<T>(this GameObject go) where T : UnityEngine.Component
     { 
-        return Util.GetOrAddComponent<T>(go);
+        return UI_Util.GetOrAddComponent<T>(go);
     }
 
     public static void AddUIEvent(this GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)

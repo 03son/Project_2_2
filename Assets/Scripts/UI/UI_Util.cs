@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Util //기능성 함수 모음
+public class UI_Util //기능성 함수 모음
 {
     //객체별로 인스펙터에서 컨포넌트를 직접 연결할 필요 없이 코드로 연결
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)

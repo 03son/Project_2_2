@@ -11,7 +11,7 @@ public class UIManger : Singleton<UIManger>
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     UI_Scene _sceneUI = null;
 
-    ResourceManager resoure = new ResourceManager();
+    UI_ResourceManager resoure = new UI_ResourceManager();
 
     public GameObject Root
     {
@@ -29,7 +29,7 @@ public class UIManger : Singleton<UIManger>
     //기존 UI와의 렌더링 우선순위 정하기
     public void SetCanvas(GameObject go, bool sort = true)
     {
-        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        Canvas canvas = UI_Util.GetOrAddComponent<Canvas>(go);
 
         //화면 위에 직접 렌더링되는 모드
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -56,7 +56,7 @@ public class UIManger : Singleton<UIManger>
         }
 
         GameObject go = resoure.Instantiate($"UI/Scene/{name}");
-        T SceneUI = Util.GetOrAddComponent<T>(go);
+        T SceneUI = UI_Util.GetOrAddComponent<T>(go);
         _sceneUI = SceneUI;
 
         //root 자식으로 넣음
@@ -72,7 +72,7 @@ public class UIManger : Singleton<UIManger>
         }
 
         GameObject go = resoure.Instantiate($"UI/Popup/{name}");
-        T popup = Util.GetOrAddComponent<T>(go);
+        T popup = UI_Util.GetOrAddComponent<T>(go);
         _popupStack.Push(popup);
 
  
