@@ -34,9 +34,9 @@ public class ItemSpawnManager : MonoBehaviour
 
         for (int i = 0; i < spawnCount; i++)
         {
-            if (usedIndexes.Count >= spawnPoints.Length - 1) // 모든 위치가 사용되었을 때
+            if (usedIndexes.Count >= spawnPoints.Length - 1) // 더 이상 사용할 위치가 없음
             {
-                Debug.Log("모든 위치가 소환되었습니다.");
+                Debug.Log("소환공간 없음");
                 break; // 더 이상 소환하지 않음
             }
 
