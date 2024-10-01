@@ -50,7 +50,8 @@ public class UI_Base : MonoBehaviour
                 evt.onClickHandler += action;
                 break;
         }
-        evt.onClickHandler += ((PointerEventData data) => { evt.gameObject.transform.position = data.position;});
+        //드래그 사용 x 추후 사용 할 시 개방
+        //evt.onClickHandler += ((PointerEventData data) => { evt.gameObject.transform.position = data.position;});
     }
 
     //Bind()를 통해 찾은 일치한 object의 인덱스의 객체를 불러와 해당 객체에 데이터로 바꿈
