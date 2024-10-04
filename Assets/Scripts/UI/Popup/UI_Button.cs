@@ -19,7 +19,7 @@ public class UI_Button : UI_Popup
         SingleButton,
         MultiButton,
         SettingButton,
-        ExitButton
+        ExitButton,
     }
     enum Texts
     { 
