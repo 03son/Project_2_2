@@ -59,4 +59,6 @@ public class PlayerMove : MonoBehaviour
         // 캐릭터 이동 처리
         controller.Move((mov + velocity) * Time.deltaTime);
     }
+
+
 }
