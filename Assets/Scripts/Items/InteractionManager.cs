@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public interface IInteractable
 {
@@ -66,10 +68,18 @@ public class InteractionManager : MonoBehaviour
     public void OnInteractInput()
     {
         //E키를 누른 시점에서 현재 바라보는 curInteractable 오브젝트가 있다면
-        if (Input.GetKey(KeyCode.E) && curInteractable != null)
+        if (Input.GetKeyDown(KeyCode.E) && curInteractable != null)
         {
             //아이템을 흭득하면 아이템과 상호작용을 진행하고 초기화
             curInteractable.OnInteract();
+
+            //빈곳 번호 찾기
+            for (int i = 0; i < Inventory.instance.slots.Length; i++)
+            {
+                if (Inventory.instance.slots[i].item != null)
+                    GetComponent<Player_Equip>().selectSlot(i+1);
+            }
+
             curInteractGameobject = null;
             curInteractable = null;
             promptText.gameObject.SetActive(false);

@@ -16,4 +16,4 @@ MonoBehaviour:
   Description: "\uB098\uBB34\uD310\uC790\uB97C \uD30C\uAD34\uD560 \uC218 \uC788\uB2E4."
   type: 1
   icon: {fileID: 21300000, guid: b9d6ebff46c396045a3a2a11c297a247, type: 3}
-  dropPerfab: {fileID: 0}
+  dropPerfab: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}

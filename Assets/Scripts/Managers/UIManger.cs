@@ -11,7 +11,7 @@ public class UIManger : Singleton<UIManger>
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     UI_Scene _sceneUI = null;
 
-    UI_ResourceManager resoure = new UI_ResourceManager();
+    ResourceManager resoure = new ResourceManager();
 
     public GameObject Root
     {

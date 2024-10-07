@@ -41,7 +41,7 @@ public class Inventory : MonoBehaviour
             ui_itemSlot[i].Clear();
         }
 
-        ClearSelectItemWindow();
+        ClearSelectItemWindows();
     }
     public void Additem(itemData item)
     {
@@ -53,8 +53,9 @@ public class Inventory : MonoBehaviour
             emptyslot.quantity = 1;
             UpdateUI();
             return;
-
         }
+        //인벤토리에 빈칸이 없을 경우 못 먹음
+        return;
     }
     ItemSlot GetEmptySlot()
     {
@@ -78,7 +79,7 @@ public class Inventory : MonoBehaviour
                 ui_itemSlot[i].Clear();
         }
     }
-    void ClearSelectItemWindow()
+    void ClearSelectItemWindows()
     { 
         //아이템 초기화
         selectedItem = null;
