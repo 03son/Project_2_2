@@ -19,6 +19,9 @@ public class Player_Equip : MonoBehaviour
 
     ResourceManager resoure = new ResourceManager();
 
+    int selectIndex = 0;
+
+
     void Start()
     {
         setnumberKey();
@@ -32,19 +35,24 @@ public class Player_Equip : MonoBehaviour
     void Update()
     {
         numberKey();
+        mouseWheelScroll();
     }
     public void selectSlot(int index)
     {
-         if (Input.GetKeyDown((KeyCode)(48+index)) && index > 0 &&index < 7)
-         {
-            invenUtil(index);
-            return;
-         }
-
-        for (int i = 0; i < Inventory.instance.slots.Length; i++)
+        if (index != 0 && index <= 6)
         {
-            if (Inventory.instance.slots[i].item == null)
+            if (Input.GetKeyDown((KeyCode)(48 + index)))
             {
+                invenUtil(index);
+                return;
+            }
+
+            for (int i = 0; i < Inventory.instance.slots.Length; i++)
+            {
+               /* if (Inventory.instance.slots[i].item == null)
+                {
+                    invenUtil(index);
+                }*/
                 invenUtil(index);
             }
         }
@@ -82,7 +90,7 @@ public class Player_Equip : MonoBehaviour
     {
         //호출할 키와 기능이 일치하도록 키코드 등록
         const int alphaStart = 48;
-        const int alphaEnd = 57;
+        const int alphaEnd = 54;
 
         int paramValue = 0;
         for (int i = alphaStart; i <= alphaEnd; i++)
@@ -105,12 +113,38 @@ public class Player_Equip : MonoBehaviour
         if (!invenSlot[index - 1].GetComponent<ItemSlotUI>().equipped)
         {
             invenSlot[index - 1].GetComponent<ItemSlotUI>().equipped = true;
+            Inventory.instance.selectedItemIndex = index-1;
 
             //저장 된 아이템 있으면 손에 아이템 들기
             if (inventory.slots[index - 1].item != null)
                 setEquipItem(inventory.slots[index - 1].item.name);
             else if (Item != null)
                 Destroy(Item);
+        }
+    }
+
+    void mouseWheelScroll()
+    {
+        //마우스 휠 스크롤 해서 아이템 선택 바꾸기
+        float wheelInput = Input.GetAxis("Mouse ScrollWheel");
+
+        if (wheelInput < 0)
+        {
+            selectIndex -= 1;
+            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
+            Inventory.instance.selectedItemIndex = selectIndex;
+            selectSlot(selectIndex);
+            Debug.Log(selectIndex);
+            return;
+        }
+        else if (wheelInput > 0)
+        {
+            selectIndex += 1;
+            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
+            Inventory.instance.selectedItemIndex = selectIndex;
+            selectSlot(selectIndex);
+            Debug.Log(selectIndex);
+            return ;
         }
     }
 }

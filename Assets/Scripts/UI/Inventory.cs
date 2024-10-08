@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using static UnityEditor.Progress;
 
 public class ItemSlot
 {
@@ -18,8 +19,9 @@ public class Inventory : MonoBehaviour
     public Transform dropPos; //아이템 드랍 위치
 
     [Header("Selected Item")]
+    [SerializeField]
     ItemSlot selectedItem;
-    int selectedItemIndex;
+    public int selectedItemIndex;
     //public TextMeshProUGUI selectedItemName;
 
     public static Inventory instance;
@@ -79,16 +81,49 @@ public class Inventory : MonoBehaviour
                 ui_itemSlot[i].Clear();
         }
     }
+
+    void UnEquip(int index)
+    {
+        //아이템 장착해제
+        if(GetComponent<Player_Equip>().Item != null)
+             Destroy(GetComponent<Player_Equip>().Item);
+    }
+
+    void RemoveSelectedItem()
+    {
+        if (slots[selectedItemIndex].item != null)
+        {
+            //만약 버린 아이템이 장착 중인 아이템일 경우 해제
+            if (ui_itemSlot[selectedItemIndex].equipped)
+            {
+                UnEquip(selectedItemIndex);
+                ThrowItem(slots[selectedItemIndex].item);
+            }
+
+            //아이템 제거 및 UI에서도 아이템 정보 지우기
+            slots[selectedItemIndex].item = null;
+            ClearSelectItemWindows();
+        }
+        UpdateUI();
+    }
     void ClearSelectItemWindows()
     { 
         //아이템 초기화
         selectedItem = null;
        // selectedItemName.text = string.Empty;
     }
-    public void ThrowItem(itemData item)
+    void ThrowItem(itemData item)
     {
         //아이템 버리기
         //버려질 때, 랜덤한 회전값을 가진 채 버리기
         Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            RemoveSelectedItem();
+        }
     }
 }
