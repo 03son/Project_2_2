@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64834aa160065ac44be0db2926e5027b, type: 3}
+  m_Name: Sump
+  m_EditorClassIdentifier: 
+  ItemName: "\uAE30\uB984\uD1B5"
+  Description: "\uD5EC\uB9AC\uCF65\uD130\uC758 \uAE30\uB984\uC744 \uCC44\uC6B8 \uC218
+    \uC788\uB2E4"
+  type: 0
+  icon: {fileID: 21300000, guid: b1ad4cfc02c6bd640b4cbb1bf6cad51d, type: 3}
+  dropPerfab: {fileID: 8370939266880707758, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
