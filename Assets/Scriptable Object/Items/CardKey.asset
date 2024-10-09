@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64834aa160065ac44be0db2926e5027b, type: 3}
-  m_Name: Key
+  m_Name: CardKey
   m_EditorClassIdentifier: 
-  ItemName: "\uC5F4\uC1E0"
-  Description: "\uC7A0\uACA8 \uC788\uB294 \uBB38\uC744 \uC5F4 \uC218 \uC788\uB2E4."
+  ItemName: "\uCE74\uB4DC\uD0A4"
+  Description: "\uC548\uC804\uD558\uAC8C \uB2E4\uB978 \uCE35\uC73C\uB85C \uC774\uB3D9\uD560
+    \uC218 \uC788\uB2E4."
   type: 0
-  icon: {fileID: 21300000, guid: 8e3e82e7f85bc5f44a3fe947ad304698, type: 3}
-  dropPerfab: {fileID: 7818993243534298237, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+  icon: {fileID: 21300000, guid: a92d027db0a3bb147983d823c22f9f15, type: 3}
+  dropPerfab: {fileID: 4452110537251878417, guid: 71e34ac832d9e154f8259b3b72bb8744, type: 3}

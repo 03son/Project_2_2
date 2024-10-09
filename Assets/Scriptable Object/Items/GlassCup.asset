@@ -15,5 +15,5 @@ MonoBehaviour:
   ItemName: "\uC720\uB9AC\uCEF5"
   Description: "\uAD34\uBB3C\uB97C \uC720\uC778 \uC2DC\uD0A8\uB2E4."
   type: 0
-  icon: {fileID: 0}
-  dropPerfab: {fileID: 0}
+  icon: {fileID: 21300000, guid: 63f4b308f881c0947b68e602d48468be, type: 3}
+  dropPerfab: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}

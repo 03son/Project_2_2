@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour, IInteractable
 {
-   public itemData item;
+    public itemData item;
+
+    void Start()
+    {
+        
+    }
 
     public string GetInteractPrompt()
     {

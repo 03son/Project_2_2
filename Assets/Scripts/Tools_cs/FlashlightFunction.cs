@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlashlightController : MonoBehaviour
+public class FlashlighFunction : ItemFunction, IItemFunction
 {
     public Light flashlight; // 손전등 역할을 하는 Spotlight 컴포넌트
     public KeyCode toggleKey = KeyCode.F; // 손전등을 켜고 끄는 키 (기본: F 키)
     private bool hasFlashlight = false; // 플레이어가 손전등을 획득했는지 여부
     private bool hasLoggedNoFlashlight = false; // 손전등이 없음을 로그로 출력했는지 여부
 
+    public void Function()
+    {
+        Debug.Log("손전등 작동");
+    }
     void Start()
     {
         if (flashlight == null)

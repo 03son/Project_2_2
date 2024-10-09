@@ -77,7 +77,7 @@ public class InteractionManager : MonoBehaviour
             for (int i = 0; i < Inventory.instance.slots.Length; i++)
             {
                 if (Inventory.instance.slots[i].item != null)
-                    GetComponent<Player_Equip>().selectSlot(i+1);
+                    GetComponent<Player_Equip>().numderKeySelectSlot(i+1);
             }
 
             curInteractGameobject = null;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Player_Equip : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class Player_Equip : MonoBehaviour
     {
         numberKey();
         mouseWheelScroll();
+        EquipFunction();
     }
     public void selectSlot(int index)
     {
@@ -47,14 +49,17 @@ public class Player_Equip : MonoBehaviour
                 return;
             }
 
-            for (int i = 0; i < Inventory.instance.slots.Length; i++)
-            {
-               /* if (Inventory.instance.slots[i].item == null)
-                {
-                    invenUtil(index);
-                }*/
-                invenUtil(index);
-            }
+            invenUtil(index);
+        }
+    }
+    public void numderKeySelectSlot(int index)
+    {
+        for (int i = 0; i < Inventory.instance.slots.Length; i++)
+        {
+            if (Inventory.instance.slots[i].item == null)
+             {
+                 invenUtil(index);
+             }
         }
     }
     void setEquipItem(string item)
@@ -123,6 +128,14 @@ public class Player_Equip : MonoBehaviour
         }
     }
 
+    void EquipFunction()
+    {
+        if (Input.GetMouseButtonDown(0) && Item != null)
+        {
+            Item.GetComponent<IItemFunction>().Function();
+        }
+    }
+
     void mouseWheelScroll()
     {
         //마우스 휠 스크롤 해서 아이템 선택 바꾸기
@@ -130,20 +143,18 @@ public class Player_Equip : MonoBehaviour
 
         if (wheelInput < 0)
         {
-            selectIndex -= 1;
-            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
-            Inventory.instance.selectedItemIndex = selectIndex;
-            selectSlot(selectIndex);
-            Debug.Log(selectIndex);
-            return;
-        }
-        else if (wheelInput > 0)
-        {
             selectIndex += 1;
             selectIndex = Mathf.Clamp(selectIndex, 0, 6);
             Inventory.instance.selectedItemIndex = selectIndex;
             selectSlot(selectIndex);
-            Debug.Log(selectIndex);
+            return;
+        }
+        else if (wheelInput > 0)
+        {
+            selectIndex -= 1;
+            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
+            Inventory.instance.selectedItemIndex = selectIndex;
+            selectSlot(selectIndex);
             return ;
         }
     }
