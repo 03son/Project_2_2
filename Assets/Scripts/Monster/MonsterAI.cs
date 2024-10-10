@@ -6,40 +6,64 @@ using UnityEngine.AI;
 public class MonsterAI : MonoBehaviour
 {
     public NavMeshAgent agent;                     // NavMeshAgent 컴포넌트
-    public Transform[] patrolPoints;                // 순찰 지점 배열
-    public LayerMask playerLayer;                   // 플레이어가 속한 레이어
+    public Transform patrolParent;                 // 순찰 지점들의 부모 오브젝트
+    public Transform[] patrolPoints;               // 순찰 지점 배열
+    public LayerMask playerLayer;                  // 플레이어가 속한 레이어
+    public float moveSpeed = 3.5f;                 // 순찰 시 이동 속도
+    public float chaseSpeed = 10.0f;                // 추적 시 이동 속도
+    public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
 
     private List<Transform> detectedPlayers;       // 감지된 플레이어 리스트
-    private int currentPatrolIndex;                 // 현재 순찰 지점 인덱스
-    private Vector3 lastKnownPosition;              // 플레이어 마지막 위치
+    private int currentPatrolIndex;                // 현재 순찰 지점 인덱스
+    private Vector3 lastKnownPosition;             // 플레이어 마지막 위치
+    private bool isWaiting = true;                 // 대기 상태인지 여부
+    private float waitTimer = 0f;                  // 대기 타이머
 
-    public float viewDistance = 10f;                // 시야 거리
-    public float fieldOfView = 120f;                // 시야각
-    public float hearingRange = 15f;                // 청각 범위
+    public float viewDistance = 10f;               // 시야 거리
+    public float fieldOfView = 120f;               // 시야각
+    public float hearingRange = 15f;               // 청각 범위
 
-    private enum State { Patrol, Chase, Search };   // 상태 정의
-    private State currentState;
+    private enum State { Idle, Patrol, Chase, Search };  // 상태 정의 (Idle 추가)
+    private State currentState;                    // 현재 상태
 
     private void Start()
     {
         // NavMeshAgent 초기화
         agent = GetComponent<NavMeshAgent>();
 
-        // 플레이어를 수동으로 할당하지 않았다면 자동으로 찾기
-        detectedPlayers = new List<Transform>();
+        // 순찰 지점 배열을 자식 오브젝트에서 자동으로 가져오기
+        if (patrolParent != null)
+        {
+            patrolPoints = new Transform[patrolParent.childCount];
+            for (int i = 0; i < patrolParent.childCount; i++)
+            {
+                patrolPoints[i] = patrolParent.GetChild(i);
+            }
+        }
+        else
+        {
+            Debug.LogError("PatrolParent가 설정되지 않았습니다.");
+            enabled = false;
+            return;
+        }
 
-        // NavMeshAgent가 없으면 오류
-        if (agent == null)
+        // 이동 속도 설정
+        if (agent != null)
+        {
+            agent.speed = moveSpeed;
+        }
+        else
         {
             Debug.LogError("NavMeshAgent가 " + gameObject.name + "에 없습니다.");
-            enabled = false; // 스크립트를 비활성화하여 추가 에러 방지
+            enabled = false;
             return;
         }
 
         // 초기 상태 설정
-        currentState = State.Patrol;
+        currentState = State.Idle;
         currentPatrolIndex = 0;
-        GoToNextPatrolPoint();
+        detectedPlayers = new List<Transform>();
+        waitTimer = waitTimeBeforePatrol;
     }
 
     private void Update()
@@ -47,6 +71,9 @@ public class MonsterAI : MonoBehaviour
         // 현재 상태에 따라 적절한 행동 수행
         switch (currentState)
         {
+            case State.Idle:
+                Idle();
+                break;
             case State.Patrol:
                 Patrol();
                 break;
@@ -62,12 +89,41 @@ public class MonsterAI : MonoBehaviour
         UpdateDetectedPlayers();
     }
 
-    private void Patrol()
+    private void Idle()
     {
+        // 대기 타이머를 갱신
+        if (waitTimer < 0)
+        {
+            waitTimer = waitTimeBeforePatrol;
+        }
+        // 대기 타이머 업데이트
+        waitTimer -= Time.deltaTime;
+
+        // 대기 중 플레이어를 감지하면 추적 상태로 전환
+        if (detectedPlayers.Count > 0)
+        {
+            currentState = State.Chase;
+            return;
+        }
+
+        // 대기 시간이 끝나면 순찰 시작
+        if (waitTimer <= 0f)
+        {
+            currentState = State.Patrol;
+            GoToNextPatrolPoint();
+        }
+    }
+
+    private void Patrol() // 순찰모드
+    {
+        if (agent.speed == chaseSpeed)
+        {
+            agent.speed = moveSpeed;
+        }
         // 순찰 상태: 다음 순찰 지점으로 이동
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            GoToNextPatrolPoint();
+            Idle(); // 순찰이 끝나면 잠시 대기모드로 전환
         }
 
         // 플레이어를 감지하면 추적 상태로 전환
@@ -77,8 +133,12 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void Chase()
+    private void Chase() // 추적 모드
     {
+        if (agent.speed == moveSpeed)
+        {
+            agent.speed = chaseSpeed;
+        }
         // 가장 가까운 플레이어를 추적
         Transform closestPlayer = GetClosestPlayer();
         if (closestPlayer != null)
@@ -94,7 +154,7 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void Search()
+    private void Search() // 수색 모드
     {
         // 마지막으로 본 위치로 이동하여 수색
         agent.SetDestination(lastKnownPosition);
@@ -152,7 +212,6 @@ public class MonsterAI : MonoBehaviour
             // 플레이어가 감지 범위 내에 있는지 확인
             if (CanSeePlayer(playerTransform) || CanHearPlayer(playerTransform))
             {
-                // 감지된 플레이어를 리스트에 추가
                 if (!detectedPlayers.Contains(playerTransform))
                 {
                     detectedPlayers.Add(playerTransform);
