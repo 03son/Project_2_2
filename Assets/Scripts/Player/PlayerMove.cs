@@ -1,64 +1,76 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviourPunCallbacks
 {
     [SerializeField] float speed = 5f;
     [SerializeField] float mouseSpeed = 8f;
-    private float gravity = -9.81f;
+    [SerializeField] Transform cameraTransform; // 카메라의 Transform 참조
+
     private CharacterController controller;
-    private Vector3 mov;
     private Vector3 velocity;
-
-    [SerializeField] Transform cameraTransform; // 카메라의 Transform을 참조
-
+    private float gravity = -9.81f;
     private float mouseX;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        mov = Vector3.zero;
-        velocity = Vector3.zero;
-        Cursor.lockState = CursorLockMode.Locked;  // 마우스 커서 고정
+
+        // Main Camera 자동 할당 (Inspector에서 할당되지 않았을 경우)
+        if (cameraTransform == null)
+        {
+            cameraTransform = Camera.main?.transform;
+        }
     }
 
     void Update()
     {
-        // 마우스 회전 처리
+        // 로컬 플레이어만 제어
+        if (photonView.IsMine)
+        {
+            HandleMouseLook();
+            HandleMovement();
+        }
+    }
+
+    // 마우스 회전 처리
+    private void HandleMouseLook()
+    {
+        if (cameraTransform == null) return;
+
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
-        this.transform.localRotation = Quaternion.Euler(0, mouseX, 0);
+        transform.localRotation = Quaternion.Euler(0, mouseX, 0); // Y축 회전 (좌우 회전)
+    }
 
-        // 카메라의 방향을 기준으로 이동 처리
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+    // 이동 및 중력 처리
+    private void HandleMovement()
+    {
+        if (controller == null || cameraTransform == null) return;
 
-        // 카메라의 forward와 right 방향을 기준으로 이동 벡터 계산
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
+        // 즉각적인 이동
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
 
-        // 카메라의 Y축은 무시하고 평면에서의 이동만 계산
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
+        // 카메라 방향으로 이동 계산
+        Vector3 direction = cameraTransform.forward * moveZ + cameraTransform.right * moveX;
+        direction.y = 0f; // Y축 이동 제거
+        direction.Normalize();
 
-        // 최종 이동 벡터 계산
-        mov = (forward * moveZ + right * moveX).normalized * speed;
+        // 이동 벡터 적용
+        Vector3 mov = direction * speed;
 
-        // 중력 처리
+        // 중력 적용
         if (controller.isGrounded)
         {
-            velocity.y = -2f; // 바닥에 있을 때 약간의 중력만 적용
+            velocity.y = -2f;  // 땅에 있을 때 약간의 중력만 적용
         }
         else
         {
-            velocity.y += gravity * Time.deltaTime; // 공중에 있을 때 중력 적용
+            velocity.y += gravity * Time.deltaTime; // 공중에서 중력 가속 적용
         }
 
-        // 캐릭터 이동 처리
+        // 최종 이동 처리
         controller.Move((mov + velocity) * Time.deltaTime);
     }
-
-
 }

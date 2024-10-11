@@ -2,87 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlashlighFunction : ItemFunction, IItemFunction
+public class FlashlighFunction : MonoBehaviour, IItemFunction
 {
-    public Light flashlight; // 손전등 역할을 하는 Spotlight 컴포넌트
-    public KeyCode toggleKey = KeyCode.F; // 손전등을 켜고 끄는 키 (기본: F 키)
-    private bool hasFlashlight = false; // 플레이어가 손전등을 획득했는지 여부
-    private bool hasLoggedNoFlashlight = false; // 손전등이 없음을 로그로 출력했는지 여부
+    public Light flashlight; // 손전등 역할을 하는 Light 컴포넌트
+    public KeyCode toggleKey = KeyCode.F;
+    private bool hasFlashlight = false; // 손전등을 획득했는지 여부
 
-    public void Function()
-    {
-        Debug.Log("손전등 작동");
-    }
     void Start()
     {
+        // 자식에서 Light 컴포넌트를 찾아 할당 (Inspector에서 할당되지 않은 경우에만)
         if (flashlight == null)
         {
-            flashlight = GetComponentInChildren<Light>(); // 자식 오브젝트에서 Light 컴포넌트를 가져옴
+            flashlight = GetComponentInChildren<Light>();
         }
 
+        // Light 컴포넌트가 있다면 기본적으로 꺼진 상태로 설정
         if (flashlight != null)
         {
-            flashlight.enabled = false; // 시작할 때 손전등은 꺼진 상태로 설정
-            //Debug.Log("손전등 초기화: 꺼진 상태 (" + flashlight.name + ")");
-        }
-        else
-        {
-           // Debug.Log("손전등 Light 컴포넌트를 찾을 수 없습니다.");
+            flashlight.enabled = false;
         }
     }
 
     void Update()
     {
-        if (hasFlashlight) // 손전등을 획득한 상태일 때만 작동
+        // 손전등을 획득한 후에만 동작하도록 함
+        if (hasFlashlight && Input.GetKeyDown(toggleKey))
         {
-            if (!hasLoggedNoFlashlight) // 손전등이 획득되었으면 더 이상 출력하지 않도록
-            {
-                hasLoggedNoFlashlight = true;
-            }
-
-            if (Input.GetKeyDown(toggleKey)) // 지정된 키를 눌렀을 때
-            {
-                Debug.Log("F 키가 눌렸습니다."); // F 키가 눌렸을 때 로그 출력
-
-                if (flashlight != null)
-                {
-                    flashlight.enabled = !flashlight.enabled; // 손전등의 활성화 상태를 반전시킴
-                    Debug.Log("손전등 상태 변경: " + (flashlight.enabled ? "켜짐" : "꺼짐"));
-                }
-                else
-                {
-                    Debug.Log("flashlight 변수가 할당되지 않았습니다.");
-                }
-            }
-        }
-        else
-        {
-            if (!hasLoggedNoFlashlight) // 손전등이 없다는 로그는 한 번만 출력
-            {
-               // Debug.Log("손전등이 아직 획득되지 않았습니다."); // 손전등을 획득하지 않은 상태임을 알림
-                hasLoggedNoFlashlight = true;
-            }
+            ToggleFlashlight(); // F 키를 눌렀을 때 손전등 켜기/끄기
         }
     }
 
-    // 손전등을 획득했을 때 호출되는 메서드
+    // IItemFunction 인터페이스의 Function() 메서드 구현
+    public void Function()
+    {
+        ToggleFlashlight(); // 손전등 켜기/끄기 동작
+    }
+
+    // 손전등 획득 시 호출되는 메서드
     public void AcquireFlashlight()
     {
-        hasFlashlight = true; // 손전등 획득 상태로 설정
-        Debug.Log("손전등을 획득했습니다.");
+        hasFlashlight = true; // 손전등을 획득한 상태로 설정
+
+        // Light 컴포넌트를 획득한 후에도 다시 확인 및 할당
+        if (flashlight == null)
+        {
+            flashlight = GetComponentInChildren<Light>();
+        }
 
         if (flashlight != null)
         {
-            flashlight.enabled = false; // 손전등을 획득 후에도 꺼진 상태로 시작
+            flashlight.enabled = false; // 획득 후 꺼진 상태로 시작
+
+            // 손전등의 부모를 메인 카메라로 설정하여 위치와 회전을 따라가게 함
+            flashlight.transform.SetParent(Camera.main.transform);
+            flashlight.transform.localPosition = new Vector3(0.3f, -0.3f, 0.5f); // 오른손에 들린 것처럼 위치 조정
+            flashlight.transform.localRotation = Quaternion.Euler(0, 0, 0); // 필요한 회전 설정
+        }
+    }
+
+    // 손전등을 켜고 끄는 메서드
+    private void ToggleFlashlight()
+    {
+        if (flashlight != null)
+        {
+            flashlight.enabled = !flashlight.enabled; // 불 켜고 끄기
         }
     }
 }
-
-
-
-
-
-
-
-
-

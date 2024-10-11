@@ -10,7 +10,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     void Start()
     {
-        
+
     }
 
     public string GetInteractPrompt()
@@ -29,10 +29,10 @@ public class ItemObject : MonoBehaviour, IInteractable
     bool addSlot()
     {
         //인벤토리에 빈 슬롯이 있는지 확인
-        for (int i = 0; i< Inventory.instance.slots.Length; i++)
+        for (int i = 0; i < Inventory.instance.slots.Length; i++)
         {
             if (Inventory.instance.slots[i].item == null)
-                return true;   
+                return true;
         }
         return false;
     }
