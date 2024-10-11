@@ -12,12 +12,14 @@ public class MonsterAI : MonoBehaviour
     public float moveSpeed = 3.5f;                 // 순찰 시 이동 속도
     public float chaseSpeed = 10.0f;                // 추적 시 이동 속도
     public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
+    public float idleTimeBeforePatrol = 5.0f;      // 예외 처리 - 정지 후 순찰로 돌아가는 시간
 
     private List<Transform> detectedPlayers;       // 감지된 플레이어 리스트
     private int currentPatrolIndex;                // 현재 순찰 지점 인덱스
     private Vector3 lastKnownPosition;             // 플레이어 마지막 위치
     private bool isWaiting = true;                 // 대기 상태인지 여부
     private float waitTimer = 0f;                  // 대기 타이머
+    private float idleTimer = 0f;                  // 정지 상태 타이머
 
     public float viewDistance = 10f;               // 시야 거리
     public float fieldOfView = 120f;               // 시야각
@@ -68,6 +70,23 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
+        // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경
+        if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
+        {
+            idleTimer += Time.deltaTime;
+            if (idleTimer >= idleTimeBeforePatrol)
+            {
+                currentState = State.Patrol;
+                GoToNextPatrolPoint();
+                idleTimer = 0f; // 타이머 초기화
+                return;
+            }
+        }
+        else
+        {
+            idleTimer = 0f; // 몬스터가 움직이면 idleTimer 초기화
+        }
+        Debug.Log(currentState);
         // 현재 상태에 따라 적절한 행동 수행
         switch (currentState)
         {
