@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float soundVolume = 1f;
-    public AudioSource audioSource;
     void Start()
     {
         
@@ -14,6 +12,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

@@ -23,7 +23,8 @@ public class MonsterAI : MonoBehaviour
 
     public float viewDistance = 10f;               // 시야 거리
     public float fieldOfView = 120f;               // 시야각
-    public float hearingRange = 15f;               // 청각 범위
+    public float hearingRange = 50f;               // 청각 범위
+    public float minDecibelToDetect = 30f;        // 감지 가능한 최소 데시벨 값
 
     private enum State { Idle, Patrol, Chase, Search };  // 상태 정의 (Idle 추가)
     private State currentState;                    // 현재 상태
@@ -70,6 +71,7 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
+        // 추후 제작할 예외 처리 (몬스터가 하나의 플레이어만 따라가지 않도록 바꾸기)
         // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경
         if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
         {
@@ -229,7 +231,7 @@ public class MonsterAI : MonoBehaviour
             Transform playerTransform = playerObject.transform;
 
             // 플레이어가 감지 범위 내에 있는지 확인
-            if (CanSeePlayer(playerTransform) || CanHearPlayer(playerTransform))
+            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform))
             {
                 if (!detectedPlayers.Contains(playerTransform))
                 {
@@ -248,6 +250,7 @@ public class MonsterAI : MonoBehaviour
             }
         }
     }
+
 
     private bool CanSeePlayer(Transform player)
     {
@@ -276,15 +279,20 @@ public class MonsterAI : MonoBehaviour
         }
         return false;  // 시야 내에 없으면 false 반환
     }
-
-    private bool CanHearPlayer(Transform player)
+    private bool CanHearSoundSource(Transform player)
     {
-        // 플레이어가 청각 범위 내에 있는지 확인
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        // 플레이어가 소리를 내는 중인지 확인
-        Player playerSound = player.GetComponent<Player>();
-        return distanceToPlayer <= hearingRange && playerSound != null && playerSound.audioSource.isPlaying;
+        // 모든 SoundSource를 가져오고, 각 SoundSource의 데시벨을 계산하여 몬스터가 감지할 수 있는 범위 내에 있는지 확인
+        SoundSource[] soundSources = FindObjectsOfType<SoundSource>();
+        foreach (SoundSource soundSource in soundSources)
+        {
+            float decibel = soundSource.GetDecibelAtDistance(transform.position);
+            // 데시벨이 감지 가능한 최소 데시벨 값 이상이고, 소리의 범위 내에 있어야 감지
+            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, player.position) <= soundSource.range)
+            {
+                return true; // 소리가 감지됨
+            }
+        }
+        return false; // 감지되지 않음
     }
 
     private void OnDrawGizmosSelected()
@@ -320,5 +328,8 @@ public class MonsterAI : MonoBehaviour
 
             Gizmos.DrawLine(currentPoint, nextPoint); // 부채꼴의 각도를 따라 끝 부분을 연결
         }
+        // 청각 범위 (원형) 그리기
+        Gizmos.color = Color.blue; // 청각 범위는 파란색으로 표시
+        Gizmos.DrawWireSphere(origin, hearingRange);
     }
 }
