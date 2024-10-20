@@ -12,12 +12,13 @@ public class MonsterAI : MonoBehaviour
     private List<Transform> detectedPlayers;       // 감지된 플레이어 리스트
     private int currentPatrolIndex;                 // 현재 순찰 지점 인덱스
     private Vector3 lastKnownPosition;              // 플레이어 마지막 위치
+    private Vector3 soundHeardPosition;             // 소리를 들은 위치 저장
 
     public float viewDistance = 10f;                // 시야 거리
     public float fieldOfView = 120f;                // 시야각
     public float hearingRange = 15f;                // 청각 범위
 
-    private enum State { Patrol, Chase, Search };   // 상태 정의
+    private enum State { Patrol, Chase, Search, Investigate };   // 상태 정의에 Investigate 추가
     private State currentState;
 
     private void Start()
@@ -40,6 +41,15 @@ public class MonsterAI : MonoBehaviour
         currentState = State.Patrol;
         currentPatrolIndex = 0;
         GoToNextPatrolPoint();
+
+        // 유리병 깨진 소리를 듣고 반응하는 이벤트 등록
+        GlassCupFunction.OnGlassBreak += OnGlassBreakHeard;
+    }
+
+    private void OnDestroy()
+    {
+        // 이벤트 등록 해제
+        GlassCupFunction.OnGlassBreak -= OnGlassBreakHeard;
     }
 
     private void Update()
@@ -55,6 +65,9 @@ public class MonsterAI : MonoBehaviour
                 break;
             case State.Search:
                 Search();
+                break;
+            case State.Investigate:  // 소리 발생 위치로 이동
+                Investigate();
                 break;
         }
 
@@ -109,6 +122,18 @@ public class MonsterAI : MonoBehaviour
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
+        }
+    }
+
+    private void Investigate()
+    {
+        // 유리병이 깨진 위치로 이동
+        agent.SetDestination(soundHeardPosition);
+
+        // 해당 위치에 도착하면 순찰 상태로 돌아감
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = State.Patrol;
         }
     }
 
@@ -209,38 +234,15 @@ public class MonsterAI : MonoBehaviour
         return distanceToPlayer <= hearingRange && playerSound != null && playerSound.audioSource.isPlaying;
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnGlassBreakHeard(Vector3 position)
     {
-        Gizmos.color = Color.red;
+        // 유리병 깨진 소리가 들렸을 때, 소리의 위치로 이동하도록 설정
+        float distanceToSound = Vector3.Distance(transform.position, position);
 
-        // 부채꼴을 그리기 위한 세그먼트 개수
-        int segments = 20;
-        float angleStep = fieldOfView / segments; // 각도 단위
-        Vector3 origin = transform.position; // 몬스터의 위치
-
-        // 시야각 부채꼴 그리기
-        for (int i = 0; i <= segments; i++)
+        if (distanceToSound <= hearingRange)
         {
-            float currentAngle = -fieldOfView / 2 + angleStep * i; // 각도 계산
-            Vector3 direction = Quaternion.Euler(0, currentAngle, 0) * transform.forward; // 각도를 회전하여 방향 벡터 계산
-            Vector3 endPoint = origin + direction * viewDistance; // 시야 거리만큼 떨어진 지점 계산
-
-            Gizmos.DrawLine(origin, endPoint); // 몬스터의 위치에서 해당 방향으로 선을 그림
-        }
-
-        // 시야 범위 끝에 부채꼴을 완성하는 경계 그리기
-        for (int i = 0; i < segments; i++)
-        {
-            float currentAngle = -fieldOfView / 2 + angleStep * i;
-            float nextAngle = currentAngle + angleStep;
-
-            Vector3 currentDir = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
-            Vector3 nextDir = Quaternion.Euler(0, nextAngle, 0) * transform.forward;
-
-            Vector3 currentPoint = origin + currentDir * viewDistance;
-            Vector3 nextPoint = origin + nextDir * viewDistance;
-
-            Gizmos.DrawLine(currentPoint, nextPoint); // 부채꼴의 각도를 따라 끝 부분을 연결
+            soundHeardPosition = position;
+            currentState = State.Investigate;  // 소리 들린 곳으로 이동
         }
     }
 }

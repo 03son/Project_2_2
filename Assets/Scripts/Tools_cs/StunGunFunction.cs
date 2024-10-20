@@ -6,7 +6,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
 {
     public KeyCode fireKey = KeyCode.Mouse0; // 마우스 좌클릭으로 발사
     public float range = 10f; // 스턴건의 사거리
-    public float stunDuration = 5f; // 적을 5초 동안 멈추게 함
+    public float stunDuration = 2f; // 적을 2초 동안 멈추게 함
     public LayerMask enemyLayer; // 적 레이어 설정
 
     private Camera playerCamera;
