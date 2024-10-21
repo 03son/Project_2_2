@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -10,9 +9,10 @@ using Unity.VisualScripting;
 
 public class UI_Button : UI_Popup
 {
+    public GameObject MultiList;
     public enum GameObjects
     {
-        MainScreenButtons
+        MainScreenButtons,
     }
     enum Buttons
     {
@@ -56,6 +56,8 @@ public class UI_Button : UI_Popup
         Array buttonNames = Enum.GetValues(typeof(Buttons));
         foreach (int buttonNum in buttonNames)
             GetButton((int)buttonNum).gameObject.AddUIEvent(OnMainButtonClicked);
+
+        MultiList.gameObject.SetActive(false);
         
     }
     
@@ -74,7 +76,7 @@ public class UI_Button : UI_Popup
 
             // 멀티 버튼
             case Buttons.MultiButton:
-                Debug.Log((string)button.pointerEnter.name);
+                OpenMultiRoomList();
                 break;
 
             // 설정 버튼
@@ -87,6 +89,20 @@ public class UI_Button : UI_Popup
                 GameExit();
                 break;
         }
+    }
+
+    //멀티 방 리스트 띄우기
+    void OpenMultiRoomList()
+    {
+        //메인화면 버튼 오브젝트 비활성화
+        Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(false);
+
+        PhotonManager.instance.StartCoroutine(PhotonManager.instance.SetLoadingText());
+
+        //UIManger.Instance.ShowPopupUI<MultiPlayList>();
+
+        //서버 연결
+        PhotonManager.instance.ConnectSever();
     }
 
     //설정 창 띄우기
