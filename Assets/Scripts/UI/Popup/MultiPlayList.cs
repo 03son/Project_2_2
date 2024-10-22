@@ -5,11 +5,15 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
+using Photon.Pun;
 
 public class MultiPlayList : UI_Popup
 {
-    //이름 입력 인풋필드
+    //방 이름 입력 인풋필드
     GameObject RoomNameInputField;
+
+    //플레이어 닉네임 인풋필드
+    GameObject InputFeldPlayerNickName;
 
     //입력 후 생성 버튼
     GameObject JoinCreateRoom;
@@ -21,7 +25,8 @@ public class MultiPlayList : UI_Popup
     {
         InputFieldRoomName,
         JoinCreateRoom,
-        PhotonManager
+        PhotonManager,
+        InputFieldPlayerNickName
     }
     enum Buttons
     {
@@ -38,6 +43,7 @@ public class MultiPlayList : UI_Popup
         GetObject((int)Objects.JoinCreateRoom).gameObject.AddUIEvent(Oncilck_Join_Createroom);
 
         RoomNameInputField = GetObject((int)Objects.InputFieldRoomName);
+        InputFeldPlayerNickName = GetObject((int)Objects.InputFieldPlayerNickName);
         JoinCreateRoom = GetObject((int)Objects.JoinCreateRoom);
     }
     void Start()
@@ -46,10 +52,18 @@ public class MultiPlayList : UI_Popup
 
         RoomNameInputField.SetActive(false);
         JoinCreateRoom.SetActive(false);
+        InputFeldPlayerNickName.SetActive(true);
     }
 
     void Update()
     {
+        string playerNickName = InputFeldPlayerNickName.GetComponent<TMP_InputField>().text;
+        string NickNameRegexResult = Regex.Replace(playerNickName, @"\s", "");
+        if (playerNickName.Length > 0)
+        {
+            //닉네임 설정
+           PhotonNetwork.LocalPlayer.NickName = NickNameRegexResult;
+        }
         if (Input.GetKey(KeyCode.Escape) && this.gameObject.activeSelf)
         {
             //메인화면 버튼 4종 활성화

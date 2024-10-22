@@ -13,11 +13,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 룸 목록에 대한 데이터를 저장하기 위한 딕셔너리 자료형
     private Dictionary<string, GameObject> rooms = new Dictionary<string, GameObject>();
 
+    public string PlayerNickName;
+
     // 룸 목록을 표시할 프리팹
     public GameObject roomItemPrefab;
-
-    //유저 닉네임
-    string userId = "testUser_1";
 
     public TextMeshProUGUI StatusText;
 
@@ -123,6 +122,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         MultiList.GetComponent<MultiPlayList>().JoinRoom();
     }
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            Debug.Log($"현재 방에 있는 플레이어들 : {player.NickName}");
+
+        }
+    }
     public override void OnRoomListUpdate(List<RoomInfo> roomList) //방 목록 수신
     {
         // 삭제된 RoomItem 프리팹을 저장할 임시변수
@@ -165,7 +172,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftLobby()
     {
         Debug.Log("로비 나감");
-       // PhotonNetwork.Disconnect();
     }
     public override void OnJoinedLobby()
     {
@@ -180,13 +186,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("방에서 나갔습니다.");
         StartCoroutine(SetLoadingText());
-       //PhotonNetwork.JoinLobby();
     }
     public override void OnDisconnected(DisconnectCause cause)//서버와 연결이 끊어졌을 때
     {
         Debug.Log("서버 연결 종료");
-
-        //PhotonNetwork.RemoveCallbackTarget(this);
     }
     #endregion
 }
