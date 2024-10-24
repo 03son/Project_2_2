@@ -7,20 +7,20 @@ using UnityEngine.EventSystems;
 
 public class Player_RoomInfo : UI_Popup
 {
-   public string NickName = "X";
-   public string AnimalName = "동물이름";
+   string NickName = "X";
+   string AnimalName = "동물이름";
 
     public override void Init()
     {
         transform.Find("ReadyButton").gameObject.AddUIEvent(OnCickReadyButton);
     }
 
-    public void UpdatePlayerInfo() //플레이어 슬롯 정보 업데이트
+    public void UpdatePlayerInfo(string NickName) //플레이어 슬롯 정보 업데이트
     {
-        setPlayerNickNameText();
+        setPlayerNickNameText(NickName);
         setAnimalNameText();
     }
-    void setPlayerNickNameText()
+    void setPlayerNickNameText(string NickName)
     {
         transform.Find("PlayerNickName").gameObject.GetComponent<TextMeshProUGUI>().text
             = NickName;
@@ -39,7 +39,7 @@ public class Player_RoomInfo : UI_Popup
     {
         Init();
 
-        UpdatePlayerInfo();
+        UpdatePlayerInfo("X");
     }
 
 }

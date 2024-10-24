@@ -18,14 +18,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 룸 목록을 표시할 프리팹
     public GameObject roomItemPrefab;
 
-    public TextMeshProUGUI StatusText;
-
     public GameObject MultiList;
+
+    public GameObject Room;
 
     public Transform RoomListPrefabPos;
 
-    public TextMeshProUGUI LoadingText;
+    private Transform room_Player;
 
+    public GameObject BG;
+
+    RoomSetting roomSetting;
+
+    #region 텍스트 변수
+
+    //서버 연결 상태 텍스트
+    public TextMeshProUGUI StatusText;
+
+    //로딩 텍스트
+    public TextMeshProUGUI LoadingText;
+    #endregion
+    private Dictionary<int, GameObject> playerItems = new Dictionary<int, GameObject>();
     void Awake()
     {
         if (instance == null)
@@ -50,6 +63,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.AddCallbackTarget(this);
     }
+
+    void Start()
+    {
+        room_Player = GameObject.Find("room_Player").transform;
+        roomSetting = BG.GetComponent<RoomSetting>();
+    }
+
     private void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
@@ -74,12 +94,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void leaveRoom() //방 나가기
     {
+        roomSetting.UpdatePlayerNickName(
+            PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
+
         PhotonNetwork.LeaveRoom();
     }
 
     public void CreateRoom(string roomName)
     {
         PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { MaxPlayers = 4 },null);
+    }
+    private void UpdatePlayerList()//입/퇴장시 리스트 업데이트
+    {
+       
     }
 
     public IEnumerator SetLoadingText()//로딩중 텍스트
@@ -101,7 +128,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // 서버 접속 함수
         Debug.Log("서버 접속 성공");
-    }
+    }//서버 연결
     public override void OnConnectedToMaster()//고유 ID 마스터 서버 접속
     {
         //로비 접속
@@ -112,23 +139,31 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         //방 생성
         Debug.Log($"Room Name = {PhotonNetwork.CurrentRoom.Name}");
-    }
+    }//방 생성
 
-    public override void OnJoinedRoom()
+    public override void OnJoinedRoom()//룸 입장
     {
         Debug.Log("룸에 입장");
         Debug.Log($"PhotonNetwork.InRoom = {PhotonNetwork.InRoom}");
         Debug.Log($"Player Count = {PhotonNetwork.CurrentRoom.PlayerCount}");
 
         MultiList.GetComponent<MultiPlayList>().JoinRoom();
+
+        Room.SetActive(true);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            roomSetting.UpdatePlayerNickName(
+                PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
+        }
+        else 
+        {
+            roomSetting.PlayerEnteredRoom();
+        }
     }
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-        {
-            Debug.Log($"현재 방에 있는 플레이어들 : {player.NickName}");
 
-        }
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList) //방 목록 수신
     {
@@ -172,7 +207,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftLobby()
     {
         Debug.Log("로비 나감");
-    }
+    }//로비 퇴장
     public override void OnJoinedLobby()
     {
         Debug.Log("로비 접속");
@@ -181,7 +216,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         LoadingText.gameObject.SetActive(false);
 
         MultiList.gameObject.SetActive(true);
-    }
+    }//로비 입장
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        UpdatePlayerList();
+        Debug.Log($"{newPlayer.NickName}님이 입장했습니다.");
+
+        roomSetting.UpdatePlayerNickName(
+                newPlayer.NickName, newPlayer.ActorNumber);
+    }//남이 방을 입장
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        UpdatePlayerList();
+        Debug.Log($"{otherPlayer.NickName}님이 퇴장했습니다.");
+
+        roomSetting.UpdatePlayerNickName(
+        otherPlayer.NickName, otherPlayer.ActorNumber);
+    }//남이 방을 퇴장
     public override void OnLeftRoom() //방에서 나갔을 때
     {
         Debug.Log("방에서 나갔습니다.");

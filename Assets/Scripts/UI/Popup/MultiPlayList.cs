@@ -98,8 +98,6 @@ public class MultiPlayList : UI_Popup
     {
         //방 입장
         gameObject.SetActive(false);
-        //ClosePopupUI();
-        UIManger.Instance.ShowPopupUI<Room>();
     }
 
     void OnClickCreateRoomButton(PointerEventData button) //방 생성 버튼 클릭

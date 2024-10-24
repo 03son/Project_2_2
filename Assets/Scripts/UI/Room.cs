@@ -25,22 +25,10 @@ public class Room : UI_Popup
 
         GetButton((int)Buttons.ExitButton).gameObject.AddUIEvent(ExitRoomButton);
     }
-    public void JoinPlayer()
-    {
-        if (PhotonNetwork.IsMasterClient)//마스터클라이언트가 방을 만들면서 입장
-        {
-            Debug.Log("방장 플레이어가 입장 하였습니다.");
-            Debug.Log($"플레이어 이름 : {PhotonNetwork.LocalPlayer.NickName},ActorNumber : {PhotonNetwork.MasterClient.ActorNumber}");
-
-            PlayerSlot.GetComponent<PlayerSlot>().JoinedRoom();
-        }        
-    }
   
     void Start()
     {
         Init();
-
-        JoinPlayer();
     }
 
     void Update()
@@ -60,8 +48,9 @@ public class Room : UI_Popup
         //룸에서 나가기
         PhotonManager.instance.leaveRoom();
 
+        gameObject.SetActive(false);
         //로비 화면 닫기
-        ClosePopupUI();
+        //ClosePopupUI();
     }
 
 }
