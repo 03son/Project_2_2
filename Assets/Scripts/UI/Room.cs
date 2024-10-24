@@ -12,7 +12,9 @@ using System.Runtime.InteropServices;
 
 public class Room : UI_Popup
 {
-    public GameObject PlayerSlot;
+    public GameObject BG;
+
+    RoomSetting roomSetting;
 
     enum Buttons
     { 
@@ -24,6 +26,8 @@ public class Room : UI_Popup
         Bind<Button>(typeof(Buttons));
 
         GetButton((int)Buttons.ExitButton).gameObject.AddUIEvent(ExitRoomButton);
+
+        roomSetting = BG.gameObject.GetComponent<RoomSetting>();
     }
   
     void Start()
@@ -41,6 +45,8 @@ public class Room : UI_Popup
 
      void ExitRoomButton(PointerEventData button)
     {
+        roomSetting.PlayerLeftRoom(PhotonNetwork.LocalPlayer.ActorNumber);
+
         ExitRoom();
     }
     void ExitRoom()
@@ -49,8 +55,7 @@ public class Room : UI_Popup
         PhotonManager.instance.leaveRoom();
 
         gameObject.SetActive(false);
-        //로비 화면 닫기
-        //ClosePopupUI();
+
     }
 
 }

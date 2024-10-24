@@ -38,8 +38,6 @@ public class Player_RoomInfo : UI_Popup
     void Start()
     {
         Init();
-
-        UpdatePlayerInfo("X");
     }
 
 }

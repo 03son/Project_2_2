@@ -94,8 +94,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void leaveRoom() //방 나가기
     {
-        roomSetting.UpdatePlayerNickName(
-            PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
+
+   //     roomSetting.UpdatePlayerNickName(
+     //       PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
 
         PhotonNetwork.LeaveRoom();
     }
@@ -222,19 +223,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         UpdatePlayerList();
         Debug.Log($"{newPlayer.NickName}님이 입장했습니다.");
 
-        roomSetting.UpdatePlayerNickName(
-                newPlayer.NickName, newPlayer.ActorNumber);
+       roomSetting.UpdatePlayerNickName(
+               newPlayer.NickName, newPlayer.ActorNumber);
     }//남이 방을 입장
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         UpdatePlayerList();
         Debug.Log($"{otherPlayer.NickName}님이 퇴장했습니다.");
 
-        roomSetting.UpdatePlayerNickName(
-        otherPlayer.NickName, otherPlayer.ActorNumber);
+        roomSetting.PlayerLeftRoom(
+            otherPlayer.ActorNumber);
+        
     }//남이 방을 퇴장
     public override void OnLeftRoom() //방에서 나갔을 때
     {
+        roomSetting.PlayerLeftRoom(PhotonNetwork.LocalPlayer.ActorNumber);
+
+
         Debug.Log("방에서 나갔습니다.");
         StartCoroutine(SetLoadingText());
     }
