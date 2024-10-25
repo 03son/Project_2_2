@@ -9,9 +9,14 @@ using static UI_Button;
 using UnityEngine.EventSystems;
 using Photon.Pun.UtilityScripts;
 using System.Runtime.InteropServices;
+using ExitGames.Client.Photon;
+using Photon.Pun.Demo.PunBasics;
+using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class Room : UI_Popup
 {
+    HashTable playerCP;
+
     public GameObject BG;
 
     RoomSetting roomSetting;
@@ -45,12 +50,12 @@ public class Room : UI_Popup
 
      void ExitRoomButton(PointerEventData button)
     {
-        roomSetting.PlayerLeftRoom(PhotonNetwork.LocalPlayer.ActorNumber);
-
         ExitRoom();
     }
     void ExitRoom()
     {
+        roomSetting.localPlayerLeftRoom();
+
         //룸에서 나가기
         PhotonManager.instance.leaveRoom();
 

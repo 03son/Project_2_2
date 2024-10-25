@@ -5,10 +5,11 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
+using ExitGames.Client.Photon;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    public static PhotonManager instance; 
+    public static PhotonManager instance;
 
     // 룸 목록에 대한 데이터를 저장하기 위한 딕셔너리 자료형
     private Dictionary<string, GameObject> rooms = new Dictionary<string, GameObject>();
@@ -152,15 +153,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         Room.SetActive(true);
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            roomSetting.UpdatePlayerNickName(
-                PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
-        }
-        else 
-        {
-            roomSetting.PlayerEnteredRoom();
-        }
+        roomSetting.UpdatePlayerNickName(
+              PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
     }
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
@@ -223,8 +217,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         UpdatePlayerList();
         Debug.Log($"{newPlayer.NickName}님이 입장했습니다.");
 
-       roomSetting.UpdatePlayerNickName(
+        
+       roomSetting.PlayerEnteredRoom(
                newPlayer.NickName, newPlayer.ActorNumber);
+        
     }//남이 방을 입장
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
@@ -235,11 +231,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             otherPlayer.ActorNumber);
         
     }//남이 방을 퇴장
-    public override void OnLeftRoom() //방에서 나갔을 때
+    public override void OnLeftRoom() //내가 방에서 나갔을 때
     {
-        roomSetting.PlayerLeftRoom(PhotonNetwork.LocalPlayer.ActorNumber);
-
-
         Debug.Log("방에서 나갔습니다.");
         StartCoroutine(SetLoadingText());
     }

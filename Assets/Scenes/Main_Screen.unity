@@ -1643,6 +1643,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: InfoText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: InfoText1
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: InfoText2
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: InfoText3
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
       propertyPath: playerPfefab
       value: 
       objectReference: {fileID: 3225011347212051074, guid: 907f1f74d053f0048a51c14ec69c2b49, type: 3}
