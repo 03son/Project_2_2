@@ -6,13 +6,24 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using System.Text.RegularExpressions;
 
 public class UI_Button : UI_Popup
 {
     public GameObject MultiList;
+
+    public GameObject setPlayerNickName;
+
+    TMP_InputField InputNickName;
+
+    public GameObject G_ApplyButton;
+    Button ApplyButton;
+
+    public string PlayerNickName;
+
     public enum GameObjects
     {
-        MainScreenButtons,
+        MainScreenButtons
     }
     enum Buttons
     {
@@ -39,6 +50,29 @@ public class UI_Button : UI_Popup
         Init();
     }
 
+    void Update()
+    {
+        if (setPlayerNickName.gameObject.activeSelf)
+        {
+            string playerNickName = InputNickName.GetComponent<TMP_InputField>().text;
+            string NickNameRegexResult = Regex.Replace(playerNickName, @"\s", ""); //공백 제거
+
+            if (NickNameRegexResult.Length > 0)
+            {
+                PlayerNickName = NickNameRegexResult;
+                G_ApplyButton.gameObject.SetActive(true); //적용 버튼 활성화
+
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    SetPlayerNickName();
+                    return;
+                }
+            }
+            else
+                G_ApplyButton.gameObject.SetActive(false);//적용 버튼 비활성화
+        }
+    }
+
     public override void Init()
     {
         base.Init();
@@ -57,8 +91,16 @@ public class UI_Button : UI_Popup
         foreach (int buttonNum in buttonNames)
             GetButton((int)buttonNum).gameObject.AddUIEvent(OnMainButtonClicked);
 
+
         MultiList.gameObject.SetActive(false);
-        
+
+        Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(false);
+
+        ApplyButton = G_ApplyButton.GetComponent<Button>();
+
+        InputNickName = setPlayerNickName.gameObject.GetComponentInChildren<TMP_InputField>();
+
+        ApplyButton.onClick.AddListener(SetPlayerNickName);
     }
     
     //싱글, 멀티, 설정, 종료 이벤트
@@ -113,6 +155,18 @@ public class UI_Button : UI_Popup
 
         //설정 창 띄우기
         UIManger.Instance.ShowPopupUI<MainSettingScreen>();
+    }
+
+    void SetPlayerNickName()
+    {
+        //포톤 메니저에 닉네임 전송
+        PhotonManager.instance.PlayerNickName = PlayerNickName;
+
+        //닉네임 입력 창 비활성화
+        setPlayerNickName.SetActive(false);
+
+        //메인화면 버튼 활성화
+        Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(true);
     }
     //게임 종료
     void GameExit()

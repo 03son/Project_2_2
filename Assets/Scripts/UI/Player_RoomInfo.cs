@@ -4,10 +4,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class Player_RoomInfo : UI_Popup
 {
-   string NickName = "X";
    string AnimalName = "동물이름";
 
     public override void Init()
@@ -22,9 +22,9 @@ public class Player_RoomInfo : UI_Popup
     }
     void setPlayerNickNameText(string NickName)
     {
-        transform.Find("PlayerNickName").gameObject.GetComponent<TextMeshProUGUI>().text
-            = NickName;
+         transform.Find("PlayerNickName").gameObject.GetComponent<TextMeshProUGUI>().text = NickName;   
     }
+   
     void setAnimalNameText()
     {
         transform.Find("AnimalName").gameObject.GetComponent<TextMeshProUGUI>().text

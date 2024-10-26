@@ -19,7 +19,7 @@ public class Room : UI_Popup
 
     public GameObject BG;
 
-    RoomSetting roomSetting;
+    RoomManager roomSetting;
 
     enum Buttons
     { 
@@ -32,11 +32,13 @@ public class Room : UI_Popup
 
         GetButton((int)Buttons.ExitButton).gameObject.AddUIEvent(ExitRoomButton);
 
-        roomSetting = BG.gameObject.GetComponent<RoomSetting>();
+        roomSetting = BG.gameObject.GetComponent<RoomManager>();
     }
   
     void Start()
     {
+        playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+
         Init();
     }
 
@@ -54,8 +56,6 @@ public class Room : UI_Popup
     }
     void ExitRoom()
     {
-        roomSetting.localPlayerLeftRoom();
-
         //룸에서 나가기
         PhotonManager.instance.leaveRoom();
 

@@ -29,7 +29,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public GameObject BG;
 
-    RoomSetting roomSetting;
+    RoomManager roomSetting;
 
     #region 텍스트 변수
 
@@ -68,13 +68,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     void Start()
     {
         room_Player = GameObject.Find("room_Player").transform;
-        roomSetting = BG.GetComponent<RoomSetting>();
+        roomSetting = BG.GetComponent<RoomManager>();
     }
 
     private void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
     }
+
+    
 
     public void ConnectSever() //서버 연결
     {
@@ -95,20 +97,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void leaveRoom() //방 나가기
     {
-
-   //     roomSetting.UpdatePlayerNickName(
-     //       PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
-
         PhotonNetwork.LeaveRoom();
     }
 
     public void CreateRoom(string roomName)
     {
         PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { MaxPlayers = 4 },null);
-    }
-    private void UpdatePlayerList()//입/퇴장시 리스트 업데이트
-    {
-       
     }
 
     public IEnumerator SetLoadingText()//로딩중 텍스트
@@ -130,6 +124,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // 서버 접속 함수
         Debug.Log("서버 접속 성공");
+
+        //닉네임 설정
+        PhotonNetwork.NickName = PlayerNickName;
+        Debug.Log($"플레이어 닉네임 : {PhotonNetwork.NickName}");
     }//서버 연결
     public override void OnConnectedToMaster()//고유 ID 마스터 서버 접속
     {
@@ -153,8 +151,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         Room.SetActive(true);
 
-        roomSetting.UpdatePlayerNickName(
-              PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
+        roomSetting.PlayerEnteredRoom();
+
     }
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
@@ -214,22 +212,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }//로비 입장
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
-        UpdatePlayerList();
         Debug.Log($"{newPlayer.NickName}님이 입장했습니다.");
 
-        
-       roomSetting.PlayerEnteredRoom(
-               newPlayer.NickName, newPlayer.ActorNumber);
-        
+        roomSetting.PlayerEnteredRoom();
+
+
     }//남이 방을 입장
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
-        UpdatePlayerList();
-        Debug.Log($"{otherPlayer.NickName}님이 퇴장했습니다.");
+        roomSetting.localPlayerLeftRoom();
 
-        roomSetting.PlayerLeftRoom(
-            otherPlayer.ActorNumber);
-        
+        Debug.Log($"{otherPlayer.NickName}님이 퇴장했습니다.");
     }//남이 방을 퇴장
     public override void OnLeftRoom() //내가 방에서 나갔을 때
     {
