@@ -55,24 +55,12 @@ public class MultiPlayList : UI_Popup
             Go_Main();
 
         if (Input.GetKeyDown(KeyCode.Return) && RoomNameInputField.activeSelf)
-            Go_Main();
+            Go_Join_Createroom();
     }
 
     void Oncilck_Join_Createroom(PointerEventData button)//방 이름 입력 후 입장 버튼
     {
-        string roomName = RoomNameInputField.GetComponent<TMP_InputField>().text;
-
-        //공백 제거
-        string regexResult = Regex.Replace(roomName,@"\s", "");
-
-        if (regexResult.Length > 0)
-        {
-            //지정된 이름으로 방 생성
-            PhotonManager.instance.CreateRoom(regexResult);
-            return;
-        }
-
-        Debug.Log("이름을 입력하세요");
+        Go_Join_Createroom();
     }
     public void JoinRoom()
     {
@@ -107,5 +95,19 @@ public class MultiPlayList : UI_Popup
 
         //서버연결 끊기
         PhotonManager.instance.DisConnentSever();
+    }
+    void Go_Join_Createroom()
+    {
+        string roomName = RoomNameInputField.GetComponent<TMP_InputField>().text;
+
+        //공백 제거
+        string regexResult = Regex.Replace(roomName, @"\s", "");
+
+        if (regexResult.Length > 0)
+        {
+            //지정된 이름으로 방 생성
+            PhotonManager.instance.CreateRoom(regexResult);
+            return;
+        }
     }
 }
