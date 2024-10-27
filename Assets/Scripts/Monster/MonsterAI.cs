@@ -6,47 +6,95 @@ using UnityEngine.AI;
 public class MonsterAI : MonoBehaviour
 {
     public NavMeshAgent agent;                     // NavMeshAgent 컴포넌트
-    public Transform[] patrolPoints;                // 순찰 지점 배열
-    public LayerMask playerLayer;                   // 플레이어가 속한 레이어
+    public Transform patrolParent;                 // 순찰 지점들의 부모 오브젝트
+    public Transform[] patrolPoints;               // 순찰 지점 배열
+    public LayerMask playerLayer;                  // 플레이어가 속한 레이어
+    public float moveSpeed = 3.5f;                 // 순찰 시 이동 속도
+    public float chaseSpeed = 10.0f;                // 추적 시 이동 속도
+    public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
+    public float idleTimeBeforePatrol = 5.0f;      // 예외 처리 - 정지 후 순찰로 돌아가는 시간
 
     private List<Transform> detectedPlayers;       // 감지된 플레이어 리스트
-    private int currentPatrolIndex;                 // 현재 순찰 지점 인덱스
-    private Vector3 lastKnownPosition;              // 플레이어 마지막 위치
+    private int currentPatrolIndex;                // 현재 순찰 지점 인덱스
+    private Vector3 lastKnownPosition;             // 플레이어 마지막 위치
+    private bool isWaiting = true;                 // 대기 상태인지 여부
+    private float waitTimer = 0f;                  // 대기 타이머
+    private float idleTimer = 0f;                  // 정지 상태 타이머
 
-    public float viewDistance = 10f;                // 시야 거리
-    public float fieldOfView = 120f;                // 시야각
-    public float hearingRange = 15f;                // 청각 범위
+    public float viewDistance = 10f;               // 시야 거리
+    public float fieldOfView = 120f;               // 시야각
+    public float hearingRange = 50f;               // 청각 범위
+    public float minDecibelToDetect = 30f;        // 감지 가능한 최소 데시벨 값
 
-    private enum State { Patrol, Chase, Search };   // 상태 정의
-    private State currentState;
+    private enum State { Idle, Patrol, Chase, Search };  // 상태 정의 (Idle 추가)
+    private State currentState;                    // 현재 상태
 
     private void Start()
     {
         // NavMeshAgent 초기화
         agent = GetComponent<NavMeshAgent>();
 
-        // 플레이어를 수동으로 할당하지 않았다면 자동으로 찾기
-        detectedPlayers = new List<Transform>();
+        // 순찰 지점 배열을 자식 오브젝트에서 자동으로 가져오기
+        if (patrolParent != null)
+        {
+            patrolPoints = new Transform[patrolParent.childCount];
+            for (int i = 0; i < patrolParent.childCount; i++)
+            {
+                patrolPoints[i] = patrolParent.GetChild(i);
+            }
+        }
+        else
+        {
+            Debug.LogError("PatrolParent가 설정되지 않았습니다.");
+            enabled = false;
+            return;
+        }
 
-        // NavMeshAgent가 없으면 오류
-        if (agent == null)
+        // 이동 속도 설정
+        if (agent != null)
+        {
+            agent.speed = moveSpeed;
+        }
+        else
         {
             Debug.LogError("NavMeshAgent가 " + gameObject.name + "에 없습니다.");
-            enabled = false; // 스크립트를 비활성화하여 추가 에러 방지
+            enabled = false;
             return;
         }
 
         // 초기 상태 설정
-        currentState = State.Patrol;
+        currentState = State.Idle;
         currentPatrolIndex = 0;
-        GoToNextPatrolPoint();
+        detectedPlayers = new List<Transform>();
+        waitTimer = waitTimeBeforePatrol;
     }
 
     private void Update()
     {
+        // 추후 제작할 예외 처리 (몬스터가 하나의 플레이어만 따라가지 않도록 바꾸기)
+        // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경
+        if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
+        {
+            idleTimer += Time.deltaTime;
+            if (idleTimer >= idleTimeBeforePatrol)
+            {
+                currentState = State.Patrol;
+                GoToNextPatrolPoint();
+                idleTimer = 0f; // 타이머 초기화
+                return;
+            }
+        }
+        else
+        {
+            idleTimer = 0f; // 몬스터가 움직이면 idleTimer 초기화
+        }
+        Debug.Log(currentState);
         // 현재 상태에 따라 적절한 행동 수행
         switch (currentState)
         {
+            case State.Idle:
+                Idle();
+                break;
             case State.Patrol:
                 Patrol();
                 break;
@@ -62,12 +110,41 @@ public class MonsterAI : MonoBehaviour
         UpdateDetectedPlayers();
     }
 
-    private void Patrol()
+    private void Idle()
     {
+        // 대기 타이머를 갱신
+        if (waitTimer < 0)
+        {
+            waitTimer = waitTimeBeforePatrol;
+        }
+        // 대기 타이머 업데이트
+        waitTimer -= Time.deltaTime;
+
+        // 대기 중 플레이어를 감지하면 추적 상태로 전환
+        if (detectedPlayers.Count > 0)
+        {
+            currentState = State.Chase;
+            return;
+        }
+
+        // 대기 시간이 끝나면 순찰 시작
+        if (waitTimer <= 0f)
+        {
+            currentState = State.Patrol;
+            GoToNextPatrolPoint();
+        }
+    }
+
+    private void Patrol() // 순찰모드
+    {
+        if (agent.speed == chaseSpeed)
+        {
+            agent.speed = moveSpeed;
+        }
         // 순찰 상태: 다음 순찰 지점으로 이동
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            GoToNextPatrolPoint();
+            Idle(); // 순찰이 끝나면 잠시 대기모드로 전환
         }
 
         // 플레이어를 감지하면 추적 상태로 전환
@@ -77,8 +154,12 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void Chase()
+    private void Chase() // 추적 모드
     {
+        if (agent.speed == moveSpeed)
+        {
+            agent.speed = chaseSpeed;
+        }
         // 가장 가까운 플레이어를 추적
         Transform closestPlayer = GetClosestPlayer();
         if (closestPlayer != null)
@@ -94,7 +175,7 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void Search()
+    private void Search() // 수색 모드
     {
         // 마지막으로 본 위치로 이동하여 수색
         agent.SetDestination(lastKnownPosition);
@@ -150,9 +231,8 @@ public class MonsterAI : MonoBehaviour
             Transform playerTransform = playerObject.transform;
 
             // 플레이어가 감지 범위 내에 있는지 확인
-            if (CanSeePlayer(playerTransform) || CanHearPlayer(playerTransform))
+            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform))
             {
-                // 감지된 플레이어를 리스트에 추가
                 if (!detectedPlayers.Contains(playerTransform))
                 {
                     detectedPlayers.Add(playerTransform);
@@ -170,6 +250,7 @@ public class MonsterAI : MonoBehaviour
             }
         }
     }
+
 
     private bool CanSeePlayer(Transform player)
     {
@@ -198,15 +279,20 @@ public class MonsterAI : MonoBehaviour
         }
         return false;  // 시야 내에 없으면 false 반환
     }
-
-    private bool CanHearPlayer(Transform player)
+    private bool CanHearSoundSource(Transform player)
     {
-        // 플레이어가 청각 범위 내에 있는지 확인
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        // 플레이어가 소리를 내는 중인지 확인
-        Player playerSound = player.GetComponent<Player>();
-        return distanceToPlayer <= hearingRange && playerSound != null && playerSound.audioSource.isPlaying;
+        // 모든 SoundSource를 가져오고, 각 SoundSource의 데시벨을 계산하여 몬스터가 감지할 수 있는 범위 내에 있는지 확인
+        SoundSource[] soundSources = FindObjectsOfType<SoundSource>();
+        foreach (SoundSource soundSource in soundSources)
+        {
+            float decibel = soundSource.GetDecibelAtDistance(transform.position);
+            // 데시벨이 감지 가능한 최소 데시벨 값 이상이고, 소리의 범위 내에 있어야 감지
+            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, player.position) <= soundSource.range)
+            {
+                return true; // 소리가 감지됨
+            }
+        }
+        return false; // 감지되지 않음
     }
 
     private void OnDrawGizmosSelected()
@@ -242,5 +328,8 @@ public class MonsterAI : MonoBehaviour
 
             Gizmos.DrawLine(currentPoint, nextPoint); // 부채꼴의 각도를 따라 끝 부분을 연결
         }
+        // 청각 범위 (원형) 그리기
+        Gizmos.color = Color.blue; // 청각 범위는 파란색으로 표시
+        Gizmos.DrawWireSphere(origin, hearingRange);
     }
 }
