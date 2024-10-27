@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 using System;
 using TMPro;
 
-public class MainSettingScreen : UI_Button
+public class MainSettingScreen : UI_Popup
 {
     enum SettingGameObjects
     {
