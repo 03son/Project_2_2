@@ -67,7 +67,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        room_Player = GameObject.Find("room_Player").transform;
         roomSetting = BG.GetComponent<RoomManager>();
     }
 
