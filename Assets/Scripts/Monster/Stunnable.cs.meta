@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Monster/Stunnable.cs.meta
+guid: fb898fa529472be4581c2c9b7ff92439
+========
+guid: e9100b9da97ec114abda627203b20cf1
+>>>>>>>> Development_branch:Assets/Scripts/Managers/PhotonManager.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
