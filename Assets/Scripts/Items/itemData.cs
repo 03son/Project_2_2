@@ -16,6 +16,7 @@ public class itemData : ScriptableObject
     [Header("Info")]
     public string ItemName;
     public string Description;
+    public int spawnCount;
     public ItemType type;
     public Sprite icon;
     public GameObject dropPerfab;
