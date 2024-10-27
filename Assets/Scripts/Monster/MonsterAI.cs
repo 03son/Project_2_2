@@ -88,7 +88,7 @@ public class MonsterAI : MonoBehaviour
         {
             idleTimer = 0f; // 몬스터가 움직이면 idleTimer 초기화
         }
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         // 현재 상태에 따라 적절한 행동 수행
         switch (currentState)
         {

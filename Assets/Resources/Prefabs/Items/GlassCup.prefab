@@ -134,3 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae53c85e93e8f84cb94710c968d2d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  glassCupRigidbody: {fileID: 0}
+  glassCupCollider: {fileID: 0}
+  breakSound: {fileID: 0}
+  throwForce: 10
+  upwardForce: 5
+  playerCamera: {fileID: 0}

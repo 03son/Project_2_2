@@ -132,3 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efaeb6d39eb01664fb77eefdea68cab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireKey: 323
+  range: 10
+  stunDuration: 2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0

@@ -120,7 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: ca55ae0e204d608499c971d394c06d68, type: 2}
-  item_function: {fileID: 0}
 --- !u!114 &4168613621727179680
 MonoBehaviour:
   m_ObjectHideFlags: 0
