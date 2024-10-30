@@ -26,7 +26,9 @@ public class MultiPlayList : UI_Popup
     }
     enum Buttons
     {
-        CreateRoom
+        CreateRoom,
+        BackButton
+        
     }
     public override void Init()
     {
@@ -35,6 +37,7 @@ public class MultiPlayList : UI_Popup
         Bind<GameObject>(typeof(Objects));
 
         GetButton((int)Buttons.CreateRoom).gameObject.AddUIEvent(OnClickCreateRoomButton);
+        GetButton((int)Buttons.BackButton).gameObject.AddUIEvent(BackButton);
 
         GetObject((int)Objects.JoinCreateRoom).gameObject.AddUIEvent(Oncilck_Join_Createroom);
 
@@ -85,6 +88,18 @@ public class MultiPlayList : UI_Popup
     }
 
     void Go_Main()
+    {
+        //메인화면 버튼 4종 활성화
+        GameObject.Find("UI_Button").transform.GetChild(1).gameObject.SetActive(true);
+
+        //멀티 리스트 비활성화
+        gameObject.SetActive(false);
+        //ClosePopupUI();
+
+        //서버연결 끊기
+        PhotonManager.instance.DisConnentSever();
+    }
+    void BackButton(PointerEventData button)
     {
         //메인화면 버튼 4종 활성화
         GameObject.Find("UI_Button").transform.GetChild(1).gameObject.SetActive(true);

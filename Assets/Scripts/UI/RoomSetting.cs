@@ -32,10 +32,17 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         roomName.text = $"방 이름: {PhotonNetwork.CurrentRoom.Name}";
     }
+
     public void PlayerEnteredRoom() //플레이어 입장
     {
-        UpdatePlayerList();
+        StartCoroutine(playerList());
 
+    }
+
+    IEnumerator playerList()
+    {
+        yield return new WaitForSecondsRealtime(0.01f);
+        UpdatePlayerList();
     }
 
    public void UpdatePlayerList() //플레이어 리스트 업데이트
@@ -45,7 +52,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
             playerNickName[i] = null;
             playerActorNumber[i] = 0;
 
-            player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdatePlayerInfo("X");
+            player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdatePlayerInfo("X",0);
+
+            //준비 해제
+            player_RoomInfo[i].GetComponent<Player_RoomInfo>().isReady = false;
+            player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdateReadyUI();
         }
 
         int _index = 0;
@@ -54,20 +65,72 @@ public class RoomManager : MonoBehaviourPunCallbacks
             playerNickName[_index] = player.Value.NickName;
             playerActorNumber[_index] = player.Key;
 
-            player_RoomInfo[_index].GetComponent<Player_RoomInfo>().UpdatePlayerInfo(player.Value.NickName);
+            player_RoomInfo[_index].GetComponent<Player_RoomInfo>().UpdatePlayerInfo(player.Value.NickName, player.Key);
 
+            if (player.Value.CustomProperties.ContainsKey("isReady"))
+            {
+                player.Value.CustomProperties.TryGetValue("isReady", out object isReadyValue);
+
+                bool _isReady = (bool)isReadyValue;
+                player_RoomInfo[_index].GetComponent<Player_RoomInfo>().isReady = _isReady;
+                player_RoomInfo[_index].GetComponent<Player_RoomInfo>().UpdateReadyUI();
+
+                Debug.Log($"{player.Value.NickName}__{player.Value.ActorNumber}__{isReadyValue}");
+            }
             _index++;
         }
+
     }
 
     public void localPlayerLeftRoom()//플레이어가 나갈 때
     {
         UpdatePlayerList();
+
     }
 
-
-    public override void OnRoomPropertiesUpdate(HashTable propertiesThatChanged)
+    void GameStart()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            //4명 모두가 준비 상태이면 인게임으로 입장
+            if (
+                player_RoomInfo[0].GetComponent<Player_RoomInfo>().isReady &&
+                player_RoomInfo[1].GetComponent<Player_RoomInfo>().isReady &&
+                player_RoomInfo[2].GetComponent<Player_RoomInfo>().isReady &&
+                player_RoomInfo[3].GetComponent<Player_RoomInfo>().isReady
+                )
+            {
+                LoadingSceneManager.InGameLoading("1",1); //멀티용으로 수정 예정
+                //PhotonNetwork.LoadLevel("Loading_Screen");
+                Debug.Log("게임 시작");
+                return;
+            }
+        }
+    }
 
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, HashTable changedProps)
+    {
+        if (changedProps.ContainsKey("isReady"))
+        {
+            bool _isReady = (bool)changedProps["isReady"];
+
+            Debug.Log($"{targetPlayer.NickName}의 준비 상태: {_isReady}");
+
+            //프로퍼티가 바뀐 플레이어의 액터넘버를 비교해서 찾아서 토글
+            foreach(var player in PhotonNetwork.CurrentRoom.Players)
+            {
+                for (int index = 0; index<4; index++)
+                {
+                    int Number = player_RoomInfo[index].GetComponent<Player_RoomInfo>().Actor_num;
+                    if (targetPlayer.ActorNumber == Number)
+                    {
+                        player_RoomInfo[index].GetComponent<Player_RoomInfo>().isReady = _isReady;
+                        player_RoomInfo[index].GetComponent<Player_RoomInfo>().UpdateReadyUI();
+                        break;
+                    }
+                }
+            }
+            GameStart();
+        }
     }
 }

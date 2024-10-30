@@ -113,7 +113,7 @@ public class UI_Button : UI_Popup
         {
             //싱글 버튼
             case Buttons.SingleButton:
-                Debug.Log((string)button.pointerEnter.name);
+                StartSingleGame();
                 break;
 
             // 멀티 버튼
@@ -133,6 +133,11 @@ public class UI_Button : UI_Popup
         }
     }
 
+    void StartSingleGame()
+    {
+        Debug.Log("싱글 시작");
+        LoadingSceneManager.InGameLoading("1",1);
+    }
     //멀티 방 리스트 띄우기
     void OpenMultiRoomList()
     {

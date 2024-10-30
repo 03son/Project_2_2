@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Player_Equip : MonoBehaviour
 {

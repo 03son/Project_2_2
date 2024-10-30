@@ -4,25 +4,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LoadingSceneManager : Singleton<LoadingSceneManager>
+public class LoadingSceneManager : MonoBehaviour
 {
-    static LoadingSceneManager loa;
+    public static LoadingSceneManager loa;
 
-    public Image LoadingBar;
-    public Image background_LoadingImage;
+    [SerializeField] Slider LoadingBar;
+    [SerializeField] Image background_LoadingImage;
 
-    public Sprite[] loadingImages;
-    public GameObject loadingBarObj;
+    [SerializeField] Sprite[] loadingImages;
+    [SerializeField] GameObject loadingBarObj;
 
-    public static void InGameLoading(string MapName, int MapNum)
+    private void Awake()
+    {
+        if (loa == null)
+        {
+            loa = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+            Destroy(this.gameObject);
+    }
+    private void Start()
+    {
+        //로딩 캔버스 비활성화
+        loadingBarObj.SetActive(false);
+    }
+    public static void InGameLoading(string MapName, int ImageNumber)
     {
         loa.StartCoroutine(acc_LoadScene(MapName));
-        loa.loadingImage(MapNum - 1);
+        loa.loadingImage(ImageNumber - 1);
     }
 
     static IEnumerator acc_LoadScene(string MapName)
     {
-        SceneManager.LoadScene("InGameMapLoading", LoadSceneMode.Single);
 
         if (!loa.loadingBarObj.activeSelf)
         {
@@ -41,13 +55,13 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
 
             if (op.progress < 0.1f)
             {
-                loa.LoadingBar.fillAmount = (op.progress) * 1 / 100;
+                loa.LoadingBar.value = (op.progress) * 1 / 100;
             }
             else
             {
                 timer += Time.unscaledDeltaTime;
-                loa.LoadingBar.fillAmount = Mathf.Lerp(0.1f, 1f, timer);
-                if (loa.LoadingBar.fillAmount >= 1f)
+                loa.LoadingBar.value = Mathf.Lerp(0.1f, 1f, timer);
+                if (loa.LoadingBar.value >= 1f)
                 {
                     op.allowSceneActivation = true;
 
