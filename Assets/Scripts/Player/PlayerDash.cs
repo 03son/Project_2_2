@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerDash : MonoBehaviour
@@ -7,14 +8,19 @@ public class PlayerDash : MonoBehaviour
     private CharacterController controller;
     private Transform cameraTransform;
 
+    PhotonView pv;
     void Start()
     {
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
+        pv = GetComponent<PhotonView>();
     }
 
     void Update()
     {
+        if (!pv.IsMine)
+            return;
+
         // 대쉬 기능 (왼쪽 Shift 키를 누르고 있는 동안 작동)
         if (Input.GetKey(KeyCode.LeftShift))
         {

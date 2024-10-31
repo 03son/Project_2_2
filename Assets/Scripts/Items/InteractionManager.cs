@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using Photon.Pun;
 
 public interface IInteractable
 {
@@ -24,9 +25,15 @@ public class InteractionManager : MonoBehaviour
     public TextMeshProUGUI promptText;
     new Camera camera;
 
+    PhotonView pv;
+
+    Inventory inven;
+
     void Start()
     {
         camera =  Camera.main;
+        pv = GetComponent<PhotonView>();
+        inven = GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -74,10 +81,10 @@ public class InteractionManager : MonoBehaviour
             curInteractable.OnInteract();
 
             //빈곳 번호 찾기
-            for (int i = 0; i < Inventory.instance.slots.Length; i++)
+            for (int i = 0; i < inven.slots.Length; i++)
             {
-                if (Inventory.instance.slots[i].item != null)
-                    GetComponent<Player_Equip>().numderKeySelectSlot(i+1);
+                if (inven.slots[i].item != null)
+                    GetComponent<Player_Equip>().numderKeySelectSlot(i + 1);
             }
 
             curInteractGameobject = null;

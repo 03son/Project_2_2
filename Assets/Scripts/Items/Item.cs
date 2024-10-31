@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
             transform.localRotation = Quaternion.identity;
 
             // 손전등 획득 처리
-            FlashlightController flashlightController = GetComponent<FlashlightController>();
+            FlashlighFunction flashlightController = GetComponent<FlashlighFunction>();
             if (flashlightController != null)
             {
                 flashlightController.enabled = true; // 손전등 사용 가능하도록 활성화

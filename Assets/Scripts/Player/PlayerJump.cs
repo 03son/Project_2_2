@@ -1,4 +1,5 @@
 
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,30 +15,36 @@ public class PlayerJump : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;
 
+    PhotonView pv;
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        pv = GetComponent<PhotonView>();
+
     }
 
     void Update()
     {
-        // 중력 처리 및 점프
-        if (controller.isGrounded)
+        if (pv.IsMine)
         {
-            velocity.y = -2f; // 바닥에 있을 때 약간의 중력만 적용
-
-            if (Input.GetButtonDown("Jump"))
+            // 중력 처리 및 점프
+            if (controller.isGrounded)
             {
-                velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-            }
-        }
-        else
-        {
-            velocity.y += gravity * Time.deltaTime;
-        }
+                velocity.y = -2f; // 바닥에 있을 때 약간의 중력만 적용
 
-        // 캐릭터 이동 처리
-        controller.Move(velocity * Time.deltaTime);
+                if (Input.GetButtonDown("Jump"))
+                {
+                    velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+                }
+            }
+            else
+            {
+                velocity.y += gravity * Time.deltaTime;
+            }
+
+            // 캐릭터 이동 처리
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
 }
 

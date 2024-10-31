@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,140 +22,172 @@ public class Player_Equip : MonoBehaviour
 
     int selectIndex = 0;
 
-
+    PhotonView pv;
     void Start()
     {
-        setnumberKey();
-        invenSlot[0].GetComponent<ItemSlotUI>().equipped = true;
+        pv = GetComponent<PhotonView>();
 
-        inventory = GetComponent<Inventory>();
+        if (pv.IsMine)
+        {
+            setnumberKey();
+            invenSlot[0].GetComponent<ItemSlotUI>().equipped = true;
 
-        equipItem = GameObject.Find("EquipItem");
+            inventory = GetComponent<Inventory>();
+
+            equipItem = GameObject.Find("EquipItem");
+        }
     }
 
     void Update()
     {
-        numberKey();
-        mouseWheelScroll();
-        EquipFunction();
+        if (pv.IsMine)
+        {
+            numberKey();
+            mouseWheelScroll();
+            EquipFunction();
+        }
     }
     public void selectSlot(int index)
     {
-        if (index != 0 && index <= 6)
+        if (pv.IsMine)
         {
-            if (Input.GetKeyDown((KeyCode)(48 + index)))
+            if (index != 0 && index <= 6)
             {
-                invenUtil(index);
-                return;
-            }
+                if (Input.GetKeyDown((KeyCode)(48 + index)))
+                {
+                    invenUtil(index);
+                    return;
+                }
 
-            invenUtil(index);
+                invenUtil(index);
+            }
         }
     }
     public void numderKeySelectSlot(int index)
     {
-        for (int i = 0; i < Inventory.instance.slots.Length; i++)
+        if (pv.IsMine)
         {
-            if (Inventory.instance.slots[i].item == null)
-             {
-                 invenUtil(index);
-             }
+            for (int i = 0; i < Inventory.instance.slots.Length; i++)
+            {
+                if (Inventory.instance.slots[i].item == null)
+                {
+                    invenUtil(index);
+                }
+            }
         }
     }
     void setEquipItem(string item)
     {
-         if (Item != null)
-             Destroy(Item);
+        if (pv.IsMine)
+        {
+            if (Item != null)
+                Destroy(Item);
 
-         Item = resoure.Instantiate($"Items/{item}");
-         Item.layer = LayerMask.NameToLayer("Equip");
-         Item.transform.SetParent(equipItem.transform);
+            Item = resoure.Instantiate($"Items/{item}");
+            Item.layer = LayerMask.NameToLayer("Equip");
+            Item.transform.SetParent(equipItem.transform);
 
-         Item.transform.localPosition = Vector3.zero;
-         Item.transform.localRotation = Quaternion.identity;  
+            Item.transform.localPosition = Vector3.zero;
+            Item.transform.localRotation = Quaternion.identity;
+        }
     }
     void numberKey()
     {
-        //등록된 키코드가 눌려있는지 확인
-        foreach (KeyValuePair<KeyCode, System.Action> entry in keyCodeDic)
+        if (pv.IsMine)
         {
-            //Check if the keycode is pressed
-            if (Input.GetKeyDown(entry.Key))
+            //등록된 키코드가 눌려있는지 확인
+            foreach (KeyValuePair<KeyCode, System.Action> entry in keyCodeDic)
             {
-                //Check if the key pressed exist in the dictionary key
-                if (keyCodeDic.ContainsKey(entry.Key))
+                //Check if the keycode is pressed
+                if (Input.GetKeyDown(entry.Key))
                 {
-                    //Call the function stored in the Dictionary's value
-                    keyCodeDic[entry.Key].Invoke();
+                    //Check if the key pressed exist in the dictionary key
+                    if (keyCodeDic.ContainsKey(entry.Key))
+                    {
+                        //Call the function stored in the Dictionary's value
+                        keyCodeDic[entry.Key].Invoke();
+                    }
                 }
             }
         }
     }
     void setnumberKey()
     {
-        //호출할 키와 기능이 일치하도록 키코드 등록
-        const int alphaStart = 48;
-        const int alphaEnd = 54;
-
-        int paramValue = 0;
-        for (int i = alphaStart; i <= alphaEnd; i++)
+        if (pv.IsMine)
         {
-            KeyCode tempKeyCode = (KeyCode)i;
+            //호출할 키와 기능이 일치하도록 키코드 등록
+            const int alphaStart = 48;
+            const int alphaEnd = 54;
 
-            //키 등록
-            int index = paramValue;
-            keyCodeDic.Add(tempKeyCode, () => selectSlot(index));
-            paramValue++;
+            int paramValue = 0;
+            for (int i = alphaStart; i <= alphaEnd; i++)
+            {
+                KeyCode tempKeyCode = (KeyCode)i;
+
+                //키 등록
+                int index = paramValue;
+                keyCodeDic.Add(tempKeyCode, () => selectSlot(index));
+                paramValue++;
+            }
         }
     }
 
     void invenUtil(int index)
     {
-        //Outline 다 끄고 선택한 번호의 슬롯만 켜기
-        for (int i = 0; i < invenSlot.Length; i++)
-            invenSlot[i].GetComponent<ItemSlotUI>().equipped = false;
-
-        if (!invenSlot[index - 1].GetComponent<ItemSlotUI>().equipped)
+        if (pv.IsMine)
         {
-            invenSlot[index - 1].GetComponent<ItemSlotUI>().equipped = true;
-            Inventory.instance.selectedItemIndex = index-1;
+            //Outline 다 끄고 선택한 번호의 슬롯만 켜기
+            for (int i = 0; i < invenSlot.Length; i++)
+                invenSlot[i].GetComponent<ItemSlotUI>().equipped = false;
 
-            //저장 된 아이템 있으면 손에 아이템 들기
-            if (inventory.slots[index - 1].item != null)
-                setEquipItem(inventory.slots[index - 1].item.name);
-            else if (Item != null)
-                Destroy(Item);
+            if (!invenSlot[index - 1].GetComponent<ItemSlotUI>().equipped)
+            {
+                invenSlot[index - 1].GetComponent<ItemSlotUI>().equipped = true;
+                Inventory.instance.selectedItemIndex = index - 1;
+
+                //저장 된 아이템 있으면 손에 아이템 들기
+                if (inventory.slots[index - 1].item != null)
+                    setEquipItem(inventory.slots[index - 1].item.name);
+                else if (Item != null)
+                    Destroy(Item);
+            }
         }
     }
 
     void EquipFunction()
     {
-        if (Input.GetMouseButtonDown(0) && Item != null)
+        if (pv.IsMine)
         {
-            Item.GetComponent<IItemFunction>().Function();
+            if (Input.GetMouseButtonDown(0) && Item != null)
+            {
+                Item.GetComponent<IItemFunction>().Function();
+            }
         }
     }
 
     void mouseWheelScroll()
     {
-        //마우스 휠 스크롤 해서 아이템 선택 바꾸기
-        float wheelInput = Input.GetAxis("Mouse ScrollWheel");
+        if (pv.IsMine)
+        {
+            //마우스 휠 스크롤 해서 아이템 선택 바꾸기
+            float wheelInput = Input.GetAxis("Mouse ScrollWheel");
 
-        if (wheelInput < 0)
-        {
-            selectIndex += 1;
-            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
-            Inventory.instance.selectedItemIndex = selectIndex;
-            selectSlot(selectIndex);
-            return;
-        }
-        else if (wheelInput > 0)
-        {
-            selectIndex -= 1;
-            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
-            Inventory.instance.selectedItemIndex = selectIndex;
-            selectSlot(selectIndex);
-            return ;
+            if (wheelInput < 0)
+            {
+                selectIndex += 1;
+                selectIndex = Mathf.Clamp(selectIndex, 0, 6);
+                Inventory.instance.selectedItemIndex = selectIndex;
+                selectSlot(selectIndex);
+                return;
+            }
+            else if (wheelInput > 0)
+            {
+                selectIndex -= 1;
+                selectIndex = Mathf.Clamp(selectIndex, 0, 6);
+                Inventory.instance.selectedItemIndex = selectIndex;
+                selectSlot(selectIndex);
+                return;
+            }
         }
     }
 }

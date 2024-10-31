@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,44 @@ public class CameraRot : MonoBehaviour
     [SerializeField] private float mouseSpeed = 8f; // 회전 속도
     [SerializeField] private Transform playerTransform; // 플레이어의 Transform
 
+    [SerializeField] GameObject Player;//플레이어
+
     private float mouseX = 0f; // 좌우 회전 값
     private float mouseY = 0f; // 위아래 회전 값
     [SerializeField] private Vector3 offset; // 카메라와 플레이어 사이의 간격
 
+    PhotonView pv;
+
+    public GameObject FollowCam;
+    public GameObject EquipCamera;
+
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서를 고정
+        pv = Player.GetComponent<PhotonView>();
+
+        if (pv.IsMine)
+        {
+            GetComponent<AudioListener>().enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            GetComponent<AudioListener>().enabled = false;
+            Destroy(this.gameObject);
+            Destroy(FollowCam);
+            Destroy(EquipCamera);
+        }
     }
 
     void Update()
+    {
+        if (pv.IsMine)
+        {
+            cameraPos();
+        }
+    }
+
+    void cameraPos()
     {
         // 마우스 입력을 받아 카메라 회전 처리
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;

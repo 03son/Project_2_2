@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Photon.Pun.Demo.PunBasics;
 using System.Reflection;
 using static UnityEngine.Rendering.VolumeComponent;
+using static RoomManager;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -33,10 +34,18 @@ public class RoomManager : MonoBehaviourPunCallbacks
         roomName.text = $"방 이름: {PhotonNetwork.CurrentRoom.Name}";
     }
 
+    public enum AniMalName
+    { 
+        랜덤,
+        늑대,
+        토끼,
+        라쿤,
+        고양이
+    }
+
     public void PlayerEnteredRoom() //플레이어 입장
     {
         StartCoroutine(playerList());
-
     }
 
     IEnumerator playerList()
@@ -52,20 +61,27 @@ public class RoomManager : MonoBehaviourPunCallbacks
             playerNickName[i] = null;
             playerActorNumber[i] = 0;
 
-            player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdatePlayerInfo("X",0);
+            player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdatePlayerInfo("",0,""); //닉네임, 액터넘버, 동물이름
 
             //준비 해제
             player_RoomInfo[i].GetComponent<Player_RoomInfo>().isReady = false;
             player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdateReadyUI();
         }
 
+        string animalName = AniMalName.랜덤.ToString();
         int _index = 0;
         foreach (var player in PhotonNetwork.CurrentRoom.Players)//접속한 플레이어 표시
         {
             playerNickName[_index] = player.Value.NickName;
             playerActorNumber[_index] = player.Key;
 
-            player_RoomInfo[_index].GetComponent<Player_RoomInfo>().UpdatePlayerInfo(player.Value.NickName, player.Key);
+            if (player.Value.CustomProperties.ContainsKey("animalName"))
+            {
+                player.Value.CustomProperties.TryGetValue("animalName", out object _animalName);
+                animalName = (string)_animalName;
+            }
+
+            player_RoomInfo[_index].GetComponent<Player_RoomInfo>().UpdatePlayerInfo(player.Value.NickName, player.Key, animalName);
 
             if (player.Value.CustomProperties.ContainsKey("isReady"))
             {
@@ -90,21 +106,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void GameStart()
     {
-        if (PhotonNetwork.IsMasterClient)
+        //4명 모두가 준비 상태이면 인게임으로 입장
+        if (
+            player_RoomInfo[0].GetComponent<Player_RoomInfo>().isReady &&
+            player_RoomInfo[1].GetComponent<Player_RoomInfo>().isReady &&
+            player_RoomInfo[2].GetComponent<Player_RoomInfo>().isReady &&
+            player_RoomInfo[3].GetComponent<Player_RoomInfo>().isReady
+            )
         {
-            //4명 모두가 준비 상태이면 인게임으로 입장
-            if (
-                player_RoomInfo[0].GetComponent<Player_RoomInfo>().isReady &&
-                player_RoomInfo[1].GetComponent<Player_RoomInfo>().isReady &&
-                player_RoomInfo[2].GetComponent<Player_RoomInfo>().isReady &&
-                player_RoomInfo[3].GetComponent<Player_RoomInfo>().isReady
-                )
-            {
-                LoadingSceneManager.InGameLoading("1",1); //멀티용으로 수정 예정
-                //PhotonNetwork.LoadLevel("Loading_Screen");
-                Debug.Log("게임 시작");
-                return;
-            }
+            LoadingSceneManager.InGameLoading("1", 1);
+            return;
         }
     }
 
