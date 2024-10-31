@@ -1,12 +1,19 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : Singleton<GameManager>
 {
+    HashTable playerCP;
+
     void Awake()
     {
+        playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+
         CreatePlayer();
     }
 
@@ -16,7 +23,6 @@ public class GameManager : Singleton<GameManager>
         Transform[] points =
         GameObject.Find("PlayerSpawnPointGroup").GetComponentsInChildren<Transform>();
         int idx = Random.Range(0, points.Length);
-        // 네트워크상에 캐릭터 생성
         PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
     }
 }

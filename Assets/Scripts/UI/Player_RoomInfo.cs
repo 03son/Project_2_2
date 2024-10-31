@@ -95,7 +95,7 @@ public class Player_RoomInfo : UI_Popup
     }
     void UpdatePlayerReayState(bool ready)
     {
-        playerCP = new HashTable() { {"isReady",ready } };
+        playerCP = new HashTable() { { "isReady", ready } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
     }
    public void UpdateReadyUI()
