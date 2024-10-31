@@ -29,50 +29,59 @@ public class Inventory : MonoBehaviour
     public PhotonView pv;
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+            Destroy(this.GetComponent<Inventory>());
 
         pv = GetComponent<PhotonView>();
+
+        ConnectUi_itemSlot();
     }
 
     private void Start()
     {
-        if (pv.IsMine)
+        slots = new ItemSlot[ui_itemSlot.Length];
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            slots = new ItemSlot[ui_itemSlot.Length];
-
-            for (int i = 0; i < slots.Length; i++)
-            {
-                //UI 슬롯 초기화 하기
-                slots[i] = new ItemSlot();
-                //ui_itemSlot[i].index = i;
-                ui_itemSlot[i].Clear();
-            }
-
-            ClearSelectItemWindows();
+            //UI 슬롯 초기화 하기
+            slots[i] = new ItemSlot();
+            //ui_itemSlot[i].index = i;
+            ui_itemSlot[i].Clear();
         }
+
+        dropPos = GameObject.Find("ItemDropPos").gameObject.GetComponent<Transform>();
+
+        ClearSelectItemWindows();
+    }
+    void ConnectUi_itemSlot()
+    {
+        ui_itemSlot[0] = GameObject.Find("ItemSlot").gameObject.GetComponent<ItemSlotUI>();
+        ui_itemSlot[1] = GameObject.Find("ItemSlot (1)").gameObject.GetComponent<ItemSlotUI>();
+        ui_itemSlot[2] = GameObject.Find("ItemSlot (2)").gameObject.GetComponent<ItemSlotUI>();
+        ui_itemSlot[3] = GameObject.Find("ItemSlot (3)").gameObject.GetComponent<ItemSlotUI>();
+        ui_itemSlot[4] = GameObject.Find("ItemSlot (4)").gameObject.GetComponent<ItemSlotUI>();
+        ui_itemSlot[5] = GameObject.Find("ItemSlot (5)").gameObject.GetComponent<ItemSlotUI>();
     }
     public void Additem(itemData item)
     {
-        if (pv.IsMine)
-        {
-            ItemSlot emptyslot = GetEmptySlot();
+        ItemSlot emptyslot = GetEmptySlot();
 
-            if (emptyslot != null)
-            {
-                emptyslot.item = item;
-                emptyslot.quantity = 1;
-                UpdateUI();
-                return;
-            }
-            //인벤토리에 빈칸이 없을 경우 못 먹음
+        if (emptyslot != null)
+        {
+            emptyslot.item = item;
+            emptyslot.quantity = 1;
+            UpdateUI();
             return;
         }
+        //인벤토리에 빈칸이 없을 경우 못 먹음
+        return;
     }
     ItemSlot GetEmptySlot()
     {
-        if (!pv.IsMine)
-            return null;
-
         //빈 슬롯 찾기
         for (int i = 0; i < slots.Length; i++)
         {
@@ -84,9 +93,6 @@ public class Inventory : MonoBehaviour
 
     void UpdateUI()
     {
-        if (!pv.IsMine)
-            return;
-
         //UI의 슬롯 최신화하기
         for (int i = 0; i < slots.Length; i++)
         {
@@ -99,9 +105,6 @@ public class Inventory : MonoBehaviour
 
     void UnEquip(int index)
     {
-        if (!pv.IsMine)
-            return;
-
         //아이템 장착해제
         if (GetComponent<Player_Equip>().Item != null)
              Destroy(GetComponent<Player_Equip>().Item);
@@ -109,9 +112,6 @@ public class Inventory : MonoBehaviour
 
     void RemoveSelectedItem()
     {
-        if (!pv.IsMine)
-            return;
-
         if (slots[selectedItemIndex].item != null)
         {
             //만약 버린 아이템이 장착 중인 아이템일 경우 해제
@@ -129,18 +129,12 @@ public class Inventory : MonoBehaviour
     }
     void ClearSelectItemWindows()
     {
-        if (!pv.IsMine)
-            return;
-
         //아이템 초기화
         selectedItem = null;
        // selectedItemName.text = string.Empty;
     }
     void ThrowItem(itemData item)
     {
-        if (!pv.IsMine)
-            return;
-
         //아이템 버리기
         //버려질 때, 랜덤한 회전값을 가진 채 버리기
         Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
@@ -148,12 +142,9 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (pv.IsMine)
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                RemoveSelectedItem();
-            }
+            RemoveSelectedItem();
         }
     }
 }

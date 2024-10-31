@@ -27,18 +27,26 @@ public class InteractionManager : MonoBehaviour
 
     PhotonView pv;
 
-    Inventory inven;
 
     void Start()
     {
-        camera =  Camera.main;
         pv = GetComponent<PhotonView>();
-        inven = GetComponent<Inventory>();
+
+        if (!pv.IsMine)
+            return;
+
+        promptText = GameObject.Find("prompt_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        promptText.gameObject.SetActive(false);
+
+        camera =  Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!pv.IsMine)
+            return;
+
         //마지막으로 체크한 시간이 checkRate를 넘겼다면
         if (Time.time - lastCheckTime > checkRate)
         { 
@@ -74,16 +82,16 @@ public class InteractionManager : MonoBehaviour
 
     public void OnInteractInput()
     {
-        //E키를 누른 시점에서 현재 바라보는 curInteractable 오브젝트가 있다면
+        //F키를 누른 시점에서 현재 바라보는 curInteractable 오브젝트가 있다면
         if (Input.GetKeyDown(KeyCode.F) && curInteractable != null)
         {
             //아이템을 흭득하면 아이템과 상호작용을 진행하고 초기화
             curInteractable.OnInteract();
 
             //빈곳 번호 찾기
-            for (int i = 0; i < inven.slots.Length; i++)
+            for (int i = 0; i < GetComponent<Inventory>().slots.Length; i++)
             {
-                if (inven.slots[i].item != null)
+                if (GetComponent<Inventory>().slots[i].item != null)
                     GetComponent<Player_Equip>().numderKeySelectSlot(i + 1);
             }
 

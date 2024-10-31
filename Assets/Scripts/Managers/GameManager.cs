@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
         // 출현 위치 정보를 배열에저장
         Transform[] points =
         GameObject.Find("PlayerSpawnPointGroup").GetComponentsInChildren<Transform>();
-        int idx = Random.Range(1, points.Length);
+        int idx = Random.Range(0, points.Length);
         // 네트워크상에 캐릭터 생성
         PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
     }

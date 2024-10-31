@@ -36,7 +36,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public enum AniMalName
     { 
-        랜덤,
+        무작위,
         늑대,
         토끼,
         라쿤,
@@ -68,7 +68,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdateReadyUI();
         }
 
-        string animalName = AniMalName.랜덤.ToString();
+        string animalName = AniMalName.무작위.ToString();
         int _index = 0;
         foreach (var player in PhotonNetwork.CurrentRoom.Players)//접속한 플레이어 표시
         {

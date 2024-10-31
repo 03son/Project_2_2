@@ -101,6 +101,9 @@ public class GlassCupFunction : ItemFunction, IItemFunction
         {
             Debug.Log("유리컵 던지기");
 
+            //던지기 직전 유리컵의 레이어를 바꿔줌(안 바꾸면 1인칭에서 카메라에서 날아가져서 이상해짐)
+            this.gameObject.layer = 3;
+
             // 던지기 전에 Interpolate 및 Continuous 설정
             glassCupRigidbody.isKinematic = false;
             glassCupRigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;

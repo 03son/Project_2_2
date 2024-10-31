@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class CameraRot : MonoBehaviour
     [SerializeField] private float mouseSpeed = 8f; // 회전 속도
     [SerializeField] private Transform playerTransform; // 플레이어의 Transform
 
-    [SerializeField] GameObject Player;//플레이어
+    [SerializeField] GameObject player;//플레이어
 
     private float mouseX = 0f; // 좌우 회전 값
     private float mouseY = 0f; // 위아래 회전 값
@@ -19,9 +20,15 @@ public class CameraRot : MonoBehaviour
     public GameObject FollowCam;
     public GameObject EquipCamera;
 
+    void Awake()
+    {
+
+    }
     void Start()
     {
-        pv = Player.GetComponent<PhotonView>();
+        player = this.gameObject.GetComponent<Transform>().parent.gameObject;
+        playerTransform = player.transform;
+        pv = player.GetComponent<PhotonView>();
 
         if (pv.IsMine)
         {
@@ -31,9 +38,9 @@ public class CameraRot : MonoBehaviour
         else
         {
             GetComponent<AudioListener>().enabled = false;
-            Destroy(this.gameObject);
             Destroy(FollowCam);
             Destroy(EquipCamera);
+            Destroy(this.gameObject);
         }
     }
 

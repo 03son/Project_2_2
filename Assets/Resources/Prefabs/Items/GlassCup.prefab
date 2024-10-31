@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glassCupRigidbody: {fileID: 0}
   glassCupCollider: {fileID: 0}
-  breakSound: {fileID: 0}
+  breakSound: {fileID: 8300000, guid: 52ffbccca1224d143a6bbbca626ae566, type: 3}
   throwForce: 10
   upwardForce: 5
   playerCamera: {fileID: 0}
