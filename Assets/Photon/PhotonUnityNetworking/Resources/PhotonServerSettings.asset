@@ -42,6 +42,9 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - OpenDoorRPC
+  - RPC_AttachItem
+  - RPC_StartSubmarine
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

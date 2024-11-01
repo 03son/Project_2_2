@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
 using Photon.Pun;
 
 public class ItemSlot
@@ -13,10 +12,10 @@ public class ItemSlot
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlotUI[] ui_itemSlot; // UI 상의 아이템 슬롯
-    public ItemSlot[] slots; // 실제 아이템 슬롯이 저장되는 배열
+    public ItemSlotUI[] ui_itemSlot;
+    public ItemSlot[] slots;
 
-    public Transform dropPos; // 아이템 드랍 위치
+    public Transform dropPos;
 
     [Header("Selected Item")]
     [SerializeField]
@@ -27,6 +26,8 @@ public class Inventory : MonoBehaviour
 
     public PhotonView pv;
 
+    private GameObject equippedItemObject; // 현재 장착된 아이템의 GameObject를 저장하는 변수
+
     private void Awake()
     {
         if (instance == null)
@@ -35,7 +36,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Destroy(this.GetComponent<Inventory>());
+            Destroy(this);
         }
 
         pv = GetComponent<PhotonView>();
@@ -49,25 +50,23 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slots.Length; i++)
         {
-            // UI 슬롯 초기화
             slots[i] = new ItemSlot();
             ui_itemSlot[i].Clear();
         }
 
-        dropPos = GameObject.Find("ItemDropPos").gameObject.GetComponent<Transform>();
+        dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
 
         ClearSelectItemWindows();
     }
 
     void ConnectUi_itemSlot()
     {
-        // UI 슬롯 연결 (수동으로 연결 중)
-        ui_itemSlot[0] = GameObject.Find("ItemSlot").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[1] = GameObject.Find("ItemSlot (1)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[2] = GameObject.Find("ItemSlot (2)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[3] = GameObject.Find("ItemSlot (3)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[4] = GameObject.Find("ItemSlot (4)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[5] = GameObject.Find("ItemSlot (5)").gameObject.GetComponent<ItemSlotUI>();
+        ui_itemSlot[0] = GameObject.Find("ItemSlot").GetComponent<ItemSlotUI>();
+        ui_itemSlot[1] = GameObject.Find("ItemSlot (1)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[2] = GameObject.Find("ItemSlot (2)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[3] = GameObject.Find("ItemSlot (3)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[4] = GameObject.Find("ItemSlot (4)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[5] = GameObject.Find("ItemSlot (5)").GetComponent<ItemSlotUI>();
     }
 
     public void Additem(itemData item)
@@ -81,25 +80,65 @@ public class Inventory : MonoBehaviour
             UpdateUI();
             return;
         }
-        // 인벤토리에 빈칸이 없을 경우 못 먹음
     }
 
-    public bool HasKey(string keyID)
+    public bool HasItem(string itemName)
     {
+        // 인벤토리 슬롯에서 아이템 확인
         foreach (var slot in slots)
         {
-            if (slot.item != null && slot.item.itemID == keyID)  // 열쇠의 itemID가 keyID와 같은지 확인
+            if (slot.item != null && slot.item.ItemName == itemName)
             {
+                Debug.Log($"인벤토리에 {itemName}이(가) 있음");
                 return true;
             }
         }
+
+        // 현재 장착된 아이템도 확인
+        if (equippedItemObject != null)
+        {
+            itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
+            if (equippedItemData != null && equippedItemData.ItemName == itemName)
+            {
+                Debug.Log($"장착된 상태에서 {itemName}이(가) 있음");
+                return true;
+            }
+        }
+
+        Debug.Log($"인벤토리에 {itemName}이(가) 없음");
         return false;
     }
 
+    public void RemoveItem(string itemName)
+    {
+        // 인벤토리 슬롯에서 아이템 제거
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item != null && slots[i].item.ItemName == itemName)
+            {
+                slots[i].item = null;
+                slots[i].quantity = 0;
+                ui_itemSlot[i].Clear();
+                UpdateUI();
+                return;
+            }
+        }
+
+        // 장착된 아이템 제거
+        if (equippedItemObject != null)
+        {
+            itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
+            if (equippedItemData != null && equippedItemData.ItemName == itemName)
+            {
+                Destroy(equippedItemObject); // 장착된 아이템 오브젝트 삭제
+                equippedItemObject = null;
+                Debug.Log($"장착된 {itemName} 제거됨");
+            }
+        }
+    }
 
     ItemSlot GetEmptySlot()
     {
-        // 빈 슬롯 찾기
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item == null)
@@ -110,7 +149,6 @@ public class Inventory : MonoBehaviour
 
     void UpdateUI()
     {
-        // UI의 슬롯 최신화
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item != null)
@@ -122,7 +160,6 @@ public class Inventory : MonoBehaviour
 
     void UnEquip(int index)
     {
-        // 아이템 장착 해제
         if (GetComponent<Player_Equip>().Item != null)
             Destroy(GetComponent<Player_Equip>().Item);
     }
@@ -131,14 +168,12 @@ public class Inventory : MonoBehaviour
     {
         if (slots[selectedItemIndex].item != null)
         {
-            // 장착 중인 아이템일 경우 해제
             if (ui_itemSlot[selectedItemIndex].equipped)
             {
                 UnEquip(selectedItemIndex);
                 ThrowItem(slots[selectedItemIndex].item);
             }
 
-            // 아이템 제거 및 UI에서도 정보 지우기
             slots[selectedItemIndex].item = null;
             ClearSelectItemWindows();
         }
@@ -147,13 +182,11 @@ public class Inventory : MonoBehaviour
 
     void ClearSelectItemWindows()
     {
-        // 선택된 아이템 초기화
         selectedItem = null;
     }
 
     void ThrowItem(itemData item)
     {
-        // 아이템 버리기
         Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
     }
 
@@ -163,5 +196,11 @@ public class Inventory : MonoBehaviour
         {
             RemoveSelectedItem();
         }
+    }
+
+    public void EquipItem(GameObject itemObject)
+    {
+        // EquipItem 메서드로 장착된 아이템을 설정
+        equippedItemObject = itemObject;
     }
 }

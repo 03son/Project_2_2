@@ -38,7 +38,7 @@ public class InteractionManager : MonoBehaviour
         promptText = GameObject.Find("prompt_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
         promptText.gameObject.SetActive(false);
 
-        camera =  Camera.main;
+        camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -49,12 +49,12 @@ public class InteractionManager : MonoBehaviour
 
         //마지막으로 체크한 시간이 checkRate를 넘겼다면
         if (Time.time - lastCheckTime > checkRate)
-        { 
+        {
             lastCheckTime = Time.time;
             // 화면의 정중앙에 상호작용 가능한 물체가 있는지 확인하기
 
             //화면 중앙에서 Ray 발사
-            Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2));
+            Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
 
             //ray에 뭔가 충돌했다면 hit에 충돌한 오브젝트에 대한 정보가 넘어감
@@ -102,7 +102,7 @@ public class InteractionManager : MonoBehaviour
     }
 
     void SetPromptText()
-    { 
+    {
         promptText.gameObject.SetActive(true);
 
         //<b></b> : <b>는 볼트체

@@ -40,7 +40,8 @@ public class Door : MonoBehaviour, IInteractable
         }
         else
         {
-            gameObject.SetActive(false); // Animator가 없으면 문을 비활성화
+            // Animator가 없는 경우 문을 열리는 방향으로 이동시키는 예시 (간단한 이동)
+            transform.position += -transform.forward * 1.5f; // 문을 오른쪽으로 약간 이동
         }
     }
 }
