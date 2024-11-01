@@ -4,6 +4,7 @@ using ExitGames.Client.Photon;
 using TMPro;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using System;
 using JetBrains.Annotations;
@@ -23,6 +24,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] string[] playerNickName = new string[4];
     [SerializeField] int[] playerActorNumber = new int[4];
 
+    public Sprite[] CharacterImage = new Sprite[5];
+
+    public Sprite nullPlayerImage;
     void Awake()
     {
         roomCP = PhotonNetwork.CurrentRoom.CustomProperties;
@@ -37,15 +41,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void SetRoomName()
     {
         roomName.text = $"방 이름: {PhotonNetwork.CurrentRoom.Name}";
-    }
-
-    public enum AniMalName
-    {
-        무작위,
-        늑대,
-        토끼,
-        라쿤,
-        고양이
     }
 
     public void PlayerEnteredRoom() //플레이어 입장
@@ -68,26 +63,20 @@ public class RoomManager : MonoBehaviourPunCallbacks
             playerActorNumber[i] = 0;
 
             player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdatePlayerInfo("", 0, ""); //닉네임, 액터넘버, 동물이름
+            player_RoomInfo[i].GetComponent<Player_RoomInfo>().setAnimalNameText("");
 
             //준비 해제
             player_RoomInfo[i].GetComponent<Player_RoomInfo>().isReady = false;
             player_RoomInfo[i].GetComponent<Player_RoomInfo>().UpdateReadyUI();
+            player_RoomInfo[i].GetComponent<Player_RoomInfo>().Animal_Image.sprite = nullPlayerImage;
         }
 
-        string animalName = AniMalName.무작위.ToString();
+        string animalName = "무작위"; //기본값
         int _index = 0;
         foreach (var player in PhotonNetwork.CurrentRoom.Players)//접속한 플레이어 표시
         {
             playerNickName[_index] = player.Value.NickName;
             playerActorNumber[_index] = player.Key;
-
-            if (player.Value.CustomProperties.ContainsKey("animalName"))
-            {
-                player.Value.CustomProperties.TryGetValue("animalName", out object _animalName);
-                animalName = (string)_animalName;
-            }
-
-            player_RoomInfo[_index].GetComponent<Player_RoomInfo>().UpdatePlayerInfo(player.Value.NickName, player.Key, animalName);
 
             if (player.Value.CustomProperties.ContainsKey("isReady"))
             {
@@ -99,6 +88,17 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
                 Debug.Log($"{player.Value.NickName}__{player.Value.ActorNumber}__{isReadyValue}");
             }
+
+            if (player.Value.CustomProperties.ContainsKey("animalName"))
+            {
+                player.Value.CustomProperties.TryGetValue("animalName", out object _animalName);
+                animalName = (string)_animalName;
+            }
+            else
+            {
+                animalName = "무작위";
+            }
+            player_RoomInfo[_index].GetComponent<Player_RoomInfo>().UpdatePlayerInfo(player.Value.NickName, player.Key, animalName);
             _index++;
         }
 
@@ -127,6 +127,22 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, HashTable changedProps)
     {
+        if (changedProps.ContainsKey("animalName"))
+        {
+            foreach (var player in PhotonNetwork.CurrentRoom.Players)
+            {
+                for (int index = 0; index < 4; index++)
+                {
+                    int Number = player_RoomInfo[index].GetComponent<Player_RoomInfo>().Actor_num;
+                    if (targetPlayer.ActorNumber == Number)
+                    {
+                        targetPlayer.CustomProperties.TryGetValue("animalName", out object _animalName);
+                        player_RoomInfo[index].GetComponent<Player_RoomInfo>().setAnimalNameText((string)_animalName);
+                        break;
+                    }
+                }
+            }
+        }
         if (changedProps.ContainsKey("isReady"))
         {
             bool _isReady = (bool)changedProps["isReady"];
@@ -147,7 +163,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     }
                 }
             }
-            GameStart();
+           GameStart();
         }
     }
 }

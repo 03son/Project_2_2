@@ -60,11 +60,10 @@ public class Inventory : MonoBehaviour
     void ConnectUi_itemSlot()
     {
         ui_itemSlot[0] = GameObject.Find("ItemSlot").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[1] = GameObject.Find("ItemSlot (1)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[2] = GameObject.Find("ItemSlot (2)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[3] = GameObject.Find("ItemSlot (3)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[4] = GameObject.Find("ItemSlot (4)").gameObject.GetComponent<ItemSlotUI>();
-        ui_itemSlot[5] = GameObject.Find("ItemSlot (5)").gameObject.GetComponent<ItemSlotUI>();
+        for (int i =1; i<6;i++)
+        {
+            ui_itemSlot[i] = GameObject.Find($"ItemSlot ({i})").gameObject.GetComponent<ItemSlotUI>();
+        }
     }
     public void Additem(itemData item)
     {

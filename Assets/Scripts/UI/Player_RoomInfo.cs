@@ -10,7 +10,7 @@ using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class Player_RoomInfo : UI_Popup
 {
-    Image Animal_Image;
+   public Image Animal_Image;
 
     HashTable playerCP;
 
@@ -28,6 +28,35 @@ public class Player_RoomInfo : UI_Popup
 
     public Button ChangeCharacterButton_L;
     public Button ChangeCharacterButton_R;
+
+    [SerializeField] Sprite[] CharacterImage = new Sprite[5];
+
+    int characterNumber;
+
+    public enum _AniMalName
+    {
+        무작위,
+        늑대,
+        토끼,
+        라쿤,
+        고양이
+    }
+    void Start()
+    {
+        CharacterImage = GetComponentInParent<Transform>().GetComponentInParent<RoomManager>().CharacterImage;
+
+        ReadyButton = transform.Find("ReadyButton").GetComponent<Button>();
+        Animal_Image = transform.Find("Player_Image").GetComponent<Image>();
+
+        playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+
+        //준비 버튼 초기화
+        Image ReadyButtonCB = ReadyButton.GetComponent<Image>();
+        ReadyButtonCB.color = new Color(255, 0, 0, 255);
+        ReadyButton.GetComponent<Image>().color = ReadyButtonCB.color;
+
+        Init();
+    }
 
     public override void Init()
     {
@@ -52,10 +81,25 @@ public class Player_RoomInfo : UI_Popup
          transform.Find("PlayerNickName").gameObject.GetComponent<TextMeshProUGUI>().text = NickName;   
     }
    
-    void setAnimalNameText(string AnimalName)
+    public void setAnimalNameText(string AnimalName)
     {
-        transform.Find("AnimalName").gameObject.GetComponent<TextMeshProUGUI>().text
+        if (AnimalName == "")
+        {
+            transform.Find("AnimalName").gameObject.GetComponent<TextMeshProUGUI>().text
             = AnimalName;
+            return;
+        }
+
+        if (Enum.TryParse(AnimalName, out _AniMalName _AnimalName))
+        {
+            Animal_Image.sprite = CharacterImage[(int)_AnimalName];
+
+            characterNumber = (int)_AnimalName;
+
+            transform.Find("AnimalName").gameObject.GetComponent<TextMeshProUGUI>().text
+             = AnimalName;
+        }
+
     }
     void OnCickReadyButton(PointerEventData button)
     {
@@ -76,8 +120,28 @@ public class Player_RoomInfo : UI_Popup
     {
         if (Actor_num == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            Debug.Log("왼쪽");
-            //roomManager.GetComponent<RoomManager>().AniMalName.
+            switch (characterNumber)
+            {
+                case 0:
+                    characterNumber = 4;
+                    break;
+                case 1:
+                    characterNumber = 0;
+                    break;
+                case 2:
+                    characterNumber = 1;
+                    break;
+                case 3:
+                    characterNumber = 2;
+                    break;
+                case 4:
+                    characterNumber = 3;
+                    break;
+
+            }
+            _AniMalName Name = (_AniMalName)characterNumber;
+            setAnimalNameText(Name.ToString());
+            UpdateCharacterHashTable(Name.ToString());
         }
     }   
     
@@ -85,12 +149,34 @@ public class Player_RoomInfo : UI_Popup
     {
         if (Actor_num == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            Debug.Log("오른쪽");
+            switch (characterNumber)
+            {
+                case 0:
+                    characterNumber = 1;
+                    break;
+                case 1:
+                    characterNumber = 2;
+                    break;
+                case 2:
+                    characterNumber = 3;
+                    break;
+                case 3:
+                    characterNumber = 4;
+                    break;
+                case 4:
+                    characterNumber = 0;
+                    break;
+
+            }
+            _AniMalName Name = (_AniMalName)characterNumber;
+            setAnimalNameText(Name.ToString());
+            UpdateCharacterHashTable(Name.ToString());
         }
     }
-    void UpdateCharacterHashTable()//커스텀 프로퍼티에 자신 캐릭터 이름 등록
+
+    void UpdateCharacterHashTable(string AnimalName)//커스텀 프로퍼티에 자신 캐릭터 이름 등록
     {
-        playerCP = new HashTable() { { "animalName", "동물이름" } };
+        playerCP = new HashTable() { { "animalName", AnimalName } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
     }
     void UpdatePlayerReayState(bool ready)
@@ -114,18 +200,7 @@ public class Player_RoomInfo : UI_Popup
         }
         ReadyButton.GetComponent<Image>().color = ReadyButtonCB.color;
     }
-    void Start()
-    {
-        ReadyButton = transform.Find("ReadyButton").GetComponent<Button>();
-        Animal_Image = transform.Find("Player_Image").GetComponent<Image>();
 
-        playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+     
 
-        //준비 버튼 초기화
-        Image ReadyButtonCB = ReadyButton.GetComponent<Image>();
-        ReadyButtonCB.color = new Color(255, 0, 0, 255);
-        ReadyButton.GetComponent<Image>().color = ReadyButtonCB.color;
-
-        Init();
-    }
 }
