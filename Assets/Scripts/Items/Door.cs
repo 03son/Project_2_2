@@ -36,7 +36,7 @@ public class Door : MonoBehaviour, IInteractable
         {
             Debug.Log("잠긴 문입니다. 열쇠가 필요합니다.");
         }
-        if (openDoor == false)
+        if (isOpen && openDoor == false)
         {
             Closedoor();
             Debug.Log("문이 닫힙니다.");
@@ -47,7 +47,19 @@ public class Door : MonoBehaviour, IInteractable
 
     public string GetInteractPrompt()
     {
-        return "문 열기";
+        if (isOpen == false)
+        {
+            return "문 잠금해제";
+        }
+        else if (openDoor == false)
+        {
+            return "문 닫기";
+        }
+        else if (openDoor == true)
+        {
+            return "문 열기";
+        }
+        return "???"; // 기본 반환값 추가
     }
 
     void OpenDoor()
