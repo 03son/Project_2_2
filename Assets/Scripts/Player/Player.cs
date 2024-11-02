@@ -21,9 +21,17 @@ public class Player : MonoBehaviour
             GameObject.Find("Follow Cam").gameObject.transform.SetParent(this.transform);
             GameObject.Find("EquipCamera").gameObject.transform.SetParent(this.transform);
 
-            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("animalName"))
+            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("animalName"))//캐릭터 할당
             {
                 PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("animalName", out object _animalName);
+                if ((string)_animalName == "무작위")
+                {
+                    //4개 캐릭터 중 랜덤 1택
+                }
+                else
+                { 
+                    //선택한 캐릭터로 1택
+                }
                 Debug.Log((string)_animalName);
             }
         }
