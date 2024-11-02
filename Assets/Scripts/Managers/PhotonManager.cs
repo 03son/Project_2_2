@@ -9,6 +9,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun.Demo.PunBasics;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.SceneManagement;
+using static Player_RoomInfo;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -151,6 +152,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log($"PhotonNetwork.InRoom = {PhotonNetwork.InRoom}");
         Debug.Log($"Player Count = {PhotonNetwork.CurrentRoom.PlayerCount}");
 
+        playerCP = new HashTable() { { "animalName", null } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
+
         MultiList.GetComponent<MultiPlayList>().JoinRoom();
 
         Room.SetActive(true);
@@ -234,6 +238,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
         playerCP = new HashTable() { { "isReady", null } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
+
+        playerCP = new HashTable() { { "animalName", null } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
 
         Debug.Log("방에서 나갔습니다.");

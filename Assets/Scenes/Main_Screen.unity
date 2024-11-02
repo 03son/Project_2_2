@@ -2878,6 +2878,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3424396121040894207, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3788298986166376476, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -2942,6 +2946,14 @@ PrefabInstance:
       propertyPath: m_text
       value: X
       objectReference: {fileID: 0}
+    - target: {fileID: 5808158532237783668, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808158532237783668, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5937777987299683659, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3074,6 +3086,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 7673822689225788152, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7673822689225788152, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 8078716388565735099, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078716388565735099, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 8184364047874152900, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
       propertyPath: m_Name
       value: Room
@@ -3102,6 +3130,34 @@ PrefabInstance:
       propertyPath: playerPfefab
       value: 
       objectReference: {fileID: 3225011347212051074, guid: 907f1f74d053f0048a51c14ec69c2b49, type: 3}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: nullPlayerImage
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: CharacterImage.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: CharacterImage.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: aa86b09722a003a4b80e7e804c19358f, type: 3}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: CharacterImage.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 2f4ef21d4c9379845835b6d30569c1bf, type: 3}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: CharacterImage.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 53390248b506ad347b8d4c54fb754f89, type: 3}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: CharacterImage.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7bb3d6e71e50ca4489f0b4a69a257c87, type: 3}
+    - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: CharacterImage.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: da3f42fb4fa47aa438c033999db5cf9b, type: 3}
     - target: {fileID: 8419965988490273270, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
       propertyPath: player_RoomInfo.Array.data[0]
       value: 
@@ -3150,6 +3206,14 @@ PrefabInstance:
       propertyPath: m_Colors.m_DisabledColor.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8772074220519482464, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772074220519482464, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 9141616638273549761, guid: f32399d734d84fe4c8074f704133bf82, type: 3}
       propertyPath: m_Colors.m_PressedColor.b
       value: 1
