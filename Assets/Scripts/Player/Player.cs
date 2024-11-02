@@ -13,13 +13,17 @@ public class Player : MonoBehaviour
     PhotonView pv;
     void Awake()
     {
+        if (!PhotonNetwork.IsConnected)//싱글 플레이
+        {
+            FindCam();
+            return;
+        }
+
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
         pv = GetComponent<PhotonView>();
-        if (pv.IsMine)
+        if (pv.IsMine) //멀티 플레이
         {
-            GameObject.Find("Main Camera").gameObject.transform.SetParent(this.transform);
-            GameObject.Find("Follow Cam").gameObject.transform.SetParent(this.transform);
-            GameObject.Find("EquipCamera").gameObject.transform.SetParent(this.transform);
+            FindCam();
 
             if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("animalName"))//캐릭터 할당
             {
@@ -38,13 +42,24 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        notMine();
+        if (PhotonNetwork.IsConnected)//멀티일 때만
+        {
+            notMine();
+        }
+     
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    void FindCam()
+    {
+        GameObject.Find("Main Camera").gameObject.transform.SetParent(this.transform);
+        GameObject.Find("Follow Cam").gameObject.transform.SetParent(this.transform);
+        GameObject.Find("EquipCamera").gameObject.transform.SetParent(this.transform);
     }
 
     void notMine() //자기 자신이 아니면 스크립트와 인벤토리 UI 비활성화

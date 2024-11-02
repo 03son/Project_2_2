@@ -1,24 +1,25 @@
 using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
-using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 
-public class GameManager : Singleton<GameManager>
+public class Multi_GameManager : GameManager
 {
     HashTable playerCP;
 
-    void Awake()
+    protected override void Awake()
     {
+        if(!PhotonNetwork.IsConnected)
+            return;
+
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
 
         CreatePlayer();
     }
 
-    void CreatePlayer()
+    protected override void CreatePlayer()
     {
         // 출현 위치 정보를 배열에저장
         Transform[] points =

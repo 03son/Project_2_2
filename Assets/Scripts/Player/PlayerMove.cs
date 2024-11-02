@@ -15,26 +15,32 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if (photonView.IsMine)
+        if (PhotonNetwork.IsConnected)
         {
-            controller = GetComponent<CharacterController>();
+            if (!photonView.IsMine)
+                return;
+        }
 
-            // Main Camera 자동 할당 (Inspector에서 할당되지 않았을 경우)
-            if (cameraTransform == null)
-            {
-                cameraTransform = Camera.main?.transform;
-            }
+        controller = GetComponent<CharacterController>();
+
+        // Main Camera 자동 할당 (Inspector에서 할당되지 않았을 경우)
+        if (cameraTransform == null)
+        {
+            cameraTransform = Camera.main?.transform;
         }
     }
 
     void Update()
     {
         // 로컬 플레이어만 제어
-        if (photonView.IsMine)
+        if (PhotonNetwork.IsConnected)
         {
-            HandleMouseLook();
-            HandleMovement();
+            if (!photonView.IsMine)
+                return;
         }
+      
+        HandleMouseLook();
+        HandleMovement();
     }
 
     // 마우스 회전 처리

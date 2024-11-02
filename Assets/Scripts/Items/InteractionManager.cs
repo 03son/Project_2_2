@@ -30,22 +30,35 @@ public class InteractionManager : MonoBehaviour
 
     void Start()
     {
-        pv = GetComponent<PhotonView>();
+        if (PhotonNetwork.IsConnected) //멀티
+        {
+            pv = GetComponent<PhotonView>();
 
-        if (!pv.IsMine)
-            return;
+            if (!pv.IsMine)
+                return;
 
-        promptText = GameObject.Find("prompt_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
-        promptText.gameObject.SetActive(false);
+            promptText = GameObject.Find("prompt_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+            promptText.gameObject.SetActive(false);
 
-        camera =  Camera.main;
+            camera = Camera.main;
+        }
+        else // 싱글
+        {
+            promptText = GameObject.Find("prompt_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+            promptText.gameObject.SetActive(false);
+
+            camera = Camera.main;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!pv.IsMine)
-            return;
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!pv.IsMine)
+                return;
+        }
 
         //마지막으로 체크한 시간이 checkRate를 넘겼다면
         if (Time.time - lastCheckTime > checkRate)
