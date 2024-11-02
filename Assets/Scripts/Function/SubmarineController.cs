@@ -8,25 +8,35 @@ public class SubmarineController : MonoBehaviourPun
     private bool isKeyAttached = false;
     private bool isStarted = false;
 
+    public AudioSource audioSource; // 잠수함 시동 소리를 위한 AudioSource
+    public AudioClip startSound; // 잠수함 시동 소리 클립
+
+    private void Start()
+    {
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>(); // AudioSource가 없으면 추가
+        }
+    }
+
     public void AttachedItem(string itemName)
     {
         if (itemName == "Propeller")
         {
             isPropellerAttached = true;
-            Debug.Log("Propeller 부착됨");  // Propeller 부착 상태 확인
+            Debug.Log("Propeller 부착됨");
         }
         else if (itemName == "Battery")
         {
             isBatteryAttached = true;
-            Debug.Log("Battery 부착됨");  // Battery 부착 상태 확인
+            Debug.Log("Battery 부착됨");
         }
         else if (itemName == "Submarine Key")
         {
             isKeyAttached = true;
-            Debug.Log("Submarine Key 부착됨");  // Submarine Key 부착 상태 확인
+            Debug.Log("Submarine Key 부착됨");
         }
 
-        // 모든 부품 상태를 한번에 확인하는 로그
         Debug.Log($"Current Attach Status - Propeller: {isPropellerAttached}, Battery: {isBatteryAttached}, Key: {isKeyAttached}");
     }
 
@@ -45,8 +55,15 @@ public class SubmarineController : MonoBehaviourPun
             isStarted = true;
             Debug.Log("잠수함이 시동되었습니다. 탈출 시퀀스가 시작됩니다!");
 
-            // 여기에 애니메이션 호출 또는 씬 전환 등 탈출 시퀀스 코드 추가 가능
-            Invoke("EscapeSequence", 3.0f); // 3초 후 탈출 시퀀스 실행
+            // 시동 소리 재생
+            if (audioSource != null && startSound != null)
+            {
+                audioSource.clip = startSound;
+                audioSource.Play();
+            }
+
+            // 3초 후 탈출 시퀀스 실행
+            Invoke("EscapeSequence", 3.0f);
         }
         else
         {
