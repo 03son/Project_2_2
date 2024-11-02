@@ -28,25 +28,42 @@ public class CameraRot : MonoBehaviour
     {
         player = this.gameObject.GetComponent<Transform>().parent.gameObject;
         playerTransform = player.transform;
-        pv = player.GetComponent<PhotonView>();
 
-        if (pv.IsMine)
+        if (PhotonNetwork.IsConnected)
+        {
+            pv = player.GetComponent<PhotonView>();
+
+            if (pv.IsMine)
+            {
+                GetComponent<AudioListener>().enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                GetComponent<AudioListener>().enabled = false;
+                Destroy(FollowCam);
+                Destroy(EquipCamera);
+                Destroy(this.gameObject);
+            }
+        }
+        else
         {
             GetComponent<AudioListener>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
         }
-        else
-        {
-            GetComponent<AudioListener>().enabled = false;
-            Destroy(FollowCam);
-            Destroy(EquipCamera);
-            Destroy(this.gameObject);
-        }
+
     }
 
     void Update()
     {
-        if (pv.IsMine)
+        if (PhotonNetwork.IsConnected)
+        {
+            if (pv.IsMine)
+            {
+                cameraPos();
+            }
+        }
+        else
         {
             cameraPos();
         }
