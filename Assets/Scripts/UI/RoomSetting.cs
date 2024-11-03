@@ -12,6 +12,7 @@ using Photon.Pun.Demo.PunBasics;
 using System.Reflection;
 using static UnityEngine.Rendering.VolumeComponent;
 using static RoomManager;
+using UnityEngine.EventSystems;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -27,6 +28,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public Sprite[] CharacterImage = new Sprite[5];
 
     public Sprite nullPlayerImage;
+
+    public Button start_testversion;
     void Awake()
     {
         roomCP = PhotonNetwork.CurrentRoom.CustomProperties;
@@ -35,7 +38,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        start_testversion.gameObject.AddUIEvent(start_test);
+    }
 
+    void start_test(PointerEventData button) //테스트용 시작버튼(인원 상관X)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            LoadingSceneManager.InGameLoading("1", 1);
+        }
     }
 
     void SetRoomName()
