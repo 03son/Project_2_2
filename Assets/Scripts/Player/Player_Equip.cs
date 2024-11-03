@@ -39,9 +39,13 @@ public class Player_Equip : MonoBehaviour
 
     void Update()
     {
-        numberKey();
-        mouseWheelScroll();
-        EquipFunction();
+        //Esc 창이 닫혀있을 때만
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        {
+            numberKey();
+            mouseWheelScroll();
+            EquipFunction();
+        }
     }
     void ConnectUi_itemSlot()
     {
@@ -140,7 +144,7 @@ public class Player_Equip : MonoBehaviour
         }
     }
 
-    void EquipFunction()
+    void EquipFunction()//아이템 기능 작동
     {
         if (Input.GetMouseButtonDown(0) && Item != null)
         {

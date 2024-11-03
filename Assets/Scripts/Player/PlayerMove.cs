@@ -45,6 +45,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             HandleMouseLook();
             HandleMovement();
         }
+        else //esc 창이 열려있으면 실행
+        {
+            PlayerVelocity(Vector3.zero);
+        }
     }
 
     // 마우스 회전 처리
@@ -73,6 +77,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         // 이동 벡터 적용
         Vector3 mov = direction * speed;
 
+        PlayerVelocity(mov);
+    }
+    void PlayerVelocity(Vector3 mov)
+    {
         // 중력 적용
         if (controller.isGrounded)
         {

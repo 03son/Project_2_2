@@ -49,17 +49,7 @@ public class EscMenu : UI_Popup
     }
     void Exit_InGame(PointerEventData button)
     {
-        Debug.Log("게임 나가기");
-        if (PhotonNetwork.IsConnected)
-        {
-            if (PhotonNetwork.InRoom)
-            {
-                // PhotonNetwork.LeaveRoom();
-                // PhotonNetwork.JoinLobby();
-            }
-        }
-        SceneManager.LoadScene("Main_Screen");
-        
+        UIManger.Instance.ShowPopupUI<DoubleCheck_UI>();
     }
     void CloseEscMenu(PointerEventData button)//esc메뉴 닫기
     {

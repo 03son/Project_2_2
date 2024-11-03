@@ -181,10 +181,6 @@ public class UI_Button : UI_Popup
     //게임 종료
     void GameExit()
     {
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+        UIManger.Instance.ShowPopupUI<DoubleCheck_UI>();
     }
 }
