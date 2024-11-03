@@ -495,6 +495,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5718086661210797226, guid: 8fd596bb20e00284db89d985f2f79d17, type: 3}
   m_PrefabInstance: {fileID: 4424064851624553239}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &397825414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 397825415}
+  - component: {fileID: 397825417}
+  - component: {fileID: 397825416}
+  m_Layer: 0
+  m_Name: Crosshair_Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &397825415
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397825414}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1717201928264011473}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &397825416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397825414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &397825417
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397825414}
+  m_CullTransparentMesh: 1
 --- !u!4 &500744359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5004110787507116380, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
@@ -1577,7 +1652,7 @@ GameObject:
   - component: {fileID: 1179909838}
   - component: {fileID: 1179909837}
   m_Layer: 0
-  m_Name: Cloes
+  m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2796,6 +2871,7 @@ GameObject:
   - component: {fileID: 1980137177}
   - component: {fileID: 1980137176}
   - component: {fileID: 1980137175}
+  - component: {fileID: 1980137178}
   m_Layer: 0
   m_Name: Option_BG
   m_TagString: Untagged
@@ -2888,6 +2964,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1980137173}
   m_CullTransparentMesh: 1
+--- !u!114 &1980137178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980137173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ada0737719114b459a8d0bf0159d081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2035724075
 GameObject:
   m_ObjectHideFlags: 0
@@ -3375,6 +3463,7 @@ RectTransform:
   m_Children:
   - {fileID: 8251144719157445632}
   - {fileID: 168861565363289491}
+  - {fileID: 397825415}
   m_Father: {fileID: 4040493933903251212}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5101,6 +5190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd6226180e222a4f836cf80b8719b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popup_escMenu: 0
 --- !u!114 &8097146714274682412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5119,6 +5209,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   FollowCam: {fileID: 1586328093126080412}
   EquipCamera: {fileID: 3791820408516909211}
+  popup_escMenu: 0
 --- !u!224 &8251144719157445632
 RectTransform:
   m_ObjectHideFlags: 0

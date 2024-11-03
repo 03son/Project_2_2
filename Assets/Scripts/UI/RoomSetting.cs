@@ -28,9 +28,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public Sprite nullPlayerImage;
     void Awake()
-    {
-        roomCP = PhotonNetwork.CurrentRoom.CustomProperties;
-        playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+    {   
+        if (PhotonNetwork.IsConnected)
+        {
+            roomCP = PhotonNetwork.CurrentRoom.CustomProperties;
+            playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+        }
     }
 
     private void Start()

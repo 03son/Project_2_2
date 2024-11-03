@@ -38,9 +38,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             if (!photonView.IsMine)
                 return;
         }
-      
-        HandleMouseLook();
-        HandleMovement();
+
+        //esc 창이 닫혀있으면 실행
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        {
+            HandleMouseLook();
+            HandleMovement();
+        }
     }
 
     // 마우스 회전 처리

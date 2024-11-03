@@ -101,6 +101,10 @@ public class UI_Button : UI_Popup
         InputNickName = setPlayerNickName.gameObject.GetComponentInChildren<TMP_InputField>();
 
         ApplyButton.onClick.AddListener(SetPlayerNickName);
+
+        //닉네임이 지정 돼 있으면 닉네임 입력 화면은 false, 닉네임이 없으면 true
+        setPlayerNickName.SetActive(PhotonManager.instance.PlayerNickName == null ? true : false);
+        Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(PhotonManager.instance.PlayerNickName != null ? true : false);
     }
     
     //싱글, 멀티, 설정, 종료 이벤트
@@ -166,6 +170,7 @@ public class UI_Button : UI_Popup
     {
         //포톤 메니저에 닉네임 전송
         PhotonManager.instance.PlayerNickName = PlayerNickName;
+        PlayerPrefs.SetString("PlayerNickName", PlayerNickName);
 
         //닉네임 입력 창 비활성화
         setPlayerNickName.SetActive(false);
@@ -177,7 +182,7 @@ public class UI_Button : UI_Popup
     void GameExit()
     {
         #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
