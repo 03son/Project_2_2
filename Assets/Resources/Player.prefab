@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 6809498836912174046}
   - component: {fileID: 1462954312414108516}
   - component: {fileID: 2686416197553505534}
+  - component: {fileID: 8492365672760249928}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -39,7 +40,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5653916586029829173}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -134,12 +135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b627cbef64cd89849938657aae8e75fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
-  walkSound: {fileID: 0}
-  walkingClip: {fileID: 8300000, guid: eb323b9f7c21ddf439440d452c28c4b1, type: 3}
-  walkVolume: 0.5
+  walkSound: {fileID: 1462954312414108516}
+  walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
+  walkVolume: 0.15
 --- !u!114 &400456349316490321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,3 +405,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   deathEffect: {fileID: 0}
+--- !u!114 &8492365672760249928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5653916586029829173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 707b4b3beece5154bacba2ad97a90e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashlightLight: {fileID: 0}
+  intensity: 10
+  range: 100

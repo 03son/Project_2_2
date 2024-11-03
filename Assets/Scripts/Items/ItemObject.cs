@@ -24,9 +24,21 @@ public class ItemObject : MonoBehaviour, IInteractable
         if (addSlot())
         {
             Inventory.instance.Additem(item);
+
+            // 손전등 획득 처리
+            if (item.ItemName == "Flashlight")
+            {
+                Flashlight1 flashlightScript = FindObjectOfType<Flashlight1>();
+                if (flashlightScript != null)
+                {
+                    flashlightScript.AcquireFlashlight();
+                }
+            }
+
             Destroy(gameObject);
         }
     }
+
     bool addSlot()
     {
        //인벤토리에 빈 슬롯이 있는지 확인

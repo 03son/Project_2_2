@@ -78,9 +78,25 @@ public class Inventory : MonoBehaviour
             emptySlot.item = item;
             emptySlot.quantity = 1;
             UpdateUI();
+
+            // 손전등 아이템을 추가할 때 Flashlight1의 AcquireFlashlight 메서드를 호출
+            if (item.ItemName == "Flashlight") // 손전등 아이템 이름이 "Flashlight"인 경우
+            {
+                GameObject flashlightObject = GameObject.Find("Flashlight");
+                if (flashlightObject != null)
+                {
+                    Flashlight1 flashlightScript = flashlightObject.GetComponent<Flashlight1>();
+                    if (flashlightScript != null)
+                    {
+                        flashlightScript.AcquireFlashlight();
+                    }
+                }
+            }
+
             return;
         }
     }
+
 
     public bool HasItem(string itemName)
     {

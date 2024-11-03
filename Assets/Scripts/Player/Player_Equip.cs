@@ -136,9 +136,25 @@ public class Player_Equip : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Item != null)
         {
-            Item.GetComponent<IItemFunction>().Function();
+            IItemFunction itemFunction = Item.GetComponent<IItemFunction>();
+            if (itemFunction != null)
+            {
+                itemFunction.Function();
+            }
+
+            // 장착된 아이템이 손전등인지 확인하고 Flashlight1 활성화
+            if (Item.name == "Flashlight")
+            {
+                Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
+                if (flashlightScript != null)
+                {
+                    flashlightScript.AcquireFlashlight();
+                }
+            }
         }
     }
+
+
 
     void mouseWheelScroll()
     {
