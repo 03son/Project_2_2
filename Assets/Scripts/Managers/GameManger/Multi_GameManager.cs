@@ -5,21 +5,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 
-public class Multi_GameManager : GameManager
+public class Multi_GameManager : GameManager, IGameManager
 {
+    //멀티플레이 게임매니저
+
     HashTable playerCP;
 
-    protected override void Awake()
+    void Awake()
     {
         if(!PhotonNetwork.IsConnected)
             return;
+
+        GetComponent<Multi_GameManager>().enabled = true;
+        GetComponent<Single_GameManager>().enabled = false;
 
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
 
         CreatePlayer();
     }
 
-    protected override void CreatePlayer()
+    public void CreatePlayer()
     {
         // 출현 위치 정보를 배열에저장
         Transform[] points =

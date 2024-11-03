@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 
 public class UI_Button : UI_Popup
 {
+    static bool PlayerNickNameText = false;
+
     public GameObject MultiList;
 
     public GameObject setPlayerNickName;
@@ -34,7 +36,8 @@ public class UI_Button : UI_Popup
     }
     enum Texts
     { 
-        TMP_VersionText
+        TMP_VersionText,
+        PlayerNickName_Text
     }
     enum Images
     { 
@@ -95,6 +98,18 @@ public class UI_Button : UI_Popup
         MultiList.gameObject.SetActive(false);
 
         Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(false);
+
+        //플레이어 닉네임 텍스트 최초 1번만 비활성화에서 활성화하기
+        if (!PlayerNickNameText)
+        {
+            Get<TMP_Text>((int)Texts.PlayerNickName_Text).gameObject.SetActive(false);
+            PlayerNickNameText = true;
+        }
+        else //이후는 계속 활성 상태
+        {
+            Get<TMP_Text>((int)Texts.PlayerNickName_Text).gameObject.SetActive(true);
+            Get<TMP_Text>((int)Texts.PlayerNickName_Text).text = $"플레이어 닉네임 : {PlayerPrefs.GetString("PlayerNickName")}";
+        }
 
         ApplyButton = G_ApplyButton.GetComponent<Button>();
 
@@ -177,10 +192,17 @@ public class UI_Button : UI_Popup
 
         //메인화면 버튼 활성화
         Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(true);
+
+        //플레이어 닉네임 텍스트 활성화
+        Get<TMP_Text>((int)Texts.PlayerNickName_Text).gameObject.SetActive(true);
+
+        //플레이어 닉네임 표시
+        Get<TMP_Text>((int)Texts.PlayerNickName_Text).text = $"플레이어 닉네임 : {PlayerPrefs.GetString("PlayerNickName")}";
     }
     //게임 종료
     void GameExit()
     {
+        //종료하시겠습니까? 팝업UI 띄우기
         UIManger.Instance.ShowPopupUI<DoubleCheck_UI>();
     }
 }
