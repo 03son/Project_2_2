@@ -45,6 +45,7 @@ MonoBehaviour:
   - OpenDoorRPC
   - RPC_AttachItem
   - RPC_StartSubmarine
+  - NotifyDeath
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

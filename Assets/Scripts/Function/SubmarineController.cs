@@ -10,6 +10,8 @@ public class SubmarineController : MonoBehaviourPun
 
     public AudioSource audioSource; // 잠수함 시동 소리를 위한 AudioSource
     public AudioClip startSound; // 잠수함 시동 소리 클립
+    [Range(0f, 1f)]
+    public float volume = 1.0f; // 음량 조절 변수
 
     private void Start()
     {
@@ -17,6 +19,7 @@ public class SubmarineController : MonoBehaviourPun
         {
             audioSource = gameObject.AddComponent<AudioSource>(); // AudioSource가 없으면 추가
         }
+        audioSource.volume = volume; // 초기 음량 설정
     }
 
     public void AttachedItem(string itemName)
@@ -59,6 +62,7 @@ public class SubmarineController : MonoBehaviourPun
             if (audioSource != null && startSound != null)
             {
                 audioSource.clip = startSound;
+                audioSource.volume = volume; // 설정된 음량 사용
                 audioSource.Play();
             }
 
