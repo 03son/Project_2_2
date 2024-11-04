@@ -42,7 +42,7 @@ public class MainSettingScreen : UI_Popup
         if (Input.GetKey(KeyCode.Escape) && this.gameObject.activeSelf)
         {
             //메인화면 버튼 4종 활성화
-            GameObject.Find("UI_Button").transform.GetChild(1).gameObject.SetActive(true);
+            GameObject.Find("UI_Button").transform.GetChild(0).gameObject.SetActive(true);
 
             //설정창 닫기
             ClosePopupUI();
