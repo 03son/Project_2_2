@@ -11,6 +11,7 @@ public class EscMenu : UI_Popup
 {
     GameObject gameObjectssss;
 
+    public InGameUI inGameUI;
     enum GameObjects
     {
 
@@ -28,9 +29,12 @@ public class EscMenu : UI_Popup
         Bind<GameObject>(typeof(GameObjects));
         Bind<Button>(typeof(Buttons));
 
-
+        //계속하기, 옵션, 나가기, 닫기
+        GetButton((int)Buttons.Resume).gameObject.AddUIEvent(CloseEscMenu);
+        GetButton((int)Buttons.Option).gameObject.AddUIEvent(Option);
         GetButton((int)Buttons.Exit).gameObject.AddUIEvent(Exit_InGame);
-        
+        GetButton((int)Buttons.Close).gameObject.AddUIEvent(CloseEscMenu);
+
     }
     void Start()
     {
@@ -45,7 +49,7 @@ public class EscMenu : UI_Popup
 
     void Option(PointerEventData button)
     {
-
+        UIManger.Instance.ShowPopupUI<MainSettingScreen>();
     }
     void Exit_InGame(PointerEventData button)
     {
@@ -53,6 +57,6 @@ public class EscMenu : UI_Popup
     }
     void CloseEscMenu(PointerEventData button)//esc메뉴 닫기
     {
-
+        inGameUI.CloseEscMenu();
     }
 }

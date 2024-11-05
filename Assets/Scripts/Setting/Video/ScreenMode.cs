@@ -7,8 +7,6 @@ using UnityEngine.UIElements;
 
 public class ScreenMode : MonoBehaviour
 {
-   static Dictionary<string, int> ScreenModeDictionary = new Dictionary<string, int>();
-
     public TMP_Dropdown ScreenMode_Dropdown;
     // string[] screenModeText = new string[3] { "전체화면","테두리 없는 창모드","창모드"};
 
@@ -25,11 +23,11 @@ public class ScreenMode : MonoBehaviour
         switch (option)
         {
             case 0: // 전체화면 모드
-                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+                Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
                 Debug.Log("전체화면 모드");
                 break;
             case 1: // 테두리 없는 창 모드
-                Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
                 Debug.Log("테두리 없는 창 모드");
                 break;
             case 2: // 창 모드

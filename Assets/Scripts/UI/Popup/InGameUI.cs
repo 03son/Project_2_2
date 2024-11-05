@@ -35,4 +35,12 @@ public class InGameUI : MonoBehaviour
             return;
         }
     }
+
+    public void CloseEscMenu()
+    {
+        Esc_Menu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        popup_escMenu = false;
+        MainCam.GetComponent<CameraRot>().popup_escMenu = popup_escMenu;
+    }
 }
