@@ -1001,7 +1001,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -149.6486, y: 21.1873}
+  m_AnchoredPosition: {x: -149.64868, y: 21.187256}
   m_SizeDelta: {x: 276.6973, y: 50.1746}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &279383145
@@ -4082,6 +4082,7 @@ GameObject:
   - component: {fileID: 1482490377}
   - component: {fileID: 1482490376}
   - component: {fileID: 1482490380}
+  - component: {fileID: 1482490381}
   m_Layer: 5
   m_Name: UI_Button
   m_TagString: Untagged
@@ -4193,6 +4194,36 @@ MonoBehaviour:
   setPlayerNickName: {fileID: 194230496}
   G_ApplyButton: {fileID: 1793427326}
   PlayerNickName: 
+--- !u!114 &1482490381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482490375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 475988ea37b41354499b2b9b62e6a544, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: PC
+  m_DefaultActionMap: 88886eef-1f5b-49bb-839b-8b6a17cb3575
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1499038312
 GameObject:
   m_ObjectHideFlags: 0
