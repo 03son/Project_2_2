@@ -48,6 +48,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+
             LoadingSceneManager.InGameLoading("1", 1);
         }
     }
@@ -135,6 +138,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
             player_RoomInfo[3].GetComponent<Player_RoomInfo>().isReady
             )
         {
+            // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+
             LoadingSceneManager.InGameLoading("1", 1);
             return;
         }
