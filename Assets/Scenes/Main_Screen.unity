@@ -1542,7 +1542,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 222164377392921400, guid: c4771b0b1bdb92840a685858c66e376a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000014573336
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 717502577569583812, guid: c4771b0b1bdb92840a685858c66e376a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2414,7 +2414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerNickName: 
-  roomItemPrefab: {fileID: 628784566631896922, guid: 38cecd61b27356148afddc65699027d8, type: 3}
+  roomItemPrefab: {fileID: 6700139871264308339, guid: f4a66c32e91ab48449065f598ed8c6f3, type: 3}
   MultiList: {fileID: 512165382}
   Room: {fileID: 309748965}
   RoomListPrefabPos: {fileID: 162642028}
