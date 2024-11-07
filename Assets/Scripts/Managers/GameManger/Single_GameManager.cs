@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Single_GameManager : GameManager , IGameManager
+public class Single_GameManager : GameManager
 {
     //싱글플레이 게임매니저
 
@@ -21,7 +21,7 @@ public class Single_GameManager : GameManager , IGameManager
         CreatePlayer();
     }
 
-    public void CreatePlayer()
+    public override void CreatePlayer()
     {
         // 출현 위치 정보를 배열에저장
         Transform[] points =

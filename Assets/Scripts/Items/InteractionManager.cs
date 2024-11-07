@@ -5,6 +5,7 @@ using TMPro;
 using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using Photon.Pun;
+using System;
 
 public interface IInteractable
 {
@@ -105,7 +106,9 @@ public class InteractionManager : MonoBehaviour
             for (int i = 0; i < GetComponent<Inventory>().slots.Length; i++)
             {
                 if (GetComponent<Inventory>().slots[i].item != null)
+                {
                     GetComponent<Player_Equip>().numderKeySelectSlot(i + 1);
+                }
             }
 
             curInteractGameobject = null;

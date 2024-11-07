@@ -27,6 +27,8 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
 
     public PhotonView pv;
+
+    int addItemIndex;
     private void Awake()
     {
         if (instance == null)
@@ -74,6 +76,7 @@ public class Inventory : MonoBehaviour
             emptyslot.item = item;
             emptyslot.quantity = 1;
             UpdateUI();
+            GetComponent<Player_Equip>().invenUtil(addItemIndex + 1);
             return;
         }
         //인벤토리에 빈칸이 없을 경우 못 먹음
@@ -85,7 +88,11 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item == null)
+            {
+                addItemIndex = i;
                 return slots[i];
+            }
+            
         }
         return null;
     }
@@ -106,7 +113,9 @@ public class Inventory : MonoBehaviour
     {
         //아이템 장착해제
         if (GetComponent<Player_Equip>().Item != null)
-             Destroy(GetComponent<Player_Equip>().Item);
+        {
+            Destroy(GetComponent<Player_Equip>().Item);
+        }
     }
 
     void RemoveSelectedItem()

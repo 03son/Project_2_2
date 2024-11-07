@@ -20,7 +20,7 @@ public class Player_Equip : MonoBehaviour
 
     ResourceManager resoure = new ResourceManager();
 
-    int selectIndex = 0;
+    //int selectIndex = 0;
 
     PhotonView pv;
     void Start()
@@ -65,8 +65,6 @@ public class Player_Equip : MonoBehaviour
                 invenUtil(index);
                 return;
             }
-
-            invenUtil(index);
         }
     }
     public void numderKeySelectSlot(int index)
@@ -75,11 +73,12 @@ public class Player_Equip : MonoBehaviour
         {
             if (inventory.slots[i].item == null)
             {
-                invenUtil(index);
+               // invenUtil(index); 먹은 아이템이 바로 선택되게 하기 위해 주석처리함
+                return;
             }
         }
     }
-    void setEquipItem(string item)
+    public void setEquipItem(string item)
     {
         
         if (Item != null)
@@ -125,7 +124,7 @@ public class Player_Equip : MonoBehaviour
         }
     }
 
-    void invenUtil(int index)
+    public void invenUtil(int index)
     {
         //Outline 다 끄고 선택한 번호의 슬롯만 켜기
         for (int i = 0; i < invenSlot.Length; i++)
@@ -156,22 +155,31 @@ public class Player_Equip : MonoBehaviour
     {
         //마우스 휠 스크롤 해서 아이템 선택 바꾸기
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
-
+        int selectedItemIndex = GetComponent<Inventory>().selectedItemIndex;
         if (wheelInput < 0)
-        {
-            selectIndex += 1;
-            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
-            inventory.selectedItemIndex = selectIndex;
-            selectSlot(selectIndex);
-            return;
+        {  
+            if (selectedItemIndex < 5)
+            {
+                selectedItemIndex += 1;
+                GetComponent<Inventory>().selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, 6);
+                invenUtil(selectedItemIndex + 1);
+                return;
+            }
         }
         else if (wheelInput > 0)
         {
-            selectIndex -= 1;
-            selectIndex = Mathf.Clamp(selectIndex, 0, 6);
-            inventory.selectedItemIndex = selectIndex;
-            selectSlot(selectIndex);
-            return;
+            if (selectedItemIndex > 0)
+            {
+                selectedItemIndex -= 1;
+                GetComponent<Inventory>().selectedItemIndex = Mathf.Clamp(selectedItemIndex, 0, 6);
+                invenUtil(selectedItemIndex + 1);
+                return;
+            }
         }
+    }
+
+    public void DropItem()
+    {
+
     }
 }

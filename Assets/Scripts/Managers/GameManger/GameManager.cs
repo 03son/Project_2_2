@@ -6,12 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameManager
+public abstract class GameManager : Singleton<GameManager>
 {
-   void CreatePlayer(); //플레이어 생성
-}
-
-public class GameManager : Singleton<GameManager>
-{
-
+  public abstract void CreatePlayer();//플레이어 생성
 }
