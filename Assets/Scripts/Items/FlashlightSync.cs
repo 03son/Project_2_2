@@ -9,12 +9,18 @@ public class FlashlightSync : MonoBehaviour
         // 메인 카메라를 자동으로 찾음
         if (mainCamera == null)
         {
-            mainCamera = Camera.main.transform;
+            mainCamera = Camera.main?.transform;
         }
     }
 
     void LateUpdate()
     {
+        // 카메라의 Transform이 비어 있으면 다시 할당
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main?.transform;
+        }
+
         // 카메라의 위치와 회전을 플래시라이트에 동기화
         if (mainCamera != null)
         {

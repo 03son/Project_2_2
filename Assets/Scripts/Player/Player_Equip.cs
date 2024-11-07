@@ -49,6 +49,18 @@ public class Player_Equip : MonoBehaviour
         numberKey();
         mouseWheelScroll();
         EquipFunction();
+
+        // 던지는 동작 처리 (유리컵 충전 던지기)
+        if (isCharging)
+        {
+            ChargeThrow();
+        }
+
+        // 던지기 종료 처리
+        if (Input.GetMouseButtonUp(0) && isCharging)
+        {
+            ReleaseThrow();
+        }
     }
 
     void ConnectUi_itemSlot()
@@ -166,48 +178,40 @@ public class Player_Equip : MonoBehaviour
 
     void EquipFunction()
     {
+        // 마우스 좌클릭으로 모든 아이템 작동
         if (Input.GetMouseButtonDown(0) && Item != null)
         {
-            // 아이템이 유리컵인 경우
-            if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
+            // 손전등 아이템 처리
+            if (Item.name == "Flashlight")
+            {
+                Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
+                if (flashlightScript != null)
+                {
+                    Debug.Log("손전등 획득 및 사용");
+                    flashlightScript.AcquireFlashlight();
+                }
+            }
+            // 유리컵 아이템 처리
+            else if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
             {
                 StartThrowing();
             }
-            else if (Item != null)
+            // 다른 아이템 처리
+            else
             {
-                // IItemFunction 인터페이스를 가진 다른 아이템 사용 처리
+                // IItemFunction 인터페이스를 가진 아이템 처리
                 IItemFunction itemFunction = Item.GetComponent<IItemFunction>();
                 if (itemFunction != null)
                 {
                     Debug.Log($"{Item.name} 아이템 기능 실행");
                     itemFunction.Function();
                 }
-
-                // 손전등 아이템 처리
-                if (Item.name == "Flashlight")
-                {
-                    Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
-                    if (flashlightScript != null)
-                    {
-                        Debug.Log("손전등 획득 및 사용");
-                        flashlightScript.AcquireFlashlight();
-                    }
-                }
             }
         }
-
-        // 던지는 동작 처리 (유리컵 충전 던지기)
-        if (isCharging)
-        {
-            ChargeThrow();
-        }
-
-        // 던지기 종료 처리
-        if (Input.GetMouseButtonUp(0) && isCharging)
-        {
-            ReleaseThrow();
-        }
     }
+
+
+       
 
 
     void StartThrowing()
@@ -261,7 +265,6 @@ public class Player_Equip : MonoBehaviour
         isCharging = false;
     }
 
-
     void ShowTrajectory(Vector3 origin, Vector3 speed)
     {
         if (trajectoryLine == null) return;
@@ -278,7 +281,6 @@ public class Player_Equip : MonoBehaviour
 
         trajectoryLine.SetPositions(points);
     }
-
     void mouseWheelScroll()
     {
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
@@ -321,3 +323,6 @@ public class Player_Equip : MonoBehaviour
         return false;
     }
 }
+
+
+

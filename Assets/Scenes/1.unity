@@ -1869,14 +1869,6 @@ PrefabInstance:
       propertyPath: glassCupPrefab
       value: 
       objectReference: {fileID: 724290729}
-    - target: {fileID: 4641985258889030927, guid: 160f55e6ac5cd5d4d88473daaab84a4e, type: 3}
-      propertyPath: maxForce
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4641985258889030927, guid: 160f55e6ac5cd5d4d88473daaab84a4e, type: 3}
-      propertyPath: throwForce
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5653916586029829173, guid: 160f55e6ac5cd5d4d88473daaab84a4e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4366,7 +4358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5721733818861825887, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.06
+      value: -21.29
       objectReference: {fileID: 0}
     - target: {fileID: 5721733818861825887, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4374,7 +4366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5721733818861825887, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.76
+      value: -5.06
       objectReference: {fileID: 0}
     - target: {fileID: 5721733818861825887, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
       propertyPath: m_LocalRotation.w
