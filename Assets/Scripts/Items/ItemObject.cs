@@ -29,7 +29,7 @@ public class ItemObject : MonoBehaviour, IInteractable
             Inventory.instance.Additem(item);
             Debug.Log($"아이템 획득: {item.ItemName}");
 
-            // 유리컵을 획득한 경우 처리
+            // 유리컵 획득 처리
             if (item.ItemName == "GlassCup")
             {
                 Debug.Log("유리컵을 획득하려고 합니다...");
@@ -45,12 +45,30 @@ public class ItemObject : MonoBehaviour, IInteractable
                     Debug.LogWarning("GlassCupThrower가 존재하지 않습니다. 유리컵을 획득할 수 없습니다.");
                 }
             }
+            // 손전등 획득 처리
+            else if (item.ItemName == "Flashlight")
+            {
+                Flashlight1 flashlightScript = FindObjectOfType<Flashlight1>();
+                if (flashlightScript != null)
+                {
+                    Debug.Log("손전등 획득 처리 중...");
+                    flashlightScript.AcquireFlashlight();
+                }
+                else
+                {
+                    Debug.LogWarning("Flashlight1 스크립트를 찾을 수 없습니다. 손전등을 획득할 수 없습니다.");
+                }
+            }
+
+            // 아이템을 획득한 후 제거
+            Destroy(gameObject);
         }
         else
         {
             Debug.LogWarning("인벤토리에 빈 슬롯이 없습니다. 아이템을 획득할 수 없습니다.");
         }
     }
+
 
     bool addSlot()
     {
