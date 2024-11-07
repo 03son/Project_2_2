@@ -44,6 +44,7 @@ public class Flashlight1 : MonoBehaviour
 
             // 손전등 켜기/끄기
             if (Input.GetMouseButtonDown(0))
+                Debug.Log("작동");
             {
                 flashlightActive = !flashlightActive;
                 flashlightLight.SetActive(flashlightActive);

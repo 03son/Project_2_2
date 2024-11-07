@@ -4356,6 +4356,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: 4400822618238498116, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 926791170547918208}
     - target: {fileID: 5544210761962123603, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
       propertyPath: m_Name
       value: Flashlight
