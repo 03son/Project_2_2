@@ -26,6 +26,8 @@ public class Inventory : MonoBehaviour
 
     public PhotonView pv;
 
+    int addItemIndex;
+
     private GameObject equippedItemObject; // 현재 장착된 아이템의 GameObject를 저장하는 변수
 
     private void Awake()
@@ -79,8 +81,11 @@ public class Inventory : MonoBehaviour
             emptySlot.quantity = 1;
             UpdateUI();
 
+            // 아이템을 획득하고 나면 Player_Equip의 invenUtil을 호출해 장착함
+            GetComponent<Player_Equip>().invenUtil(addItemIndex + 1);
+
             // 손전등 아이템을 추가할 때 Flashlight1의 AcquireFlashlight 메서드를 호출
-            if (item.ItemName == "Flashlight") // 손전등 아이템 이름이 "Flashlight"인 경우
+            if (item.ItemName == "Flashlight")
             {
                 GameObject flashlightObject = GameObject.Find("Flashlight");
                 if (flashlightObject != null)
@@ -96,7 +101,6 @@ public class Inventory : MonoBehaviour
             return;
         }
     }
-
 
     public bool HasItem(string itemName)
     {
@@ -158,7 +162,10 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item == null)
+            {
+                addItemIndex = i;
                 return slots[i];
+            }
         }
         return null;
     }

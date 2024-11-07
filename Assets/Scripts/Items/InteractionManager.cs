@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using System;
 
 public interface IInteractable
 {
@@ -97,10 +98,12 @@ public class InteractionManager : MonoBehaviour
         // F키 입력 시 현재 바라보고 있는 상호작용 가능한 오브젝트와 상호작용
         if (Input.GetKeyDown(KeyCode.F) && curInteractable != null)
         {
+            Debug.Log("상호작용 입력 받음 - 상호작용 가능한 오브젝트 발견");
             curInteractable.OnInteract(); // 상호작용 실행
             ClearInteractable(); // 상호작용 후 초기화
         }
     }
+
 
     void SetPromptText()
     {
