@@ -9,7 +9,7 @@ public class Flashlight1 : MonoBehaviour
     private Transform cameraTransform;
     private Light flashlightComponent;
 
-    [SerializeField] private float intensity = 1f; // 기본 인텐시티 값
+    [SerializeField] private float intensity = 15f; // 기본 인텐시티 값
     [SerializeField] private float range = 10f; // 기본 렌지 값
 
     void Start()

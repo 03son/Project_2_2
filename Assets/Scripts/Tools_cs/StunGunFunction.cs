@@ -6,50 +6,69 @@ public class StunGunFunction : ItemFunction, IItemFunction
 {
     public KeyCode fireKey = KeyCode.Mouse0; // 마우스 좌클릭으로 발사
     public float range = 10f; // 스턴건의 사거리
-    public float stunDuration = 2f; // 적을 2초 동안 멈추게 함
+    public float stunDuration = 5f; // 적을 5초 동안 멈추게 함
     public LayerMask enemyLayer; // 적 레이어 설정
+    public LineRenderer lineRenderer; // 라인 렌더러 컴포넌트 추가
+    public float laserDuration = 0.1f; // 레이저가 보이는 시간
+
+    public AudioClip fireSound; // 발사 소리
+    private AudioSource audioSource; // 오디오 소스를 저장할 변수
 
     private Camera playerCamera;
 
     void Start()
     {
         playerCamera = Camera.main;
-        enemyLayer = 1 << LayerMask.NameToLayer("Enemy"); // 레이어 초기화
+        lineRenderer = GetComponent<LineRenderer>();
+
+        // 오디오 소스 초기화
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            // 오디오 소스가 없다면 추가해줌
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // 발사 소리 클립 설정
+        audioSource.clip = fireSound;
+        audioSource.playOnAwake = false; // 시작할 때 자동 재생되지 않도록 설정
     }
 
     public void Function()
     {
-        Debug.Log("스턴건 작동");
         FireStunGun();
     }
 
     void FireStunGun()
     {
+        // 클릭하자마자 발사 소리 재생
+        if (audioSource != null && fireSound != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
+
         Vector3 rayOrigin = playerCamera.transform.position;
         Ray ray = new Ray(rayOrigin, playerCamera.transform.forward);
         RaycastHit hit;
 
-        // 레이캐스트 시각화
-        Debug.DrawRay(ray.origin, ray.direction * range, Color.red, 2f); // 2초 동안 빨간색으로 라인 그리기
+        StartCoroutine(ShowLaser(ray.origin, ray.direction * range));
 
         if (Physics.Raycast(ray, out hit, range, enemyLayer))
         {
-            Debug.Log("레이캐스트 충돌 오브젝트: " + hit.collider.name + ", 레이어: " + hit.collider.gameObject.layer);
-
             Stunnable stunnableEnemy = hit.collider.GetComponent<Stunnable>();
             if (stunnableEnemy != null)
             {
                 stunnableEnemy.Stun(stunDuration);
-                Debug.Log("적 감지됨: " + hit.collider.name);
-            }
-            else
-            {
-                Debug.Log("적을 감지했지만 Stunnable 컴포넌트가 없음.");
             }
         }
-        else
-        {
-            Debug.Log("적 감지 실패");
-        }
+    }
+
+    IEnumerator ShowLaser(Vector3 start, Vector3 end)
+    {
+        lineRenderer.SetPosition(0, start);
+        lineRenderer.SetPosition(1, start + end);
+        lineRenderer.enabled = true;
+        yield return new WaitForSeconds(laserDuration);
+        lineRenderer.enabled = false;
     }
 }

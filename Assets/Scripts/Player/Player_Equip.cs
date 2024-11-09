@@ -261,13 +261,13 @@ public class Player_Equip : MonoBehaviour
             itemData cupItemData = currentGlassCup.GetComponent<ItemObject>().item;
 
             // 인벤토리에서 아이템 제거
-            if (cupItemData != null)
+          /*  if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
-            }
+            } */
 
-            hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
-            currentGlassCup = null;  // 유리컵 참조 해제
+          //      hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
+         //  currentGlassCup = null;  // 유리컵 참조 해제
 
             if (trajectoryLine != null)
             {
