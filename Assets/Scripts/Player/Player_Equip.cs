@@ -61,6 +61,10 @@ public class Player_Equip : MonoBehaviour
         {
             ReleaseThrow();
         }
+        if (isCharging && Input.GetMouseButtonDown(1)) // 마우스 우클릭 시
+        {
+            CancelThrow();
+        }
     }
 
     void ConnectUi_itemSlot()
@@ -253,6 +257,15 @@ public class Player_Equip : MonoBehaviour
                 rb.AddForce(throwDirection * finalForce, ForceMode.VelocityChange);
             }
 
+            // 현재 유리컵의 itemData 가져오기
+            itemData cupItemData = currentGlassCup.GetComponent<ItemObject>().item;
+
+            // 인벤토리에서 아이템 제거
+            if (cupItemData != null)
+            {
+                Inventory.instance.RemoveItem(cupItemData.ItemName);
+            }
+
             hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
             currentGlassCup = null;  // 유리컵 참조 해제
 
@@ -264,6 +277,23 @@ public class Player_Equip : MonoBehaviour
 
         isCharging = false;
     }
+
+
+    void CancelThrow()
+    {
+        isCharging = false;
+        chargeTime = 0f;
+
+        if (trajectoryLine != null)
+        {
+            trajectoryLine.enabled = false;  // 궤적 표시 비활성화
+        }
+
+        Debug.Log("던지기 취소됨");
+    }
+
+
+
 
     void ShowTrajectory(Vector3 origin, Vector3 speed)
     {
