@@ -1,40 +1,58 @@
+using Photon.Pun;
 using UnityEngine;
+using System.Collections;
 
-public class RevivePlayer : MonoBehaviour
+public class RevivePlayer : MonoBehaviourPun
 {
-    public float holdTime = 5f; // 입력을 유지해야 하는 시간
+    public float holdTime = 5f;
     private float holdCounter = 0f;
     private bool isHolding = false;
+    private PlayerDeathManager targetPlayer;
 
-    private PlayerDeathManager targetPlayer; // 타겟 플레이어의 PlayerDeathManager
-    public MedkitTimerUI medkitTimerUI; // 타이머 UI 스크립트
+    public MedkitTimerUI medkitTimerUI;
 
     void Update()
     {
-        if (targetPlayer != null && Input.GetKey(KeyCode.E)) // E 키로 상호작용
+        if (targetPlayer != null && Input.GetKey(KeyCode.E))
         {
             isHolding = true;
             holdCounter += Time.deltaTime;
 
-            if (medkitTimerUI != null && holdCounter > 0)
-            {
-                medkitTimerUI.StartMedkitTimer();
-            }
-
             if (holdCounter >= holdTime)
             {
-                targetPlayer.Revive(); // 부활 호출
-                Debug.Log("플레이어가 부활했습니다.");
+                // 메딧킷 사용 RPC 호출
+                photonView.RPC("RPC_UseMedkit", RpcTarget.All, targetPlayer.photonView.ViewID);
                 ResetHold();
             }
         }
         else if (Input.GetKeyUp(KeyCode.E) || !isHolding)
         {
-            if (medkitTimerUI != null)
-            {
-                medkitTimerUI.ResetTimer(); // 타이머 초기화
-            }
             ResetHold();
+        }
+    }
+
+    [PunRPC]
+    public void RPC_UseMedkit(int targetPlayerViewID)
+    {
+        PhotonView targetPhotonView = PhotonView.Find(targetPlayerViewID);
+        if (targetPhotonView != null)
+        {
+            PlayerDeathManager targetPlayer = targetPhotonView.GetComponent<PlayerDeathManager>();
+            if (targetPlayer != null && targetPlayer.isDead)
+            {
+                targetPlayer.Revive();
+                Debug.Log("플레이어가 부활했습니다.");
+            }
+        }
+    }
+
+    private void ResetHold()
+    {
+        isHolding = false;
+        holdCounter = 0f;
+        if (medkitTimerUI != null)
+        {
+            medkitTimerUI.ResetTimer();
         }
     }
 
@@ -54,11 +72,5 @@ public class RevivePlayer : MonoBehaviour
             targetPlayer = null;
             ResetHold();
         }
-    }
-
-    private void ResetHold()
-    {
-        isHolding = false;
-        holdCounter = 0f;
     }
 }

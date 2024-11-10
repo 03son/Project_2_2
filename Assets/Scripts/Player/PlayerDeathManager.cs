@@ -14,6 +14,9 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         isDead = true;
         deathPosition = transform.position;
 
+        // 죽음 상태를 다른 클라이언트에 동기화
+        photonView.RPC("RPC_Die", RpcTarget.All, deathPosition);
+
         // 죽음 효과 표시
         if (deathEffect != null)
             Instantiate(deathEffect, deathPosition, Quaternion.identity);
@@ -21,14 +24,17 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         // 죽은 플레이어의 움직임과 상호작용 멈추기
         GetComponent<PlayerMove>().enabled = false;
         GetComponent<PlayerDash>().enabled = false;
-
-        // 싱글 플레이용으로 NotifyDeath()를 직접 호출
-        NotifyDeath(deathPosition);
     }
 
-    void NotifyDeath(Vector3 position)
+    [PunRPC]
+    void RPC_Die(Vector3 position)
     {
         Debug.Log("플레이어가 이 위치에서 죽었습니다: " + position);
+        isDead = true;
+
+        // 다른 클라이언트에서도 움직임과 상호작용 멈추기
+        GetComponent<PlayerMove>().enabled = false;
+        GetComponent<PlayerDash>().enabled = false;
     }
 
     public void Revive()
@@ -41,5 +47,17 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         transform.position = deathPosition;
         GetComponent<PlayerMove>().enabled = true;
         GetComponent<PlayerDash>().enabled = true;
+
+        // 부활 상태를 동기화
+        photonView.RPC("RPC_Revive", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_Revive()
+    {
+        isDead = false;
+        GetComponent<PlayerMove>().enabled = true;
+        GetComponent<PlayerDash>().enabled = true;
+        Debug.Log("플레이어가 부활했습니다.");
     }
 }

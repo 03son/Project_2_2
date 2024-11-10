@@ -46,6 +46,9 @@ MonoBehaviour:
   - RPC_AttachItem
   - RPC_StartSubmarine
   - NotifyDeath
+  - RPC_UseMedkit
+  - RPC_Die
+  - RPC_Revive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
