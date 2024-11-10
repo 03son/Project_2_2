@@ -11,7 +11,6 @@ public class RevivePlayer : MonoBehaviourPun
 
     public MedkitTimerUI medkitTimerUI;
 
-
     void Start()
     {
         if (medkitTimerUI == null)
@@ -31,9 +30,10 @@ public class RevivePlayer : MonoBehaviourPun
             if (!isHolding)
             {
                 isHolding = true;
-                if (medkitTimerUI != null)
+                if (medkitTimerUI != null && medkitTimerUI.photonView.IsMine)
                 {
-                    medkitTimerUI.TriggerMedkitTimer();
+                    Debug.Log("RPC 호출 시도 중");
+                    medkitTimerUI.photonView.RPC("RPC_TriggerMedkitTimer", RpcTarget.All);
                 }
             }
 
@@ -41,7 +41,7 @@ public class RevivePlayer : MonoBehaviourPun
 
             if (holdCounter >= holdTime)
             {
-                // 메딧킷 사용 RPC 호출
+                // 메딕킷 사용 RPC 호출
                 photonView.RPC("RPC_UseMedkit", RpcTarget.All, targetPlayer.photonView.ViewID);
                 ResetHold();
             }
@@ -51,6 +51,8 @@ public class RevivePlayer : MonoBehaviourPun
             ResetHold();
         }
     }
+
+
 
     [PunRPC]
     public void RPC_UseMedkit(int targetPlayerViewID)
