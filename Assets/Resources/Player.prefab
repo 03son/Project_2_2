@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b627cbef64cd89849938657aae8e75fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 5
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
   walkSound: {fileID: 1462954312414108516}
