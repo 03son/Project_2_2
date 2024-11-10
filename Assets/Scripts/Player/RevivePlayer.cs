@@ -11,11 +11,32 @@ public class RevivePlayer : MonoBehaviourPun
 
     public MedkitTimerUI medkitTimerUI;
 
+
+    void Start()
+    {
+        if (medkitTimerUI == null)
+        {
+            medkitTimerUI = FindObjectOfType<MedkitTimerUI>();
+            if (medkitTimerUI == null)
+            {
+                Debug.LogError("MedkitTimerUI를 찾을 수 없습니다. 씬에 해당 컴포넌트가 있는지 확인하세요.");
+            }
+        }
+    }
+
     void Update()
     {
         if (targetPlayer != null && Input.GetKey(KeyCode.E))
         {
-            isHolding = true;
+            if (!isHolding)
+            {
+                isHolding = true;
+                if (medkitTimerUI != null)
+                {
+                    medkitTimerUI.TriggerMedkitTimer();
+                }
+            }
+
             holdCounter += Time.deltaTime;
 
             if (holdCounter >= holdTime)

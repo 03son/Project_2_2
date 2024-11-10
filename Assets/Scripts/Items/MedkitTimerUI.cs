@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using Photon.Pun;
 
-public class MedkitTimerUI : MonoBehaviour
+public class MedkitTimerUI : MonoBehaviourPun
 {
     public Image timerImage; // 원형 프로그레스 바 이미지
     public TextMeshProUGUI timerText; // TextMeshProUGUI 타입으로 설정
@@ -16,10 +17,21 @@ public class MedkitTimerUI : MonoBehaviour
         timerText.gameObject.SetActive(false);
     }
 
+    public void TriggerMedkitTimer()
+    {
+        // 타이머 UI 활성화
+        timerImage.gameObject.SetActive(true);
+        timerText.gameObject.SetActive(true);
+
+        // 타이머 코루틴 시작
+        StartCoroutine(RunTimer());
+    }
+
+
+    [PunRPC]
     public void StartMedkitTimer()
     {
-        Debug.Log("ds");
-        // 타이머 UI 활성화
+        Debug.Log("Medkit 타이머 시작");
         timerImage.gameObject.SetActive(true);
         timerText.gameObject.SetActive(true);
         StartCoroutine(RunTimer());
@@ -45,7 +57,7 @@ public class MedkitTimerUI : MonoBehaviour
         timerImage.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
 
-        // 부활 로직 실행
+        // 부활 로직이 완료된 후
         Debug.Log("메딧킷 사용 완료!");
     }
 
@@ -56,5 +68,4 @@ public class MedkitTimerUI : MonoBehaviour
         timerImage.gameObject.SetActive(false); // 이미지 숨김
         timerText.gameObject.SetActive(false); // 텍스트 숨김
     }
-
 }

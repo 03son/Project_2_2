@@ -49,6 +49,7 @@ MonoBehaviour:
   - RPC_UseMedkit
   - RPC_Die
   - RPC_Revive
+  - StartMedkitTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
