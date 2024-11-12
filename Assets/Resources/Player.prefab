@@ -142,9 +142,6 @@ MonoBehaviour:
   speed: 5
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
-  walkSound: {fileID: 1462954312414108516}
-  walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
-  walkVolume: 0.15
 --- !u!114 &400456349316490321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +266,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6809498836912174046}
-  sceneViewId: 1
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &-8309449392869349436
