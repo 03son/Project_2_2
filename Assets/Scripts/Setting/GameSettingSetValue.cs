@@ -25,7 +25,7 @@ public class GameSettingSetValue : MonoBehaviour
     #region 게임 설정 불러오기
     void InputKeySetting()
     {
-
+        LoadKey();
     } //조작키
     void VideosSetting()
     {
@@ -105,7 +105,17 @@ public class GameSettingSetValue : MonoBehaviour
     }
     #endregion
     #region 조작키 키값 설정 불러오기
-
+    KeyCode StringToKeyCode(string keyString) //string -> KeyCode
+    {
+        return (KeyCode)System.Enum.Parse(typeof(KeyCode), keyString);
+    }
+    void LoadKey()
+    {
+       KeyManager.Front_Key = PlayerPrefs.HasKey("FrontKey") ? StringToKeyCode(PlayerPrefs.GetString("FrontKey")) : KeyCode.W; //앞
+       KeyManager.Back_Key = PlayerPrefs.HasKey("BackKey") ? StringToKeyCode(PlayerPrefs.GetString("BackKey")) : KeyCode.S; //뒤
+       KeyManager.Left_Key = PlayerPrefs.HasKey("LeftKey") ? StringToKeyCode(PlayerPrefs.GetString("LeftKey")) : KeyCode.A; //좌
+       KeyManager.Right_Key = PlayerPrefs.HasKey("RightKey") ? StringToKeyCode(PlayerPrefs.GetString("RightKey")) : KeyCode.D; //우
+    }
     #endregion
     #region 오디오 설정 불러오기
     void SoundSeting()//마스터볼륨, 배경볼륨, 효과음볼륨
