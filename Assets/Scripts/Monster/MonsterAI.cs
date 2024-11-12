@@ -25,6 +25,7 @@ public class MonsterAI : MonoBehaviour
     public float fieldOfView = 120f;               // 시야각
     public float hearingRange = 50f;               // 청각 범위
     public float minDecibelToDetect = 30f;        // 감지 가능한 최소 데시벨 값
+    private Mic micScript;                        // Mic 스크립트 참조
 
     private enum State { Idle, Patrol, Chase, Search };  // 상태 정의 (Idle 추가)
     private State currentState;                    // 현재 상태
@@ -231,7 +232,7 @@ public class MonsterAI : MonoBehaviour
             Transform playerTransform = playerObject.transform;
 
             // 플레이어가 감지 범위 내에 있는지 확인
-            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform))
+            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform) || CanHearVoiceSource(playerTransform))
             {
                 if (!detectedPlayers.Contains(playerTransform))
                 {
@@ -294,6 +295,39 @@ public class MonsterAI : MonoBehaviour
         }
         return false; // 감지되지 않음
     }
+    private bool CanHearVoiceSource(Transform player)
+    {
+        // 모든 플레이어 객체를 가져오기
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+        // 각 플레이어에 대해 확인
+        foreach (GameObject playerObject in playerObjects)
+        {
+            // 플레이어의 Mic 컴포넌트 찾기
+            micScript = playerObject.GetComponentInChildren<Mic>();
+
+            // Mic가 없으면 감지할 수 없음
+            if (micScript == null)
+            {
+                continue;
+            }
+
+            // Mic에서 실시간으로 계산된 데시벨 값 가져오기
+            float decibel = micScript.GetDecibelAtDistance(transform.position);
+            Debug.Log(decibel);
+
+            // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
+            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
+            {
+                Debug.Log("Sound detected from player within hearing range");
+                return true;  // 소리가 감지됨
+            }
+        }
+
+        // 어느 플레이어의 소리도 감지되지 않으면 false 반환
+        return false;
+    }
+
 
     private void OnDrawGizmosSelected()
     {
