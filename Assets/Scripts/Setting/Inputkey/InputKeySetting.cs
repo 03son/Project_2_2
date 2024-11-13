@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InputKeySetting : MonoBehaviour
+public class InputKeySetting : MonoBehaviour , IResetKey
 {
     public Button currentKeyButton;
     protected TextMeshProUGUI keyText;
@@ -16,11 +16,14 @@ public class InputKeySetting : MonoBehaviour
 
     protected static bool isClickChangeButton = false; //변경할 키는 1개씩만 가능
 
+    protected GameSettingSetValue key;
     void Awake()
     {
         keyText = currentKeyButton.gameObject.transform.GetComponentInChildren<TextMeshProUGUI>();
 
         currentKeyButton.gameObject.AddUIEvent(OnClickKeyButton);
+
+        key = GameSettingSetValue.Instance;
     }
 
     protected virtual void OnClickKeyButton(PointerEventData button)
@@ -31,13 +34,12 @@ public class InputKeySetting : MonoBehaviour
     protected IEnumerator ChangeKey()
     {
         isClickChangeButton = true;
-        Debug.Log("키 변경");
         keyText.text = "변경하려는 키를 입력하세요.";
         keyText.fontSize = 15;
 
         while (true)
         {
-            if (!string.IsNullOrEmpty(Input.inputString) && Bool_StringToKeyCode(Input.inputString[0].ToString().ToUpper()))
+            if (!string.IsNullOrEmpty(Input.inputString) && Bool_StringToKeyCode(Input.inputString[0].ToString().ToUpper()) && !Input.GetKey(KeyCode.Space))
             {
                 char key = Input.inputString[0];
                 keyText.text = key.ToString().ToUpper();
@@ -47,11 +49,12 @@ public class InputKeySetting : MonoBehaviour
             }
             else
             {
-                // 컨트롤, 쉬프트 키 감지
+                // 컨트롤, 쉬프트 , 스페이스 키 감지
                 bool isShiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 bool isCtrlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+                bool isSpaceBar = Input.GetKey(KeyCode.Space);
 
-                if (isShiftPressed | isCtrlPressed) //XOR 연산자으로 판단
+                if (isShiftPressed | isCtrlPressed | isSpaceBar) //XOR 연산자으로 판단
                 {
                     if (isShiftPressed) //쉬프트
                     {
@@ -73,6 +76,13 @@ public class InputKeySetting : MonoBehaviour
                         else if (Input.GetKey(KeyCode.RightControl)) //오른쪽 컨트롤
                         {
                             keyText.text = "RightControl";
+                        }
+                    }
+                    if (isSpaceBar) //스페이스 바
+                    {
+                        if (Input.GetKey(KeyCode.Space))
+                        {
+                            keyText.text = "Space";
                         }
                     }
                     currentKey = StringToKeyCode(keyText.text);
@@ -109,5 +119,10 @@ public class InputKeySetting : MonoBehaviour
             Debug.LogWarning("지정할 수 없음");
             return false; // 기본값 반환
         }
+    }
+
+    public virtual void ResetKey()
+    {
+
     }
 }
