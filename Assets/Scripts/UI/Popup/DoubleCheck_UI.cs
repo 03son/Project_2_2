@@ -30,7 +30,7 @@ public class DoubleCheck_UI : UI_Popup
         if (sceneName.name == "Main_Screen")//메인화면일 경우
             Ask_Text = "게임을 종료하시겠습니까?";
         
-        if (sceneName.name == "1") //인게임일 경우
+        if (sceneName.name == "UI") //인게임일 경우
             Ask_Text = "게임을 나가겠습니까?";
         
             Ask_again_text.text = Ask_Text;
@@ -50,7 +50,7 @@ public class DoubleCheck_UI : UI_Popup
         }
 
         //인게임 일 때
-        if (sceneName.name == "1")
+        if (sceneName.name == "UI")
         {
             Debug.Log("게임 나가기");
             if (PhotonNetwork.IsConnected)
