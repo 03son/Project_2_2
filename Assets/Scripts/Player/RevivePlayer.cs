@@ -2,37 +2,54 @@ using UnityEngine;
 
 public class RevivePlayer : MonoBehaviour
 {
-    public float holdTime = 5f;
+    public float holdTime = 5f; // 입력을 유지해야 하는 시간
     private float holdCounter = 0f;
     private bool isHolding = false;
 
-    private PlayerDeathManager targetPlayer;
-    public MedkitTimerUI medkitTimerUI;
+    private PlayerDeathManager targetPlayer; // 타겟 플레이어의 PlayerDeathManager
+    public MedkitTimerUI medkitTimerUI; // 타이머 UI 스크립트
+
+    void Start()
+    {
+        // MedkitTimerUI가 Inspector에서 연결되지 않았을 경우 자동으로 찾기
+        if (medkitTimerUI == null)
+        {
+            medkitTimerUI = FindObjectOfType<MedkitTimerUI>();
+            if (medkitTimerUI != null)
+            {
+                Debug.Log("MedkitTimerUI 연결 성공: " + medkitTimerUI.name);
+            }
+            else
+            {
+                Debug.LogError("MedkitTimerUI를 찾을 수 없습니다. 씬에 MedkitTimerUI가 있는지 확인하세요.");
+            }
+        }
+    }
 
     void Update()
     {
-        if (targetPlayer != null && Input.GetKey(KeyCode.E))
+        if (targetPlayer != null && Input.GetKey(KeyCode.E)) // E 키로 상호작용
         {
             isHolding = true;
             holdCounter += Time.deltaTime;
 
-            if (medkitTimerUI != null && holdCounter > 0 && !isHolding)
+            if (medkitTimerUI != null && holdCounter > 0)
             {
-                medkitTimerUI.StartMedkitTimer();
+                medkitTimerUI.StartMedkitTimer(); // 타이머 UI 시작
             }
 
-            if (holdCounter >= holdTime)
+            if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
             {
-                targetPlayer.Revive();
+                targetPlayer.Revive(); // 부활 호출
                 Debug.Log("플레이어가 부활했습니다.");
                 ResetHold();
             }
         }
-        else if (Input.GetKeyUp(KeyCode.E) || !isHolding)
+        else if (Input.GetKeyUp(KeyCode.E) || !isHolding) // 키를 떼거나 상호작용 중단
         {
             if (medkitTimerUI != null)
             {
-                medkitTimerUI.ResetTimer();
+                medkitTimerUI.ResetTimer(); // 타이머 초기화
             }
             ResetHold();
         }
