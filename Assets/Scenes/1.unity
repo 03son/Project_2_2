@@ -1267,6 +1267,7 @@ GameObject:
   - component: {fileID: 1525789500}
   - component: {fileID: 1525789499}
   - component: {fileID: 1525789506}
+  - component: {fileID: 1525789507}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -1433,7 +1434,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e828ab90b7330f546846e1052bbbe145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hearingRange: 50
   navAgent: {fileID: 1525789499}
+--- !u!114 &1525789507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525789498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &1699088493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6491222372347642638, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
