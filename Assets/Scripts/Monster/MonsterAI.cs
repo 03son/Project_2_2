@@ -10,7 +10,7 @@ public class MonsterAI : MonoBehaviour
     public Transform[] patrolPoints;               // 순찰 지점 배열
     public LayerMask playerLayer;                  // 플레이어가 속한 레이어
     public float moveSpeed = 3.5f;                 // 순찰 시 이동 속도
-    public float chaseSpeed = 10.0f;               // 추적 시 이동 속도
+    public float chaseSpeed = 10.0f;                // 추적 시 이동 속도
     public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
     public float idleTimeBeforePatrol = 5.0f;      // 예외 처리 - 정지 후 순찰로 돌아가는 시간
 
@@ -20,19 +20,14 @@ public class MonsterAI : MonoBehaviour
     private bool isWaiting = true;                 // 대기 상태인지 여부
     private float waitTimer = 0f;                  // 대기 타이머
     private float idleTimer = 0f;                  // 정지 상태 타이머
-    private Vector3 investigatePoint;              // 조사할 지점
 
     public float viewDistance = 10f;               // 시야 거리
     public float fieldOfView = 120f;               // 시야각
     public float hearingRange = 50f;               // 청각 범위
-<<<<<<< HEAD
     public float minDecibelToDetect = 30f;        // 감지 가능한 최소 데시벨 값
     private Mic micScript;                        // Mic 스크립트 참조
-=======
-    public float minDecibelToDetect = 30f;         // 감지 가능한 최소 데시벨 값
->>>>>>> origin/Develop_02
 
-    private enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Investigate 추가)
+    private enum State { Idle, Patrol, Chase, Search };  // 상태 정의 (Idle 추가)
     private State currentState;                    // 현재 상태
 
     private void Start()
@@ -77,7 +72,8 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
-        // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경)
+        // 추후 제작할 예외 처리 (몬스터가 하나의 플레이어만 따라가지 않도록 바꾸기)
+        // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경
         if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
         {
             idleTimer += Time.deltaTime;
@@ -93,7 +89,7 @@ public class MonsterAI : MonoBehaviour
         {
             idleTimer = 0f; // 몬스터가 움직이면 idleTimer 초기화
         }
-
+        //Debug.Log(currentState);
         // 현재 상태에 따라 적절한 행동 수행
         switch (currentState)
         {
@@ -108,9 +104,6 @@ public class MonsterAI : MonoBehaviour
                 break;
             case State.Search:
                 Search();
-                break;
-            case State.Investigate:
-                Investigate();
                 break;
         }
 
@@ -201,29 +194,6 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void Investigate() // 조사 상태 추가
-    {
-        agent.SetDestination(investigatePoint);
-
-        // 조사 지점에 도달하면 순찰 상태로 전환
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-        {
-            currentState = State.Patrol;
-        }
-
-        // 다시 플레이어를 발견하면 추적 상태로 전환
-        if (detectedPlayers.Count > 0)
-        {
-            currentState = State.Chase;
-        }
-    }
-
-    public void SetInvestigatePoint(Vector3 point)
-    {
-        investigatePoint = point;
-        currentState = State.Investigate;
-    }
-
     private void GoToNextPatrolPoint()
     {
         if (patrolPoints.Length == 0)
@@ -281,6 +251,7 @@ public class MonsterAI : MonoBehaviour
             }
         }
     }
+
 
     private bool CanSeePlayer(Transform player)
     {
@@ -394,7 +365,5 @@ public class MonsterAI : MonoBehaviour
         // 청각 범위 (원형) 그리기
         Gizmos.color = Color.blue; // 청각 범위는 파란색으로 표시
         Gizmos.DrawWireSphere(origin, hearingRange);
-
-
     }
 }

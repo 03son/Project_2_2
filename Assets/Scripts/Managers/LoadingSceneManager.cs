@@ -9,8 +9,6 @@ public class LoadingSceneManager : MonoBehaviour
 {
     public static LoadingSceneManager loa;
 
-    static bool hasRunOnce = false;
-
     [SerializeField] Slider LoadingBar;
     [SerializeField] Image background_LoadingImage;
 
@@ -26,13 +24,6 @@ public class LoadingSceneManager : MonoBehaviour
         }
         else
             Destroy(this.gameObject);
-
-        if (hasRunOnce) //게임 실행 중 최초 1번만 실행
-        {
-            hasRunOnce = true;
-            Debug.Log("게임 실행");
-            PlayerPrefs.SetString("PlayerNickName", null);
-        }    
     }
     private void Start()
     {
@@ -129,12 +120,5 @@ public class LoadingSceneManager : MonoBehaviour
     void loadingImage(int MapNum) // 이미지
     {
         background_LoadingImage.GetComponent<Image>().sprite = loadingImages[MapNum];
-    }
-
-    //프로그램이 종료되면 자동으로 실행, PlayerPrefs정보 삭제
-    void OnApplicationQuit()
-    {
-        Debug.Log("게임 종료");
-        PlayerPrefs.SetString("PlayerNickName", null);
     }
 }

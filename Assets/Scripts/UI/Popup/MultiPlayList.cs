@@ -90,7 +90,7 @@ public class MultiPlayList : UI_Popup
     void Go_Main()
     {
         //메인화면 버튼 4종 활성화
-        GameObject.Find("UI_Button").transform.GetChild(0).gameObject.SetActive(true);
+        GameObject.Find("UI_Button").transform.GetChild(1).gameObject.SetActive(true);
 
         //멀티 리스트 비활성화
         gameObject.SetActive(false);
@@ -101,7 +101,15 @@ public class MultiPlayList : UI_Popup
     }
     void BackButton(PointerEventData button)
     {
-        Go_Main();
+        //메인화면 버튼 4종 활성화
+        GameObject.Find("UI_Button").transform.GetChild(1).gameObject.SetActive(true);
+
+        //멀티 리스트 비활성화
+        gameObject.SetActive(false);
+        //ClosePopupUI();
+
+        //서버연결 끊기
+        PhotonManager.instance.DisConnentSever();
     }
     void Go_Join_Createroom()
     {

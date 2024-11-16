@@ -5,7 +5,6 @@ using TMPro;
 using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using Photon.Pun;
-using System;
 
 public interface IInteractable
 {
@@ -97,7 +96,7 @@ public class InteractionManager : MonoBehaviour
     public void OnInteractInput()
     {
         //F키를 누른 시점에서 현재 바라보는 curInteractable 오브젝트가 있다면
-        if (Input.GetKeyDown(KeyManager.Interaction_Key) && curInteractable != null)
+        if (Input.GetKeyDown(KeyCode.F) && curInteractable != null)
         {
             //아이템을 흭득하면 아이템과 상호작용을 진행하고 초기화
             curInteractable.OnInteract();
@@ -106,9 +105,7 @@ public class InteractionManager : MonoBehaviour
             for (int i = 0; i < GetComponent<Inventory>().slots.Length; i++)
             {
                 if (GetComponent<Inventory>().slots[i].item != null)
-                {
                     GetComponent<Player_Equip>().numderKeySelectSlot(i + 1);
-                }
             }
 
             curInteractGameobject = null;
@@ -122,6 +119,6 @@ public class InteractionManager : MonoBehaviour
         promptText.gameObject.SetActive(true);
 
         //<b></b> : <b>는 볼트체
-        promptText.text = string.Format($"<b>[{KeyManager.Interaction_Key}]</b> {curInteractable.GetInteractPrompt()}");
+        promptText.text = string.Format("<b>[F]</b> {0}", curInteractable.GetInteractPrompt());
     }
 }

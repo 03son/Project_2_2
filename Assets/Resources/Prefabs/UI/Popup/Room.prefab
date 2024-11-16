@@ -544,26 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9a3e3ede01c454496194fb6882894f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_RoomInfo:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   roomName: {fileID: 2925818389294488042}
-  playerNickName:
-  - 
-  - 
-  - 
-  - 
-  playerActorNumber: 00000000000000000000000000000000
-  CharacterImage:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  nullPlayerImage: {fileID: 0}
-  start_testversion: {fileID: 0}
 --- !u!1 &8184364047874152900
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,11 +620,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -679,7 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf9652067476b64398893ffb9d43165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BG: {fileID: 0}
+  PlayerSlot: {fileID: 3621766304410280518}
 --- !u!1001 &5151430846866355304
 PrefabInstance:
   m_ObjectHideFlags: 0

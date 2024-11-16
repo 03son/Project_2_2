@@ -18,11 +18,11 @@ public class PlayerDash : MonoBehaviour
 
     void Update()
     {
-        if (!pv.IsMine && PhotonNetwork.IsConnected)
+        if (!pv.IsMine)
             return;
 
         // 대쉬 기능 (왼쪽 Shift 키를 누르고 있는 동안 작동)
-        if (Input.GetKey(KeyManager.Run_Key))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             Vector3 dashDirection = cameraTransform.forward;
             dashDirection.y = 0f; // 대쉬는 수평 방향으로만 적용

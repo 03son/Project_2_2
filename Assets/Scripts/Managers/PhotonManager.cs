@@ -18,7 +18,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 룸 목록에 대한 데이터를 저장하기 위한 딕셔너리 자료형
     private Dictionary<string, GameObject> rooms = new Dictionary<string, GameObject>();
 
-    public string PlayerNickName = null;
+    public string PlayerNickName;
 
     HashTable playerCP;
 
@@ -48,10 +48,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private Dictionary<int, GameObject> playerItems = new Dictionary<int, GameObject>();
     void Awake()
     {
-        instance = this;
-
-        string playerPrefs_NickName = PlayerPrefs.GetString("PlayerNickName").Length > 0 ? PlayerPrefs.GetString("PlayerNickName") : null;
-        PlayerNickName = playerPrefs_NickName != null ? playerPrefs_NickName : null;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+            Destroy(this.gameObject);
 
         //마스터 클라이언트의 씬 자동 동기화 옵션
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -71,15 +74,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     void Start()
     {
         roomSetting = BG.GetComponent<RoomManager>();
-        LoadingText.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            StatusText.text = PhotonNetwork.NetworkClientState.ToString();
-        }
+        StatusText.text = PhotonNetwork.NetworkClientState.ToString();
     }
 
     
