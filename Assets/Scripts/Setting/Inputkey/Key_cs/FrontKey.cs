@@ -18,4 +18,11 @@ public class FrontKey : InputKeySetting
 
         KeyManager.Front_Key = currentKey;
     }
+    public override void ResetKey()
+    {
+        base.ResetKey();
+        PlayerPrefs.DeleteKey("FrontKey");
+        key.LoadKey();
+        keyText.text = KeyManager.Front_Key.ToString();
+    }
 }

@@ -17,4 +17,11 @@ public class BackKey : InputKeySetting
 
         KeyManager.Back_Key = currentKey;
     }
+    public override void ResetKey()
+    {
+        base.ResetKey();
+        PlayerPrefs.DeleteKey("BackKey");
+        key.LoadKey();
+        keyText.text = KeyManager.Back_Key.ToString();
+    }
 }

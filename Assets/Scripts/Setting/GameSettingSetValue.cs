@@ -6,6 +6,8 @@ using System.Linq;
 public class GameSettingSetValue : MonoBehaviour
 {   //저장된 게임의 세팅을 로드
 
+    public static GameSettingSetValue Instance;
+
     static bool LoadGameSetting = false;
 
     List<Resolution> resolutions;
@@ -13,6 +15,8 @@ public class GameSettingSetValue : MonoBehaviour
     void Awake()
     {
         //PlayerPrefs.DeleteAll();
+
+        Instance = this;
 
         //게임 최초 실행에만 저장된 설정을 적용
         if (LoadGameSetting)
@@ -109,12 +113,19 @@ public class GameSettingSetValue : MonoBehaviour
     {
         return (KeyCode)System.Enum.Parse(typeof(KeyCode), keyString);
     }
-    void LoadKey()
+    public void LoadKey()
     {
        KeyManager.Front_Key = PlayerPrefs.HasKey("FrontKey") ? StringToKeyCode(PlayerPrefs.GetString("FrontKey")) : KeyCode.W; //앞
        KeyManager.Back_Key = PlayerPrefs.HasKey("BackKey") ? StringToKeyCode(PlayerPrefs.GetString("BackKey")) : KeyCode.S; //뒤
        KeyManager.Left_Key = PlayerPrefs.HasKey("LeftKey") ? StringToKeyCode(PlayerPrefs.GetString("LeftKey")) : KeyCode.A; //좌
        KeyManager.Right_Key = PlayerPrefs.HasKey("RightKey") ? StringToKeyCode(PlayerPrefs.GetString("RightKey")) : KeyCode.D; //우
+       KeyManager.Jump_Key = PlayerPrefs.HasKey("Jump_Key") ? StringToKeyCode(PlayerPrefs.GetString("Jump_Key")) : KeyCode.Space; //점프
+       KeyManager.Run_Key = PlayerPrefs.HasKey("Run_Key") ? StringToKeyCode(PlayerPrefs.GetString("Run_Key")) : KeyCode.LeftShift; //달리기
+       KeyManager.SitDown_Key = PlayerPrefs.HasKey("SitDown_Key") ? StringToKeyCode(PlayerPrefs.GetString("SitDown_Key")) : KeyCode.LeftControl; //앉기
+
+       KeyManager.Interaction_Key = PlayerPrefs.HasKey("Interaction_Key") ? StringToKeyCode(PlayerPrefs.GetString("Interaction_Key")) : KeyCode.F; //상호작용
+       KeyManager.Mic_Key = PlayerPrefs.HasKey("Mic_Key") ? StringToKeyCode(PlayerPrefs.GetString("Mic_Key")) : KeyCode.T; //마이크
+       KeyManager.Drop_Key = PlayerPrefs.HasKey("Drop_Key") ? StringToKeyCode(PlayerPrefs.GetString("Drop_Key")) : KeyCode.G; //버리기
     }
     #endregion
     #region 오디오 설정 불러오기

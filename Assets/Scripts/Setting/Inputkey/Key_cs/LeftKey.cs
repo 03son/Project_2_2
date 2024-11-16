@@ -17,4 +17,11 @@ public class LeftKey : InputKeySetting
 
         KeyManager.Left_Key = currentKey;
     }
+    public override void ResetKey()
+    {
+        base.ResetKey();
+        PlayerPrefs.DeleteKey("LeftKey");
+        key.LoadKey();
+        keyText.text = KeyManager.Left_Key.ToString();
+    }
 }

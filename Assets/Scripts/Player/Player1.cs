@@ -11,9 +11,12 @@ public class Player1 : MonoBehaviour
     HashTable playerCP;
 
     PhotonView pv;
+
+    GameObject mainCam;
+
     void Awake()
     {
-        if (!PhotonNetwork.IsConnected)//½Ì±Û ÇÃ·¹ÀÌ
+        if (!PhotonNetwork.IsConnected)//ï¿½Ì±ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½
         {
             FindCam();
             return;
@@ -21,28 +24,29 @@ public class Player1 : MonoBehaviour
 
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
         pv = GetComponent<PhotonView>();
-        if (pv.IsMine) //¸ÖÆ¼ ÇÃ·¹ÀÌ
+        if (pv.IsMine) //ï¿½ï¿½Æ¼ ï¿½Ã·ï¿½ï¿½ï¿½
         {
             FindCam();
 
-            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("animalName"))//Ä³¸¯ÅÍ ÇÒ´ç
+            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("animalName"))//Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½
             {
                 PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("animalName", out object _animalName);
-                if ((string)_animalName == "¹«ÀÛÀ§")
+                if ((string)_animalName == "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
                 {
-                    //4°³ Ä³¸¯ÅÍ Áß ·£´ý 1ÅÃ
+                    //4ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½
                 }
                 else
                 {
-                    //¼±ÅÃÇÑ Ä³¸¯ÅÍ·Î 1ÅÃ
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í·ï¿½ 1ï¿½ï¿½
                 }
                 Debug.Log((string)_animalName);
             }
+
         }
     }
     void Start()
     {
-        if (PhotonNetwork.IsConnected)//¸ÖÆ¼ÀÏ ¶§¸¸
+        if (PhotonNetwork.IsConnected)//ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             notMine();
         }
@@ -57,7 +61,7 @@ public class Player1 : MonoBehaviour
 
     void FindCam()
     {
-        // Main Camera, Follow Cam, EquipCamera¸¦ Ã£¾Æ ÇÃ·¹ÀÌ¾î Æ®·£½ºÆûÀ» ºÎ¸ð·Î ¼³Á¤
+        // Main Camera, Follow Cam, EquipCameraï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Transform mainCameraTransform = GameObject.Find("Main Camera")?.transform;
         Transform followCamTransform = GameObject.Find("Follow Cam")?.transform;
         Transform equipCameraTransform = GameObject.Find("EquipCamera")?.transform;
@@ -68,7 +72,7 @@ public class Player1 : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Main Camera¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("Main Cameraï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
 
         if (followCamTransform != null)
@@ -77,23 +81,23 @@ public class Player1 : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Follow CamÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("Follow Camï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
 
         if (equipCameraTransform != null)
         {
-            equipCameraTransform.SetParent(mainCameraTransform); // EquipCamera¸¦ Main CameraÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤
-            equipCameraTransform.localPosition = Vector3.zero; // ºÎ¸ð ±âÁØ À§Ä¡ ÃÊ±âÈ­
-            equipCameraTransform.localRotation = Quaternion.identity; // ºÎ¸ð ±âÁØ È¸Àü ÃÊ±âÈ­
+            equipCameraTransform.SetParent(mainCameraTransform); // EquipCameraï¿½ï¿½ Main Cameraï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            equipCameraTransform.localPosition = Vector3.zero; // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½Ê±ï¿½È­
+            equipCameraTransform.localRotation = Quaternion.identity; // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½Ê±ï¿½È­
         }
         else
         {
-            Debug.LogWarning("EquipCamera¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("EquipCameraï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
     }
 
 
-    void notMine() //ÀÚ±â ÀÚ½ÅÀÌ ¾Æ´Ï¸é ½ºÅ©¸³Æ®¿Í ÀÎº¥Åä¸® UI ºñÈ°¼ºÈ­
+    void notMine() //ï¿½Ú±ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® UI ï¿½ï¿½È°ï¿½ï¿½È­
     {
         if (!pv.IsMine)
         {

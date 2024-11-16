@@ -6,14 +6,14 @@ using Photon.Pun;
 
 public class ItemSlot
 {
-    public itemData item; // ¾ÆÀÌÅÛ µ¥ÀÌÅÍ
-    public int quantity; // °³¼ö
+    public itemData item; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public int quantity; // ï¿½ï¿½ï¿½ï¿½
 }
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlotUI[] ui_itemSlot;
-    public ItemSlot[] slots;
+    public ItemSlotUI[] ui_itemSlot = new ItemSlotUI[6]; // UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public ItemSlot[] slots; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½è¿­
 
     public Transform dropPos;
 
@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
 
     int addItemIndex;
 
-    private GameObject equippedItemObject; // ÇöÀç ÀåÂøµÈ ¾ÆÀÌÅÛÀÇ GameObject¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    private GameObject equippedItemObject; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GameObjectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Awake()
     {
@@ -81,10 +81,10 @@ public class Inventory : MonoBehaviour
             emptySlot.quantity = 1;
             UpdateUI();
 
-            // ¾ÆÀÌÅÛÀ» È¹µæÇÏ°í ³ª¸é Player_EquipÀÇ invenUtilÀ» È£ÃâÇØ ÀåÂøÇÔ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ Player_Equipï¿½ï¿½ invenUtilï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             GetComponent<Player_Equip>().invenUtil(addItemIndex + 1);
 
-            // ¼ÕÀüµî ¾ÆÀÌÅÛÀ» Ãß°¡ÇÒ ¶§ Flashlight1ÀÇ AcquireFlashlight ¸Þ¼­µå¸¦ È£Ãâ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ Flashlight1ï¿½ï¿½ AcquireFlashlight ï¿½Þ¼ï¿½ï¿½å¸¦ È£ï¿½ï¿½
             if (item.ItemName == "Flashlight")
             {
                 GameObject flashlightObject = GameObject.Find("Flashlight");
@@ -104,34 +104,34 @@ public class Inventory : MonoBehaviour
 
     public bool HasItem(string itemName)
     {
-        // ÀÎº¥Åä¸® ½½·Ô¿¡¼­ ¾ÆÀÌÅÛ È®ÀÎ
+        // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         foreach (var slot in slots)
         {
             if (slot.item != null && slot.item.ItemName == itemName)
             {
-                Debug.Log($"ÀÎº¥Åä¸®¿¡ {itemName}ÀÌ(°¡) ÀÖÀ½");
+                Debug.Log($"ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ {itemName}ï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½");
                 return true;
             }
         }
 
-        // ÇöÀç ÀåÂøµÈ ¾ÆÀÌÅÛµµ È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ È®ï¿½ï¿½
         if (equippedItemObject != null)
         {
             itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
             if (equippedItemData != null && equippedItemData.ItemName == itemName)
             {
-                Debug.Log($"ÀåÂøµÈ »óÅÂ¿¡¼­ {itemName}ÀÌ(°¡) ÀÖÀ½");
+                Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ {itemName}ï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½");
                 return true;
             }
         }
 
-        Debug.Log($"ÀÎº¥Åä¸®¿¡ {itemName}ÀÌ(°¡) ¾øÀ½");
+        Debug.Log($"ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ {itemName}ï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½");
         return false;
     }
 
     public void RemoveItem(string itemName)
     {
-        // ÀÎº¥Åä¸® ½½·Ô¿¡¼­ ¾ÆÀÌÅÛ Á¦°Å
+        // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item != null && slots[i].item.ItemName == itemName)
@@ -144,15 +144,15 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // ÀåÂøµÈ ¾ÆÀÌÅÛ Á¦°Å
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (equippedItemObject != null)
         {
             itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
             if (equippedItemData != null && equippedItemData.ItemName == itemName)
             {
-                Destroy(equippedItemObject); // ÀåÂøµÈ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® »èÁ¦
+                Destroy(equippedItemObject); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
                 equippedItemObject = null;
-                Debug.Log($"ÀåÂøµÈ {itemName} Á¦°ÅµÊ");
+                Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {itemName} ï¿½ï¿½ï¿½Åµï¿½");
             }
         }
     }
@@ -223,7 +223,7 @@ public class Inventory : MonoBehaviour
 
     public void EquipItem(GameObject itemObject)
     {
-        // EquipItem ¸Þ¼­µå·Î ÀåÂøµÈ ¾ÆÀÌÅÛÀ» ¼³Á¤
+        // EquipItem ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         equippedItemObject = itemObject;
     }
 }

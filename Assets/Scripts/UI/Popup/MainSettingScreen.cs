@@ -13,6 +13,8 @@ using TMPro;
 public class MainSettingScreen : UI_Popup
 {
     Scene sceneName;
+
+    [SerializeField] Button CloseButton;
     enum SettingGameObjects
     {
         VideoSetting,//비디오 설정 창
@@ -23,7 +25,7 @@ public class MainSettingScreen : UI_Popup
     {
         VideoSetting_Button,//비디오 설정 버튼
         InputkeySetting_Button,//조작키 버튼
-        SoundSetting_Button//사운드 설정 버튼
+        SoundSetting_Button,//사운드 설정 버튼
     }
     Buttons StringToEnum(string buttons)
     {
@@ -45,13 +47,7 @@ public class MainSettingScreen : UI_Popup
     {
         if (Input.GetKey(KeyCode.Escape) && this.gameObject.activeSelf)
         {
-            if (sceneName.name == "Main_Screen") //메인화면일 경우
-            {
-                //메인화면 버튼 4종 활성화
-                GameObject.Find("UI_Button").transform.GetChild(0).gameObject.SetActive(true);
-            }
-            //설정창 닫기
-            ClosePopupUI();
+            CloseSetting();
         }
     }
     //세부 설정 창
@@ -64,10 +60,13 @@ public class MainSettingScreen : UI_Popup
         Bind<GameObject>(typeof(SettingGameObjects));
         Bind<Button>(typeof(Buttons));
 
-        //비디오, 조작키, 사운드 OnOff 버튼 받아오기
+        //비디오, 조작키, 사운드 OnOff 버튼 받아오기 && 닫기 버튼
         buttonNames = Enum.GetValues(typeof(Buttons));
         foreach (int buttonNum in buttonNames)
             GetButton((int)buttonNum).gameObject.AddUIEvent(OnClickSettingMenuButton);
+
+        //닫기 버튼
+        CloseButton.gameObject.AddUIEvent(CloseSetting_Button);
 
         //비디오, 조작키, 사운드 세부설정 창 받아오기
         settingButtons = Enum.GetValues(typeof(SettingGameObjects));
@@ -139,4 +138,21 @@ public class MainSettingScreen : UI_Popup
         }
     }
 
+    void CloseSetting_Button(PointerEventData button)
+    {
+        CloseSetting();
+    }
+    void CloseSetting()//설정창 닫기
+    {
+        if (this.gameObject.activeSelf)
+        {
+            if (sceneName.name == "Main_Screen") //메인화면일 경우
+            {
+                //메인화면 버튼 4종 활성화
+                GameObject.Find("UI_Button").transform.GetChild(0).gameObject.SetActive(true);
+            }
+            //설정창 닫기
+            ClosePopupUI();
+        }
+    }
 }

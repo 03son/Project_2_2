@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviourPunCallbacks
 {
@@ -12,7 +13,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private Vector3 velocity;
     private float gravity = -9.81f;
     private float mouseX;
-
+    private float mouseY = 0f; // 위아래 회전 값
     void Start()
     {
         if (PhotonNetwork.IsConnected)
@@ -29,7 +30,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             cameraTransform = Camera.main?.transform;
         }
     }
-
     void Update()
     {
         // 로컬 플레이어만 제어
@@ -50,7 +50,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             PlayerVelocity(Vector3.zero);
         }
     }
-
     // 마우스 회전 처리
     private void HandleMouseLook()
     {
