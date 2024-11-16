@@ -140,6 +140,9 @@ MonoBehaviour:
   speed: 5
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
+  walkSound: {fileID: 1462954312414108516}
+  walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
+  walkVolume: 0.5
 --- !u!114 &400456349316490321
 MonoBehaviour:
   m_ObjectHideFlags: 0
