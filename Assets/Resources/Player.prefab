@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 8761946148333739593}
   - component: {fileID: 6809498836912174046}
   - component: {fileID: 1462954312414108516}
+  - component: {fileID: 7549801389599281699}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -198,6 +199,10 @@ MonoBehaviour:
   - {fileID: 0}
   equipItem: {fileID: 0}
   Item: {fileID: 0}
+  throwKey: 323
+  throwForce: 10
+  maxForce: 20
+  trajectoryLine: {fileID: 0}
 --- !u!114 &8165397908938508119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +377,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7549801389599281699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5653916586029829173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da6921d2173fb4c4893b3dc5ee145e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glassCupPrefab: {fileID: 0}
+  throwKey: 323
+  throwForce: 10
+  maxForce: 20
+  trajectoryLine: {fileID: 0}
 --- !u!1 &6246557984929298042
 GameObject:
   m_ObjectHideFlags: 0
