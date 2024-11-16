@@ -237,15 +237,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }//남이 방을 퇴장
     public override void OnLeftRoom() //내가 방에서 나갔을 때
     {
-        playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
-        playerCP = new HashTable() { { "isReady", null } };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
+        if (SceneManager.GetActiveScene().name == "Main_Screen")
+        {
+            playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+            playerCP = new HashTable() { { "isReady", null } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
 
-        playerCP = new HashTable() { { "animalName", null } };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
+            playerCP = new HashTable() { { "animalName", null } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
 
-        Debug.Log("방에서 나갔습니다.");
-        StartCoroutine(SetLoadingText());
+            Debug.Log("방에서 나갔습니다.");
+            StartCoroutine(SetLoadingText());
+        }
     }
     public override void OnDisconnected(DisconnectCause cause)//서버와 연결이 끊어졌을 때
     {

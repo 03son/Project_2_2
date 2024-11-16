@@ -819,3 +819,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recorder: {fileID: 4841665644714577382}
+  Microphone_Decibel_Bar: {fileID: 0}

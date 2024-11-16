@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Photon.Voice.PUN;
+using Photon.Voice.Unity;
 
 public class DoubleCheck_UI : UI_Popup
 {
@@ -30,7 +32,7 @@ public class DoubleCheck_UI : UI_Popup
         if (sceneName.name == "Main_Screen")//메인화면일 경우
             Ask_Text = "게임을 종료하시겠습니까?";
         
-        if (sceneName.name == "UI") //인게임일 경우
+        if (sceneName.name == GameInfo.InGameScenes) //인게임일 경우
             Ask_Text = "게임을 나가겠습니까?";
         
             Ask_again_text.text = Ask_Text;
@@ -50,14 +52,18 @@ public class DoubleCheck_UI : UI_Popup
         }
 
         //인게임 일 때
-        if (sceneName.name == "UI")
+        if (sceneName.name == GameInfo.InGameScenes)
         {
             Debug.Log("게임 나가기");
             if (PhotonNetwork.IsConnected)
             {
                 if (PhotonNetwork.InRoom)
                 {
-                    PhotonNetwork.LeaveRoom();
+                    //PhotonNetwork.Disconnect();
+
+                    //SceneManager.LoadScene("Main_Screen");
+                    //PhotonNetwork.LeaveRoom();
+                    //PhotonNetwork.LeaveLobby();
                 }
             }
             else

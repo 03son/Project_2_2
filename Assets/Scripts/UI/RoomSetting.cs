@@ -51,7 +51,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
             PhotonNetwork.CurrentRoom.IsOpen = false;
 
-            LoadingSceneManager.InGameLoading("UI", 1);
+            LoadingSceneManager.InGameLoading(GameInfo.InGameScenes, 1);
         }
     }
 
@@ -141,7 +141,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
             PhotonNetwork.CurrentRoom.IsOpen = false;
 
-            LoadingSceneManager.InGameLoading("UI", 1);
+            LoadingSceneManager.InGameLoading(GameInfo.InGameScenes, 1);
             return;
         }
     }

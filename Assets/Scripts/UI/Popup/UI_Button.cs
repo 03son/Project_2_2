@@ -155,7 +155,7 @@ public class UI_Button : UI_Popup
     void StartSingleGame()
     {
         Debug.Log("싱글 시작");
-        LoadingSceneManager.InGameLoading("UI",1);
+        LoadingSceneManager.InGameLoading(GameInfo.InGameScenes,1);
     }
     //멀티 방 리스트 띄우기
     void OpenMultiRoomList()
