@@ -47,6 +47,6 @@ public class Mic : MonoBehaviour
         float distance = Vector3.Distance(listenerPosition, transform.position);
 
         // 현재 데시벨 값을 반환하고, 거리 기반으로 감쇠 적용
-        return currentDb * Mathf.Log10(distance);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+        return currentDb  * Mathf.Log10(distance);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
     }
 }

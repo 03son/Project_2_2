@@ -5,12 +5,13 @@ using UnityEngine.AI;
 
 public class MonsterAI : MonoBehaviour
 {
+    private Vector3 investigatePoint;
     public NavMeshAgent agent;                     // NavMeshAgent 컴포넌트
     public Transform patrolParent;                 // 순찰 지점들의 부모 오브젝트
     public Transform[] patrolPoints;               // 순찰 지점 배열
     public LayerMask playerLayer;                  // 플레이어가 속한 레이어
     public float moveSpeed = 3.5f;                 // 순찰 시 이동 속도
-    public float chaseSpeed = 10.0f;               // 추적 시 이동 속도
+    public float chaseSpeed = 10.0f;                // 추적 시 이동 속도
     public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
     public float idleTimeBeforePatrol = 5.0f;      // 예외 처리 - 정지 후 순찰로 돌아가는 시간
 
@@ -20,14 +21,14 @@ public class MonsterAI : MonoBehaviour
     private bool isWaiting = true;                 // 대기 상태인지 여부
     private float waitTimer = 0f;                  // 대기 타이머
     private float idleTimer = 0f;                  // 정지 상태 타이머
-    private Vector3 investigatePoint;              // 조사할 지점
 
     public float viewDistance = 10f;               // 시야 거리
     public float fieldOfView = 120f;               // 시야각
     public float hearingRange = 50f;               // 청각 범위
-    public float minDecibelToDetect = 30f;         // 감지 가능한 최소 데시벨 값
-    private Mic micScript;
-    private enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Investigate 추가)
+    public float minDecibelToDetect = 30f;        // 감지 가능한 최소 데시벨 값
+    private Mic micScript;                        // Mic 스크립트 참조
+
+    private enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Idle 추가)
     private State currentState;                    // 현재 상태
 
     private void Start()
@@ -72,7 +73,8 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
-        // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경)
+        // 추후 제작할 예외 처리 (몬스터가 하나의 플레이어만 따라가지 않도록 바꾸기)
+        // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경
         if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
         {
             idleTimer += Time.deltaTime;
@@ -88,7 +90,7 @@ public class MonsterAI : MonoBehaviour
         {
             idleTimer = 0f; // 몬스터가 움직이면 idleTimer 초기화
         }
-
+        //Debug.Log(currentState);
         // 현재 상태에 따라 적절한 행동 수행
         switch (currentState)
         {
@@ -195,7 +197,6 @@ public class MonsterAI : MonoBehaviour
             currentState = State.Chase;
         }
     }
-
     private void Investigate() // 조사 상태 추가
     {
         agent.SetDestination(investigatePoint);
@@ -218,7 +219,6 @@ public class MonsterAI : MonoBehaviour
         investigatePoint = point;
         currentState = State.Investigate;
     }
-
     private void GoToNextPatrolPoint()
     {
         if (patrolPoints.Length == 0)
@@ -257,7 +257,7 @@ public class MonsterAI : MonoBehaviour
             Transform playerTransform = playerObject.transform;
 
             // 플레이어가 감지 범위 내에 있는지 확인
-            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform))
+            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform) || CanHearVoiceSource(playerTransform))
             {
                 if (!detectedPlayers.Contains(playerTransform))
                 {
@@ -276,6 +276,7 @@ public class MonsterAI : MonoBehaviour
             }
         }
     }
+
 
     private bool CanSeePlayer(Transform player)
     {
@@ -321,36 +322,38 @@ public class MonsterAI : MonoBehaviour
     }
     private bool CanHearVoiceSource(Transform player)
     {
-        // ��� �÷��̾� ��ü�� ��������
+        // 모든 플레이어 객체를 가져오기
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
-        // �� �÷��̾ ���� Ȯ��
+        // 각 플레이어에 대해 확인
         foreach (GameObject playerObject in playerObjects)
         {
-            // �÷��̾��� Mic ������Ʈ ã��
+            // 플레이어의 Mic 컴포넌트 찾기
             micScript = playerObject.GetComponentInChildren<Mic>();
 
-            // Mic�� ������ ������ �� ����
+            // Mic가 없으면 감지할 수 없음
             if (micScript == null)
             {
                 continue;
             }
 
-            // Mic���� �ǽð����� ���� ���ú� �� ��������
+            // Mic에서 실시간으로 계산된 데시벨 값 가져오기
             float decibel = micScript.GetDecibelAtDistance(transform.position);
             Debug.Log(decibel);
 
-            // ���ú��� ���� ���� �̻��̰�, û�� ���� ���� ������ �Ҹ� ����
+            // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
             {
                 Debug.Log("Sound detected from player within hearing range");
-                return true;  // �Ҹ��� ������
+                return true;  // 소리가 감지됨
             }
         }
 
-        // ��� �÷��̾��� �Ҹ��� �������� ������ false ��ȯ
+        // 어느 플레이어의 소리도 감지되지 않으면 false 반환
         return false;
     }
+
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -387,7 +390,8 @@ public class MonsterAI : MonoBehaviour
         // 청각 범위 (원형) 그리기
         Gizmos.color = Color.blue; // 청각 범위는 파란색으로 표시
         Gizmos.DrawWireSphere(origin, hearingRange);
-
-
     }
+
+    
+
 }
