@@ -6,80 +6,111 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 {
     [SerializeField] float speed = 5f;
     [SerializeField] float mouseSpeed = 8f;
-    [SerializeField] Transform cameraTransform; // 카메라의 Transform 참조
+    [SerializeField] Transform cameraTransform;
+
+    [SerializeField] AudioSource walkSound;
+    [SerializeField] AudioClip walkingClip;
+    [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
 
     private CharacterController controller;
     private Vector3 velocity;
     private float gravity = -9.81f;
     private float mouseX;
+    private bool isWalking;
 
     void Start()
     {
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
-            if (!photonView.IsMine)
-                return;
+            return;
         }
 
         controller = GetComponent<CharacterController>();
 
-        // Main Camera 자동 할당 (Inspector에서 할당되지 않았을 경우)
         if (cameraTransform == null)
         {
             cameraTransform = Camera.main?.transform;
+        }
+
+        if (walkSound != null && walkingClip != null)
+        {
+            walkSound.clip = walkingClip;
+            walkSound.loop = true;
+            walkSound.volume = walkVolume;
         }
     }
 
     void Update()
     {
-        // 로컬 플레이어만 제어
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
-            if (!photonView.IsMine)
-                return;
+            return;
         }
-      
-        HandleMouseLook();
-        HandleMovement();
+
+        // esc 창이 열려있지 않을 때만 움직임 처리
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        {
+            HandleMouseLook();
+            HandleMovement();
+        }
+        else
+        {
+            PlayerVelocity(Vector3.zero, 0f, 0f);
+        }
     }
 
-    // 마우스 회전 처리
     private void HandleMouseLook()
     {
         if (cameraTransform == null) return;
 
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
-        transform.localRotation = Quaternion.Euler(0, mouseX, 0); // Y축 회전 (좌우 회전)
+        transform.localRotation = Quaternion.Euler(0, mouseX, 0);
     }
 
-    // 이동 및 중력 처리
     private void HandleMovement()
     {
         if (controller == null || cameraTransform == null) return;
 
-        // 즉각적인 이동
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
-        // 카메라 방향으로 이동 계산
         Vector3 direction = cameraTransform.forward * moveZ + cameraTransform.right * moveX;
-        direction.y = 0f; // Y축 이동 제거
+        direction.y = 0f;
         direction.Normalize();
 
-        // 이동 벡터 적용
         Vector3 mov = direction * speed;
 
-        // 중력 적용
+        PlayerVelocity(mov, moveX, moveZ);
+    }
+
+    void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
+    {
+        // 중력 처리
         if (controller.isGrounded)
         {
-            velocity.y = -2f;  // 땅에 있을 때 약간의 중력만 적용
+            velocity.y = -2f;
         }
         else
         {
-            velocity.y += gravity * Time.deltaTime; // 공중에서 중력 가속 적용
+            velocity.y += gravity * Time.deltaTime;
         }
 
-        // 최종 이동 처리
         controller.Move((mov + velocity) * Time.deltaTime);
+
+        // 걸음 소리 처리
+        if ((moveX != 0 || moveZ != 0) && controller.isGrounded)
+        {
+            if (!walkSound.isPlaying)
+            {
+                walkSound.Play();
+            }
+            walkSound.volume = walkVolume;
+            isWalking = true;
+        }
+        else if (isWalking)
+        {
+            walkSound.Stop();
+            isWalking = false;
+        }
     }
 }

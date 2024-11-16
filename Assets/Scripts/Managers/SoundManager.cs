@@ -34,4 +34,7 @@ public class SoundManager : Singleton<SoundManager>
 
         sfxSource.PlayOneShot(sfxClips[sfxIndex]);
     }
+    
+    
 }
+

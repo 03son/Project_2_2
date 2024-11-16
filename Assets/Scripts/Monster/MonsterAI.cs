@@ -5,37 +5,38 @@ using UnityEngine.AI;
 
 public class MonsterAI : MonoBehaviour
 {
-    public NavMeshAgent agent;                     // NavMeshAgent ÄÄÆ÷³ÍÆ®
-    public Transform patrolParent;                 // ¼øÂû ÁöÁ¡µéÀÇ ºÎ¸ð ¿ÀºêÁ§Æ®
-    public Transform[] patrolPoints;               // ¼øÂû ÁöÁ¡ ¹è¿­
-    public LayerMask playerLayer;                  // ÇÃ·¹ÀÌ¾î°¡ ¼ÓÇÑ ·¹ÀÌ¾î
-    public float moveSpeed = 3.5f;                 // ¼øÂû ½Ã ÀÌµ¿ ¼Óµµ
-    public float chaseSpeed = 10.0f;                // ÃßÀû ½Ã ÀÌµ¿ ¼Óµµ
-    public float waitTimeBeforePatrol = 2.0f;      // ¼øÂû ½ÃÀÛ Àü ´ë±â ½Ã°£
-    public float idleTimeBeforePatrol = 5.0f;      // ¿¹¿Ü Ã³¸® - Á¤Áö ÈÄ ¼øÂû·Î µ¹¾Æ°¡´Â ½Ã°£
+    public NavMeshAgent agent;                     // NavMeshAgent ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public Transform patrolParent;                 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public Transform[] patrolPoints;               // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
+    public LayerMask playerLayer;                  // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½
+    public float moveSpeed = 3.5f;                 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public float chaseSpeed = 10.0f;               // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public float waitTimeBeforePatrol = 2.0f;      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public float idleTimeBeforePatrol = 5.0f;      // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
-    private List<Transform> detectedPlayers;       // °¨ÁöµÈ ÇÃ·¹ÀÌ¾î ¸®½ºÆ®
-    private int currentPatrolIndex;                // ÇöÀç ¼øÂû ÁöÁ¡ ÀÎµ¦½º
-    private Vector3 lastKnownPosition;             // ÇÃ·¹ÀÌ¾î ¸¶Áö¸· À§Ä¡
-    private bool isWaiting = true;                 // ´ë±â »óÅÂÀÎÁö ¿©ºÎ
-    private float waitTimer = 0f;                  // ´ë±â Å¸ÀÌ¸Ó
-    private float idleTimer = 0f;                  // Á¤Áö »óÅÂ Å¸ÀÌ¸Ó
+    private List<Transform> detectedPlayers;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    private int currentPatrolIndex;                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
+    private Vector3 lastKnownPosition;             // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    private bool isWaiting = true;                 // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float waitTimer = 0f;                  // ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½
+    private float idleTimer = 0f;                  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½
+    private Vector3 investigatePoint;              // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    public float viewDistance = 10f;               // ½Ã¾ß °Å¸®
-    public float fieldOfView = 120f;               // ½Ã¾ß°¢
-    public float hearingRange = 50f;               // Ã»°¢ ¹üÀ§
-    public float minDecibelToDetect = 30f;        // °¨Áö °¡´ÉÇÑ ÃÖ¼Ò µ¥½Ãº§ °ª
-    private Mic micScript;                        // Mic ½ºÅ©¸³Æ® ÂüÁ¶
+    public float viewDistance = 10f;               // ï¿½Ã¾ï¿½ ï¿½Å¸ï¿½
+    public float fieldOfView = 120f;               // ï¿½Ã¾ß°ï¿½
+    public float hearingRange = 50f;               // Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float minDecibelToDetect = 30f;        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½
+    private Mic micScript;                        // Mic ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 
-    private enum State { Idle, Patrol, Chase, Search };  // »óÅÂ Á¤ÀÇ (Idle Ãß°¡)
-    private State currentState;                    // ÇöÀç »óÅÂ
+    private enum State { Idle, Patrol, Chase, Search, Investigate };  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (Investigate ï¿½ß°ï¿½)
+    private State currentState;                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Start()
     {
-        // NavMeshAgent ÃÊ±âÈ­
+        // NavMeshAgent ï¿½Ê±ï¿½È­
         agent = GetComponent<NavMeshAgent>();
 
-        // ¼øÂû ÁöÁ¡ ¹è¿­À» ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡¼­ ÀÚµ¿À¸·Î °¡Á®¿À±â
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (patrolParent != null)
         {
             patrolPoints = new Transform[patrolParent.childCount];
@@ -46,24 +47,24 @@ public class MonsterAI : MonoBehaviour
         }
         else
         {
-            Debug.LogError("PatrolParent°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("PatrolParentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
             enabled = false;
             return;
         }
 
-        // ÀÌµ¿ ¼Óµµ ¼³Á¤
+        // ï¿½Ìµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
         if (agent != null)
         {
             agent.speed = moveSpeed;
         }
         else
         {
-            Debug.LogError("NavMeshAgent°¡ " + gameObject.name + "¿¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError("NavMeshAgentï¿½ï¿½ " + gameObject.name + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             enabled = false;
             return;
         }
 
-        // ÃÊ±â »óÅÂ ¼³Á¤
+        // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         currentState = State.Idle;
         currentPatrolIndex = 0;
         detectedPlayers = new List<Transform>();
@@ -72,8 +73,7 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
-        // ÃßÈÄ Á¦ÀÛÇÒ ¿¹¿Ü Ã³¸® (¸ó½ºÅÍ°¡ ÇÏ³ªÀÇ ÇÃ·¹ÀÌ¾î¸¸ µû¶ó°¡Áö ¾Êµµ·Ï ¹Ù²Ù±â)
-        // ¿¹¿Ü Ã³¸® (¸ó½ºÅÍ°¡ ¿òÁ÷ÀÓÀÌ ¾øÀ¸¸é ¼øÂû »óÅÂ·Î º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ (ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½)
         if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
         {
             idleTimer += Time.deltaTime;
@@ -81,16 +81,16 @@ public class MonsterAI : MonoBehaviour
             {
                 currentState = State.Patrol;
                 GoToNextPatrolPoint();
-                idleTimer = 0f; // Å¸ÀÌ¸Ó ÃÊ±âÈ­
+                idleTimer = 0f; // Å¸ï¿½Ì¸ï¿½ ï¿½Ê±ï¿½È­
                 return;
             }
         }
         else
         {
-            idleTimer = 0f; // ¸ó½ºÅÍ°¡ ¿òÁ÷ÀÌ¸é idleTimer ÃÊ±âÈ­
+            idleTimer = 0f; // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ idleTimer ï¿½Ê±ï¿½È­
         }
-        //Debug.Log(currentState);
-        // ÇöÀç »óÅÂ¿¡ µû¶ó ÀûÀýÇÑ Çàµ¿ ¼öÇà
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½àµ¿ ï¿½ï¿½ï¿½ï¿½
         switch (currentState)
         {
             case State.Idle:
@@ -105,30 +105,33 @@ public class MonsterAI : MonoBehaviour
             case State.Search:
                 Search();
                 break;
+            case State.Investigate:
+                Investigate();
+                break;
         }
 
-        // ÇÃ·¹ÀÌ¾î °¨Áö »óÅÂ ¾÷µ¥ÀÌÆ®
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         UpdateDetectedPlayers();
     }
 
     private void Idle()
     {
-        // ´ë±â Å¸ÀÌ¸Ó¸¦ °»½Å
+        // ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (waitTimer < 0)
         {
             waitTimer = waitTimeBeforePatrol;
         }
-        // ´ë±â Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         waitTimer -= Time.deltaTime;
 
-        // ´ë±â Áß ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏ¸é ÃßÀû »óÅÂ·Î ÀüÈ¯
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
             return;
         }
 
-        // ´ë±â ½Ã°£ÀÌ ³¡³ª¸é ¼øÂû ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (waitTimer <= 0f)
         {
             currentState = State.Patrol;
@@ -136,62 +139,85 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void Patrol() // ¼øÂû¸ðµå
+    private void Patrol() // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         if (agent.speed == chaseSpeed)
         {
             agent.speed = moveSpeed;
         }
-        // ¼øÂû »óÅÂ: ´ÙÀ½ ¼øÂû ÁöÁ¡À¸·Î ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            Idle(); // ¼øÂûÀÌ ³¡³ª¸é Àá½Ã ´ë±â¸ðµå·Î ÀüÈ¯
+            Idle(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         }
 
-        // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏ¸é ÃßÀû »óÅÂ·Î ÀüÈ¯
+        // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
         }
     }
 
-    private void Chase() // ÃßÀû ¸ðµå
+    private void Chase() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     {
         if (agent.speed == moveSpeed)
         {
             agent.speed = chaseSpeed;
         }
-        // °¡Àå °¡±î¿î ÇÃ·¹ÀÌ¾î¸¦ ÃßÀû
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½
         Transform closestPlayer = GetClosestPlayer();
         if (closestPlayer != null)
         {
             agent.SetDestination(closestPlayer.position);
-            lastKnownPosition = closestPlayer.position; // ¸¶Áö¸·À¸·Î º» À§Ä¡ ¾÷µ¥ÀÌÆ®
+            lastKnownPosition = closestPlayer.position; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         }
 
-        // ½Ã¾ß¿¡¼­ ÇÃ·¹ÀÌ¾î¸¦ ÀÒÀ¸¸é ¼ö»ö »óÅÂ·Î ÀüÈ¯
+        // ï¿½Ã¾ß¿ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
         if (detectedPlayers.Count == 0)
         {
             currentState = State.Search;
         }
     }
 
-    private void Search() // ¼ö»ö ¸ðµå
+    private void Search() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     {
-        // ¸¶Áö¸·À¸·Î º» À§Ä¡·Î ÀÌµ¿ÇÏ¿© ¼ö»ö
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         agent.SetDestination(lastKnownPosition);
 
-        // ¼ö»ö À§Ä¡¿¡ µµÂøÇÏ¸é ¼øÂû »óÅÂ·Î ÀüÈ¯
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentState = State.Patrol;
         }
 
-        // ´Ù½Ã ÇÃ·¹ÀÌ¾î¸¦ ¹ß°ßÇÏ¸é ÃßÀû »óÅÂ·Î ÀüÈ¯
+        // ï¿½Ù½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ß°ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
         }
+    }
+
+    private void Investigate() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+    {
+        agent.SetDestination(investigatePoint);
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = State.Patrol;
+        }
+
+        // ï¿½Ù½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ß°ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
+        if (detectedPlayers.Count > 0)
+        {
+            currentState = State.Chase;
+        }
+    }
+
+    public void SetInvestigatePoint(Vector3 point)
+    {
+        investigatePoint = point;
+        currentState = State.Investigate;
     }
 
     private void GoToNextPatrolPoint()
@@ -200,7 +226,7 @@ public class MonsterAI : MonoBehaviour
             return;
 
         agent.destination = patrolPoints[currentPatrolIndex].position;
-        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length; // ´ÙÀ½ ÁöÁ¡À¸·Î ÀÎµ¦½º ÀÌµ¿
+        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ìµï¿½
     }
 
     private Transform GetClosestPlayer()
@@ -223,7 +249,7 @@ public class MonsterAI : MonoBehaviour
 
     private void UpdateDetectedPlayers()
     {
-        // ¸ðµç ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¸¦ Ã£¾Æ °¨Áö ¸®½ºÆ®¸¦ ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
         List<Transform> currentPlayers = new List<Transform>();
 
@@ -231,7 +257,7 @@ public class MonsterAI : MonoBehaviour
         {
             Transform playerTransform = playerObject.transform;
 
-            // ÇÃ·¹ÀÌ¾î°¡ °¨Áö ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform) || CanHearVoiceSource(playerTransform))
             {
                 if (!detectedPlayers.Contains(playerTransform))
@@ -242,7 +268,7 @@ public class MonsterAI : MonoBehaviour
             }
         }
 
-        // °¨ÁöµÇÁö ¾ÊÀº ÇÃ·¹ÀÌ¾î¸¦ ¸®½ºÆ®¿¡¼­ Á¦°Å
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = detectedPlayers.Count - 1; i >= 0; i--)
         {
             if (!currentPlayers.Contains(detectedPlayers[i]))
@@ -252,79 +278,78 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-
     private bool CanSeePlayer(Transform player)
     {
-        // ÇÃ·¹ÀÌ¾î±îÁöÀÇ ¹æÇâ º¤ÅÍ °è»ê
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
 
-        // ¸ó½ºÅÍÀÇ Á¤¸é°ú ÇÃ·¹ÀÌ¾îÀÇ ¹æÇâ °£ÀÇ °¢µµ¸¦ °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         float angle = Vector3.Angle(transform.forward, directionToPlayer);
 
-        // ½Ã¾ß°¢ ¾È¿¡ ÀÖ´ÂÁö ¸ÕÀú È®ÀÎ
+        // ï¿½Ã¾ß°ï¿½ ï¿½È¿ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (angle < fieldOfView / 2)
         {
-            // ½Ã¾ß °Å¸® ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+            // ï¿½Ã¾ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             if (Vector3.Distance(transform.position, player.position) <= viewDistance)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, directionToPlayer, out hit, viewDistance))
                 {
-                    // ÇÃ·¹ÀÌ¾î¿ÍÀÇ »çÀÌ¿¡ Àå¾Ö¹°ÀÌ ¾ø´ÂÁö È®ÀÎ
+                    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
                     if (hit.transform == player)
                     {
-                        return true;  // ÇÃ·¹ÀÌ¾î°¡ ½Ã¾ß ³»¿¡ ÀÖÀ½
+                        return true;  // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     }
                 }
             }
         }
-        return false;  // ½Ã¾ß ³»¿¡ ¾øÀ¸¸é false ¹ÝÈ¯
+        return false;  // ï¿½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false ï¿½ï¿½È¯
     }
     private bool CanHearSoundSource(Transform player)
     {
-        // ¸ðµç SoundSource¸¦ °¡Á®¿À°í, °¢ SoundSourceÀÇ µ¥½Ãº§À» °è»êÇÏ¿© ¸ó½ºÅÍ°¡ °¨ÁöÇÒ ¼ö ÀÖ´Â ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+        // ï¿½ï¿½ï¿½ SoundSourceï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ SoundSourceï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         SoundSource[] soundSources = FindObjectsOfType<SoundSource>();
         foreach (SoundSource soundSource in soundSources)
         {
             float decibel = soundSource.GetDecibelAtDistance(transform.position);
-            // µ¥½Ãº§ÀÌ °¨Áö °¡´ÉÇÑ ÃÖ¼Ò µ¥½Ãº§ °ª ÀÌ»óÀÌ°í, ¼Ò¸®ÀÇ ¹üÀ§ ³»¿¡ ÀÖ¾î¾ß °¨Áö
+            // ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì°ï¿½, ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, player.position) <= soundSource.range)
             {
-                return true; // ¼Ò¸®°¡ °¨ÁöµÊ
+                return true; // ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
-        return false; // °¨ÁöµÇÁö ¾ÊÀ½
+        return false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
     private bool CanHearVoiceSource(Transform player)
     {
-        // ¸ðµç ÇÃ·¹ÀÌ¾î °´Ã¼¸¦ °¡Á®¿À±â
+        // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
-        // °¢ ÇÃ·¹ÀÌ¾î¿¡ ´ëÇØ È®ÀÎ
+        // ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         foreach (GameObject playerObject in playerObjects)
         {
-            // ÇÃ·¹ÀÌ¾îÀÇ Mic ÄÄÆ÷³ÍÆ® Ã£±â
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Mic ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
             micScript = playerObject.GetComponentInChildren<Mic>();
 
-            // Mic°¡ ¾øÀ¸¸é °¨ÁöÇÒ ¼ö ¾øÀ½
+            // Micï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (micScript == null)
             {
                 continue;
             }
 
-            // Mic¿¡¼­ ½Ç½Ã°£À¸·Î °è»êµÈ µ¥½Ãº§ °ª °¡Á®¿À±â
+            // Micï¿½ï¿½ï¿½ï¿½ ï¿½Ç½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             float decibel = micScript.GetDecibelAtDistance(transform.position);
             Debug.Log(decibel);
 
-            // µ¥½Ãº§ÀÌ ÀÏÁ¤ ¹üÀ§ ÀÌ»óÀÌ°í, Ã»°¢ ¹üÀ§ ³»¿¡ ÀÖÀ¸¸é ¼Ò¸® °¨Áö
+            // ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì°ï¿½, Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
             {
                 Debug.Log("Sound detected from player within hearing range");
-                return true;  // ¼Ò¸®°¡ °¨ÁöµÊ
+                return true;  // ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
 
-        // ¾î´À ÇÃ·¹ÀÌ¾îÀÇ ¼Ò¸®µµ °¨ÁöµÇÁö ¾ÊÀ¸¸é false ¹ÝÈ¯
+        // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false ï¿½ï¿½È¯
         return false;
     }
 
@@ -333,22 +358,22 @@ public class MonsterAI : MonoBehaviour
     {
         Gizmos.color = Color.red;
 
-        // ºÎÃ¤²ÃÀ» ±×¸®±â À§ÇÑ ¼¼±×¸ÕÆ® °³¼ö
+        // ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×¸ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         int segments = 20;
-        float angleStep = fieldOfView / segments; // °¢µµ ´ÜÀ§
-        Vector3 origin = transform.position; // ¸ó½ºÅÍÀÇ À§Ä¡
+        float angleStep = fieldOfView / segments; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Vector3 origin = transform.position; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 
-        // ½Ã¾ß°¢ ºÎÃ¤²Ã ±×¸®±â
+        // ï¿½Ã¾ß°ï¿½ ï¿½ï¿½Ã¤ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
         for (int i = 0; i <= segments; i++)
         {
-            float currentAngle = -fieldOfView / 2 + angleStep * i; // °¢µµ °è»ê
-            Vector3 direction = Quaternion.Euler(0, currentAngle, 0) * transform.forward; // °¢µµ¸¦ È¸ÀüÇÏ¿© ¹æÇâ º¤ÅÍ °è»ê
-            Vector3 endPoint = origin + direction * viewDistance; // ½Ã¾ß °Å¸®¸¸Å­ ¶³¾îÁø ÁöÁ¡ °è»ê
+            float currentAngle = -fieldOfView / 2 + angleStep * i; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            Vector3 direction = Quaternion.Euler(0, currentAngle, 0) * transform.forward; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            Vector3 endPoint = origin + direction * viewDistance; // ï¿½Ã¾ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-            Gizmos.DrawLine(origin, endPoint); // ¸ó½ºÅÍÀÇ À§Ä¡¿¡¼­ ÇØ´ç ¹æÇâÀ¸·Î ¼±À» ±×¸²
+            Gizmos.DrawLine(origin, endPoint); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
         }
 
-        // ½Ã¾ß ¹üÀ§ ³¡¿¡ ºÎÃ¤²ÃÀ» ¿Ï¼ºÇÏ´Â °æ°è ±×¸®±â
+        // ï¿½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¼ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
         for (int i = 0; i < segments; i++)
         {
             float currentAngle = -fieldOfView / 2 + angleStep * i;
@@ -360,10 +385,12 @@ public class MonsterAI : MonoBehaviour
             Vector3 currentPoint = origin + currentDir * viewDistance;
             Vector3 nextPoint = origin + nextDir * viewDistance;
 
-            Gizmos.DrawLine(currentPoint, nextPoint); // ºÎÃ¤²ÃÀÇ °¢µµ¸¦ µû¶ó ³¡ ºÎºÐÀ» ¿¬°á
+            Gizmos.DrawLine(currentPoint, nextPoint); // ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
-        // Ã»°¢ ¹üÀ§ (¿øÇü) ±×¸®±â
-        Gizmos.color = Color.blue; // Ã»°¢ ¹üÀ§´Â ÆÄ¶õ»öÀ¸·Î Ç¥½Ã
+        // Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½) ï¿½×¸ï¿½ï¿½ï¿½
+        Gizmos.color = Color.blue; // Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
         Gizmos.DrawWireSphere(origin, hearingRange);
+
+
     }
 }

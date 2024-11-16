@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
 using Photon.Pun;
 
 public class ItemSlot
 {
-    public itemData item; //¾ÆÀÌÅÛ µ¥ÀÌÅÍ
-    public int quantity; //°³¼ö
+    public itemData item; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public int quantity; // ï¿½ï¿½ï¿½ï¿½
 }
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlotUI[] ui_itemSlot; // UI »óÀÇ ¾ÆÀÌÅÛ ½½·Ô
-    public ItemSlot[] slots; //½ÇÁ¦ ¾ÆÀÌÅÛ ½½·ÔÀÌ ÀúÀåµÇ´Â ¹è¿­
+    public ItemSlotUI[] ui_itemSlot = new ItemSlotUI[6]; // UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public ItemSlot[] slots; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½è¿­
 
-    public Transform dropPos; //¾ÆÀÌÅÛ µå¶ø À§Ä¡
+    public Transform dropPos;
 
     [Header("Selected Item")]
     [SerializeField]
     ItemSlot selectedItem;
     public int selectedItemIndex;
-    //public TextMeshProUGUI selectedItemName;
 
     public static Inventory instance;
 
     public PhotonView pv;
+
+    int addItemIndex;
+
+    private GameObject equippedItemObject; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GameObjectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+
     private void Awake()
     {
         if (instance == null)
@@ -34,7 +37,9 @@ public class Inventory : MonoBehaviour
             instance = this;
         }
         else
-            Destroy(this.GetComponent<Inventory>());
+        {
+            Destroy(this);
+        }
 
         pv = GetComponent<PhotonView>();
 
@@ -47,52 +52,126 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < slots.Length; i++)
         {
-            //UI ½½·Ô ÃÊ±âÈ­ ÇÏ±â
             slots[i] = new ItemSlot();
-            //ui_itemSlot[i].index = i;
             ui_itemSlot[i].Clear();
         }
 
-        dropPos = GameObject.Find("ItemDropPos").gameObject.GetComponent<Transform>();
+        dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
 
         ClearSelectItemWindows();
     }
+
     void ConnectUi_itemSlot()
     {
-        ui_itemSlot[0] = GameObject.Find("ItemSlot").gameObject.GetComponent<ItemSlotUI>();
-        for (int i =1; i<6;i++)
-        {
-            ui_itemSlot[i] = GameObject.Find($"ItemSlot ({i})").gameObject.GetComponent<ItemSlotUI>();
-        }
+        ui_itemSlot[0] = GameObject.Find("ItemSlot").GetComponent<ItemSlotUI>();
+        ui_itemSlot[1] = GameObject.Find("ItemSlot (1)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[2] = GameObject.Find("ItemSlot (2)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[3] = GameObject.Find("ItemSlot (3)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[4] = GameObject.Find("ItemSlot (4)").GetComponent<ItemSlotUI>();
+        ui_itemSlot[5] = GameObject.Find("ItemSlot (5)").GetComponent<ItemSlotUI>();
     }
+
     public void Additem(itemData item)
     {
-        ItemSlot emptyslot = GetEmptySlot();
+        ItemSlot emptySlot = GetEmptySlot();
 
-        if (emptyslot != null)
+        if (emptySlot != null)
         {
-            emptyslot.item = item;
-            emptyslot.quantity = 1;
+            emptySlot.item = item;
+            emptySlot.quantity = 1;
             UpdateUI();
+
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ Player_Equipï¿½ï¿½ invenUtilï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            GetComponent<Player_Equip>().invenUtil(addItemIndex + 1);
+
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ Flashlight1ï¿½ï¿½ AcquireFlashlight ï¿½Þ¼ï¿½ï¿½å¸¦ È£ï¿½ï¿½
+            if (item.ItemName == "Flashlight")
+            {
+                GameObject flashlightObject = GameObject.Find("Flashlight");
+                if (flashlightObject != null)
+                {
+                    Flashlight1 flashlightScript = flashlightObject.GetComponent<Flashlight1>();
+                    if (flashlightScript != null)
+                    {
+                        flashlightScript.AcquireFlashlight();
+                    }
+                }
+            }
+
             return;
         }
-        //ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ¾øÀ» °æ¿ì ¸ø ¸ÔÀ½
-        return;
     }
+
+    public bool HasItem(string itemName)
+    {
+        // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        foreach (var slot in slots)
+        {
+            if (slot.item != null && slot.item.ItemName == itemName)
+            {
+                Debug.Log($"ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ {itemName}ï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½");
+                return true;
+            }
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ È®ï¿½ï¿½
+        if (equippedItemObject != null)
+        {
+            itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
+            if (equippedItemData != null && equippedItemData.ItemName == itemName)
+            {
+                Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ {itemName}ï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½");
+                return true;
+            }
+        }
+
+        Debug.Log($"ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ {itemName}ï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½");
+        return false;
+    }
+
+    public void RemoveItem(string itemName)
+    {
+        // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item != null && slots[i].item.ItemName == itemName)
+            {
+                slots[i].item = null;
+                slots[i].quantity = 0;
+                ui_itemSlot[i].Clear();
+                UpdateUI();
+                return;
+            }
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (equippedItemObject != null)
+        {
+            itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
+            if (equippedItemData != null && equippedItemData.ItemName == itemName)
+            {
+                Destroy(equippedItemObject); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+                equippedItemObject = null;
+                Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {itemName} ï¿½ï¿½ï¿½Åµï¿½");
+            }
+        }
+    }
+
     ItemSlot GetEmptySlot()
     {
-        //ºó ½½·Ô Ã£±â
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item == null)
+            {
+                addItemIndex = i;
                 return slots[i];
+            }
         }
         return null;
     }
 
     void UpdateUI()
     {
-        //UIÀÇ ½½·Ô ÃÖ½ÅÈ­ÇÏ±â
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item != null)
@@ -104,46 +183,47 @@ public class Inventory : MonoBehaviour
 
     void UnEquip(int index)
     {
-        //¾ÆÀÌÅÛ ÀåÂøÇØÁ¦
         if (GetComponent<Player_Equip>().Item != null)
-             Destroy(GetComponent<Player_Equip>().Item);
+            Destroy(GetComponent<Player_Equip>().Item);
     }
 
     void RemoveSelectedItem()
     {
         if (slots[selectedItemIndex].item != null)
         {
-            //¸¸¾à ¹ö¸° ¾ÆÀÌÅÛÀÌ ÀåÂø ÁßÀÎ ¾ÆÀÌÅÛÀÏ °æ¿ì ÇØÁ¦
             if (ui_itemSlot[selectedItemIndex].equipped)
             {
                 UnEquip(selectedItemIndex);
                 ThrowItem(slots[selectedItemIndex].item);
             }
 
-            //¾ÆÀÌÅÛ Á¦°Å ¹× UI¿¡¼­µµ ¾ÆÀÌÅÛ Á¤º¸ Áö¿ì±â
             slots[selectedItemIndex].item = null;
             ClearSelectItemWindows();
         }
         UpdateUI();
     }
+
     void ClearSelectItemWindows()
     {
-        //¾ÆÀÌÅÛ ÃÊ±âÈ­
         selectedItem = null;
-       // selectedItemName.text = string.Empty;
     }
+
     void ThrowItem(itemData item)
     {
-        //¾ÆÀÌÅÛ ¹ö¸®±â
-        //¹ö·ÁÁú ¶§, ·£´ýÇÑ È¸Àü°ªÀ» °¡Áø Ã¤ ¹ö¸®±â
         Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyManager.Drop_Key))
         {
             RemoveSelectedItem();
         }
+    }
+
+    public void EquipItem(GameObject itemObject)
+    {
+        // EquipItem ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        equippedItemObject = itemObject;
     }
 }

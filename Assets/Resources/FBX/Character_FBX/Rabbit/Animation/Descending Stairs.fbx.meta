@@ -1,0 +1,617 @@
+fileFormatVersion: 2
+guid: 038fca7d8c30107489540e58a4aeb468
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: mixamo.com
+      takeName: mixamo.com
+      internalID: -203655887218126122
+      firstFrame: 0
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: rabbit:Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftHandIndex1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftHandIndex2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:LeftHandIndex3
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightHandIndex1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightHandIndex2
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:RightHandIndex3
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rabbit:Spine2
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Descending Stairs(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube2
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube2pSphere1
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube2pCube8
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube2pCube13
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCylinder1
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube9
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube9pCube10
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube9pCube11
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube9pCube12
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCube9pCube14
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCylinder2
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCylinder2Group37955
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCylinder2Group37956
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCylinder2Group37953
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCylinder2Group37954
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Group37952pCylinder3
+      parentName: Descending Stairs(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Hips
+      parentName: Descending Stairs(Clone)
+      position: {x: 0.000036199595, y: 0.103721924, z: -0.0023629079}
+      rotation: {x: -0, y: -0, z: 0.0000000064119368, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:RightUpLeg
+      parentName: rabbit:Hips
+      position: {x: 0.007056089, y: -0.004286909, z: 0.0025479966}
+      rotation: {x: 0.0000044075537, y: -0.0017231294, z: 0.99999523, w: 0.0025649036}
+      scale: {x: 1.0000007, y: 1.0000006, z: 1}
+    - name: rabbit:RightLeg
+      parentName: rabbit:RightUpLeg
+      position: {x: 5.357619e-12, y: 0.043612283, z: -3.0984792e-12}
+      rotation: {x: -0.029356614, y: -0.0005235181, z: 0.017821778, w: 0.99941003}
+      scale: {x: 1.0000005, y: 1, z: 1.0000006}
+    - name: rabbit:RightFoot
+      parentName: rabbit:RightLeg
+      position: {x: 1.16188364e-10, y: 0.04428644, z: 2.6862104e-10}
+      rotation: {x: 0.48310238, y: 0.010083999, z: -0.0055644573, w: 0.87548816}
+      scale: {x: 1.0000005, y: 1.0000006, z: 0.9999996}
+    - name: rabbit:RightToeBase
+      parentName: rabbit:RightFoot
+      position: {x: -1.8775266e-11, y: 0.014952002, z: 4.8713167e-10}
+      rotation: {x: 0.2831103, y: -0.08755718, z: 0.025963701, w: 0.9547294}
+      scale: {x: 0.9999992, y: 0.9999998, z: 1}
+    - name: rabbit:RightToe_End
+      parentName: rabbit:RightToeBase
+      position: {x: 9.338832e-12, y: 0.0056979046, z: 3.326625e-12}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Spine
+      parentName: rabbit:Hips
+      position: {x: -0, y: 0.0077136513, z: -0.00009025428}
+      rotation: {x: -0.005850017, y: 3.5381715e-11, z: -0.0000000060480354, w: 0.9999829}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: rabbit:Spine1
+      parentName: rabbit:Spine
+      position: {x: -0, y: 0.008999868, z: 1.4618085e-12}
+      rotation: {x: 0.000000034924597, y: 0.0000000014593483, z: -3.4674746e-10, w: 1}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1}
+    - name: rabbit:Spine2
+      parentName: rabbit:Spine1
+      position: {x: -0, y: 0.010285567, z: 3.471783e-12}
+      rotation: {x: -0.000000035390258, y: -0.000000002871877, z: -0.0000000033080083, w: 1}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: rabbit:RightShoulder
+      parentName: rabbit:Spine2
+      position: {x: 0.005338664, y: 0.009387621, z: -0.000017952227}
+      rotation: {x: -0.5747695, y: -0.41116962, z: 0.57585526, w: -0.41105995}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: rabbit:RightArm
+      parentName: rabbit:RightShoulder
+      position: {x: 2.9223997e-13, y: 0.011273049, z: 6.055048e-11}
+      rotation: {x: -0.1409918, y: -0.000095471725, z: 0.0058278735, w: 0.98999363}
+      scale: {x: 1.0000007, y: 1.0000007, z: 1.0000008}
+    - name: rabbit:RightForeArm
+      parentName: rabbit:RightArm
+      position: {x: -5.880395e-12, y: 0.019842755, z: 1.1886488e-10}
+      rotation: {x: 0.022440234, y: 0.0004254197, z: -0.018949794, w: -0.9995686}
+      scale: {x: 1.0000013, y: 1.0000023, z: 1.000001}
+    - name: rabbit:RightHand
+      parentName: rabbit:RightForeArm
+      position: {x: -3.5637435e-13, y: 0.022024568, z: -2.97016e-10}
+      rotation: {x: -0.08214318, y: -0.00058747304, z: 0.004980551, w: 0.99660796}
+      scale: {x: 1.0000007, y: 1.0000013, z: 1.000001}
+    - name: rabbit:RightHandIndex1
+      parentName: rabbit:RightHand
+      position: {x: 1.4774931e-11, y: 0.008758913, z: -6.807257e-11}
+      rotation: {x: 0.07979463, y: -0.0007247432, z: -0.0026451985, w: 0.9968075}
+      scale: {x: 1.0000001, y: 1, z: 1.0000005}
+    - name: rabbit:RightHandIndex2
+      parentName: rabbit:RightHandIndex1
+      position: {x: 1.6622525e-12, y: 0.0015820618, z: -7.960228e-12}
+      rotation: {x: -0, y: -0.000000033469394, z: -0.000000034706307, w: 1}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: rabbit:RightHandIndex3
+      parentName: rabbit:RightHandIndex2
+      position: {x: 0.000017340286, y: 0.0024692155, z: 0.00016650626}
+      rotation: {x: 0.00000004470347, y: 0.000000032130618, z: 0.000000035252, w: 1}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000005}
+    - name: rabbit:RightHandIndex4
+      parentName: rabbit:RightHandIndex3
+      position: {x: 0.00012264386, y: 0.002147538, z: 0.000057599158}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:Neck
+      parentName: rabbit:Spine2
+      position: {x: -0, y: 0.011571255, z: 3.1973306e-11}
+      rotation: {x: 0.0058499943, y: -7.3822415e-10, z: 0.0000000018147026, w: 0.9999829}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: rabbit:Head
+      parentName: rabbit:Neck
+      position: {x: -0, y: 0.010775251, z: -0.0011076628}
+      rotation: {x: 0.000000011641532, y: 0.0000000021827875, z: 0.0000000012732927, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: rabbit:HeadTop_End
+      parentName: rabbit:Head
+      position: {x: -0, y: 0.015083503, z: -0.0015505377}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:LeftShoulder
+      parentName: rabbit:Spine2
+      position: {x: -0.005338664, y: 0.009387799, z: -0.000033145305}
+      rotation: {x: 0.573374, y: -0.41260973, z: 0.57721686, w: 0.40965396}
+      scale: {x: 1.0000007, y: 1.000002, z: 1.0000018}
+    - name: rabbit:LeftArm
+      parentName: rabbit:LeftShoulder
+      position: {x: -1.2389561e-12, y: 0.011273049, z: 6.053854e-11}
+      rotation: {x: -0.14108738, y: -0.0036144843, z: 0.002508878, w: 0.98998743}
+      scale: {x: 1.0000013, y: 1.0000019, z: 1.000001}
+    - name: rabbit:LeftForeArm
+      parentName: rabbit:LeftArm
+      position: {x: 3.6788614e-13, y: 0.019842496, z: 2.929756e-11}
+      rotation: {x: -0.022550046, y: 0.00018632994, z: -0.00826141, w: 0.9997116}
+      scale: {x: 1.0000017, y: 1.0000015, z: 1.0000012}
+    - name: rabbit:LeftHand
+      parentName: rabbit:LeftForeArm
+      position: {x: 1.7967014e-12, y: 0.022007825, z: 2.725182e-10}
+      rotation: {x: -0.08120483, y: 0.0068667294, z: -0.06212795, w: 0.99473554}
+      scale: {x: 1.0000001, y: 1.000001, z: 1.0000008}
+    - name: rabbit:LeftHandIndex1
+      parentName: rabbit:LeftHand
+      position: {x: 3.535459e-11, y: 0.008920631, z: 7.503509e-13}
+      rotation: {x: 0.065553956, y: 0.012712178, z: 0.043999434, w: 0.99679744}
+      scale: {x: 1, y: 1.0000005, z: 1.0000005}
+    - name: rabbit:LeftHandIndex2
+      parentName: rabbit:LeftHandIndex1
+      position: {x: -5.527037e-12, y: 0.0015915447, z: 5.933828e-11}
+      rotation: {x: -0.00610775, y: 0.000000036321573, z: 0.004120903, w: 0.9999729}
+      scale: {x: 1, y: 1.0000004, z: 1.0000005}
+    - name: rabbit:LeftHandIndex3
+      parentName: rabbit:LeftHandIndex2
+      position: {x: 0.00012917248, y: 0.0023698537, z: 0.00019145585}
+      rotation: {x: 0.0064606275, y: -0.0013529004, z: 0.012387928, w: 0.99990153}
+      scale: {x: 1.0000002, y: 1, z: 1}
+    - name: rabbit:LeftHandIndex4
+      parentName: rabbit:LeftHandIndex3
+      position: {x: 0.00031371313, y: 0.0020518794, z: 0.000060496695}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: rabbit:LeftUpLeg
+      parentName: rabbit:Hips
+      position: {x: -0.007056089, y: -0.004286909, z: 0.0022633271}
+      rotation: {x: -0.0000036528654, y: -0.0014250557, z: 0.9999957, w: -0.0025648985}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1}
+    - name: rabbit:LeftLeg
+      parentName: rabbit:LeftUpLeg
+      position: {x: 7.733328e-12, y: 0.0436122, z: -2.8767516e-13}
+      rotation: {x: -0.023888886, y: 0.00042601905, z: -0.017825421, w: 0.99955565}
+      scale: {x: 1.0000007, y: 1.0000006, z: 1.0000002}
+    - name: rabbit:LeftFoot
+      parentName: rabbit:LeftLeg
+      position: {x: -5.4113193e-11, y: 0.044257596, z: 3.0647037e-11}
+      rotation: {x: 0.47696647, y: -0.010257087, z: 0.0055667213, w: 0.8788441}
+      scale: {x: 1.0000035, y: 1.0000025, z: 1.0000007}
+    - name: rabbit:LeftToeBase
+      parentName: rabbit:LeftFoot
+      position: {x: 1.383234e-11, y: 0.0149013, z: 3.2003689e-10}
+      rotation: {x: 0.28401625, y: 0.08828378, z: -0.02627245, w: 0.9543849}
+      scale: {x: 1.0000006, y: 1.0000013, z: 0.99999994}
+    - name: rabbit:LeftToe_End
+      parentName: rabbit:LeftToeBase
+      position: {x: -4.618584e-12, y: 0.005634368, z: 2.0135664e-12}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
