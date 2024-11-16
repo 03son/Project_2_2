@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 5836253110891415553}
   - component: {fileID: 7608843027441086669}
   - component: {fileID: 4841665644714577382}
+  - component: {fileID: 4480022086946713880}
   m_Layer: 0
   m_Name: Voice
   m_TagString: Untagged
@@ -608,6 +609,20 @@ MonoBehaviour:
   useOnAudioFilterRead: 0
   useMicrophoneTypeFallback: 1
   recordWhenJoined: 1
+--- !u!114 &4480022086946713880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246557984929298042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610c616f290710c4c800a7bd5e0921c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recorder: {fileID: 4841665644714577382}
+  noiseThreshold: 40
 --- !u!1 &6889110796529454607
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +640,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2946916573207820541
 Transform:
   m_ObjectHideFlags: 0
@@ -648,7 +663,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6889110796529454607}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -753,7 +768,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6889110796529454607}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1bc338da708a1348a037a084395e664, type: 3}
   m_Name: 
