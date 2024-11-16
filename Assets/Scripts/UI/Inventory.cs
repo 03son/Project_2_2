@@ -13,7 +13,7 @@ public class ItemSlot
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlotUI[] ui_itemSlot; // UI 상의 아이템 슬롯
+    public ItemSlotUI[] ui_itemSlot = new ItemSlotUI[6]; // UI 상의 아이템 슬롯
     public ItemSlot[] slots; //실제 아이템 슬롯이 저장되는 배열
 
     public Transform dropPos; //아이템 드랍 위치

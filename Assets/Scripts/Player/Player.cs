@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     HashTable playerCP;
 
     PhotonView pv;
+
+    GameObject mainCam;
+
     void Awake()
     {
         if (!PhotonNetwork.IsConnected)//싱글 플레이
@@ -28,16 +31,9 @@ public class Player : MonoBehaviour
             if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("animalName"))//캐릭터 할당
             {
                 PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("animalName", out object _animalName);
-                if ((string)_animalName == "무작위")
-                {
-                    //4개 캐릭터 중 랜덤 1택
-                }
-                else
-                { 
-                    //선택한 캐릭터로 1택
-                }
                 Debug.Log((string)_animalName);
             }
+
         }
     }
     void Start()

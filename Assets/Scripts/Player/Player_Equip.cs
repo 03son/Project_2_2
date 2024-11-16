@@ -177,9 +177,4 @@ public class Player_Equip : MonoBehaviour
             }
         }
     }
-
-    public void DropItem()
-    {
-
-    }
 }

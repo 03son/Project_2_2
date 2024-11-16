@@ -8,6 +8,7 @@ public class Single_GameManager : GameManager
     //ΩÃ±€«√∑π¿Ã ∞‘¿”∏≈¥œ¿˙
 
     GameObject player;
+    GameObject ≈‰≥¢;
     void Awake()
     {
         if (PhotonNetwork.IsConnected)
@@ -28,5 +29,6 @@ public class Single_GameManager : GameManager
         GameObject.Find("PlayerSpawnPointGroup").gameObject.GetComponentsInChildren<Transform>();
 
         GameObject.Instantiate(player, points[1].position, points[1].rotation);
+        //GameObject.Instantiate(≈‰≥¢ , points[1].position, points[1].rotation);
     }
 }
