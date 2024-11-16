@@ -20,6 +20,7 @@ public class CameraRot : MonoBehaviour
     public GameObject FollowCam;
     public GameObject EquipCamera;
 
+    public bool popup_escMenu = false; //esc T/F여부
     void Awake()
     {
 
@@ -56,6 +57,9 @@ public class CameraRot : MonoBehaviour
 
     void Update()
     {
+        if (popup_escMenu) //esc 창이 열려있으면 카메라 회전X
+            return;
+
         if (PhotonNetwork.IsConnected)
         {
             if (pv.IsMine)

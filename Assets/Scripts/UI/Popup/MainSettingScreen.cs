@@ -2,6 +2,7 @@ using ExitGames.Client.Photon.StructWrapping;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static UI_Button;
@@ -11,6 +12,7 @@ using TMPro;
 
 public class MainSettingScreen : UI_Popup
 {
+    Scene sceneName;
     enum SettingGameObjects
     {
         VideoSetting,//비디오 설정 창
@@ -35,15 +37,19 @@ public class MainSettingScreen : UI_Popup
         //설정 창 열었을 때 비디오 옵션이 디폴트로 열림
         GetObject((int)Buttons.VideoSetting_Button).transform.GetChild(0).gameObject.SetActive(true);
         OnOffSetting((int)Buttons.VideoSetting_Button);
+
+        sceneName = SceneManager.GetActiveScene();
     }
 
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape) && this.gameObject.activeSelf)
         {
-            //메인화면 버튼 4종 활성화
-            GameObject.Find("UI_Button").transform.GetChild(1).gameObject.SetActive(true);
-
+            if (sceneName.name == "Main_Screen") //메인화면일 경우
+            {
+                //메인화면 버튼 4종 활성화
+                GameObject.Find("UI_Button").transform.GetChild(0).gameObject.SetActive(true);
+            }
             //설정창 닫기
             ClosePopupUI();
         }

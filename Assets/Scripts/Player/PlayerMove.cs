@@ -38,9 +38,17 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             if (!photonView.IsMine)
                 return;
         }
-      
-        HandleMouseLook();
-        HandleMovement();
+
+        //esc 창이 닫혀있으면 실행
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        {
+            HandleMouseLook();
+            HandleMovement();
+        }
+        else //esc 창이 열려있으면 실행
+        {
+            PlayerVelocity(Vector3.zero);
+        }
     }
 
     // 마우스 회전 처리
@@ -58,8 +66,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (controller == null || cameraTransform == null) return;
 
         // 즉각적인 이동
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
+        float moveX = 0; // Input.GetAxisRaw("Horizontal");
+        float moveZ = 0; //Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKey(KeyManager.Front_Key)) moveZ = 1; //앞
+        if (Input.GetKey(KeyManager.Back_Key)) moveZ = -1; //뒤
+        if (Input.GetKey(KeyManager.Left_Key)) moveX = -1; //좌
+        if (Input.GetKey(KeyManager.Right_Key)) moveX = 1; //우
 
         // 카메라 방향으로 이동 계산
         Vector3 direction = cameraTransform.forward * moveZ + cameraTransform.right * moveX;
@@ -69,6 +82,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         // 이동 벡터 적용
         Vector3 mov = direction * speed;
 
+        PlayerVelocity(mov);
+    }
+    void PlayerVelocity(Vector3 mov)
+    {
         // 중력 적용
         if (controller.isGrounded)
         {
