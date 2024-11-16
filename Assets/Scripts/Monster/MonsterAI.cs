@@ -13,7 +13,7 @@ public class MonsterAI : MonoBehaviour
     public float chaseSpeed = 10.0f;               // 추적 시 이동 속도
     public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
     public float idleTimeBeforePatrol = 5.0f;      // 예외 처리 - 정지 후 순찰로 돌아가는 시간
-    private Mic micScript;                         // Mic 스크립트 참조
+
     private List<Transform> detectedPlayers;       // 감지된 플레이어 리스트
     private int currentPatrolIndex;                // 현재 순찰 지점 인덱스
     private Vector3 lastKnownPosition;             // 플레이어 마지막 위치
@@ -26,8 +26,8 @@ public class MonsterAI : MonoBehaviour
     public float fieldOfView = 120f;               // 시야각
     public float hearingRange = 50f;               // 청각 범위
     public float minDecibelToDetect = 30f;         // 감지 가능한 최소 데시벨 값
-
-    private enum State { Idle, Patrol, Chase, Search, Investigate };  //상태 정의 (Investigate 추가)
+    private Mic micScript;
+    private enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Investigate 추가)
     private State currentState;                    // 현재 상태
 
     private void Start()
@@ -319,7 +319,38 @@ public class MonsterAI : MonoBehaviour
         }
         return false; // 감지되지 않음
     }
+    private bool CanHearVoiceSource(Transform player)
+    {
+        // ��� �÷��̾� ��ü�� ��������
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
+        // �� �÷��̾ ���� Ȯ��
+        foreach (GameObject playerObject in playerObjects)
+        {
+            // �÷��̾��� Mic ������Ʈ ã��
+            micScript = playerObject.GetComponentInChildren<Mic>();
+
+            // Mic�� ������ ������ �� ����
+            if (micScript == null)
+            {
+                continue;
+            }
+
+            // Mic���� �ǽð����� ���� ���ú� �� ��������
+            float decibel = micScript.GetDecibelAtDistance(transform.position);
+            Debug.Log(decibel);
+
+            // ���ú��� ���� ���� �̻��̰�, û�� ���� ���� ������ �Ҹ� ����
+            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
+            {
+                Debug.Log("Sound detected from player within hearing range");
+                return true;  // �Ҹ��� ������
+            }
+        }
+
+        // ��� �÷��̾��� �Ҹ��� �������� ������ false ��ȯ
+        return false;
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
