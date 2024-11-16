@@ -1,42 +1,38 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterAI : MonoBehaviour
+public class MonsterAI : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public NavMeshAgent agent;                     // NavMeshAgent ������Ʈ
-    public Transform patrolParent;                 // ���� �������� �θ� ������Ʈ
-    public Transform[] patrolPoints;               // ���� ���� �迭
-    public LayerMask playerLayer;                  // �÷��̾ ���� ���̾�
-    public float moveSpeed = 3.5f;                 // ���� �� �̵� �ӵ�
-    public float chaseSpeed = 10.0f;               // ���� �� �̵� �ӵ�
-    public float waitTimeBeforePatrol = 2.0f;      // ���� ���� �� ��� �ð�
-    public float idleTimeBeforePatrol = 5.0f;      // ���� ó�� - ���� �� ������ ���ư��� �ð�
+    public NavMeshAgent agent;                     // NavMeshAgent 컴포넌트
+    public Transform patrolParent;                 // 순찰 지점들의 부모 오브젝트
+    public Transform[] patrolPoints;               // 순찰 지점 배열
+    public LayerMask playerLayer;                  // 플레이어가 속한 레이어
+    public float moveSpeed = 3.5f;                 // 순찰 시 이동 속도
+    public float chaseSpeed = 10.0f;               // 추적 시 이동 속도
+    public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
+    public float idleTimeBeforePatrol = 5.0f;      // 정지 후 순찰로 돌아가는 시간
+    public float hearingRange = 50f;               // 청각 범위
+    public float minDecibelToDetect = 30f;         // 감지 가능한 최소 데시벨 값
+    private Mic micScript;                         // Mic 스크립트 참조
 
-    private List<Transform> detectedPlayers;       // ������ �÷��̾� ����Ʈ
-    private int currentPatrolIndex;                // ���� ���� ���� �ε���
-    private Vector3 lastKnownPosition;             // �÷��̾� ������ ��ġ
-    private bool isWaiting = true;                 // ��� �������� ����
-    private float waitTimer = 0f;                  // ��� Ÿ�̸�
-    private float idleTimer = 0f;                  // ���� ���� Ÿ�̸�
-    private Vector3 investigatePoint;              // ������ ����
+    private List<Transform> detectedPlayers;       // 감지된 플레이어 리스트
+    private int currentPatrolIndex;                // 현재 순찰 지점 인덱스
+    private Vector3 lastKnownPosition;             // 플레이어 마지막 위치
+    private Vector3 investigatePoint;              // 조사할 위치
+    private float waitTimer = 0f;                  // 대기 타이머
+    private float idleTimer = 0f;                  // 정지 상태 타이머
 
-    public float viewDistance = 10f;               // �þ� �Ÿ�
-    public float fieldOfView = 120f;               // �þ߰�
-    public float hearingRange = 50f;               // û�� ����
-    public float minDecibelToDetect = 30f;        // ���� ������ �ּ� ���ú� ��
-    private Mic micScript;                        // Mic ��ũ��Ʈ ����
-
-    private enum State { Idle, Patrol, Chase, Search, Investigate };  // ���� ���� (Investigate �߰�)
-    private State currentState;                    // ���� ����
+    private enum State { Idle, Patrol, Chase, Search, Investigate }; // 몬스터 상태 정의
+    private State currentState;                    // 현재 상태
 
     private void Start()
     {
-        // NavMeshAgent �ʱ�ȭ
         agent = GetComponent<NavMeshAgent>();
 
-        // ���� ���� �迭�� �ڽ� ������Ʈ���� �ڵ����� ��������
+        // 순찰 지점 설정
         if (patrolParent != null)
         {
             patrolPoints = new Transform[patrolParent.childCount];
@@ -47,24 +43,22 @@ public class MonsterAI : MonoBehaviour
         }
         else
         {
-            Debug.LogError("PatrolParent�� �������� �ʾҽ��ϴ�.");
+            Debug.LogError("PatrolParent가 설정되지 않았습니다.");
             enabled = false;
             return;
         }
 
-        // �̵� �ӵ� ����
         if (agent != null)
         {
             agent.speed = moveSpeed;
         }
         else
         {
-            Debug.LogError("NavMeshAgent�� " + gameObject.name + "�� �����ϴ�.");
+            Debug.LogError("NavMeshAgent가 " + gameObject.name + "에 없습니다.");
             enabled = false;
             return;
         }
 
-        // �ʱ� ���� ����
         currentState = State.Idle;
         currentPatrolIndex = 0;
         detectedPlayers = new List<Transform>();
@@ -73,24 +67,9 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
-        // ���� ó�� (���Ͱ� �������� ������ ���� ���·� ����)
-        if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
-        {
-            idleTimer += Time.deltaTime;
-            if (idleTimer >= idleTimeBeforePatrol)
-            {
-                currentState = State.Patrol;
-                GoToNextPatrolPoint();
-                idleTimer = 0f; // Ÿ�̸� �ʱ�ȭ
-                return;
-            }
-        }
-        else
-        {
-            idleTimer = 0f; // ���Ͱ� �����̸� idleTimer �ʱ�ȭ
-        }
+        if (!photonView.IsMine) // 로컬 클라이언트만 행동 처리
+            return;
 
-        // ���� ���¿� ���� ������ �ൿ ����
         switch (currentState)
         {
             case State.Idle:
@@ -110,28 +89,13 @@ public class MonsterAI : MonoBehaviour
                 break;
         }
 
-        // �÷��̾� ���� ���� ������Ʈ
         UpdateDetectedPlayers();
     }
 
     private void Idle()
     {
-        // ��� Ÿ�̸Ӹ� ����
-        if (waitTimer < 0)
-        {
-            waitTimer = waitTimeBeforePatrol;
-        }
-        // ��� Ÿ�̸� ������Ʈ
         waitTimer -= Time.deltaTime;
 
-        // ��� �� �÷��̾ �����ϸ� ���� ���·� ��ȯ
-        if (detectedPlayers.Count > 0)
-        {
-            currentState = State.Chase;
-            return;
-        }
-
-        // ��� �ð��� ������ ���� ����
         if (waitTimer <= 0f)
         {
             currentState = State.Patrol;
@@ -139,78 +103,52 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void Patrol() // �������
+    private void Patrol()
     {
-        if (agent.speed == chaseSpeed)
+        if (agent.speed != moveSpeed)
         {
             agent.speed = moveSpeed;
         }
-        // ���� ����: ���� ���� �������� �̵�
+
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            Idle(); // ������ ������ ��� ������ ��ȯ
-        }
-
-        // �÷��̾ �����ϸ� ���� ���·� ��ȯ
-        if (detectedPlayers.Count > 0)
-        {
-            currentState = State.Chase;
+            currentState = State.Idle;
+            waitTimer = waitTimeBeforePatrol;
         }
     }
 
-    private void Chase() // ���� ���
+    private void Chase()
     {
-        if (agent.speed == moveSpeed)
+        if (agent.speed != chaseSpeed)
         {
             agent.speed = chaseSpeed;
         }
-        // ���� ����� �÷��̾ ����
+
         Transform closestPlayer = GetClosestPlayer();
         if (closestPlayer != null)
         {
             agent.SetDestination(closestPlayer.position);
-            lastKnownPosition = closestPlayer.position; // ���������� �� ��ġ ������Ʈ
-        }
-
-        // �þ߿��� �÷��̾ ������ ���� ���·� ��ȯ
-        if (detectedPlayers.Count == 0)
-        {
-            currentState = State.Search;
+            lastKnownPosition = closestPlayer.position;
         }
     }
 
-    private void Search() // ���� ���
+    private void Search()
     {
-        // ���������� �� ��ġ�� �̵��Ͽ� ����
         agent.SetDestination(lastKnownPosition);
 
-        // ���� ��ġ�� �����ϸ� ���� ���·� ��ȯ
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentState = State.Patrol;
         }
-
-        // �ٽ� �÷��̾ �߰��ϸ� ���� ���·� ��ȯ
-        if (detectedPlayers.Count > 0)
-        {
-            currentState = State.Chase;
-        }
     }
 
-    private void Investigate() // ���� ���� �߰�
+    private void Investigate()
     {
         agent.SetDestination(investigatePoint);
 
-        // ���� ������ �����ϸ� ���� ���·� ��ȯ
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentState = State.Patrol;
-        }
-
-        // �ٽ� �÷��̾ �߰��ϸ� ���� ���·� ��ȯ
-        if (detectedPlayers.Count > 0)
-        {
-            currentState = State.Chase;
         }
     }
 
@@ -220,15 +158,6 @@ public class MonsterAI : MonoBehaviour
         currentState = State.Investigate;
     }
 
-    private void GoToNextPatrolPoint()
-    {
-        if (patrolPoints.Length == 0)
-            return;
-
-        agent.destination = patrolPoints[currentPatrolIndex].position;
-        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length; // ���� �������� �ε��� �̵�
-    }
-
     private Transform GetClosestPlayer()
     {
         Transform closestPlayer = null;
@@ -236,10 +165,10 @@ public class MonsterAI : MonoBehaviour
 
         foreach (Transform player in detectedPlayers)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-            if (distanceToPlayer < closestDistance)
+            float distance = Vector3.Distance(transform.position, player.position);
+            if (distance < closestDistance)
             {
-                closestDistance = distanceToPlayer;
+                closestDistance = distance;
                 closestPlayer = player;
             }
         }
@@ -249,148 +178,50 @@ public class MonsterAI : MonoBehaviour
 
     private void UpdateDetectedPlayers()
     {
-        // ��� �÷��̾� ������Ʈ�� ã�� ���� ����Ʈ�� ������Ʈ
-        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-        List<Transform> currentPlayers = new List<Transform>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        detectedPlayers.Clear();
 
-        foreach (GameObject playerObject in playerObjects)
+        foreach (GameObject player in players)
         {
-            Transform playerTransform = playerObject.transform;
+            Transform playerTransform = player.transform;
 
-            // �÷��̾ ���� ���� ���� �ִ��� Ȯ��
-            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform) || CanHearVoiceSource(playerTransform))
+            if (CanSeePlayer(playerTransform) || CanHearSound(playerTransform))
             {
-                if (!detectedPlayers.Contains(playerTransform))
-                {
-                    detectedPlayers.Add(playerTransform);
-                }
-                currentPlayers.Add(playerTransform);
-            }
-        }
-
-        // �������� ���� �÷��̾ ����Ʈ���� ����
-        for (int i = detectedPlayers.Count - 1; i >= 0; i--)
-        {
-            if (!currentPlayers.Contains(detectedPlayers[i]))
-            {
-                detectedPlayers.RemoveAt(i);
+                detectedPlayers.Add(playerTransform);
             }
         }
     }
 
     private bool CanSeePlayer(Transform player)
     {
-        // �÷��̾������ ���� ���� ���
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        Vector3 direction = (player.position - transform.position).normalized;
+        float angle = Vector3.Angle(transform.forward, direction);
 
-        // ������ ����� �÷��̾��� ���� ���� ������ ���
-        float angle = Vector3.Angle(transform.forward, directionToPlayer);
-
-        // �þ߰� �ȿ� �ִ��� ���� Ȯ��
-        if (angle < fieldOfView / 2)
+        if (angle < 120f / 2)
         {
-            // �þ� �Ÿ� ���� �ִ��� Ȯ��
-            if (Vector3.Distance(transform.position, player.position) <= viewDistance)
+            if (Vector3.Distance(transform.position, player.position) <= 10f)
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, directionToPlayer, out hit, viewDistance))
-                {
-                    // �÷��̾���� ���̿� ��ֹ��� ������ Ȯ��
-                    if (hit.transform == player)
-                    {
-                        return true;  // �÷��̾ �þ� ���� ����
-                    }
-                }
+                return true;
             }
         }
-        return false;  // �þ� ���� ������ false ��ȯ
-    }
-    private bool CanHearSoundSource(Transform player)
-    {
-        // ��� SoundSource�� ��������, �� SoundSource�� ���ú��� ����Ͽ� ���Ͱ� ������ �� �ִ� ���� ���� �ִ��� Ȯ��
-        SoundSource[] soundSources = FindObjectsOfType<SoundSource>();
-        foreach (SoundSource soundSource in soundSources)
-        {
-            float decibel = soundSource.GetDecibelAtDistance(transform.position);
-            // ���ú��� ���� ������ �ּ� ���ú� �� �̻��̰�, �Ҹ��� ���� ���� �־�� ����
-            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, player.position) <= soundSource.range)
-            {
-                return true; // �Ҹ��� ������
-            }
-        }
-        return false; // �������� ����
-    }
-    private bool CanHearVoiceSource(Transform player)
-    {
-        // ��� �÷��̾� ��ü�� ��������
-        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-
-        // �� �÷��̾ ���� Ȯ��
-        foreach (GameObject playerObject in playerObjects)
-        {
-            // �÷��̾��� Mic ������Ʈ ã��
-            micScript = playerObject.GetComponentInChildren<Mic>();
-
-            // Mic�� ������ ������ �� ����
-            if (micScript == null)
-            {
-                continue;
-            }
-
-            // Mic���� �ǽð����� ���� ���ú� �� ��������
-            float decibel = micScript.GetDecibelAtDistance(transform.position);
-            Debug.Log(decibel);
-
-            // ���ú��� ���� ���� �̻��̰�, û�� ���� ���� ������ �Ҹ� ����
-            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
-            {
-                Debug.Log("Sound detected from player within hearing range");
-                return true;  // �Ҹ��� ������
-            }
-        }
-
-        // ��� �÷��̾��� �Ҹ��� �������� ������ false ��ȯ
         return false;
     }
 
-
-    private void OnDrawGizmosSelected()
+    private bool CanHearSound(Transform player)
     {
-        Gizmos.color = Color.red;
+        float distance = Vector3.Distance(transform.position, player.position);
+        return distance <= hearingRange; // 간단한 청각 처리
+    }
 
-        // ��ä���� �׸��� ���� ���׸�Ʈ ����
-        int segments = 20;
-        float angleStep = fieldOfView / segments; // ���� ����
-        Vector3 origin = transform.position; // ������ ��ġ
-
-        // �þ߰� ��ä�� �׸���
-        for (int i = 0; i <= segments; i++)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting) // 데이터를 전송
         {
-            float currentAngle = -fieldOfView / 2 + angleStep * i; // ���� ���
-            Vector3 direction = Quaternion.Euler(0, currentAngle, 0) * transform.forward; // ������ ȸ���Ͽ� ���� ���� ���
-            Vector3 endPoint = origin + direction * viewDistance; // �þ� �Ÿ���ŭ ������ ���� ���
-
-            Gizmos.DrawLine(origin, endPoint); // ������ ��ġ���� �ش� �������� ���� �׸�
+            stream.SendNext(currentState);
         }
-
-        // �þ� ���� ���� ��ä���� �ϼ��ϴ� ��� �׸���
-        for (int i = 0; i < segments; i++)
+        else // 데이터를 수신
         {
-            float currentAngle = -fieldOfView / 2 + angleStep * i;
-            float nextAngle = currentAngle + angleStep;
-
-            Vector3 currentDir = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
-            Vector3 nextDir = Quaternion.Euler(0, nextAngle, 0) * transform.forward;
-
-            Vector3 currentPoint = origin + currentDir * viewDistance;
-            Vector3 nextPoint = origin + nextDir * viewDistance;
-
-            Gizmos.DrawLine(currentPoint, nextPoint); // ��ä���� ������ ���� �� �κ��� ����
+            currentState = (State)stream.ReceiveNext();
         }
-        // û�� ���� (����) �׸���
-        Gizmos.color = Color.blue; // û�� ������ �Ķ������� ǥ��
-        Gizmos.DrawWireSphere(origin, hearingRange);
-
-
     }
 }
