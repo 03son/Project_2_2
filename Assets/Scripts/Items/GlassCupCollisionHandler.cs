@@ -42,7 +42,7 @@ public class GlassCupCollisionHandler : MonoBehaviour
         AlertMonsters(breakPoint);
 
         // 기존 유리컵 오브젝트 비활성화
-       // gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     void AlertMonsters(Vector3 breakPoint)

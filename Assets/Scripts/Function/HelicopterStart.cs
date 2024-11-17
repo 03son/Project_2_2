@@ -10,7 +10,7 @@ public class HelicopterStart : MonoBehaviour, IInteractable
     // 인터페이스 메서드: 상호작용 메시지 반환
     public string GetInteractPrompt()
     {
-        return $"F 키를 눌러 헬리콥터 시동 ({requiredItemName} 필요)";
+        return $"키를 눌러 헬리콥터 시동 ({requiredItemName} 필요)";
     }
 
     // 인터페이스 메서드: 상호작용 동작

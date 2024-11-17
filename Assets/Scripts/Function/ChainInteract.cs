@@ -68,20 +68,36 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
         isHolding = false;
         holdProgress = 0f;
 
+        // 절단 완료 사운드
+        if (audioSource != null)
+        {
+            audioSource.Stop(); // 절단 중 소리 정지
+            if (cutCompleteSound != null)
+            {
+                audioSource.PlayOneShot(cutCompleteSound); // 완료 사운드 재생
+            }
+        }
+
         Inventory inventory = Inventory.instance;
-        inventory.RemoveItem(requiredItem); // 아이템 사용
+
+        // 인벤토리에서 커터 제거
+        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
+        if (playerEquip != null)
+        {
+            playerEquip.RemoveEquippedItem(requiredItem);
+            Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+        }
 
         if (PhotonNetwork.IsConnected)
         {
-            // 멀티플레이에서는 RPC 호출
             photonView.RPC("RPC_RemoveChain", RpcTarget.All);
         }
         else
         {
-            // 싱글플레이에서는 로컬 메서드 호출
             RPC_RemoveChain();
         }
     }
+
 
     private void CancelInteract()
     {

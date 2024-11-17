@@ -352,6 +352,55 @@ public class Player_Equip : MonoBehaviour
         }
         return false;
     }
+    public void RemoveEquippedItem(string itemName)
+    {
+        Debug.Log($"RemoveEquippedItem 호출됨. 제거하려는 아이템: {itemName}");
+
+        if (equipItem != null)
+        {
+            Debug.Log("equipItem이 null이 아닙니다. 모든 자식에서 아이템을 검색합니다.");
+
+            // equipItem 하위 모든 자식에서 ItemObject를 검색
+            ItemObject[] itemObjects = equipItem.GetComponentsInChildren<ItemObject>();
+            Debug.Log($"검색된 ItemObject 개수: {itemObjects.Length}");
+
+            foreach (ItemObject itemObject in itemObjects)
+            {
+                Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
+                Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
+
+                if (itemObject.item.ItemName == itemName)
+                {
+                    Debug.Log($"장착된 아이템 이름 {itemObject.item.ItemName}이(가) 제거하려는 아이템 이름과 일치합니다.");
+
+                    // 인벤토리에서 제거
+                    Inventory.instance.RemoveItem(itemName);
+
+                    // 장착된 아이템 제거
+                    Destroy(itemObject.gameObject);
+
+                    Debug.Log($"장착된 아이템 {itemName}이(가) 제거되었습니다.");
+                    return; // 아이템 제거 후 메서드 종료
+                }
+                else
+                {
+                    Debug.LogWarning($"이름이 일치하지 않음: {itemObject.item.ItemName} != {itemName}");
+                }
+            }
+
+            Debug.LogWarning($"equipItem의 모든 자식에서 {itemName} 이름을 가진 아이템을 찾을 수 없습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
+        }
+    }
+
+
+
+
+
+
 
     public bool HasEquippedCardKey()
     {

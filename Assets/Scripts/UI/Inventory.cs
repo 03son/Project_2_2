@@ -24,14 +24,15 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+    private Player_Equip playerEquip; // Player_Equip 참조 변수 추가
+
     public PhotonView pv;
 
     int addItemIndex;
 
     private GameObject equippedItemObject; // ���� ������ �������� GameObject�� �����ϴ� ����
 
-    private Player_Equip playerEquip; // Player_Equip 참조 변수 추가
-
+   
     private void Awake()
     {
         if (instance == null)
@@ -179,14 +180,14 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // 장착된 아이템 제거
-        if (equippedItemObject != null)
+        // Player_Equip에서 장착된 아이템 제거
+        if (playerEquip != null && playerEquip.equipItem != null)
         {
-            ItemObject equippedItem = equippedItemObject.GetComponent<ItemObject>();
-            if (equippedItem != null && equippedItem.item.ItemName == itemName) // item으로 수정
+            ItemObject equippedItem = playerEquip.equipItem.GetComponent<ItemObject>();
+            if (equippedItem != null && equippedItem.item.ItemName == itemName)
             {
-                Destroy(equippedItemObject);
-                equippedItemObject = null;
+                Destroy(playerEquip.equipItem);
+                playerEquip.equipItem = null;
                 Debug.Log($"장착된 {itemName} 제거됨");
             }
         }
@@ -263,4 +264,6 @@ public class Inventory : MonoBehaviour
         // EquipItem �޼���� ������ �������� ����
         equippedItemObject = itemObject;
     }
+
+
 }

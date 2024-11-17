@@ -79,7 +79,14 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
         }
 
         Inventory inventory = Inventory.instance;
-        inventory.RemoveItem(requiredItem); // 아이템 사용
+
+        // 인벤토리에서 연료통 제거
+        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
+        if (playerEquip != null)
+        {
+            playerEquip.RemoveEquippedItem(requiredItem);
+            Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+        }
 
         if (PhotonNetwork.IsConnected)
         {
@@ -90,6 +97,7 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
             RPC_AddFuel();
         }
     }
+
 
     private void CancelInteract()
     {
