@@ -37,6 +37,10 @@ public class Mic : MonoBehaviour
 
     void Update()
     {
+        //마이크 off일 때 UI 막대 값 = 0
+        if (!recorder.TransmitEnabled)
+            Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
+
         if (recorder != null && recorder.IsCurrentlyTransmitting)
         {
             // 데시벨 계산
@@ -53,18 +57,22 @@ public class Mic : MonoBehaviour
     {
         // 마이크와의 거리 계산
         float distance = Vector3.Distance(listenerPosition, transform.position);
-
-        // 현재 데시벨 값을 반환하고, 거리 기반으로 감쇠 적용
-        return currentDb  * Mathf.Log10(distance);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+        if (recorder.TransmitEnabled == true)
+        {
+            // 현재 데시벨 값을 반환하고, 거리 기반으로 감쇠 적용
+            return currentDb - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+        }
+        return 0f; // 마이크가 켜져있지 않으면 0을 출력
     }
 
     //마이크 데시벨을 슬라이더 UI에 전송
     public void SetMicDecibel_UI()
     {
-        //currentDb의 값을 UI의 Value 범위에 맞게 조정 후 적용
-        //float micDecibel = Mathf.InverseLerp(0, 80,currentDb);
-        // Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.Lerp(0,1, micDecibel);
-        Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(0, 80, (int)currentDb);
-        Debug.Log("ddjfhjshfdksj"+Mathf.InverseLerp(0, 80, (int)currentDb));
+        if(recorder.TransmitEnabled) 
+        {
+            //currentDb의 값을 UI의 Value 범위에 맞게 조정 후 적용
+            Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
+            Debug.Log("ddjfhjshfdksj" + Mathf.InverseLerp(30, 60, (int)currentDb));
+        }
     }
 }
