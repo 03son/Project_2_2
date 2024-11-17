@@ -320,10 +320,11 @@ public class MonsterAI : MonoBehaviour
         }
         return false; // 감지되지 않음
     }
-    private bool CanHearVoiceSource(Transform player)
+    private bool CanHearVoiceSource(Transform monster)
     {
         // 모든 플레이어 객체를 가져오기
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        monster = this.gameObject.transform;
 
         // 각 플레이어에 대해 확인
         foreach (GameObject playerObject in playerObjects)
@@ -339,16 +340,15 @@ public class MonsterAI : MonoBehaviour
 
             // Mic에서 실시간으로 계산된 데시벨 값 가져오기
             float decibel = micScript.GetDecibelAtDistance(transform.position);
-            Debug.Log(decibel);
+            Debug.Log("몬스터가 듣는 데시벨" + decibel);
 
             // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
             {
-                Debug.Log("Sound detected from player within hearing range");
+                Debug.Log("목소리 청취");
                 return true;  // 소리가 감지됨
             }
         }
-
         // 어느 플레이어의 소리도 감지되지 않으면 false 반환
         return false;
     }

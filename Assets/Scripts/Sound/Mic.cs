@@ -37,7 +37,7 @@ public class Mic : MonoBehaviour
             float rms = recorder.LevelMeter.CurrentAvgAmp;
             currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6f로 로그 방지
 
-            Debug.Log("Current Decibel Level: " + currentDb);
+            Debug.Log("플레이어가 내는 데시벨" + currentDb);
         }
     }
     // 데시벨을 반환하는 함수 (필요할 경우 사용)
@@ -47,6 +47,6 @@ public class Mic : MonoBehaviour
         float distance = Vector3.Distance(listenerPosition, transform.position);
 
         // 현재 데시벨 값을 반환하고, 거리 기반으로 감쇠 적용
-        return currentDb  * Mathf.Log10(distance);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+        return currentDb - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
     }
 }

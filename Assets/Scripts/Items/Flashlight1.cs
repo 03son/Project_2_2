@@ -50,7 +50,7 @@ public class Flashlight1 : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("EquipCamera/EquipItem 경로를 찾을 수 없습니다.");
+            //Debug.LogWarning("EquipCamera/EquipItem 경로를 찾을 수 없습니다.");
         }
 
         if (transform.parent != null && transform.parent.name == "EquipItem")
@@ -59,10 +59,10 @@ public class Flashlight1 : MonoBehaviour
         }
         else
         {
-            Debug.Log("손전등이 올바른 계층 구조에 있지 않습니다.");
+            //Debug.Log("손전등이 올바른 계층 구조에 있지 않습니다.");
         }
 
-        Debug.Log($"isAcquired 상태: {isAcquired}");
+        //Debug.Log($"isAcquired 상태: {isAcquired}");
 
         if (isAcquired && transform.parent != null && transform.parent.name == "EquipItem")
         {

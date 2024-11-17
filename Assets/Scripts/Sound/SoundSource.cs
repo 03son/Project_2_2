@@ -31,14 +31,6 @@ public class SoundSource : MonoBehaviour
             Debug.LogError("AudioSource에 AudioClip이 할당되지 않았습니다. 오디오 클립을 설정해 주세요.");
         }
     }
-    private void Update()
-    {
-        // E 키를 누르면 소리를 재생
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PlaySound();
-        }
-    }
 
     public void PlaySound()
     {

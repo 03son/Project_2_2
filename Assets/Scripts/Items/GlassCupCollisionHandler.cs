@@ -47,6 +47,7 @@ public class GlassCupCollisionHandler : MonoBehaviour
 
     void AlertMonsters(Vector3 breakPoint)
     {
+        SoundSource soundSource = GetComponent<SoundSource>();
         // 반경 내의 모든 Collider 찾기
         Collider[] colliders = Physics.OverlapSphere(breakPoint, 50f); // 청각 범위(50미터)
 
@@ -57,14 +58,23 @@ public class GlassCupCollisionHandler : MonoBehaviour
             {
                 float distanceToMonster = Vector3.Distance(breakPoint, monsterAI.transform.position);
 
-                // 몬스터의 청각 범위 내에 있는 경우에만 반응
-                if (distanceToMonster <= monsterAI.hearingRange)
+                // 데시벨 계산 (거리 기반)
+                float decibel = soundSource.baseDecibel - 20f * Mathf.Log10(distanceToMonster);
+
+                // 몬스터의 청각 범위와 데시벨 임계값 확인
+                if (distanceToMonster <= monsterAI.hearingRange && decibel >= monsterAI.minDecibelToDetect)
                 {
+                    Debug.Log($"Monster at {monsterAI.transform.position} detected sound with {decibel} dB");
                     monsterAI.SetInvestigatePoint(breakPoint);  // 몬스터의 조사 지점을 깨진 곳으로 설정
+                }
+                else
+                {
+                    Debug.Log($"Monster at {monsterAI.transform.position} could not detect the sound (Decibel: {decibel})");
                 }
             }
         }
     }
+
 
     // 아이템을 획득했을 때 물리 설정을 변경하는 메서드
     public void SetPhysicsForPickedUp()
