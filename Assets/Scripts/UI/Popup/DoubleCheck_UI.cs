@@ -6,12 +6,19 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Photon.Voice.PUN;
+using Photon.Voice.Unity;
+using Photon.Voice.Unity.UtilityScripts;
+using ExitGames.Client.Photon;
+using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class DoubleCheck_UI : UI_Popup
 {
     public TextMeshProUGUI Ask_again_text;
     public Button Yes_Button;
     public Button No_Button;
+
+    HashTable playerCP;
 
     Scene sceneName;
     string Ask_Text;
@@ -30,7 +37,7 @@ public class DoubleCheck_UI : UI_Popup
         if (sceneName.name == "Main_Screen")//메인화면일 경우
             Ask_Text = "게임을 종료하시겠습니까?";
         
-        if (sceneName.name == "1") //인게임일 경우
+        if (sceneName.name == GameInfo.InGameScenes) //인게임일 경우
             Ask_Text = "게임을 나가겠습니까?";
         
             Ask_again_text.text = Ask_Text;
@@ -50,14 +57,17 @@ public class DoubleCheck_UI : UI_Popup
         }
 
         //인게임 일 때
-        if (sceneName.name == "1")
+        if (sceneName.name == GameInfo.InGameScenes)
         {
-            Debug.Log("게임 나가기");
+            //Debug.Log("게임 나가기");
             if (PhotonNetwork.IsConnected)
             {
                 if (PhotonNetwork.InRoom)
                 {
-                    PhotonNetwork.LeaveRoom();
+                    StartCoroutine(disconnect());
+
+                    Debug.Log("게임 나가기");
+                    PhotonNetwork.Disconnect();
                 }
             }
             else
@@ -70,5 +80,18 @@ public class DoubleCheck_UI : UI_Popup
     void no_button(PointerEventData button)
     {
         ClosePopupUI();
+    }
+    IEnumerator disconnect()
+    {
+        while (true)
+        {
+            if (!PhotonNetwork.IsConnected)
+            {
+                SceneManager.LoadScene("Main_Screen");
+                break;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

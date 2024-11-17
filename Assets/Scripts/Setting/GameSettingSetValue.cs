@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
 
 public class GameSettingSetValue : MonoBehaviour
 {   //저장된 게임의 세팅을 로드

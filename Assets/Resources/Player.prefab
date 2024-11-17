@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 7608843027441086669}
   - component: {fileID: 4841665644714577382}
   - component: {fileID: 4480022086946713880}
+  - component: {fileID: 9187683247280162477}
   m_Layer: 0
   m_Name: Voice
   m_TagString: Untagged
@@ -819,3 +820,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recorder: {fileID: 4841665644714577382}
+  mic: {fileID: 5836253110891415553}
+  Microphone_Decibel_Bar: {fileID: 0}
+--- !u!114 &9187683247280162477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246557984929298042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba537b2ec88e55d43a0a56306fa6773f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
