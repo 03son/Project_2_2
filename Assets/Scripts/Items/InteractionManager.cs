@@ -92,6 +92,8 @@ public class InteractionManager : MonoBehaviour
             }
         }
         OnInteractInput();
+
+        
     }
 
     public void OnInteractInput()
@@ -123,5 +125,15 @@ public class InteractionManager : MonoBehaviour
 
         //<b></b> : <b>는 볼트체
         promptText.text = string.Format($"<b>[{KeyManager.Interaction_Key}]</b> {curInteractable.GetInteractPrompt()}");
+    }
+
+    // 정적 메서드로 프롬프트 업데이트
+    public static void UpdatePrompt(IInteractable interactable)
+    {
+        InteractionManager instance = FindObjectOfType<InteractionManager>();
+        if (instance != null && interactable != null)
+        {
+            instance.promptText.text = interactable.GetInteractPrompt();
+        }
     }
 }

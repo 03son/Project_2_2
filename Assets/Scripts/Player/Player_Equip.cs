@@ -368,6 +368,21 @@ public class Player_Equip : MonoBehaviour
         return false; // CardKey가 없으면 false 반환
     }
 
+    // Player_Equip에서 특정 아이템이 장착되었는지 확인하는 메서드 추가
+    public bool HasEquippedItem(string itemName)
+    {
+        if (equipItem != null)
+        {
+            ItemObject itemObject = equipItem.GetComponentInChildren<ItemObject>();
+            if (itemObject != null && itemObject.item.ItemName == itemName)
+            {
+                return true; // 장착된 아이템이 있다면 true 반환
+            }
+        }
+        return false; // 장착된 아이템이 없으면 false 반환
+    }
+
+
 }
 
 
