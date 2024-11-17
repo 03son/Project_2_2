@@ -17,11 +17,12 @@ public class PlayerMicSetting : MonoBehaviour
         if (Input.GetKey(KeyManager.Mic_Key))
         {
             recorder.TransmitEnabled = true; // 마이크 활성화
+            GetComponent<Mic>().singleMic = true;
         }
         else
         {
             recorder.TransmitEnabled = false; // 마이크 비활성화
-            
+            GetComponent<Mic>().singleMic = false;
         }
     }
 }
