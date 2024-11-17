@@ -9,6 +9,10 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
     private float holdProgress = 0f;       // 홀드 진행 시간
     private bool isHolding = false;        // 홀드 중인지 여부
 
+    [Header("Audio Settings")]
+    public AudioSource audioSource;        // AudioSource 컴포넌트
+    public AudioClip cuttingSound;         // 사슬 절단 중 사운드
+    public AudioClip cutCompleteSound;     // 절단 완료 사운드
     public string GetInteractPrompt()
     {
         if (isChainRemoved)
@@ -28,6 +32,13 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
         }
 
         isHolding = true; // 홀드 시작
+                          // 절단 중 사운드 시작
+        if (cuttingSound != null && audioSource != null)
+        {
+            audioSource.clip = cuttingSound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
 
     private void Update()
@@ -76,6 +87,12 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
     {
         isHolding = false;
         holdProgress = 0f;
+
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
         Debug.Log("사슬 제거 취소됨");
     }
 

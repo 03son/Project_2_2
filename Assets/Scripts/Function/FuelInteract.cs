@@ -9,6 +9,10 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
     private float holdProgress = 0f;     // 홀드 진행 시간
     private bool isHolding = false;      // 홀드 중인지 여부
 
+    [Header("Audio Settings")]
+    public AudioSource audioSource;        // AudioSource 컴포넌트
+    public AudioClip fuelAddingSound;      // 연료 주입 중 사운드
+    public AudioClip fuelAddedCompleteSound; // 연료 주입 완료 사운드
     public string GetInteractPrompt()
     {
         // 연료가 이미 추가된 상태면 텍스트를 표시하지 않음
@@ -27,6 +31,14 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
         }
 
         isHolding = true; // 홀드 시작
+
+        // 연료 주입 사운드 시작
+        if (fuelAddingSound != null && audioSource != null)
+        {
+            audioSource.clip = fuelAddingSound;
+            audioSource.loop = true; // 반복 재생
+            audioSource.Play();
+        }
     }
 
     private void Update()
@@ -56,17 +68,25 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
         isHolding = false;
         holdProgress = 0f;
 
+        // 연료 주입 완료 사운드
+        if (audioSource != null)
+        {
+            audioSource.Stop(); // 주입 중 소리 정지
+            if (fuelAddedCompleteSound != null)
+            {
+                audioSource.PlayOneShot(fuelAddedCompleteSound); // 완료 사운드 재생
+            }
+        }
+
         Inventory inventory = Inventory.instance;
-        inventory.RemoveItem(requiredItem); // 필요한 아이템을 인벤토리에서 제거
+        inventory.RemoveItem(requiredItem); // 아이템 사용
 
         if (PhotonNetwork.IsConnected)
         {
-            // 멀티플레이에서는 RPC 호출
             photonView.RPC("RPC_AddFuel", RpcTarget.All);
         }
         else
         {
-            // 싱글플레이에서는 로컬 메서드 호출
             RPC_AddFuel();
         }
     }
@@ -75,8 +95,16 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
     {
         isHolding = false;
         holdProgress = 0f;
+
+        // 주입 중 소리 정지
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
         Debug.Log("연료 주입 취소됨");
     }
+
 
     [PunRPC]
     private void RPC_AddFuel()
