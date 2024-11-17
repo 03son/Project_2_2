@@ -4,80 +4,63 @@ using UnityEngine;
 public class SubmarineController : MonoBehaviourPun
 {
     private bool isPropellerAttached = false;
-    private bool isBatteryAttached = false;
-    private bool isKeyAttached = false;
+    private int attachedBatteries = 0; // 배터리 수
+    public int requiredBatteries = 2; // 필요한 배터리 수
+
     private bool isStarted = false;
 
-    public AudioSource audioSource; // 잠수함 시동 소리를 위한 AudioSource
-    public AudioClip startSound; // 잠수함 시동 소리 클립
-    [Range(0f, 1f)]
-    public float volume = 1.0f; // 음량 조절 변수
+    public AudioSource audioSource; // 잠수함 소리
+    public AudioClip startSound; // 시동 소리
 
     private void Start()
     {
         if (audioSource == null)
         {
-            audioSource = gameObject.AddComponent<AudioSource>(); // AudioSource가 없으면 추가
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
-        audioSource.volume = volume; // 초기 음량 설정
     }
 
-    public void AttachedItem(string itemName)
+    public void AttachItem(string itemName)
     {
         if (itemName == "Propeller")
         {
             isPropellerAttached = true;
-            Debug.Log("Propeller 부착됨");
+            Debug.Log("프로펠러가 부착되었습니다.");
         }
         else if (itemName == "Battery")
         {
-            isBatteryAttached = true;
-            Debug.Log("Battery 부착됨");
+            attachedBatteries++;
+            Debug.Log($"배터리가 부착되었습니다. 현재 배터리 수: {attachedBatteries}/{requiredBatteries}");
         }
-        else if (itemName == "Submarine Key")
-        {
-            isKeyAttached = true;
-            Debug.Log("Submarine Key 부착됨");
-        }
-
-        Debug.Log($"Current Attach Status - Propeller: {isPropellerAttached}, Battery: {isBatteryAttached}, Key: {isKeyAttached}");
     }
 
     public bool CanStart()
     {
-        Debug.Log($"Checking CanStart - Propeller: {isPropellerAttached}, Battery: {isBatteryAttached}, Key: {isKeyAttached}");
-        return isPropellerAttached && isBatteryAttached && isKeyAttached;
+        return isPropellerAttached && attachedBatteries >= requiredBatteries;
     }
 
     public void StartSubmarine()
     {
-        if (isStarted) return;
+        if (isStarted)
+        {
+            Debug.Log("잠수함은 이미 작동 중입니다.");
+            return;
+        }
 
         if (CanStart())
         {
             isStarted = true;
-            Debug.Log("잠수함이 시동되었습니다. 탈출 시퀀스가 시작됩니다!");
+            Debug.Log("잠수함 시동 시작!");
 
-            // 시동 소리 재생
             if (audioSource != null && startSound != null)
             {
                 audioSource.clip = startSound;
-                audioSource.volume = volume; // 설정된 음량 사용
                 audioSource.Play();
             }
-
-            // 3초 후 탈출 시퀀스 실행
-            Invoke("EscapeSequence", 3.0f);
         }
         else
         {
-            Debug.Log("모든 부품이 부착되지 않았습니다. 잠수함을 시작할 수 없습니다.");
+            Debug.Log("필요한 부품이 모두 부착되지 않았습니다.");
         }
-    }
-
-    private void EscapeSequence()
-    {
-        Debug.Log("탈출 시퀀스가 시작되었습니다.");
-        // 여기서 실제 탈출 시퀀스를 처리 (예: 씬 전환, 애니메이션 등)
     }
 }

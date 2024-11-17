@@ -261,13 +261,13 @@ public class Player_Equip : MonoBehaviour
             itemData cupItemData = currentGlassCup.GetComponent<ItemObject>().item;
 
             // 인벤토리에서 아이템 제거
-          /*  if (cupItemData != null)
+            if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
-            } */
+            } 
 
-          //      hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
-         //  currentGlassCup = null;  // 유리컵 참조 해제
+                hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
+           currentGlassCup = null;  // 유리컵 참조 해제
 
             if (trajectoryLine != null)
             {
@@ -352,6 +352,22 @@ public class Player_Equip : MonoBehaviour
         }
         return false;
     }
+
+    public bool HasEquippedCardKey()
+    {
+        // equipItem 하위에 "CardKey"라는 이름의 아이템을 찾음
+        Transform cardKeyObject = equipItem.transform.Find("CardKey");
+        if (cardKeyObject != null)
+        {
+            ItemObject equippedItem = cardKeyObject.GetComponent<ItemObject>();
+            if (equippedItem != null)
+            {
+                return true; // CardKey가 장착되어 있으면 true 반환
+            }
+        }
+        return false; // CardKey가 없으면 false 반환
+    }
+
 }
 
 
