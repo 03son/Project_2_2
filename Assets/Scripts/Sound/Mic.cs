@@ -61,9 +61,10 @@ public class Mic : MonoBehaviour
     //마이크 데시벨을 슬라이더 UI에 전송
     public void SetMicDecibel_UI()
     {
-        float micDecibel = currentDb * 0.01f;
-
         //currentDb의 값을 UI의 Value 범위에 맞게 조정 후 적용
-        Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.Clamp(micDecibel, 0,1);
+        //float micDecibel = Mathf.InverseLerp(0, 80,currentDb);
+        // Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.Lerp(0,1, micDecibel);
+        Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(0, 80, (int)currentDb);
+        Debug.Log("ddjfhjshfdksj"+Mathf.InverseLerp(0, 80, (int)currentDb));
     }
 }
