@@ -346,6 +346,7 @@ public class MonsterAI : MonoBehaviour
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
             {
                 Debug.Log("목소리 청취");
+                decibel = 0f;
                 return true;  // 소리가 감지됨
             }
         }

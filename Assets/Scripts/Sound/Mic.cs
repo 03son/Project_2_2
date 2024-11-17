@@ -8,6 +8,7 @@ public class Mic : MonoBehaviour
     private float currentDb = 0f; // 현재 데시벨 값
     private PhotonView photonView; // 로컬 플레이어 확인용
 
+
     void Awake()
     {
         photonView = GetComponent<PhotonView>();
@@ -36,7 +37,6 @@ public class Mic : MonoBehaviour
             // 데시벨 계산
             float rms = recorder.LevelMeter.CurrentAvgAmp;
             currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6f로 로그 방지
-
             Debug.Log("플레이어가 내는 데시벨" + currentDb);
         }
     }
@@ -45,8 +45,11 @@ public class Mic : MonoBehaviour
     {
         // 마이크와의 거리 계산
         float distance = Vector3.Distance(listenerPosition, transform.position);
-
-        // 현재 데시벨 값을 반환하고, 거리 기반으로 감쇠 적용
-        return currentDb - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+        if (recorder.TransmitEnabled == true)
+        {
+            // 현재 데시벨 값을 반환하고, 거리 기반으로 감쇠 적용
+            return currentDb - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+        }
+        return 0f; // 마이크가 켜져있지 않으면 0을 출력
     }
 }
