@@ -41,41 +41,16 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             walkSound.loop = true;
 
 
-            if (animator == null)
-            {
-                Debug.LogError("Animator component not found! Check if the Animator exists in the children of this object.");
-            }
-            else
-            {
-                Debug.Log($"Animator found and connected: {animator.gameObject.name}");
-            }
-            walkSound.volume = walkVolume;
+
         }
     }
 
     void Update()
     {
-
-
-
-        if (animator != null)
-        {
-            bool walking = (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0);
-            animator.SetBool("isWalking", walking);
-            Debug.Log($"Set isWalking: {walking}");
-
-            bool currentParam = animator.GetBool("isWalking");
-            Debug.Log($"Animator Parameter isWalking: {currentParam}");
-
-            if (walking != currentParam)
-            {
-                Debug.LogError("Animator parameter 'isWalking' is not updating properly.");
-            }
-        }
-
-
+        // Photon View 확인
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
+            Debug.Log("Not my PhotonView, skipping Update.");
             return;
         }
 
@@ -84,15 +59,31 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             HandleMouseLook();
             HandleMovement();
+
+         
         }
         else
         {
+            // esc 창이 열려있을 때는 이동 정지
             PlayerVelocity(Vector3.zero, 0f, 0f);
         }
-
-       
-
     }
+
+
+
+    // 애니메이션 상태 업데이트
+    void UpdateAnimationStates()
+    {
+        bool isWalking = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+
+        // PlayerAnimationController 호출
+        GetComponentInChildren<PlayerAnimationController>().SetWalking(isWalking);
+        GetComponentInChildren<PlayerAnimationController>().SetRunning(isRunning);
+    }
+
+
+
 
     private void HandleMouseLook()
     {

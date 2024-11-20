@@ -6,9 +6,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     void Start()
     {
-        // Animator 컴포넌트 가져오기
-        animator = GetComponentInChildren<Animator>();
-
+        animator = GetComponent<Animator>();
         if (animator == null)
         {
             Debug.LogError("Animator component not found!");
