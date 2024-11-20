@@ -8,11 +8,14 @@ public class PlayerDash : MonoBehaviour
     private CharacterController controller;
     private Transform cameraTransform;
 
+    private Animator animator; // Animator 추가
     PhotonView pv;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
+        animator = GetComponentInChildren<Animator>(); // Animator 컴포넌트 가져오기
         pv = GetComponent<PhotonView>();
     }
 
@@ -24,10 +27,26 @@ public class PlayerDash : MonoBehaviour
         // 대쉬 기능 (왼쪽 Shift 키를 누르고 있는 동안 작동)
         if (Input.GetKey(KeyManager.Run_Key))
         {
-            Vector3 dashDirection = cameraTransform.forward;
-            dashDirection.y = 0f; // 대쉬는 수평 방향으로만 적용
-            dashDirection.Normalize();
-            controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+            HandleDash();
+        }
+        else
+        {
+            animator.SetBool("isRunning", false); // 달리기 종료
         }
     }
+
+    private void HandleDash()
+    {
+        Vector3 dashDirection = cameraTransform.forward;
+        dashDirection.y = 0f;
+        dashDirection.Normalize();
+
+        // 대쉬 처리
+        controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+
+        // Animator 업데이트
+        animator.SetBool("isRunning", true);
+        Debug.Log("isRunning: true");
+    }
+
 }

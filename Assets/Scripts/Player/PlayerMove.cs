@@ -16,6 +16,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private Vector3 velocity;
     private float gravity = -9.81f;
     private float mouseX;
+
+    private Animator animator; // Animator 추가
     private bool isWalking;
 
     void Start()
@@ -26,6 +28,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
 
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>(); // Animator 컴포넌트 가져오기
 
         if (cameraTransform == null)
         {
@@ -36,12 +39,41 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             walkSound.clip = walkingClip;
             walkSound.loop = true;
+
+
+            if (animator == null)
+            {
+                Debug.LogError("Animator component not found! Check if the Animator exists in the children of this object.");
+            }
+            else
+            {
+                Debug.Log($"Animator found and connected: {animator.gameObject.name}");
+            }
             walkSound.volume = walkVolume;
         }
     }
 
     void Update()
     {
+
+
+
+        if (animator != null)
+        {
+            bool walking = (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0);
+            animator.SetBool("isWalking", walking);
+            Debug.Log($"Set isWalking: {walking}");
+
+            bool currentParam = animator.GetBool("isWalking");
+            Debug.Log($"Animator Parameter isWalking: {currentParam}");
+
+            if (walking != currentParam)
+            {
+                Debug.LogError("Animator parameter 'isWalking' is not updating properly.");
+            }
+        }
+
+
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             return;
@@ -57,6 +89,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             PlayerVelocity(Vector3.zero, 0f, 0f);
         }
+
+       
+
     }
 
     private void HandleMouseLook()
@@ -80,8 +115,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         Vector3 mov = direction * speed;
 
+        // Animator 업데이트
+        bool walking = (moveX != 0 || moveZ != 0);
+        animator.SetBool("isWalking", walking);
+        Debug.Log($"isWalking: {walking}");
+
         PlayerVelocity(mov, moveX, moveZ);
     }
+
 
     void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
