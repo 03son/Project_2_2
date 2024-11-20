@@ -28,7 +28,12 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
 
         controller = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>(); // Animator 컴포넌트 가져오기
+        animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found!");
+        }
 
         if (cameraTransform == null)
         {
@@ -39,14 +44,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             walkSound.clip = walkingClip;
             walkSound.loop = true;
-
-
-
+            walkSound.volume = walkVolume;
         }
     }
 
     void Update()
     {
+
+
         // Photon View 확인
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
@@ -59,31 +64,23 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             HandleMouseLook();
             HandleMovement();
-
-         
+            UpdateWalkingAnimation(); // 워킹 상태 업데이트
         }
         else
         {
             // esc 창이 열려있을 때는 이동 정지
             PlayerVelocity(Vector3.zero, 0f, 0f);
         }
+
+        if (animator != null)
+        {
+            bool isWalking = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
+            animator.SetBool("isWalking", true);
+            // 강제로 Animator 업데이트
+            animator.Update(Time.deltaTime);
+            Debug.Log($"Set isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
+        }
     }
-
-
-
-    // 애니메이션 상태 업데이트
-    void UpdateAnimationStates()
-    {
-        bool isWalking = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-
-        // PlayerAnimationController 호출
-        GetComponentInChildren<PlayerAnimationController>().SetWalking(isWalking);
-        GetComponentInChildren<PlayerAnimationController>().SetRunning(isRunning);
-    }
-
-
-
 
     private void HandleMouseLook()
     {
@@ -106,16 +103,16 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         Vector3 mov = direction * speed;
 
-        // Animator 업데이트
-        bool walking = (moveX != 0 || moveZ != 0);
-        animator.SetBool("isWalking", walking);
-        Debug.Log($"isWalking: {walking}");
-
         PlayerVelocity(mov, moveX, moveZ);
+
+        // 애니메이터에 파라미터 설정
+        bool isWalking = (moveX != 0 || moveZ != 0);
+        animator.SetBool("isWalking", true);
+
+        Debug.Log($"Set isWalking: {isWalking}");
     }
 
-
-    void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
+    private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
         // 중력 처리
         if (controller.isGrounded)
@@ -143,6 +140,18 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             walkSound.Stop();
             isWalking = false;
+        }
+    }
+
+    private void UpdateWalkingAnimation()
+    {
+        bool walking = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
+
+        // Animator에 값 설정
+        if (animator != null)
+        {
+            animator.SetBool("isWalking", true);
+            Debug.Log($"isWalking: {walking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
     }
 }
