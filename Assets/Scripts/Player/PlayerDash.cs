@@ -24,14 +24,14 @@ public class PlayerDash : MonoBehaviour
         if (!pv.IsMine && PhotonNetwork.IsConnected)
             return;
 
-        // 대쉬 기능 (왼쪽 Shift 키를 누르고 있는 동안 작동)
+        // 스프린트 기능 (왼쪽 Shift 키를 누르고 있는 동안 작동)
         if (Input.GetKey(KeyManager.Run_Key))
         {
             HandleDash();
         }
         else
         {
-            animator.SetBool("isRunning", false); // 달리기 종료
+            animator.SetBool("isRunning", false); // 스프린트 종료
         }
     }
 
@@ -41,12 +41,10 @@ public class PlayerDash : MonoBehaviour
         dashDirection.y = 0f;
         dashDirection.Normalize();
 
-        // 대쉬 처리
+        // 스프린트 처리
         controller.Move(dashDirection * dashSpeed * Time.deltaTime);
 
-        // Animator 업데이트
+        // Animator 업데이트 (달리기 상태로 전환)
         animator.SetBool("isRunning", true);
-        Debug.Log("isRunning: true");
     }
-
 }

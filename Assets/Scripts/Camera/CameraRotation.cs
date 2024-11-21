@@ -1,7 +1,4 @@
 using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraRot : MonoBehaviour
@@ -9,7 +6,7 @@ public class CameraRot : MonoBehaviour
     [SerializeField] private float mouseSpeed = 8f; // 회전 속도
     [SerializeField] private Transform playerTransform; // 플레이어의 Transform
 
-    [SerializeField] GameObject player;//플레이어
+    [SerializeField] GameObject player; // 플레이어
 
     private float mouseX = 0f; // 좌우 회전 값
     private float mouseY = 0f; // 위아래 회전 값
@@ -19,12 +16,8 @@ public class CameraRot : MonoBehaviour
 
     public GameObject FollowCam;
     public GameObject EquipCamera;
+    public bool popup_escMenu = false; // esc T/F 여부
 
-    public bool popup_escMenu = false; //esc T/F여부
-    void Awake()
-    {
-
-    }
     void Start()
     {
         player = this.gameObject.GetComponent<Transform>().parent.gameObject;
@@ -38,6 +31,22 @@ public class CameraRot : MonoBehaviour
             {
                 GetComponent<AudioListener>().enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
+
+                // 플레이어의 자식 중 'camera'라는 이름의 오브젝트 찾기
+                Transform cameraParentTransform = playerTransform.Find("camera");
+                if (cameraParentTransform != null)
+                {
+                    // 메인 카메라를 'camera' 오브젝트의 자식으로 설정
+                    Camera.main.transform.SetParent(cameraParentTransform);
+
+                    // 위치 및 회전 초기화
+                    Camera.main.transform.localPosition = Vector3.zero;
+                    Camera.main.transform.localRotation = Quaternion.identity;
+                }
+                else
+                {
+                    Debug.LogError("'camera' 오브젝트를 찾을 수 없습니다!");
+                }
             }
             else
             {
@@ -51,13 +60,14 @@ public class CameraRot : MonoBehaviour
         {
             GetComponent<AudioListener>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
-        }
 
+           
+        }
     }
 
     void Update()
     {
-        if (popup_escMenu) //esc 창이 열려있으면 카메라 회전X
+        if (popup_escMenu) // esc 창이 열려있으면 카메라 회전X
             return;
 
         if (PhotonNetwork.IsConnected)

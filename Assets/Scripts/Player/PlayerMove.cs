@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
-
+        
         if (animator == null)
         {
             Debug.LogError("Animator component not found!");
@@ -51,7 +51,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void Update()
     {
 
-
+        // Height 값 강제 고정
+        if (controller.height != 0.1f)
+        {
+            controller.height = 0.1f;
+        }
         // Photon View 확인
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
@@ -72,14 +76,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             PlayerVelocity(Vector3.zero, 0f, 0f);
         }
 
-        if (animator != null)
-        {
-            bool isWalking = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
-            animator.SetBool("isWalking", true);
-            // 강제로 Animator 업데이트
-            animator.Update(Time.deltaTime);
-            Debug.Log($"Set isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
-        }
+        
     }
 
     private void HandleMouseLook()
@@ -106,10 +103,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         PlayerVelocity(mov, moveX, moveZ);
 
         // 애니메이터에 파라미터 설정
-        bool isWalking = (moveX != 0 || moveZ != 0);
-        animator.SetBool("isWalking", true);
-
-        Debug.Log($"Set isWalking: {isWalking}");
+        isWalking = (moveX != 0 || moveZ != 0);
     }
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
@@ -145,13 +139,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     private void UpdateWalkingAnimation()
     {
-        bool walking = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
-
         // Animator에 값 설정
         if (animator != null)
         {
-            animator.SetBool("isWalking", true);
-            Debug.Log($"isWalking: {walking}, Animator Parameter: {animator.GetBool("isWalking")}");
+            animator.SetBool("isWalking", isWalking);
+            Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
     }
 }
