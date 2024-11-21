@@ -12,8 +12,8 @@ public class SetCameraParent : MonoBehaviour
             Camera.main.transform.SetParent(cameraEmptyObject);
 
             // 원하는 위치와 회전을 설정 (기본값을 유지하고 싶다면 생략 가능)
-            Camera.main.transform.localPosition = Vector3.zero;
-            Camera.main.transform.localRotation = Quaternion.identity;
+          /*  Camera.main.transform.localPosition = Vector3.zero;
+            Camera.main.transform.localRotation = Quaternion.identity; */
         }
         else
         {

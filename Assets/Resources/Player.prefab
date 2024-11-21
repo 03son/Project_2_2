@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7860143041399192716}
   m_Layer: 0
-  m_Name: cameraEmptyObject
+  m_Name: 'camera '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 7126970568011307628}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0003507162, y: 0.13738015, z: 0.006064775}
+  m_LocalPosition: {x: 0, y: 0.1403, z: 0.0205}
   m_LocalScale: {x: 0.087894976, y: 0.087894976, z: 0.087894976}
   m_ConstrainProportionsScale: 0
   m_Children: []

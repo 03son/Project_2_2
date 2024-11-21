@@ -20,8 +20,8 @@ public class CameraRot : MonoBehaviour
 
     void Start()
     {
-        player = this.gameObject.GetComponent<Transform>().parent.gameObject;
-        playerTransform = player.transform;
+      //  player = this.gameObject.GetComponent<Transform>().parent.gameObject;
+      //  playerTransform = player.transform;
 
         if (PhotonNetwork.IsConnected)
         {

@@ -5849,50 +5849,6 @@ MonoBehaviour:
   sceneViewId: 8
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!1 &2077059744
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2077059746}
-  - component: {fileID: 2077059745}
-  m_Layer: 0
-  m_Name: PhotonOfflineModeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2077059745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077059744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b4366aefd2c389429b0755f53d00448, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2077059746
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077059744}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100.441765, y: 113.461395, z: 375.13388}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2109100788
 GameObject:
   m_ObjectHideFlags: 0
@@ -8149,22 +8105,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7126970568011307628, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
-      propertyPath: m_Name
-      value: 'camera '
-      objectReference: {fileID: 0}
-    - target: {fileID: 7860143041399192716, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7860143041399192716, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1138
-      objectReference: {fileID: 0}
-    - target: {fileID: 7860143041399192716, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8999467768304360252, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: sceneViewId
       value: 14
@@ -8616,6 +8556,5 @@ SceneRoots:
   - {fileID: 1632324312}
   - {fileID: 1969633338}
   - {fileID: 1430663011}
-  - {fileID: 2077059746}
   - {fileID: 796482197}
   - {fileID: 7020701786235621384}
