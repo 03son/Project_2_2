@@ -47,4 +47,23 @@ public class SoundSetting : MonoBehaviour
 
         Debug.Log(options[speakerIndex]);
     }
+
+    #region 전체 음량
+    void SetMasterVolume()
+    { 
+    
+    }
+    #endregion
+    #region 배경 음량
+    void SetBGMVolume()
+    {
+
+    }
+    #endregion
+    #region 효과음 음량
+    void SetSFXVolume()
+    {
+
+    }
+    #endregion
 }

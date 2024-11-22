@@ -14,21 +14,31 @@ public class MicSetting : MonoBehaviour
     public TMP_Dropdown microphoneMode; //마이크 모드
 
     List<string> options = new List<string>();
+    List<string> microphoneMode_options = new List<string>();
 
     private void OnEnable()
     {
         string[] selectedMic = Microphone.devices;
 
-        foreach (string mic in selectedMic)
+        foreach (string mic in selectedMic) //마이크
         {
             options.Add(mic);
         }
+
+        microphoneMode_options.Add("항상 말하기");
+        microphoneMode_options.Add("눌러서 말하기");
+        
+        microphoneMode.ClearOptions();
+        microphoneMode.AddOptions(microphoneMode_options);
+
         inputVoice.ClearOptions();
         inputVoice.AddOptions(options);
 
         inputVoice.value = PlayerPrefs.HasKey("UseMicNumber") ? PlayerPrefs.GetInt("UseMicNumber") : 0;
+        microphoneMode.value = PlayerPrefs.HasKey("microphoneMode") ? PlayerPrefs.GetInt("microphoneMode") : 0;
 
         inputVoice.onValueChanged.AddListener(SetMic);
+        microphoneMode.onValueChanged.AddListener(SetMicMode);
     }
 
     void SetMic(int MicIndex)
@@ -47,6 +57,13 @@ public class MicSetting : MonoBehaviour
 
         PlayerPrefs.SetInt("UseMicNumber", MicIndex);
         PlayerPrefs.SetString("UseMicName", options[MicIndex]);
+    }
+
+    void SetMicMode(int Index)
+    {
+        microphoneMode.value = Index;
+        Global_Microphone.MicMode = Index == 0 ? true : false; // T = 항상 말하기 , F = 눌러서 말하기
+        PlayerPrefs.SetInt("microphoneMode", Index);
     }
     
 }
