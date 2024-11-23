@@ -47,6 +47,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             return;
         }
 
+        mouseSpeed = GameInfo.MouseSensitivity; //감도 동기화
+
         // esc 창이 열려있지 않을 때만 움직임 처리
         if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
         {

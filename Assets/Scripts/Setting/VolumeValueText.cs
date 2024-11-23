@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundVolumeValueText : MonoBehaviour
+public class VolumeValueText : MonoBehaviour
 {
     [SerializeField] Slider slider;
     TextMeshProUGUI value;

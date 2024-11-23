@@ -23,7 +23,7 @@ public class CameraRot : MonoBehaviour
     public bool popup_escMenu = false; //esc T/F여부
     void Awake()
     {
-
+       
     }
     void Start()
     {
@@ -59,6 +59,8 @@ public class CameraRot : MonoBehaviour
     {
         if (popup_escMenu) //esc 창이 열려있으면 카메라 회전X
             return;
+
+        mouseSpeed = GameInfo.MouseSensitivity; //감도 동기화
 
         if (PhotonNetwork.IsConnected)
         {

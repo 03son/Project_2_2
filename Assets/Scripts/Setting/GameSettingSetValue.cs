@@ -35,6 +35,7 @@ public class GameSettingSetValue : MonoBehaviour
     void InputKeySetting()
     {
         LoadKey();
+        LoadMouseSensitivity();
     } //조작키
     void VideosSetting()
     {
@@ -131,6 +132,13 @@ public class GameSettingSetValue : MonoBehaviour
        KeyManager.Interaction_Key = PlayerPrefs.HasKey("Interaction_Key") ? StringToKeyCode(PlayerPrefs.GetString("Interaction_Key")) : KeyCode.F; //상호작용
        KeyManager.Mic_Key = PlayerPrefs.HasKey("Mic_Key") ? StringToKeyCode(PlayerPrefs.GetString("Mic_Key")) : KeyCode.T; //마이크
        KeyManager.Drop_Key = PlayerPrefs.HasKey("Drop_Key") ? StringToKeyCode(PlayerPrefs.GetString("Drop_Key")) : KeyCode.G; //버리기
+    }
+
+    void LoadMouseSensitivity()
+    {
+        float defaultValue = 0.2f;
+        float volume = PlayerPrefs.HasKey("MouseSensitivity") ? PlayerPrefs.GetFloat("MouseSensitivity") : defaultValue;
+        GameInfo.MouseSensitivity = (int)(volume * 10);
     }
     #endregion
     #region 오디오 설정 불러오기

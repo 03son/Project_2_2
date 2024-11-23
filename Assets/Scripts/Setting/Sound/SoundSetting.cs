@@ -31,7 +31,7 @@ public class SoundSetting : MonoBehaviour
         m_MusicBGMSlider.onValueChanged.AddListener(SetBGMVolume);
         m_MusicSFXSlider.onValueChanged.AddListener(SetSFXVolume);
 
-        float defaultValue = 0.6f;
+        float defaultValue = 0.2f;
         float Val;
         SetMasterVolume(Val = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : defaultValue);
         m_MusicMasterSlider.value = Val;

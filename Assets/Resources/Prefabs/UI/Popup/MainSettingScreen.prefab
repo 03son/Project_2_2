@@ -2721,7 +2721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8963728137810892079}
   m_Layer: 5
-  m_Name: ================ (1)
+  m_Name: =================
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6348,6 +6348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8507472226246069341}
   - component: {fileID: 2089091223876060311}
+  - component: {fileID: 6604728241631298896}
   m_Layer: 5
   m_Name: MouseSensitivity
   m_TagString: Untagged
@@ -6383,6 +6384,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3350667926343816675}
   m_CullTransparentMesh: 1
+--- !u!114 &6604728241631298896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350667926343816675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2304a926db76644cbc2591222a18f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSesitivity: {fileID: 4554991798402807983}
 --- !u!1 &3358530305452084576
 GameObject:
   m_ObjectHideFlags: 0
@@ -13435,8 +13449,9 @@ GameObject:
   - component: {fileID: 6355131785950820514}
   - component: {fileID: 1181253265007472267}
   - component: {fileID: 6186147210672033645}
+  - component: {fileID: 6999962396148570756}
   m_Layer: 5
-  m_Name: BrightnessVal-Text (TMP)
+  m_Name: MouseSensitivityVal-Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13558,6 +13573,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6999962396148570756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6863101596734392102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d216490aa42c44587858ed2d633b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 4554991798402807983}
 --- !u!1 &6908806193775218700
 GameObject:
   m_ObjectHideFlags: 0
@@ -15073,7 +15101,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAE30\uBCF8 \uAC12"
+  m_text: "\uAE30\uBCF8 \uD0A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c4bde158996f0740972ba1737b6d93c, type: 2}
   m_sharedMaterial: {fileID: 3491720960330803632, guid: 8c4bde158996f0740972ba1737b6d93c, type: 2}
