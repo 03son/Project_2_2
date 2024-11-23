@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Photon.Pun;
+using UnityEngine.Audio;
+using UnityEngine.Rendering;
 
 public class GameSettingSetValue : MonoBehaviour
 {   //저장된 게임의 세팅을 로드
@@ -12,6 +14,8 @@ public class GameSettingSetValue : MonoBehaviour
     static bool LoadGameSetting = false;
 
     List<Resolution> resolutions;
+
+    public AudioMixer m_AudioMixer;
 
     void Awake()
     {
@@ -131,8 +135,13 @@ public class GameSettingSetValue : MonoBehaviour
     #endregion
     #region 오디오 설정 불러오기
     void SoundSeting()//마스터볼륨, 배경볼륨, 효과음볼륨
-    { 
-    
+    {
+        float defaultValue = 0.6f;
+        float volume;
+
+        m_AudioMixer.SetFloat("Master", Mathf.Log10(volume = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : defaultValue) * 20);
+        m_AudioMixer.SetFloat("BGM", Mathf.Log10(volume = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : defaultValue) * 20);
+        m_AudioMixer.SetFloat("SFX", Mathf.Log10(volume = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : defaultValue) * 20);
     }
     void Voice()//음성채팅 관련, 마이크 토글 옵션
     {

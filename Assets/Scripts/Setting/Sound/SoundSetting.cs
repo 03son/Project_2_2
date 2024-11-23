@@ -3,67 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Voice.Unity;
 using TMPro;
-using NAudio.Wave;
-using NAudio.CoreAudioApi;
 using System;
+using UnityEngine.Audio;
+using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class SoundSetting : MonoBehaviour
 {
-    public TMP_Dropdown outputVoice; //음성 출력
-
     List<string> options = new List<string>();
+
+    #region 오디오 믹서 관련 오브젝트
+    [SerializeField] private AudioMixer m_AudioMixer;
+    [SerializeField] private Slider m_MusicMasterSlider;
+    [SerializeField] private Slider m_MusicBGMSlider;
+    [SerializeField] private Slider m_MusicSFXSlider;
+    #endregion
 
     private void OnEnable()
     {
-        int index = 0;
-       // var enumerator = new MMDeviceEnumerator();
-        //string speakerName = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia).FriendlyName;
-        //Debug.Log(speakerName);
-        
-        for (int i = 0; i < WaveOut.DeviceCount; i++)
-        {
-             options.Add(WaveOut.GetCapabilities(i).ProductName);
-            /* 
-            if (speakerName == WaveOut.GetCapabilities(i).ProductName)
-             {
-                 Debug.Log($"현재 사용 중인 스피커 이름 : {speakerName}");
-                index = i;
-             }
-            */
-        }
-        //string defaultSpeaker = new MMDeviceEnumerator().GetDevice(WaveOut.GetCapabilities(1).ProductName).FriendlyName;
-        //Debug.Log(defaultSpeaker);
-
-        outputVoice.ClearOptions();
-        outputVoice.value = index;
-        outputVoice.AddOptions(options);
-        outputVoice.onValueChanged.AddListener(SetSpeaker);
+        AudioMixerController();
     }
 
-    void SetSpeaker(int speakerIndex)
+    #region 오디오 믹서 컨트롤
+    void AudioMixerController()
     {
-        var outputDevice = new WaveOutEvent() { DeviceNumber = speakerIndex };
-        Debug.Log(outputDevice.ToString());
+        m_MusicMasterSlider.onValueChanged.AddListener(SetMasterVolume);
+        m_MusicBGMSlider.onValueChanged.AddListener(SetBGMVolume);
+        m_MusicSFXSlider.onValueChanged.AddListener(SetSFXVolume);
 
-        Debug.Log(options[speakerIndex]);
+        float defaultValue = 0.6f;
+        float Val;
+        SetMasterVolume(Val = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : defaultValue);
+        m_MusicMasterSlider.value = Val;
+
+        SetBGMVolume(Val = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : defaultValue);
+        m_MusicBGMSlider.value = Val;
+        
+        SetSFXVolume(Val = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : defaultValue);
+        m_MusicSFXSlider.value = Val;
     }
-
+    #endregion
     #region 전체 음량
-    void SetMasterVolume()
-    { 
-    
+    void SetMasterVolume(float volume)
+    {
+        m_AudioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("MasterVolume", volume);
     }
     #endregion
     #region 배경 음량
-    void SetBGMVolume()
+    void SetBGMVolume(float volume)
     {
-
+        m_AudioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("BGMVolume", volume);
     }
     #endregion
     #region 효과음 음량
-    void SetSFXVolume()
+    void SetSFXVolume(float volume)
     {
-
+        m_AudioMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
     #endregion
 }

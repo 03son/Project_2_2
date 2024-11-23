@@ -28,7 +28,7 @@ public class RevivePlayer : MonoBehaviour
 
     void Update()
     {
-        if (targetPlayer != null && Input.GetKey(KeyCode.E)) // E 키로 상호작용
+        if (targetPlayer != null && Input.GetKey(KeyManager.Interaction_Key)) // 상호작용
         {
             isHolding = true;
             holdCounter += Time.deltaTime;
@@ -45,7 +45,7 @@ public class RevivePlayer : MonoBehaviour
                 ResetHold();
             }
         }
-        else if (Input.GetKeyUp(KeyCode.E) || !isHolding) // 키를 떼거나 상호작용 중단
+        else if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
         {
             if (medkitTimerUI != null)
             {

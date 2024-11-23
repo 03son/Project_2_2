@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using Photon.Pun;
 using System;
+using UnityEngine.UI;
 
 public interface IInteractable
 {
@@ -22,8 +23,8 @@ public class InteractionManager : MonoBehaviour
 
     GameObject curInteractGameobject;
     IInteractable curInteractable;
+    public Crosshair_Image Crosshair;
 
-    public TextMeshProUGUI promptText;
     new Camera camera;
 
     PhotonView pv;
@@ -37,19 +38,11 @@ public class InteractionManager : MonoBehaviour
 
             if (!pv.IsMine)
                 return;
-
-            promptText = GameObject.Find("prompt_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
-            promptText.gameObject.SetActive(false);
-
-            camera = Camera.main;
         }
-        else // 싱글
-        {
-            promptText = GameObject.Find("prompt_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
-            promptText.gameObject.SetActive(false);
 
-            camera = Camera.main;
-        }
+        Crosshair = GameObject.Find("Crosshair_Image").GetComponent<Crosshair_Image>();
+
+        camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -80,7 +73,7 @@ public class InteractionManager : MonoBehaviour
                     //충돌한 물체 가져오기
                     curInteractGameobject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
-                    SetPromptText();
+                    Crosshair.Interaction();
                 }
             }
             else
@@ -88,7 +81,7 @@ public class InteractionManager : MonoBehaviour
                 //화면 중앙에 상호작용 가능한 물체가 없는 경우
                 curInteractGameobject = null;
                 curInteractable = null;
-                promptText.gameObject.SetActive(false);
+                Crosshair.Not_Interaction();
             }
         }
         OnInteractInput();
@@ -113,15 +106,7 @@ public class InteractionManager : MonoBehaviour
 
             curInteractGameobject = null;
             curInteractable = null;
-            promptText.gameObject.SetActive(false);
+            Crosshair.Not_Interaction();
         }
-    }
-
-    void SetPromptText()
-    { 
-        promptText.gameObject.SetActive(true);
-
-        //<b></b> : <b>는 볼트체
-        promptText.text = string.Format($"<b>[{KeyManager.Interaction_Key}]</b> {curInteractable.GetInteractPrompt()}");
     }
 }

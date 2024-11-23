@@ -162,7 +162,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  promptText: {fileID: 0}
+  Crosshair: {fileID: 0}
 --- !u!114 &5963167179807541208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +206,7 @@ MonoBehaviour:
   - {fileID: 0}
   equipItem: {fileID: 0}
   Item: {fileID: 0}
+  ItemName: {fileID: 0}
   throwKey: 323
   throwForce: 9
   maxForce: 14

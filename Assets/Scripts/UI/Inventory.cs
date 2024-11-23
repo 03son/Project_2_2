@@ -196,7 +196,7 @@ public class Inventory : MonoBehaviour
                 UnEquip(selectedItemIndex);
                 ThrowItem(slots[selectedItemIndex].item);
             }
-
+            GetComponent<Player_Equip>().ItemName.text = "";
             slots[selectedItemIndex].item = null;
             ClearSelectItemWindows();
         }
