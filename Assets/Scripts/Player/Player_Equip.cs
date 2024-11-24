@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player_Equip : MonoBehaviour
@@ -10,6 +11,7 @@ public class Player_Equip : MonoBehaviour
     public ItemSlotUI[] invenSlot = new ItemSlotUI[6];
     public GameObject equipItem;
     public GameObject Item;
+    public TextMeshProUGUI ItemName;
     Inventory inventory;
 
     ResourceManager resoure = new ResourceManager();
@@ -37,6 +39,8 @@ public class Player_Equip : MonoBehaviour
 
         inventory = GetComponent<Inventory>();
         equipItem = GameObject.Find("EquipItem").gameObject;
+        ItemName = GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        ItemName.text = "";
 
         if (trajectoryLine != null)
         {
@@ -172,10 +176,14 @@ public class Player_Equip : MonoBehaviour
             {
                 setEquipItem(inventory.slots[index - 1].item.name);
                 inventory.EquipItem(Item); // 장착된 아이템을 Inventory에도 반영
+
+                //아이템 이름 출력
+                ItemName.text = inventory.slots[index - 1].item.ItemName;
             }
             else if (Item != null)
             {
                 Destroy(Item);
+                ItemName.text = "";
             }
         }
     }

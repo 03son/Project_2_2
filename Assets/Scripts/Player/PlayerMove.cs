@@ -63,6 +63,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             return;
         }
 
+        mouseSpeed = GameInfo.MouseSensitivity; //감도 동기화
+
         // esc 창이 열려있지 않을 때만 움직임 처리
         if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
         {
@@ -114,8 +116,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     {
         if (controller == null || cameraTransform == null) return;
 
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
+        float moveX = 0; // Input.GetAxisRaw("Horizontal");
+        float moveZ = 0; //Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKey(KeyManager.Front_Key)) moveZ = 1; //앞
+        if (Input.GetKey(KeyManager.Back_Key)) moveZ = -1; //뒤
+        if (Input.GetKey(KeyManager.Left_Key)) moveX = -1; //좌
+        if (Input.GetKey(KeyManager.Right_Key)) moveX = 1; //우
 
         Vector3 direction = cameraTransform.forward * moveZ + cameraTransform.right * moveX;
         direction.y = 0f;
