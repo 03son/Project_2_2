@@ -821,8 +821,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recorder: {fileID: 4841665644714577382}
   mic: {fileID: 5836253110891415553}
-  isRecording: 0
-  singleMic: 0
   Microphone_Decibel_Bar: {fileID: 0}
 --- !u!114 &9187683247280162477
 MonoBehaviour:
