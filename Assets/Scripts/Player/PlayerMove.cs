@@ -76,7 +76,30 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             PlayerVelocity(Vector3.zero, 0f, 0f);
         }
 
-        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f))
+        {
+            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+
+            if (slopeAngle > 20) // 20도 이상이면 계단으로 판단
+            {
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    animator.SetBool("isClimbingUpStairs", true);
+                    animator.SetBool("isClimbingDownStairs", false);
+                }
+                else if (Input.GetAxis("Vertical") < 0)
+                {
+                    animator.SetBool("isClimbingUpStairs", false);
+                    animator.SetBool("isClimbingDownStairs", true);
+                }
+            }
+            else
+            {
+                animator.SetBool("isClimbingUpStairs", false);
+                animator.SetBool("isClimbingDownStairs", false);
+            }
+        }
     }
 
     private void HandleMouseLook()

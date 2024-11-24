@@ -8105,6 +8105,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1181952712019974206, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
+      propertyPath: mainCameraTransform
+      value: 
+      objectReference: {fileID: 926791170547918208}
     - target: {fileID: 8999467768304360252, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: sceneViewId
       value: 14
