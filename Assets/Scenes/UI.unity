@@ -2306,9 +2306,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fda97ad75f9d0479988e313fbdf4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredBatteries: 2
   audioSource: {fileID: 1632324314}
   startSound: {fileID: 8300000, guid: f2c83733014f28a438a7ee7219762111, type: 3}
-  volume: 0.25
 --- !u!82 &1632324314
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3157,9 +3157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fda97ad75f9d0479988e313fbdf4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredBatteries: 2
   audioSource: {fileID: 2109100793}
   startSound: {fileID: 8300000, guid: f2c83733014f28a438a7ee7219762111, type: 3}
-  volume: 0.25
 --- !u!82 &2109100793
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4809,31 +4809,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6904247485429793121, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7542394907940628383}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
---- !u!1 &7542394907940628382 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6904247485429793121, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
-  m_PrefabInstance: {fileID: 7542394907940628381}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7542394907940628383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7542394907940628382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d20c7f5d23e553f45b36d9dc9cb7d646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crosshair:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &7542394907940628384 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2398128581585923018, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
