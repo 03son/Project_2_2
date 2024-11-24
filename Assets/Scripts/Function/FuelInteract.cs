@@ -59,7 +59,7 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
             }
 
             // InteractionManager가 프롬프트를 실시간으로 업데이트하도록 호출
-            InteractionManager.UpdatePrompt(this);
+          //  InteractionManager.UpdatePrompt(this);
         }
     }
 

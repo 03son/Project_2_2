@@ -2725,7 +2725,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerImage: {fileID: 165387442}
-  timerText: {fileID: 31294683}
 --- !u!4 &1116515640
 Transform:
   m_ObjectHideFlags: 0
@@ -8098,6 +8097,10 @@ PrefabInstance:
     - target: {fileID: 644268339386022690, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1848616258309962867, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
+      propertyPath: sceneViewId
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5280258895290287533, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: cameraTransform

@@ -59,7 +59,7 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
             }
 
             // 프롬프트 업데이트를 InteractionManager가 실시간으로 호출하도록 강제
-            InteractionManager.UpdatePrompt(this);
+          //  InteractionManager.UpdatePrompt(this);
         }
     }
 
