@@ -51,10 +51,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void Update()
     {
         // Height 값 강제 고정
-        if (controller.height != 0.1f)
+       /* if (controller.height != 0.1f)
         {
             controller.height = 0.1f;
-        }
+        } */
         // Photon View 확인
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {

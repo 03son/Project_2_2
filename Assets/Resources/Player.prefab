@@ -855,8 +855,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2cbcb1765a6864cacb5da16ad5f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchHeight: 1
-  normalHeight: 2
+  crouchHeight: 0.25
+  normalHeight: 0.5
   crouchSpeed: 0.1
 --- !u!114 &1465067459471800326
 MonoBehaviour:
@@ -871,7 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashSpeed: 5
-  jumpForce: 2
+  jumpForce: 10
   gravity: -9.81
 --- !u!114 &2604648103533166454
 MonoBehaviour:
