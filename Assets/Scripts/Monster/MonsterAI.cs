@@ -92,6 +92,8 @@ public class MonsterAI : MonoBehaviour
         }
         //Debug.Log(currentState);
         // 현재 상태에 따라 적절한 행동 수행
+        // 상태 업데이트
+        UpdateState();
         switch (currentState)
         {
             case State.Idle:
@@ -213,12 +215,44 @@ public class MonsterAI : MonoBehaviour
             currentState = State.Chase;
         }
     }
+    private void UpdateState() //우선순위
+    {
+        // 1. Chase 상태: 플레이어가 감지된 경우
+        if (detectedPlayers.Count > 0)
+        {
+            currentState = State.Chase;
+            return;
+        }
+
+        // 2. Investigate 상태: 특정 조사 지점이 설정된 경우
+        if (currentState == State.Investigate)
+        {
+            return; // 조사 중이면 상태 유지
+        }
+
+        // 3. Search 상태: 플레이어를 놓쳤고 마지막 위치를 기억하는 경우
+        if (currentState == State.Search && lastKnownPosition != Vector3.zero)
+        {
+            return; // 수색 중이면 상태 유지
+        }
+
+        // 4. Patrol 상태: 감지된 대상이 없고 순찰 지점이 있는 경우
+        if (patrolPoints.Length > 0 && !agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = State.Patrol;
+            return;
+        }
+
+        // 5. Idle 상태: 다른 조건이 모두 충족되지 않으면 대기
+        currentState = State.Idle;
+    }
 
     public void SetInvestigatePoint(Vector3 point)
     {
         investigatePoint = point;
         currentState = State.Investigate;
     }
+
     private void GoToNextPatrolPoint()
     {
         if (patrolPoints.Length == 0)
@@ -245,7 +279,6 @@ public class MonsterAI : MonoBehaviour
 
         return closestPlayer;
     }
-
     private void UpdateDetectedPlayers()
     {
         // 모든 플레이어 오브젝트를 찾아 감지 리스트를 업데이트
@@ -391,7 +424,4 @@ public class MonsterAI : MonoBehaviour
         Gizmos.color = Color.blue; // 청각 범위는 파란색으로 표시
         Gizmos.DrawWireSphere(origin, hearingRange);
     }
-
-    
-
 }
