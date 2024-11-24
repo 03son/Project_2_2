@@ -24,12 +24,15 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+    private Player_Equip playerEquip; // Player_Equip 참조 변수 추가
+
     public PhotonView pv;
 
     int addItemIndex;
 
     private GameObject equippedItemObject; // ���� ������ �������� GameObject�� �����ϴ� ����
 
+   
     private void Awake()
     {
         if (instance == null)
@@ -44,7 +47,15 @@ public class Inventory : MonoBehaviour
         pv = GetComponent<PhotonView>();
 
         ConnectUi_itemSlot();
+
+        // Player_Equip 초기화
+        playerEquip = FindObjectOfType<Player_Equip>();
+        if (playerEquip == null)
+        {
+            Debug.LogError("Player_Equip을 찾을 수 없습니다. equipItem 참조가 실패할 수 있습니다.");
+        }
     }
+
 
     private void Start()
     {
@@ -104,34 +115,59 @@ public class Inventory : MonoBehaviour
 
     public bool HasItem(string itemName)
     {
-        // �κ��丮 ���Կ��� ������ Ȯ��
+        // 인벤토리 슬롯에서 아이템 확인
         foreach (var slot in slots)
         {
             if (slot.item != null && slot.item.ItemName == itemName)
             {
-                Debug.Log($"�κ��丮�� {itemName}��(��) ����");
+                Debug.Log($"인벤토리에 {itemName}이(가) 있습니다.");
                 return true;
             }
         }
 
-        // ���� ������ �����۵� Ȯ��
-        if (equippedItemObject != null)
+        // Player_Equip을 참조해서 equipItem에서 아이템 확인
+        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
+        if (playerEquip != null)
         {
-            itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
-            if (equippedItemData != null && equippedItemData.ItemName == itemName)
+            Transform equippedObject = playerEquip.equipItem.transform.Find(itemName);
+            if (equippedObject != null)
             {
-                Debug.Log($"������ ���¿��� {itemName}��(��) ����");
-                return true;
+                ItemObject equippedItem = equippedObject.GetComponent<ItemObject>();
+                if (equippedItem != null)
+                {
+                    Debug.Log($"장착된 상태로 {itemName}이(가) 있습니다.");
+                    return true;
+                }
             }
         }
 
-        Debug.Log($"�κ��丮�� {itemName}��(��) ����");
+        Debug.Log($"인벤토리와 장착된 상태 모두에서 {itemName}이(가) 없습니다.");
         return false;
     }
 
+    public bool HasEquippedItem(string itemName)
+    {
+        if (playerEquip != null && playerEquip.equipItem != null)
+        {
+            Transform equippedObject = playerEquip.equipItem.transform.Find(itemName);
+            if (equippedObject != null)
+            {
+                ItemObject equippedItem = equippedObject.GetComponent<ItemObject>();
+                if (equippedItem != null)
+                {
+                    Debug.Log($"{itemName}이(가) 장착되어 있습니다.");
+                    return true;
+                }
+            }
+        }
+        Debug.Log($"{itemName}이(가) 장착되어 있지 않습니다.");
+        return false;
+    }
+
+
     public void RemoveItem(string itemName)
     {
-        // �κ��丮 ���Կ��� ������ ����
+        // 슬롯에서 아이템 제거
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item != null && slots[i].item.ItemName == itemName)
@@ -144,18 +180,20 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // ������ ������ ����
-        if (equippedItemObject != null)
+        // Player_Equip에서 장착된 아이템 제거
+        if (playerEquip != null && playerEquip.equipItem != null)
         {
-            itemData equippedItemData = equippedItemObject.GetComponent<itemData>();
-            if (equippedItemData != null && equippedItemData.ItemName == itemName)
+            ItemObject equippedItem = playerEquip.equipItem.GetComponent<ItemObject>();
+            if (equippedItem != null && equippedItem.item.ItemName == itemName)
             {
-                Destroy(equippedItemObject); // ������ ������ ������Ʈ ����
-                equippedItemObject = null;
-                Debug.Log($"������ {itemName} ���ŵ�");
+                Destroy(playerEquip.equipItem);
+                playerEquip.equipItem = null;
+                Debug.Log($"장착된 {itemName} 제거됨");
             }
         }
     }
+
+
 
     ItemSlot GetEmptySlot()
     {
@@ -196,7 +234,7 @@ public class Inventory : MonoBehaviour
                 UnEquip(selectedItemIndex);
                 ThrowItem(slots[selectedItemIndex].item);
             }
-
+            GetComponent<Player_Equip>().ItemName.text = "";
             slots[selectedItemIndex].item = null;
             ClearSelectItemWindows();
         }
@@ -226,4 +264,6 @@ public class Inventory : MonoBehaviour
         // EquipItem �޼���� ������ �������� ����
         equippedItemObject = itemObject;
     }
+
+
 }

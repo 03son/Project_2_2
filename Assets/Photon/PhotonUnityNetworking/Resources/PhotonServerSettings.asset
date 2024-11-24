@@ -52,6 +52,10 @@ MonoBehaviour:
   - StartMedkitTimer
   - RPC_TriggerMedkitTimer
   - StartMedkitTimerRPC
+  - AddFuel
+  - RemoveChain
+  - RPC_RemoveChain
+  - RPC_AddFuel
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player_Equip : MonoBehaviour
@@ -10,6 +11,7 @@ public class Player_Equip : MonoBehaviour
     public ItemSlotUI[] invenSlot = new ItemSlotUI[6];
     public GameObject equipItem;
     public GameObject Item;
+    public TextMeshProUGUI ItemName;
     Inventory inventory;
 
     ResourceManager resoure = new ResourceManager();
@@ -37,6 +39,8 @@ public class Player_Equip : MonoBehaviour
 
         inventory = GetComponent<Inventory>();
         equipItem = GameObject.Find("EquipItem").gameObject;
+        ItemName = GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        ItemName.text = "";
 
         if (trajectoryLine != null)
         {
@@ -172,10 +176,14 @@ public class Player_Equip : MonoBehaviour
             {
                 setEquipItem(inventory.slots[index - 1].item.name);
                 inventory.EquipItem(Item); // 장착된 아이템을 Inventory에도 반영
+
+                //아이템 이름 출력
+                ItemName.text = inventory.slots[index - 1].item.ItemName;
             }
             else if (Item != null)
             {
                 Destroy(Item);
+                ItemName.text = "";
             }
         }
     }
@@ -261,13 +269,13 @@ public class Player_Equip : MonoBehaviour
             itemData cupItemData = currentGlassCup.GetComponent<ItemObject>().item;
 
             // 인벤토리에서 아이템 제거
-          /*  if (cupItemData != null)
+            if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
-            } */
+            } 
 
-          //      hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
-         //  currentGlassCup = null;  // 유리컵 참조 해제
+                hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
+           currentGlassCup = null;  // 유리컵 참조 해제
 
             if (trajectoryLine != null)
             {
@@ -352,6 +360,86 @@ public class Player_Equip : MonoBehaviour
         }
         return false;
     }
+    public void RemoveEquippedItem(string itemName)
+    {
+        Debug.Log($"RemoveEquippedItem 호출됨. 제거하려는 아이템: {itemName}");
+
+        if (equipItem != null)
+        {
+            Debug.Log("equipItem이 null이 아닙니다. 모든 자식에서 아이템을 검색합니다.");
+
+            // equipItem 하위 모든 자식에서 ItemObject를 검색
+            ItemObject[] itemObjects = equipItem.GetComponentsInChildren<ItemObject>();
+            Debug.Log($"검색된 ItemObject 개수: {itemObjects.Length}");
+
+            foreach (ItemObject itemObject in itemObjects)
+            {
+                Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
+                Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
+
+                if (itemObject.item.ItemName == itemName)
+                {
+                    Debug.Log($"장착된 아이템 이름 {itemObject.item.ItemName}이(가) 제거하려는 아이템 이름과 일치합니다.");
+
+                    // 인벤토리에서 제거
+                    Inventory.instance.RemoveItem(itemName);
+
+                    // 장착된 아이템 제거
+                    Destroy(itemObject.gameObject);
+
+                    Debug.Log($"장착된 아이템 {itemName}이(가) 제거되었습니다.");
+                    return; // 아이템 제거 후 메서드 종료
+                }
+                else
+                {
+                    Debug.LogWarning($"이름이 일치하지 않음: {itemObject.item.ItemName} != {itemName}");
+                }
+            }
+
+            Debug.LogWarning($"equipItem의 모든 자식에서 {itemName} 이름을 가진 아이템을 찾을 수 없습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
+        }
+    }
+
+
+
+
+
+
+
+    public bool HasEquippedCardKey()
+    {
+        // equipItem 하위에 "CardKey"라는 이름의 아이템을 찾음
+        Transform cardKeyObject = equipItem.transform.Find("CardKey");
+        if (cardKeyObject != null)
+        {
+            ItemObject equippedItem = cardKeyObject.GetComponent<ItemObject>();
+            if (equippedItem != null)
+            {
+                return true; // CardKey가 장착되어 있으면 true 반환
+            }
+        }
+        return false; // CardKey가 없으면 false 반환
+    }
+
+    // Player_Equip에서 특정 아이템이 장착되었는지 확인하는 메서드 추가
+    public bool HasEquippedItem(string itemName)
+    {
+        if (equipItem != null)
+        {
+            ItemObject itemObject = equipItem.GetComponentInChildren<ItemObject>();
+            if (itemObject != null && itemObject.item.ItemName == itemName)
+            {
+                return true; // 장착된 아이템이 있다면 true 반환
+            }
+        }
+        return false; // 장착된 아이템이 없으면 false 반환
+    }
+
+
 }
 
 

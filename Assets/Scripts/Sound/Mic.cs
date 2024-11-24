@@ -2,9 +2,13 @@ using Photon.Voice.Unity;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Profiling;
+using Recorder = Photon.Voice.Unity.Recorder;
 
 public class Mic : MonoBehaviour
 {
+    public static Mic Instance;
+
     [Header("멀티 용")]
     public Recorder recorder; // Photon Voice의 Recorder
     private float currentDb = 0f; // 현재 데시벨 값
@@ -27,6 +31,7 @@ public class Mic : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
 
+        Instance = this;
     }
 
     void Start()
@@ -47,11 +52,19 @@ public class Mic : MonoBehaviour
             return;
         }
 
+        //멀티에 사용할 마이크 설정
+        recorder.MicrophoneType = Recorder.MicType.Unity;
+        recorder.MicrophoneDevice = new Photon.Voice.DeviceInfo(0, Global_Microphone.UseMic);
+        recorder.RestartRecording();
+
+
+        isRecording = false;
+
         single = PhotonNetwork.IsConnected ? false : true;
 
         if (single)
             mic.volume = 0;
-        
+
         //마이크 데시벨 UI 할당
         Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
     }
@@ -78,7 +91,8 @@ public class Mic : MonoBehaviour
         if (!isRecording)
         {
 
-            micClip = Microphone.Start(Microphone.devices[0], true, 10, sampleRate);
+            //micClip = Microphone.Start(Microphone.devices[0], true, 10, sampleRate);
+            micClip = Microphone.Start(Global_Microphone.UseMic, true, 10, sampleRate);
             isRecording = true;
 
             mic.clip = micClip;
@@ -88,7 +102,8 @@ public class Mic : MonoBehaviour
         if (isRecording)
         {
 
-            int micPosition = Microphone.GetPosition(Microphone.devices[0]);
+            //int micPosition = Microphone.GetPosition(Microphone.devices[0]);
+            int micPosition = Microphone.GetPosition(Global_Microphone.UseMic);
             if (micPosition >= bufferSize)
             {
  

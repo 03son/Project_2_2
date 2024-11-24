@@ -15,6 +15,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
         else
             return $"{requiredItemName} 부착하기"; // 아직 부착되지 않았으면 프롬프트 표시
     }
+
     public void OnInteract()
     {
         if (isAttached)
@@ -32,9 +33,9 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             // 아이템 제거
             inventory.RemoveItem(requiredItemName);
 
-            // 부착 상태 동기화 (RPC 대신 직접 메서드 호출로 변경)
-            RPC_AttachItem(); // 임시로 직접 호출
-            Debug.Log("RPC_AttachItem 직접 호출됨"); // 호출 확인용 로그
+            // 부착 상태 동기화 (RPC 호출)
+            photonView.RPC("RPC_AttachItem", RpcTarget.All);
+            Debug.Log("RPC_AttachItem 호출됨"); // 호출 확인용 로그
         }
         else
         {
@@ -53,7 +54,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
         SubmarineController submarine = GetComponentInParent<SubmarineController>();
         if (submarine != null)
         {
-            submarine.AttachedItem(requiredItemName);
+            submarine.AttachItem(requiredItemName);
             Debug.Log("잠수함에 부착된 아이템 정보 전달 완료");
         }
         else
@@ -61,5 +62,4 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             Debug.LogWarning("잠수함 컨트롤러가 없습니다.");
         }
     }
-
 }

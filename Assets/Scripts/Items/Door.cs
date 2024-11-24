@@ -31,12 +31,17 @@ public class Door : MonoBehaviour, IInteractable
             openDoor = false;
             return;
         }
+
         // 문이 열려있지 않고, Player_Equip에서 열쇠가 장착된 상태인지 확인
         if (!isOpen && playerEquip != null && playerEquip.HasEquippedKey())
         {
             isOpen = true;
             Debug.Log("문의 잠금을 해제했습니다.");
             openDoor = true;
+
+            // Player_Equip의 RemoveEquippedItem 호출
+            playerEquip.RemoveEquippedItem("Key");
+
             return;
         }
         else if (!isOpen)
@@ -47,6 +52,7 @@ public class Door : MonoBehaviour, IInteractable
                 audioSource.PlayOneShot(lockedSound); // 잠겨있는 소리 재생
             }
         }
+
         if (isOpen && openDoor == false)
         {
             Closedoor();
@@ -55,6 +61,7 @@ public class Door : MonoBehaviour, IInteractable
             return;
         }
     }
+
 
     public string GetInteractPrompt()
     {
@@ -90,6 +97,7 @@ public class Door : MonoBehaviour, IInteractable
             audioSource.PlayOneShot(openSound);
         }
     }
+
     void Closedoor()
     {
         if (animator != null)
