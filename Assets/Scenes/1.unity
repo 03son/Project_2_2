@@ -1687,6 +1687,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakSound: {fileID: 0}
   brokenGlassPrefab: {fileID: 0}
+--- !u!1 &755587515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 644268339386022690, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
+  m_PrefabInstance: {fileID: 7020701786235621384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &759956016
 GameObject:
   m_ObjectHideFlags: 0
@@ -4600,16 +4605,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8982704434552452063, guid: 51e8a9b495b7b4c459acd06cc0a5a694, type: 3}
   m_PrefabInstance: {fileID: 2094002391162156595}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1797213075 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7126970568011307628, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
-  m_PrefabInstance: {fileID: 7020701786235621384}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1797213076 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7860143041399192716, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
-  m_PrefabInstance: {fileID: 7020701786235621384}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1832035576
 GameObject:
@@ -7549,7 +7544,6 @@ GameObject:
   - component: {fileID: 1019405169916074366}
   - component: {fileID: 8097146714274682412}
   - component: {fileID: 4226141952648646952}
-  - component: {fileID: 8097146714274682413}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8079,15 +8073,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 268868013960339864, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 268868013960339864, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 268868013960339864, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 268868013960339864, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8105,8 +8099,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1181952712019974206, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
-      propertyPath: mainCameraTransform
+    - target: {fileID: 5280258895290287533, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
+      propertyPath: cameraTransform
+      value: 
+      objectReference: {fileID: 926791170547918208}
+    - target: {fileID: 8563912715880725469, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
+      propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 926791170547918208}
     - target: {fileID: 8999467768304360252, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
@@ -8118,6 +8116,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
+--- !u!4 &7020701786235621385 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 268868013960339864, guid: 0184e64605aa9ec46b37d5c40a47373f, type: 3}
+  m_PrefabInstance: {fileID: 7020701786235621384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7135192821282227596
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -8477,25 +8480,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSpeed: 2
-  playerTransform: {fileID: 1797213076}
-  player: {fileID: 1797213075}
+  playerTransform: {fileID: 7020701786235621385}
+  player: {fileID: 755587515}
   offset: {x: 0, y: 0, z: 0}
   FollowCam: {fileID: 1586328093126080412}
   EquipCamera: {fileID: 3791820408516909211}
   popup_escMenu: 0
---- !u!114 &8097146714274682413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4615742892516559649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116f682c3a203e940b7f6c7567f464c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraEmptyObject: {fileID: 1797213076}
 --- !u!224 &8251144719157445632
 RectTransform:
   m_ObjectHideFlags: 0
