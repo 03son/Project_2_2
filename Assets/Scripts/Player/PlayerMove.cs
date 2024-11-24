@@ -4,7 +4,8 @@ using Photon.Pun;
 
 public class PlayerMove : MonoBehaviourPunCallbacks
 {
-    [SerializeField] float speed = 5f;
+    [SerializeField] float normalSpeed = 5f;
+    [SerializeField] float crouchSpeed = 2f;   // 앉을 때 이동 속도
     [SerializeField] float mouseSpeed = 8f;
     [SerializeField] Transform cameraTransform;
 
@@ -50,11 +51,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        // Height 값 강제 고정
-       /* if (controller.height != 0.1f)
-        {
-            controller.height = 0.1f;
-        } */
+        
         // Photon View 확인
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
@@ -90,6 +87,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     {
         if (controller == null || cameraTransform == null) return;
 
+        // 현재 이동 속도 설정: 앉은 상태인지 여부에 따라 결정
+        float currentSpeed = Input.GetKey(KeyManager.SitDown_Key) ? crouchSpeed : normalSpeed;
+
         float moveX = 0;
         float moveZ = 0;
 
@@ -102,7 +102,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         direction.y = 0f;
         direction.Normalize();
 
-        Vector3 mov = direction * speed;
+        Vector3 mov = direction * currentSpeed;
 
         PlayerVelocity(mov, moveX, moveZ);
 
