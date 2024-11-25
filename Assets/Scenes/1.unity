@@ -445,7 +445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &322234226
 Transform:
   m_ObjectHideFlags: 0
@@ -2387,7 +2387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1054676746
 Transform:
   m_ObjectHideFlags: 0
@@ -3022,6 +3022,7 @@ GameObject:
   - component: {fileID: 1505965099}
   - component: {fileID: 1505965098}
   - component: {fileID: 1505965103}
+  - component: {fileID: 1505965104}
   m_Layer: 3
   m_Name: DoorWithCardKey
   m_TagString: Untagged
@@ -3039,7 +3040,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.0023614177, z: -0, w: 0.9999972}
   m_LocalPosition: {x: -19.03, y: -1.1200027, z: -1.59}
-  m_LocalScale: {x: 0.27566242, y: 2.1737351, z: 0.94699013}
+  m_LocalScale: {x: 0.8544984, y: 2.1737351, z: 2.6439016}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1881840056}
@@ -3249,6 +3250,22 @@ MonoBehaviour:
   openSound: {fileID: 0}
   closeSound: {fileID: 0}
   autoCloseDelay: 5
+--- !u!208 &1505965104
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505965095}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1519508599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3339,7 +3356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!195 &1525789499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3480,7 +3497,7 @@ Transform:
   m_GameObject: {fileID: 1525789498}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.73358226, z: -0, w: 0.67960066}
-  m_LocalPosition: {x: 116.8747, y: 112.47, z: 375.79}
+  m_LocalPosition: {x: 121.8, y: 112.47, z: 379.12}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5350,7 +5367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2035724076
 Transform:
   m_ObjectHideFlags: 0
@@ -5406,7 +5423,7 @@ Transform:
   m_GameObject: {fileID: 2040998134}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 123.34, y: 113.26, z: 390.28906}
+  m_LocalPosition: {x: 100.34, y: 110.91, z: 377.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
