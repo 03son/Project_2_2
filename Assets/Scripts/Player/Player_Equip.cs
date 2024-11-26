@@ -30,6 +30,7 @@ public class Player_Equip : MonoBehaviour
     private GameObject currentGlassCup;
     private Animator animator;           // Animator 추가
     private CharacterController characterController;
+    private bool isFlashlightOn = false; // 손전등 상태를 저장할 변수
 
     void Start()
     {
@@ -214,6 +215,13 @@ public class Player_Equip : MonoBehaviour
                 {
                     Debug.Log("손전등 획득 및 사용");
                     flashlightScript.AcquireFlashlight();
+
+                    // 손전등 켜기/끄기 처리
+                    isFlashlightOn = !isFlashlightOn;
+                    flashlightScript.ToggleFlashlight(isFlashlightOn);
+
+                    // 애니메이션 파라미터 설정
+                    animator.SetBool("isFlashlightOn", isFlashlightOn);
                 }
             }
             // 유리컵 아이템 처리
@@ -236,7 +244,7 @@ public class Player_Equip : MonoBehaviour
     }
 
 
-       
+
 
 
     void StartThrowing()
