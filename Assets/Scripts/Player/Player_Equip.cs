@@ -28,6 +28,8 @@ public class Player_Equip : MonoBehaviour
     private float chargeTime = 0f;
     private bool hasGlassCup = false;
     private GameObject currentGlassCup;
+    private Animator animator;           // Animator 추가
+    private CharacterController characterController;
 
     void Start()
     {
@@ -45,6 +47,14 @@ public class Player_Equip : MonoBehaviour
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;  // 궤적 표시 초기화
+        }
+
+        // Animator 컴포넌트 가져오기
+        animator = GetComponent<Animator>();
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator 컴포넌트를 찾을 수 없습니다. 플레이어 오브젝트에 Animator가 있어야 합니다.");
         }
     }
 
@@ -69,6 +79,9 @@ public class Player_Equip : MonoBehaviour
         {
             CancelThrow();
         }
+        // 아이템 장착 상태에 따라 애니메이션 파라미터 설정
+        bool isHoldingAnyItem = HasAnyEquippedItem();
+        animator.SetBool("isHoldingItem", isHoldingAnyItem);
     }
 
     void ConnectUi_itemSlot()
@@ -437,6 +450,13 @@ public class Player_Equip : MonoBehaviour
             }
         }
         return false; // 장착된 아이템이 없으면 false 반환
+    }
+
+    public bool HasAnyEquippedItem()
+    {
+        // equipItem의 모든 자식에서 ItemObject 컴포넌트를 검색하여 아이템이 장착되어 있는지 확인
+        ItemObject[] equippedItems = equipItem.GetComponentsInChildren<ItemObject>();
+        return equippedItems.Length > 0; // 하나라도 장착되어 있으면 true 반환
     }
 
 

@@ -13,6 +13,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     [SerializeField] AudioClip walkingClip;
     [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
 
+
+    private Player_Equip playerEquip;
     private CharacterController controller;
     private Vector3 velocity;
     private float gravity = -9.81f;
@@ -23,6 +25,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Start()
     {
+
+        playerEquip = GetComponent<Player_Equip>();
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             return;
@@ -128,7 +132,56 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             animator.SetBool("isWalking", false);
             animator.SetBool("isMovingBackward", false);
         }
-    }
+
+        bool isHoldingItem = playerEquip != null && playerEquip.HasAnyEquippedItem();
+
+        // 걷는 애니메이션 상태 전환 로직
+        if (isWalking)
+        {
+            if (moveZ > 0) // 앞으로 이동 중일 때 (W 키)
+            {
+                if (isHoldingItem)
+                {
+                    // 아이템을 들고 앞으로 걷는 경우
+                    animator.SetBool("isWalkingWithItem", true);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isMovingBackward", false);
+                }
+                else
+                {
+                    // 아이템 없이 앞으로 걷는 경우
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isMovingBackward", false);
+                }
+            }
+            else if (moveZ < 0) // 뒤로 이동 중일 때 (S 키)
+            {
+                if (isHoldingItem)
+                {
+                    // 아이템을 들고 뒤로 걷는 경우
+                    animator.SetBool("isWalkingWithItem", true);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isMovingBackward", true);
+                }
+                else
+                {
+                    // 아이템 없이 뒤로 걷는 경우
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isMovingBackward", true);
+                }
+            }
+        }
+        else
+        {
+            // 걷지 않는 경우
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isWalkingWithItem", false);
+            animator.SetBool("isMovingBackward", false);
+        }
+    
+}
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
