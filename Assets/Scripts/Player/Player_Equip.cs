@@ -315,6 +315,9 @@ public class Player_Equip : MonoBehaviour
         isCharging = false;
         chargeTime = 0f;
 
+        // 충전 상태 해제
+        animator.SetBool("isChargingThrow", false);
+
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;  // 궤적 표시 비활성화
@@ -322,6 +325,7 @@ public class Player_Equip : MonoBehaviour
 
         Debug.Log("던지기 취소됨");
     }
+
 
 
 
