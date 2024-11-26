@@ -33,7 +33,7 @@ public class Flashlight1 : MonoBehaviour
             flashlightComponent = flashlightLight.GetComponent<Light>();
             flashlightComponent.intensity = intensity;
             flashlightComponent.range = range;
-            flashlightLight.SetActive(true);; // 시작 시 꺼진 상태
+            flashlightLight.SetActive(false);; // 시작 시 꺼진 상태
             currentSpotAngle = maxSpotAngle; // 초기 각도 설정
             currentIntensity = maxIntensity; // 초기 강도 설정
         }
@@ -53,12 +53,12 @@ public class Flashlight1 : MonoBehaviour
     }
 
     // 손전등 켜기/끄기 상태 전환 메서드 추가
-    public void ToggleFlashlight(bool state)
+  /*  public void ToggleFlashlight(bool state)
     {
         flashlightActive = state;
         flashlightLight.SetActive(flashlightActive);
         Debug.Log("손전등 " + (flashlightActive ? "켜짐" : "꺼짐"));
-    }
+    }  */
 
     public bool IsFlashlightActive()
     {

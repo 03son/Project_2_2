@@ -218,7 +218,7 @@ public class Player_Equip : MonoBehaviour
 
                     // 손전등 켜기/끄기 처리
                     isFlashlightOn = !isFlashlightOn;
-                    flashlightScript.ToggleFlashlight(isFlashlightOn);
+                //    flashlightScript.ToggleFlashlight(isFlashlightOn);
 
                     // 애니메이션 파라미터 설정
                     animator.SetBool("isFlashlightOn", isFlashlightOn);
