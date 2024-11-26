@@ -252,8 +252,12 @@ public class Player_Equip : MonoBehaviour
 
     void ChargeThrow()
     {
+        isCharging = true;
         chargeTime += Time.deltaTime;
         float currentForce = Mathf.Min(chargeTime * throwForce, maxForce);
+
+        // 애니메이터 파라미터 설정: 충전 중인 상태
+        animator.SetBool("isChargingThrow", true);
 
         // 궤적 업데이트
         Vector3 throwDirection = Camera.main.transform.forward;
@@ -285,16 +289,22 @@ public class Player_Equip : MonoBehaviour
             if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
-            } 
+            }
 
-                hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
-           currentGlassCup = null;  // 유리컵 참조 해제
+            hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
+            currentGlassCup = null;  // 유리컵 참조 해제
 
             if (trajectoryLine != null)
             {
                 trajectoryLine.enabled = false;  // 궤적 표시 비활성화
             }
         }
+
+        // 충전 중 상태 해제
+        animator.SetBool("isChargingThrow", false);
+
+        // 던지기 애니메이션 트리거 설정
+        animator.SetTrigger("isThrowing");
 
         isCharging = false;
     }
