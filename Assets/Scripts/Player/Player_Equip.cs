@@ -211,7 +211,7 @@ public class Player_Equip : MonoBehaviour
             if (Item.name == "Flashlight")
             {
                 Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
-                if (flashlightScript != null)
+               if (flashlightScript != null)
                 {
                     Debug.Log("손전등 획득 및 사용");
                     flashlightScript.AcquireFlashlight();
@@ -222,7 +222,7 @@ public class Player_Equip : MonoBehaviour
 
                     // 애니메이션 파라미터 설정
                     animator.SetBool("isFlashlightOn", isFlashlightOn);
-                }
+                } 
             }
             // 유리컵 아이템 처리
             else if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
@@ -242,7 +242,28 @@ public class Player_Equip : MonoBehaviour
             }
         }
     }
+    // 아이템을 버리거나 변경할 때 호출되는 메서드
+    public void ChangeOrRemoveItem()
+    {
+        // 현재 장착 중인 아이템이 손전등인지 확인
+        if (Item != null && Item.name == "Flashlight")
+        {
+            // 손전등이 켜져 있는 상태에서 아이템을 변경하거나 버리는 경우, 애니메이션 파라미터 초기화
+            if (isFlashlightOn)
+            {
+                isFlashlightOn = false;
+                animator.SetBool("isFlashlightOn", false);
+            }
+        }
 
+        // 기존 아이템을 제거
+        if (Item != null)
+        {
+            Destroy(Item);
+            Item = null;
+            ItemName.text = "";
+        }
+    }
 
 
 

@@ -33,7 +33,7 @@ public class Flashlight1 : MonoBehaviour
             flashlightComponent = flashlightLight.GetComponent<Light>();
             flashlightComponent.intensity = intensity;
             flashlightComponent.range = range;
-            flashlightLight.SetActive(false); // 시작 시 꺼진 상태
+            flashlightLight.SetActive(true);; // 시작 시 꺼진 상태
             currentSpotAngle = maxSpotAngle; // 초기 각도 설정
             currentIntensity = maxIntensity; // 초기 강도 설정
         }
