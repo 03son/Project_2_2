@@ -41,6 +41,8 @@ public class LoadingSceneManager : MonoBehaviour
     }
     public static void InGameLoading(string MapName, int ImageNumber)
     {
+        loa.LoadingBar.value = 0;
+
         if (PhotonNetwork.IsConnected)
             loa.StartCoroutine(MultiGameLoadScene(MapName));//멀티
         else
@@ -98,33 +100,30 @@ public class LoadingSceneManager : MonoBehaviour
         
         yield return null;
 
-        PhotonNetwork.LoadLevel(MapName);
-
-        float timer = 0f;
-        while (PhotonNetwork.LevelLoadingProgress < 1f)
+        float loadingProgress = 0f;
+        while (loadingProgress < 1f)
         {
-            yield return new WaitForEndOfFrame();
-            if (PhotonNetwork.LevelLoadingProgress < 0.1f)
-            {
-                loa.LoadingBar.value = (PhotonNetwork.LevelLoadingProgress) * 1/100;
-            }
-            else
-            {
-                timer += Time.unscaledDeltaTime;
-                loa.LoadingBar.value = Mathf.Lerp(0.1f , 1f ,timer);
-                if (PhotonNetwork.LevelLoadingProgress >= 1f)
-                {
-                    loa.LoadingBar.value = 1;
-                    yield return null;
-                    if (loa.loadingBarObj.activeSelf)
-                    {
-                        loa.loadingBarObj.SetActive(false);
-                    }
-                    yield break;
-                }
-            }
+            yield return new WaitForSecondsRealtime(0.01f);
+
+            loadingProgress += 0.01f;
+            loa.LoadingBar.value = loadingProgress;
         }
 
+        PhotonNetwork.LoadLevel(MapName);
+        while (PhotonNetwork.LevelLoadingProgress < 1f)
+        {
+            yield return new WaitForSecondsRealtime(0.001f);
+            if (PhotonNetwork.LevelLoadingProgress >= 1f)
+            {
+                loa.LoadingBar.value = 1;
+                yield return null;
+                if (loa.loadingBarObj.activeSelf)
+                {
+                    loa.loadingBarObj.SetActive(false);
+                }
+                yield break;
+            }
+        }
     }
     void loadingImage(int MapNum) // 이미지
     {

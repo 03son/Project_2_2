@@ -109,7 +109,7 @@ public class UI_Button : UI_Popup
         else //이후는 계속 활성 상태
         {
             Get<TMP_Text>((int)Texts.PlayerNickName_Text).gameObject.SetActive(true);
-            Get<TMP_Text>((int)Texts.PlayerNickName_Text).text = $"플레이어 닉네임 : {PlayerPrefs.GetString("PlayerNickName")}";
+            Get<TMP_Text>((int)Texts.PlayerNickName_Text).text = $"닉네임 : {PlayerPrefs.GetString("PlayerNickName")}";
         }
 
         ApplyButton = G_ApplyButton.GetComponent<Button>();
@@ -198,7 +198,7 @@ public class UI_Button : UI_Popup
         Get<TMP_Text>((int)Texts.PlayerNickName_Text).gameObject.SetActive(true);
 
         //플레이어 닉네임 표시
-        Get<TMP_Text>((int)Texts.PlayerNickName_Text).text = $"플레이어 닉네임 : {PlayerPrefs.GetString("PlayerNickName")}";
+        Get<TMP_Text>((int)Texts.PlayerNickName_Text).text = $"닉네임 : {PlayerPrefs.GetString("PlayerNickName")}";
 
         //로고 띄우기
         GetImage((int)Images.Logo_Image).gameObject.GetComponent<Image>().enabled = true;
