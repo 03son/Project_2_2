@@ -141,7 +141,7 @@ public class Mic : MonoBehaviour
             float rms = recorder.LevelMeter.CurrentAvgAmp;
             currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6f로 로그 방지
 
-            Debug.Log("Current Decibel Level: " + currentDb);
+            //Debug.Log("Current Decibel Level: " + currentDb);
 
             SetMicDecibel_UI();
         }
@@ -168,7 +168,7 @@ public class Mic : MonoBehaviour
         {
             //currentDb의 값을 UI의 Value 범위에 맞게 조정 후 적용
             Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
-            Debug.Log("UI 데시벨 값" + Mathf.InverseLerp(30, 60, (int)currentDb));
+            //Debug.Log("UI 데시벨 값" + Mathf.InverseLerp(30, 60, (int)currentDb));
         }
     }
 }

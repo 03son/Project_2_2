@@ -19,6 +19,7 @@ public class GlassCupCollisionHandler : MonoBehaviour
         if (collision.relativeVelocity.magnitude > 2f)
         {
             BreakGlass(collision.contacts[0].point);
+
         }
     }
 
@@ -32,20 +33,25 @@ public class GlassCupCollisionHandler : MonoBehaviour
             AudioSource.PlayClipAtPoint(breakSound, breakPoint);
         }
 
+        // SoundSource를 통한 소리 처리
+        SoundSource soundSource = GetComponent<SoundSource>();
+        if (soundSource != null)
+        {
+            soundSource.PlaySound();  // SoundSource가 알아서 소리를 방출하도록 호출
+        }
+
         // 깨진 유리 프리팹 생성
         if (brokenGlassPrefab != null)
         {
-           // Instantiate(brokenGlassPrefab, transform.position, transform.rotation);
+            Instantiate(brokenGlassPrefab, transform.position, transform.rotation);
         }
-
-        // 몬스터들에게 깨진 위치 알림
-        AlertMonsters(breakPoint);
 
         // 기존 유리컵 오브젝트 비활성화
         gameObject.SetActive(false);
     }
 
-    void AlertMonsters(Vector3 breakPoint)
+
+    /*void AlertMonsters(Vector3 breakPoint)
     {
         SoundSource soundSource = GetComponent<SoundSource>();
         // 반경 내의 모든 Collider 찾기
@@ -73,7 +79,7 @@ public class GlassCupCollisionHandler : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
 
     // 아이템을 획득했을 때 물리 설정을 변경하는 메서드

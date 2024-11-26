@@ -5,56 +5,43 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundSource : MonoBehaviour
 {
-    public AudioSource audioSource;
     public float baseDecibel = 50f;  // 기본 데시벨 값
     public float range = 20f;        // 소리의 최대 범위
-
-    // 특정 위치에서의 데시벨을 계산하는 함수
-    public float GetDecibelAtDistance(Vector3 position)
-    {
-        if (audioSource.isPlaying)
-        {
-            float distance = Vector3.Distance(transform.position, position);
-            float decibel = baseDecibel - 20f * Mathf.Log10(distance);
-            return Mathf.Max(0, decibel); // 데시벨은 음수가 되지 않도록 클램핑
-        }
-        return 0; // 오디오 소스가 재생 중이 아니면 데시벨은 0으로 반환
-    }
+    public AudioSource audioSource; // 오디오 소스
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
 
-        // 오디오 클립이 설정되지 않았다면 오류 메시지 출력
         if (audioSource.clip == null)
         {
-            Debug.LogError("AudioSource에 AudioClip이 할당되지 않았습니다. 오디오 클립을 설정해 주세요.");
+            Debug.LogError("AudioClip이 설정되지 않았습니다.");
         }
     }
 
+    // 특정 위치에서의 데시벨 계산
+    public float GetDecibelAtDistance(Vector3 position)
+    {
+        if (audioSource.isPlaying)
+        {
+            float distance = Vector3.Distance(transform.position, position);
+
+            // 데시벨 계산 (거리 기반 감소)
+            float decibel = baseDecibel - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+            Debug.Log(decibel);
+            return Mathf.Max(0, decibel); // 음수 방지
+        }
+        return 0; // 소리가 재생 중이 아니면 데시벨 0
+    }
+    // 소리 재생
     public void PlaySound()
     {
-        if (audioSource != null && !audioSource.isPlaying)
-        {
-            audioSource.Play();
-        }
+        audioSource.Play();
     }
-    void OnDrawGizmos()
+    // Gizmo로 소리 범위를 표시
+    private void OnDrawGizmosSelected()
     {
-        // AudioSource 가져오기
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
-
-        // 오디오 소스 위치에 대한 Gizmo 색상 설정
-        Gizmos.color = new Color(0, 1, 0, 0.3f); // 반투명한 초록색
-
-        // Min Distance 반경 그리기
-        Gizmos.DrawWireSphere(transform.position, audioSource.minDistance);
-
-        // Max Distance 반경 그리기
-        Gizmos.color = new Color(1, 0, 0, 0.3f); // 반투명한 빨간색
-        Gizmos.DrawWireSphere(transform.position, audioSource.maxDistance);
+        Gizmos.color = new Color(1, 0.5f, 0, 0.3f);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
