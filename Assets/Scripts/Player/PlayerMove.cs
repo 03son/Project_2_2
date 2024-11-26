@@ -113,26 +113,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         // 애니메이터에 파라미터 설정
         isWalking = (moveX != 0 || moveZ != 0);
 
-        // 이동 방향에 따라 애니메이션 상태 전환 설정
-        if (isWalking)
-        {
-            if (moveZ > 0) // 앞으로 이동 중일 때 (W 키)
-            {
-                animator.SetBool("isWalking", true);
-                animator.SetBool("isMovingBackward", false);
-            }
-            else if (moveZ < 0) // 뒤로 이동 중일 때 (S 키)
-            {
-                animator.SetBool("isWalking", false);
-                animator.SetBool("isMovingBackward", true);
-            }
-        }
-        else
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isMovingBackward", false);
-        }
-
         bool isHoldingItem = playerEquip != null && playerEquip.HasAnyEquippedItem();
 
         // 걷는 애니메이션 상태 전환 로직
@@ -142,46 +122,58 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             {
                 if (isHoldingItem)
                 {
-                    // 아이템을 들고 앞으로 걷는 경우
                     animator.SetBool("isWalkingWithItem", true);
-                    animator.SetBool("isWalking", false);
-                    animator.SetBool("isMovingBackward", false);
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isMovingBackward", true);
+                    animator.SetBool("isMovingBackwardWithItem", false);
                 }
                 else
                 {
-                    // 아이템 없이 앞으로 걷는 경우
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isWalkingWithItem", false);
                     animator.SetBool("isMovingBackward", false);
+                    animator.SetBool("isMovingBackwardWithItem", false);
                 }
             }
             else if (moveZ < 0) // 뒤로 이동 중일 때 (S 키)
             {
                 if (isHoldingItem)
                 {
-                    // 아이템을 들고 뒤로 걷는 경우
-                    animator.SetBool("isWalkingWithItem", true);
-                    animator.SetBool("isWalking", false);
-                    animator.SetBool("isMovingBackward", true);
+                    animator.SetBool("isWalkingWithItem", false);
+                   // animator.SetBool("isWalking", false);
+                   // animator.SetBool("isMovingBackward", false);
+                    animator.SetBool("isMovingBackwardWithItem", true);
                 }
                 else
                 {
                     // 아이템 없이 뒤로 걷는 경우
-                    animator.SetBool("isWalking", false);
-                    animator.SetBool("isWalkingWithItem", false);
                     animator.SetBool("isMovingBackward", true);
+                  //  animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isWalking", false);
+                  //  animator.SetBool("isMovingBackwardWithItem", false);
                 }
             }
         }
         else
         {
-            // 걷지 않는 경우
+            // 걷지 않는 경우 모든 상태를 초기화하고, 아이템을 들고 있을 때는 아이템 아이들 상태로 전환
             animator.SetBool("isWalking", false);
             animator.SetBool("isWalkingWithItem", false);
             animator.SetBool("isMovingBackward", false);
+            animator.SetBool("isMovingBackwardWithItem", false);
+
+            if (isHoldingItem)
+            {
+                // 아이템을 들고 있을 때 아이템 아이들 상태로 전환
+                animator.SetBool("isItemIdle", true);
+            }
+            else
+            {
+                animator.SetBool("isItemIdle", false);
+            }
         }
-    
-}
+    }
+
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {

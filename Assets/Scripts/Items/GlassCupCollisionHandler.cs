@@ -26,11 +26,19 @@ public class GlassCupCollisionHandler : MonoBehaviour
     {
         hasBroken = true;
 
-        // 깨지는 소리 재생
-        if (breakSound != null)
-        {
-            AudioSource.PlayClipAtPoint(breakSound, breakPoint);
-        }
+        // 깨지는 소리 재생을 위한 AudioSource 수동 생성
+        GameObject audioObject = new GameObject("GlassBreakAudio");
+        audioObject.transform.position = breakPoint;
+
+        AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+        audioSource.clip = breakSound;
+        audioSource.Play();
+
+        // 필요한 컴포넌트 추가
+        SoundSource exampleComponent = audioObject.AddComponent<SoundSource>();  // 원하는 컴포넌트 추가
+
+        // 오디오 재생이 완료된 후 오브젝트 삭제
+        Destroy(audioObject, breakSound.length);
 
         // 깨진 유리 프리팹 생성
         if (brokenGlassPrefab != null)
