@@ -153,7 +153,15 @@ public class GameSettingSetValue : MonoBehaviour
     }
     void Voice()//음성채팅 관련, 마이크 토글 옵션
     {
-        Global_Microphone.UseMic = PlayerPrefs.HasKey("UseMicName") ? PlayerPrefs.GetString("UseMicName") : Microphone.devices[0]; //마이크 설정
+        if (Microphone.devices.Length > 0) //마이크 있으면
+        {
+            Global_Microphone.UseMic = PlayerPrefs.HasKey("UseMicName") ? PlayerPrefs.GetString("UseMicName") : Microphone.devices[0]; //마이크 설정
+        }
+        else
+        {
+            Global_Microphone.UseMic = null;
+        }
+
         if (PlayerPrefs.HasKey("microphoneMode"))
         {
             if (PlayerPrefs.GetInt("microphoneMode") == 0)

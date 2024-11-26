@@ -7,6 +7,8 @@ public class MonsterDeath : MonoBehaviour
         // 필요한 초기화 코드가 있다면 여기에 작성
     }
 
+    /*
+    //플레이어 쪽으로 옮김
     private void OnTriggerEnter(Collider other)
     {
         // 몬스터의 콜라이더가 플레이어와 충돌할 때
@@ -17,7 +19,7 @@ public class MonsterDeath : MonoBehaviour
 
             if (playerHealth != null)
             {
-                playerHealth.Die(); // 플레이어의 Die 메서드 호출
+                //playerHealth.Die(); // 플레이어의 Die 메서드 호출
                 Debug.Log("플레이어가 몬스터에게 잡혀 죽었습니다.");
             }
             else
@@ -26,4 +28,5 @@ public class MonsterDeath : MonoBehaviour
             }
         }
     }
+    */
 }
