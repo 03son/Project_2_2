@@ -15,12 +15,17 @@ public class PlayerDashJump : MonoBehaviour
     private Vector3 velocity;
     private bool isDashing = false;
 
+    PlayerState playerState;
+    PlayerState.playerState state;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
         animator = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
+
+        playerState = GetComponent<PlayerState>();
     }
 
     void Update()
@@ -28,8 +33,9 @@ public class PlayerDashJump : MonoBehaviour
         if (!pv.IsMine && PhotonNetwork.IsConnected)
             return;
 
-        // esc 창이 닫혀있을 때만 동작
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        // esc 창이 닫혀있을 때 && 생존일 때 동작
+        playerState.GetState(out state);
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.생존)
         {
             HandleMovement();
             HandleDash();

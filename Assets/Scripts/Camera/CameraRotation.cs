@@ -20,6 +20,9 @@ public class CameraRot : MonoBehaviour
     public GameObject FollowCam;
     public GameObject EquipCamera;
 
+    PlayerState playerState;
+    PlayerState.playerState state;
+
     public bool popup_escMenu = false; //esc T/F여부
     void Awake()
     {
@@ -29,7 +32,7 @@ public class CameraRot : MonoBehaviour
     {
         player = this.gameObject.GetComponent<Transform>().parent.gameObject;
         playerTransform = player.transform;
-
+        playerState = player.gameObject.GetComponent<PlayerState>();
         if (PhotonNetwork.IsConnected)
         {
             pv = player.GetComponent<PhotonView>();
@@ -57,7 +60,8 @@ public class CameraRot : MonoBehaviour
 
     void Update()
     {
-        if (popup_escMenu) //esc 창이 열려있으면 카메라 회전X
+        playerState.GetState(out state);
+        if (popup_escMenu && state == PlayerState.playerState.생존) //esc 창이 열려있으면 카메라 회전X
             return;
 
         mouseSpeed = GameInfo.MouseSensitivity; //감도 동기화

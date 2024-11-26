@@ -133,7 +133,7 @@ public class MainSettingScreen : UI_Popup
 
                 textColor = GetButton(number).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
                 textColor.faceColor = 
-                    new Color32(textColor.faceColor.r, textColor.faceColor.g, textColor.faceColor.b, 100);
+                    new Color32(textColor.faceColor.r, textColor.faceColor.g, textColor.faceColor.b, 50);
             }
         }
     }

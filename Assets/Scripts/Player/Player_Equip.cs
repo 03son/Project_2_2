@@ -17,6 +17,8 @@ public class Player_Equip : MonoBehaviour
     ResourceManager resoure = new ResourceManager();
     int selectIndex = 0;
     PhotonView pv;
+    PlayerState playerState;
+    PlayerState.playerState state;
 
     [Header("Throw Settings")]
     public KeyCode throwKey = KeyCode.Mouse0;  // 던지기 키
@@ -32,6 +34,7 @@ public class Player_Equip : MonoBehaviour
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        playerState = GetComponent<PlayerState>();
 
         ConnectUi_itemSlot();
         setnumberKey();
@@ -50,6 +53,9 @@ public class Player_Equip : MonoBehaviour
 
     void Update()
     {
+        playerState.GetState(out state);
+        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음) return;
+
         numberKey();
         mouseWheelScroll();
         EquipFunction();

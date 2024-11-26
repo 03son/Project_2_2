@@ -29,6 +29,9 @@ public class InteractionManager : MonoBehaviour
 
     PhotonView pv;
 
+    PlayerState.playerState state;
+    PlayerState playerState;
+
 
     void Start()
     {
@@ -40,6 +43,7 @@ public class InteractionManager : MonoBehaviour
                 return;
         }
 
+        playerState = GetComponent<PlayerState>();
         Crosshair = GameObject.Find("Crosshair_Image").GetComponent<Crosshair_Image>();
 
         camera = Camera.main;
@@ -53,6 +57,11 @@ public class InteractionManager : MonoBehaviour
             if (!pv.IsMine)
                 return;
         }
+
+        //esc창이 열려있고 플레이어가 죽음일 때 리턴
+        playerState.GetState(out state);
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
+            return;
 
         //마지막으로 체크한 시간이 checkRate를 넘겼다면
         if (Time.time - lastCheckTime > checkRate)

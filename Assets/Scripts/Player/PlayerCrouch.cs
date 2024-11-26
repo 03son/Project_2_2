@@ -7,8 +7,12 @@ public class PlayerCrouch : MonoBehaviour
     public float crouchSpeed = 0.1f;     // 앉기와 서기 전환 속도
     private CharacterController characterController;
 
+    PlayerState playerState;
+    PlayerState.playerState state;
+
     void Start()
     {
+        playerState = GetComponent<PlayerState>();
         characterController = GetComponent<CharacterController>();
         if (characterController == null)
         {
@@ -18,6 +22,10 @@ public class PlayerCrouch : MonoBehaviour
 
     void Update()
     {
+        playerState.GetState(out state);
+        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
+            return;
+
         // Control 키를 누르고 있는 동안 crouchHeight로 전환, 떼면 normalHeight로 돌아감
         float targetHeight = Input.GetKey(KeyCode.LeftControl) ? crouchHeight : normalHeight;
         characterController.height = Mathf.Lerp(characterController.height, targetHeight, crouchSpeed);

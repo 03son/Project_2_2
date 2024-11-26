@@ -1,22 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
 public class PlayerDeathManager : MonoBehaviourPunCallbacks
 {
-    public bool isDead = false;
     public GameObject deathEffect; // 죽음 효과 (애니메이션, 파티클 등)
-    private Vector3 deathPosition;
 
     PlayerState.playerState state;
-
     PlayerState playerState;
 
     void Start()
     {
         playerState = GetComponent<PlayerState>();
-        //state = GetComponent<PlayerState>().State;
 
-        GetComponent<PlayerState>().State = PlayerState.playerState.생존;
+        playerState.State = PlayerState.playerState.생존;
         playerState.GetState(out state);
         Debug.Log(state);
     }
@@ -25,11 +23,24 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            GetComponent<PlayerState>().State = PlayerState.playerState.죽음;
-            Debug.Log(GetComponent<PlayerState>().State);
+            playerState.State = PlayerState.playerState.죽음;
+            playerState.GetState(out state);
+            Debug.Log(state);
+            Die();
         }
     }
 
+    void Die()
+    {
+        StartCoroutine(die());
+    }
+
+    IEnumerator die()
+    {
+        yield return null;
+    }
+
+    
 
     /*
     public void Die()

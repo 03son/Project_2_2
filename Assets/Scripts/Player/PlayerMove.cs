@@ -20,6 +20,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private Animator animator; // Animator 추가
     private bool isWalking;
 
+    PlayerState playerState;
+    PlayerState.playerState state;
+
     void Start()
     {
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
@@ -27,6 +30,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             return;
         }
 
+        playerState = GetComponent<PlayerState>();
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
 
@@ -50,6 +54,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        playerState.GetState(out state);
+
         // Height 값 강제 고정
         if (controller.height != 0.1f)
         {
@@ -65,7 +71,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         mouseSpeed = GameInfo.MouseSensitivity; // 감도 동기화
 
         // esc 창이 열려있지 않을 때만 움직임 처리
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.생존)
         {
             HandleMouseLook();
             HandleMovement();
