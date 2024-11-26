@@ -167,7 +167,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (animator != null)
         {
             animator.SetBool("isWalking", isWalking);
-            Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
+           // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
     }
 }

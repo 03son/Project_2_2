@@ -40,7 +40,7 @@ public class RevivePlayer : MonoBehaviour
 
             if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
             {
-                targetPlayer.Revive(); // 부활 호출
+                //targetPlayer.Revive(); // 부활 호출
                 Debug.Log("플레이어가 부활했습니다.");
                 ResetHold();
             }

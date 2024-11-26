@@ -11271,7 +11271,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uB9C8\uC774\uD06C \uC5C6\uC74C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ef632c43a515e334e8b8fcf3d33cb31a, type: 2}
   m_sharedMaterial: {fileID: 8655051535416711310, guid: ef632c43a515e334e8b8fcf3d33cb31a, type: 2}
@@ -13299,7 +13299,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2163542616959901686}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5300353
+  m_Size: 0.53003526
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -52,10 +52,17 @@ public class Mic : MonoBehaviour
             return;
         }
 
-        //멀티에 사용할 마이크 설정
-        recorder.MicrophoneType = Recorder.MicType.Unity;
-        recorder.MicrophoneDevice = new Photon.Voice.DeviceInfo(0, Global_Microphone.UseMic);
-        recorder.RestartRecording();
+        if (Global_Microphone.UseMic != null)
+        {
+            //멀티에 사용할 마이크 설정
+            recorder.MicrophoneType = Recorder.MicType.Unity;
+            recorder.MicrophoneDevice = new Photon.Voice.DeviceInfo(0, Global_Microphone.UseMic);
+            recorder.RestartRecording();
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+        }
 
 
         isRecording = false;
@@ -75,6 +82,10 @@ public class Mic : MonoBehaviour
          if (!recorder.TransmitEnabled || !singleMic)
              Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
 
+
+        if (Global_Microphone.UseMic == null)
+            return;
+
         if (single) //싱글일 때
         {
             Single_DecibelLevel();
@@ -88,10 +99,12 @@ public class Mic : MonoBehaviour
 
     void Single_DecibelLevel()
     {
+        if (Global_Microphone.UseMic == null)
+            return;
+
         if (!isRecording)
         {
 
-            //micClip = Microphone.Start(Microphone.devices[0], true, 10, sampleRate);
             micClip = Microphone.Start(Global_Microphone.UseMic, true, 10, sampleRate);
             isRecording = true;
 

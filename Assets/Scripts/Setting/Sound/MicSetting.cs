@@ -18,11 +18,18 @@ public class MicSetting : MonoBehaviour
 
     private void OnEnable()
     {
-        string[] selectedMic = Microphone.devices;
-
-        foreach (string mic in selectedMic) //마이크
+        if (Microphone.devices.Length > 0)//연결된 마이크가 있을 때
         {
-            options.Add(mic);
+            string[] selectedMic = Microphone.devices;
+
+            foreach (string mic in selectedMic) //마이크
+            {
+                options.Add(mic);
+            }
+        }
+        else
+        {
+            options.Add("마이크 없음");
         }
 
         microphoneMode_options.Add("항상 말하기");
@@ -45,7 +52,10 @@ public class MicSetting : MonoBehaviour
     {
         if(Mic.Instance != null) Mic.Instance.isRecording = false; //싱글 마이크 부분
 
-        if (Mic.Instance != null)
+        if (Global_Microphone.UseMic == null)
+            return;
+
+        if (Mic.Instance != null) 
         {
             //멀티에 사용할 마이크 설정(마이크마다 설정이 안 될 수도 있음)
             Mic.Instance.recorder.MicrophoneType = Recorder.MicType.Unity;
