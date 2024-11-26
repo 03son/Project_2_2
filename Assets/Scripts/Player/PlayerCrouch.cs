@@ -33,9 +33,16 @@ public class PlayerCrouch : MonoBehaviour
 
         // Control 키 입력 상태 확인
         bool isCrouching = Input.GetKey(KeyManager.SitDown_Key);
+        float moveSpeed = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).sqrMagnitude;
+        
+
+        // 앉은 상태에서 이동이 있는지 확인
+        bool isMovingWhileCrouched = isCrouching && moveSpeed > 0.01f;
 
         // 애니메이터 파라미터 설정 (isCrouching을 bool로 사용)
         animator.SetBool("isCrouching", isCrouching);
+        animator.SetFloat("crouchMoveSpeed", moveSpeed);
+        animator.SetBool("isMovingWhileCrouched", isMovingWhileCrouched);
 
         // 높이와 center 변경
         float targetHeight = isCrouching ? crouchHeight : normalHeight;
