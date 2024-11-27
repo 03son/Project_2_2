@@ -12,7 +12,7 @@ public class ItemObject : MonoBehaviour, IInteractable
         glassCupThrower = FindObjectOfType<GlassCupThrower>();
         if (glassCupThrower == null)
         {
-            Debug.LogError("GlassCupThrower 컴포넌트를 찾을 수 없습니다!");
+        //   Debug.LogError("GlassCupThrower 컴포넌트를 찾을 수 없습니다!");
         }
     }
 

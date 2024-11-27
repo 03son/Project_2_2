@@ -9,11 +9,13 @@ public class SetCameraParent : MonoBehaviour
         if (Camera.main != null)
         {
             // 메인 카메라의 Transform을 가져와서 cameraEmptyObject의 자식으로 설정
-            Camera.main.transform.SetParent(cameraEmptyObject);
+            Camera.main.transform.SetParent(cameraEmptyObject, false); // Keep world position false
 
-            // 원하는 위치와 회전을 설정 (기본값을 유지하고 싶다면 생략 가능)
-          /*  Camera.main.transform.localPosition = Vector3.zero;
-            Camera.main.transform.localRotation = Quaternion.identity; */
+            // 카메라의 위치와 회전을 빈 오브젝트의 로컬 위치와 동일하게 설정
+            Camera.main.transform.localPosition = Vector3.zero;
+            Camera.main.transform.localRotation = Quaternion.identity;
+
+            Debug.Log("Camera successfully attached to the empty object.");
         }
         else
         {

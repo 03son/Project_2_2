@@ -8,7 +8,7 @@ public class CameraRot : MonoBehaviour
 {
     [SerializeField] private float mouseSpeed = 8f; // 회전 속도
     [SerializeField] private Transform playerTransform; // 플레이어의 Transform
-
+    [SerializeField] private Transform cameraObject; // 빈 오브젝트 Transform
     [SerializeField] GameObject player;//플레이어
 
     private float mouseX = 0f; // 좌우 회전 값
@@ -87,7 +87,7 @@ public class CameraRot : MonoBehaviour
         // 카메라의 회전 적용 (플레이어의 회전을 따라감)
         this.transform.localEulerAngles = new Vector3(mouseY, mouseX, 0);
 
-        // 카메라 위치를 플레이어 위치에 고정
-        this.transform.position = playerTransform.position + offset;
+        // 카메라 위치를 빈 오브젝트(Camera) 위치로 고정
+        this.transform.position = cameraObject.position;
     }
 }
