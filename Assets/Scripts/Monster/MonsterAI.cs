@@ -14,6 +14,7 @@ public class MonsterAI : MonoBehaviour
     public float chaseSpeed = 10.0f;                // 추적 시 이동 속도
     public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
     public float idleTimeBeforePatrol = 5.0f;      // 예외 처리 - 정지 후 순찰로 돌아가는 시간
+    private float currentInvestigateDecibel = 0f;  // 현재 조사 중인 데시벨 값
 
     private List<Transform> detectedPlayers;       // 감지된 플레이어 리스트
     private int currentPatrolIndex;                // 현재 순찰 지점 인덱스
@@ -92,6 +93,8 @@ public class MonsterAI : MonoBehaviour
         }
         //Debug.Log(currentState);
         // 현재 상태에 따라 적절한 행동 수행
+        // 상태 업데이트
+        UpdateState();
         switch (currentState)
         {
             case State.Idle:
@@ -197,21 +200,73 @@ public class MonsterAI : MonoBehaviour
             currentState = State.Chase;
         }
     }
-    private void Investigate() // 조사 상태 추가
+    private void Investigate() // 조사 상태
     {
         agent.SetDestination(investigatePoint);
 
-        // 조사 지점에 도달하면 순찰 상태로 전환
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        // 조사 중 더 큰 데시벨이 감지되면 위치 업데이트
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject playerObject in playerObjects)
         {
-            currentState = State.Patrol;
+            micScript = playerObject.GetComponentInChildren<Mic>();
+
+            if (micScript != null)
+            {
+                float decibel = micScript.GetDecibelAtDistance(transform.position);
+                if (decibel > currentInvestigateDecibel && decibel >= minDecibelToDetect &&
+                    Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
+                {
+                    currentInvestigateDecibel = decibel; // 더 큰 데시벨로 갱신
+                    investigatePoint = playerObject.transform.position; // 조사 위치 업데이트
+                    Debug.Log("새로운 더 큰 데시벨 감지: " + decibel);
+                }
+            }
         }
 
-        // 다시 플레이어를 발견하면 추적 상태로 전환
+        // 조사 지점에 도달하면 초기화
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentInvestigateDecibel = 0f; // 조사 데시벨 초기화
+            currentState = State.Patrol;   // 순찰 상태로 전환
+            Debug.Log("조사 완료. 데시벨 초기화.");
+        }
+
+        // 플레이어 발견 시 추적 상태로 전환
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
         }
+    }
+    private void UpdateState() //우선순위
+    {
+        // 1. Chase 상태: 플레이어가 감지된 경우
+        if (detectedPlayers.Count > 0)
+        {
+            currentState = State.Chase;
+            return;
+        }
+
+        // 2. Investigate 상태: 특정 조사 지점이 설정된 경우
+        if (currentState == State.Investigate)
+        {
+            return; // 조사 중이면 상태 유지
+        }
+
+        // 3. Search 상태: 플레이어를 놓쳤고 마지막 위치를 기억하는 경우
+        if (currentState == State.Search && lastKnownPosition != Vector3.zero)
+        {
+            return; // 수색 중이면 상태 유지
+        }
+
+        // 4. Patrol 상태: 감지된 대상이 없고 순찰 지점이 있는 경우
+        if (patrolPoints.Length > 0 && !agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentState = State.Patrol;
+            return;
+        }
+
+        // 5. Idle 상태: 다른 조건이 모두 충족되지 않으면 대기
+        currentState = State.Idle;
     }
 
     public void SetInvestigatePoint(Vector3 point)
@@ -219,6 +274,7 @@ public class MonsterAI : MonoBehaviour
         investigatePoint = point;
         currentState = State.Investigate;
     }
+
     private void GoToNextPatrolPoint()
     {
         if (patrolPoints.Length == 0)
@@ -245,10 +301,8 @@ public class MonsterAI : MonoBehaviour
 
         return closestPlayer;
     }
-
     private void UpdateDetectedPlayers()
     {
-        // 모든 플레이어 오브젝트를 찾아 감지 리스트를 업데이트
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
         List<Transform> currentPlayers = new List<Transform>();
 
@@ -256,8 +310,8 @@ public class MonsterAI : MonoBehaviour
         {
             Transform playerTransform = playerObject.transform;
 
-            // 플레이어가 감지 범위 내에 있는지 확인
-            if (CanSeePlayer(playerTransform) || CanHearSoundSource(playerTransform) || CanHearVoiceSource(playerTransform))
+            // 플레이어 감지 로직
+            if (CanSeePlayer(playerTransform) || CanHearVoiceSource(playerTransform))
             {
                 if (!detectedPlayers.Contains(playerTransform))
                 {
@@ -265,6 +319,12 @@ public class MonsterAI : MonoBehaviour
                 }
                 currentPlayers.Add(playerTransform);
             }
+        }
+
+        // 오브젝트 사운드 감지 추가
+        if (CanHearSoundSource(transform))
+        {
+            currentState = State.Investigate;
         }
 
         // 감지되지 않은 플레이어를 리스트에서 제거
@@ -305,21 +365,35 @@ public class MonsterAI : MonoBehaviour
         }
         return false;  // 시야 내에 없으면 false 반환
     }
-    private bool CanHearSoundSource(Transform player)
+    private bool CanHearSoundSource(Transform listener)
     {
-        // 모든 SoundSource를 가져오고, 각 SoundSource의 데시벨을 계산하여 몬스터가 감지할 수 있는 범위 내에 있는지 확인
-        SoundSource[] soundSources = FindObjectsOfType<SoundSource>();
-        foreach (SoundSource soundSource in soundSources)
+        // 청각 범위 내의 콜라이더 검색
+        Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRange);
+
+        foreach (Collider collider in colliders)
         {
-            float decibel = soundSource.GetDecibelAtDistance(transform.position);
-            // 데시벨이 감지 가능한 최소 데시벨 값 이상이고, 소리의 범위 내에 있어야 감지
-            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, player.position) <= soundSource.range)
+            // SoundSource 컴포넌트 확인
+            SoundSource soundSource = collider.GetComponent<SoundSource>();
+
+            if (soundSource != null)
             {
-                return true; // 소리가 감지됨
+                // 데시벨 계산
+                float decibel = soundSource.GetDecibelAtDistance(transform.position);
+                // 데시벨이 최소 감지 값 이상인지 확인
+                if (decibel >= minDecibelToDetect)
+                {
+                    Debug.Log($"사운드 소스 감지: {collider.gameObject.name}, 데시벨: {decibel}, 소리 범위: {soundSource.range}, 기본 데시벨: {soundSource.baseDecibel}");
+                    SetInvestigatePoint(soundSource.transform.position);
+                    currentInvestigateDecibel = decibel;
+                    return true; // 사운드 소스가 감지됨
+                }
             }
         }
-        return false; // 감지되지 않음
+
+        return false; // 감지된 소리가 없음
     }
+
+
     private bool CanHearVoiceSource(Transform monster)
     {
         // 모든 플레이어 객체를 가져오기
@@ -340,7 +414,7 @@ public class MonsterAI : MonoBehaviour
 
             // Mic에서 실시간으로 계산된 데시벨 값 가져오기
             float decibel = micScript.GetDecibelAtDistance(transform.position);
-            Debug.Log("몬스터가 듣는 데시벨" + decibel);
+            //Debug.Log("몬스터가 듣는 데시벨" + decibel);
 
             // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
@@ -391,7 +465,4 @@ public class MonsterAI : MonoBehaviour
         Gizmos.color = Color.blue; // 청각 범위는 파란색으로 표시
         Gizmos.DrawWireSphere(origin, hearingRange);
     }
-
-    
-
 }
