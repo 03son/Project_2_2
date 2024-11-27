@@ -1953,6 +1953,7 @@ GameObject:
   - component: {fileID: 1525789506}
   - component: {fileID: 1525789509}
   - component: {fileID: 1525789508}
+  - component: {fileID: 1525789510}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -2150,7 +2151,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
@@ -2158,6 +2159,18 @@ MonoBehaviour:
   sceneViewId: 999
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1525789510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525789498}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088bdd44bc5d4f2498d64ad1fd6e3ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1632324306
 GameObject:
   m_ObjectHideFlags: 0

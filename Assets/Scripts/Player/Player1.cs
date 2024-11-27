@@ -41,16 +41,11 @@ public class Player1 : MonoBehaviour
                 }
                 Debug.Log((string)_animalName);
             }
-
         }
-    }
-    void Start()
-    {
         if (PhotonNetwork.IsConnected)//��Ƽ�� ����
         {
             notMine();
         }
-
     }
 
     // Update is called once per frame
@@ -105,6 +100,8 @@ public class Player1 : MonoBehaviour
             GetComponent<InteractionManager>().enabled = false;
             GetComponent<Player_Equip>().enabled = false;
             GetComponent<PlayerMove>().enabled = false;
+            GetComponent<PlayerCrouch>().enabled = false;
+            GetComponent<RevivePlayer>().enabled = false;
         }
     }
 }

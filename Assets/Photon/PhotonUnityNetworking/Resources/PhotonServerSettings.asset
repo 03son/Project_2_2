@@ -56,6 +56,10 @@ MonoBehaviour:
   - RemoveChain
   - RPC_RemoveChain
   - RPC_AddFuel
+  - SyncMonsterPosition
+  - ssss
+  - test
+  - LoadGame
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

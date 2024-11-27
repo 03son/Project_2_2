@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using HashTable = ExitGames.Client.Photon.Hashtable;
+using static Player_RoomInfo;
+using Photon.Realtime;
 
-public class LoadingSceneManager : MonoBehaviour
+public class LoadingSceneManager : MonoBehaviourPunCallbacks
 {
     public static LoadingSceneManager loa;
 
@@ -16,6 +19,13 @@ public class LoadingSceneManager : MonoBehaviour
 
     [SerializeField] Sprite[] loadingImages;
     [SerializeField] GameObject loadingBarObj;
+
+    HashTable roomCP;
+    HashTable playerCP;
+
+    public int loadcompletePlayer = 0;
+
+    public bool startGame = false;
 
     private void Awake()
     {
@@ -50,9 +60,13 @@ public class LoadingSceneManager : MonoBehaviour
 
         loa.loadingImage(ImageNumber - 1);
     }
-
+    #region 싱글
     static IEnumerator acc_LoadScene(string MapName)
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            loa.roomCP = PhotonNetwork.CurrentRoom.CustomProperties;
+        }
 
         if (!loa.loadingBarObj.activeSelf)
         {
@@ -92,12 +106,17 @@ public class LoadingSceneManager : MonoBehaviour
         }
         yield return null;
     }//싱글
+    #endregion
 
     static IEnumerator MultiGameLoadScene(string MapName)//멀티
     {
+        loa.startGame = false;
+        loa.roomCP = new HashTable() { { "startGame", loa.startGame } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(loa.roomCP);
+
         if (!loa.loadingBarObj.activeSelf)
             loa.loadingBarObj.SetActive(true);
-        
+
         yield return null;
 
         float loadingProgress = 0f;
@@ -108,8 +127,67 @@ public class LoadingSceneManager : MonoBehaviour
             loadingProgress += 0.01f;
             loa.LoadingBar.value = loadingProgress;
         }
+        if (GameInfo.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(MapName);
 
-        PhotonNetwork.LoadLevel(MapName);
+            loa.startGame = true;
+            loa.roomCP = new HashTable() { { "startGame", loa.startGame } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(loa.roomCP);
+        }
+        while (!loa.startGame)//방장이 씬을 로드할 때까지 대기
+        {
+            yield return new WaitForSecondsRealtime(0.01f);
+            Debug.Log(PhotonNetwork.LevelLoadingProgress);
+        }
+        while (loa.startGame)
+        {
+            yield return new WaitForSecondsRealtime(0.001f);
+            if (GameInfo.IsMasterClient)
+            {
+                while (PhotonNetwork.LevelLoadingProgress < 1f)
+                {
+                    yield return new WaitForSecondsRealtime(0.001f);
+                    if (PhotonNetwork.LevelLoadingProgress >= 1f)
+                    {
+                        loa.LoadingBar.value = 1;
+                        yield return null;
+                        if (loa.loadingBarObj.activeSelf)
+                        {
+                            loa.loadingBarObj.SetActive(false);
+                        }
+                        yield break;
+                    }
+                }
+            }
+            else
+            {
+                loa.LoadingBar.value = 1;
+                yield return null;
+                loa.loadingBarObj.SetActive(false);
+                yield break;
+            }
+        }
+        /*
+        while (!loa.startGame && !GameInfo.IsMasterClient) //입장 불가 and 방원
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            Debug.Log(GameInfo.IsMasterClient);
+        }
+        if (loa.startGame || GameInfo.IsMasterClient)//입장 가능 or 방장
+        {
+            PhotonNetwork.LoadLevel(MapName); // <- 4명 모두가 입장 가능 상태일때 실행
+
+            loa.playerCP = new HashTable() { { "loadcompletePlayer", 1 } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(loa.playerCP);
+
+            if (GameInfo.IsMasterClient)//입장가능으로 바꿈
+            {
+                loa.startGame = true;
+                loa.roomCP = new HashTable() { { "startGame", loa.startGame} };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(loa.roomCP);
+            }
+        }
         while (PhotonNetwork.LevelLoadingProgress < 1f)
         {
             yield return new WaitForSecondsRealtime(0.001f);
@@ -124,10 +202,19 @@ public class LoadingSceneManager : MonoBehaviour
                 yield break;
             }
         }
+        */
     }
     void loadingImage(int MapNum) // 이미지
     {
         background_LoadingImage.GetComponent<Image>().sprite = loadingImages[MapNum];
+    }
+
+    public override void OnRoomPropertiesUpdate(HashTable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey("startGame"))
+        {
+           loa.startGame = (bool)propertiesThatChanged["startGame"];
+        }
     }
 
     //프로그램이 종료되면 자동으로 실행, PlayerPrefs정보 삭제
