@@ -60,6 +60,15 @@ MonoBehaviour:
   - ssss
   - test
   - LoadGame
+  - SyncMonsterState
+  - SyncMonster
+  - PlayerVoicePos
+  - CanHearSoundSource
+  - CanHearVoiceSource
+  - CanSeePlayer
+  - MonsterUpdate
+  - MonsterStart
+  - SendDecibelToMaster
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

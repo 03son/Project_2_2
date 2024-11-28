@@ -1404,6 +1404,7 @@ MonoBehaviour:
   loadingImages:
   - {fileID: 21300000, guid: df1979c821537584ea41158e300fecf4, type: 3}
   loadingBarObj: {fileID: 211415674}
+  loadcompletePlayer: 0
   startGame: 0
 --- !u!4 &510587764
 Transform:

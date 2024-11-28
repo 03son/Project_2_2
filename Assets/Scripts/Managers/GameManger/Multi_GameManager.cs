@@ -25,7 +25,7 @@ public class Multi_GameManager : GameManager
 
         if (PhotonNetwork.IsMasterClient)
         {
-            CreateEnemy();
+           CreateEnemy();
         }
     }
 
@@ -54,12 +54,17 @@ public class Multi_GameManager : GameManager
             }
             idx++;
         }
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.InstantiateRoomObject("GlassCup (2)" , points[4].position, points[4].rotation, 0);
     }
+    
     public override void CreateEnemy() //UI씬의 기준으로 작성함
     {
         Transform[] points =
         GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
        // PhotonNetwork.Instantiate("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
         PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
+         
     }
+   
 }

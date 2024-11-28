@@ -154,7 +154,12 @@ public class Mic : MonoBehaviour
             float rms = recorder.LevelMeter.CurrentAvgAmp;
             currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6f로 로그 방지
 
-           // Debug.Log("Current Decibel Level: " + currentDb);
+            // Debug.Log("Current Decibel Level: " + currentDb);
+
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, currentDb, transform.position);
+            }
 
             SetMicDecibel_UI();
         }
@@ -171,6 +176,15 @@ public class Mic : MonoBehaviour
             return currentDb - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
         }
         return 0f; // 마이크가 켜져있지 않으면 0을 출력
+    }
+
+    [PunRPC]
+    public void SendDecibelToMaster(float decibel, Vector3 playerPosition)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            MonsterAI.Instance.HandlePlayerSound(decibel, playerPosition);
+        }
     }
     #endregion
 

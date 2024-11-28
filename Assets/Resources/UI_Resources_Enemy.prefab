@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2378865482706209156}
   - component: {fileID: 2258676681694738421}
   - component: {fileID: 3959057888715427213}
-  - component: {fileID: 5190295084648282190}
+  - component: {fileID: 3463863203771072633}
   m_Layer: 8
   m_Name: UI_Resources_Enemy
   m_TagString: Untagged
@@ -170,6 +170,7 @@ MonoBehaviour:
   fieldOfView: 120
   hearingRange: 15
   minDecibelToDetect: 30
+  currentState: 0
 --- !u!114 &1388522411804051230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +212,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4984942339017157801}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24828ffb77080ac4a9b7ff7474efc449, type: 3}
   m_Name: 
@@ -223,7 +224,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4984942339017157801}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 088bdd44bc5d4f2498d64ad1fd6e3ec0, type: 3}
   m_Name: 
@@ -247,11 +248,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 5190295084648282190}
+  - {fileID: 3463863203771072633}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &5190295084648282190
+--- !u!114 &3463863203771072633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
