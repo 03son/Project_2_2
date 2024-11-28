@@ -38,13 +38,18 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
 
         isHolding = true; // 홀드 시작
 
-        
+
 
         // 타임바 UI 활성화
         if (holdTimeBar != null)
         {
+            holdTimeBar.fillAmount = 0f; // 초기화
             holdTimeBar.gameObject.SetActive(true);
-            holdTimeBar.fillAmount = 0f;
+            Debug.Log("FuelInteract - HoldTimeBar Initialized");
+        }
+        else
+        {
+            Debug.LogError("FuelInteract - HoldTimeBar is null!");
         }
 
         // 연료 주입 사운드 시작
@@ -69,9 +74,10 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
                 }
 
                 // 타임바 업데이트
-                if (holdTimeBar != null)
+                if (holdTimeBar != null && holdTimeBar.gameObject.activeInHierarchy)
                 {
                     holdTimeBar.fillAmount = holdProgress / holdTime;
+                    Debug.Log($"FillAmount: {holdTimeBar.fillAmount}, Progress: {holdProgress / holdTime}");
                 }
             }
             else
@@ -80,6 +86,7 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
             }
         }
     }
+
 
     private void CompleteInteract()
     {
