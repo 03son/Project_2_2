@@ -82,7 +82,7 @@ public class CameraRot : MonoBehaviour
         mouseY -= Input.GetAxis("Mouse Y") * mouseSpeed;
 
         // 위아래 회전 각도 제한
-        mouseY = Mathf.Clamp(mouseY, -50f, 30f);
+        mouseY = Mathf.Clamp(mouseY, -90f, 90f);
 
         // 카메라의 회전 적용 (플레이어의 회전을 따라감)
         this.transform.localEulerAngles = new Vector3(mouseY, mouseX, 0);

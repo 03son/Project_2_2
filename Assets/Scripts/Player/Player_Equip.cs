@@ -41,7 +41,7 @@ public class Player_Equip : MonoBehaviour
         invenSlot[0].GetComponent<ItemSlotUI>().equipped = true;
 
         inventory = GetComponent<Inventory>();
-        equipItem = GameObject.Find("EquipItem").gameObject;
+        equipItem = GameObject.Find("handitemattach").gameObject;
         ItemName = GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
         ItemName.text = "";
 
@@ -242,7 +242,6 @@ public class Player_Equip : MonoBehaviour
             }
         }
     }
-    // 아이템을 버리거나 변경할 때 호출되는 메서드
     public void ChangeOrRemoveItem()
     {
         // 현재 장착 중인 아이템이 손전등인지 확인
@@ -256,6 +255,14 @@ public class Player_Equip : MonoBehaviour
             }
         }
 
+        // 기존 아이템을 제거하기 전에 항상 애니메이션 상태를 초기화
+        if (animator != null)
+        {
+            // 손전등이 켜져 있는 애니메이션을 포함하여 모든 아이템 관련 상태를 초기화
+            animator.SetBool("isFlashlightOn", false);
+            animator.SetBool("isHoldingItem", false);
+        }
+
         // 기존 아이템을 제거
         if (Item != null)
         {
@@ -264,6 +271,8 @@ public class Player_Equip : MonoBehaviour
             ItemName.text = "";
         }
     }
+
+
 
 
 
