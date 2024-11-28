@@ -222,8 +222,14 @@ public class Inventory : MonoBehaviour
     void UnEquip(int index)
     {
         if (GetComponent<Player_Equip>().Item != null)
+        {
             Destroy(GetComponent<Player_Equip>().Item);
+            GetComponent<Player_Equip>().Item = null;
+
+            // 자동으로 다른 슬롯을 선택하지 않음
+        }
     }
+
 
     void RemoveSelectedItem()
     {

@@ -737,6 +737,7 @@ MonoBehaviour:
   audioSource: {fileID: 485696396}
   fuelAddingSound: {fileID: 8300000, guid: 2e1d3eba35d9a7a4d8cfd14172d77104, type: 3}
   fuelAddedCompleteSound: {fileID: 0}
+  holdTimeBar: {fileID: 1687665433}
 --- !u!135 &485696393
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5760,6 +5761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredItem: Cutter
   holdTime: 5
+  holdTimeBar: {fileID: 1687665433}
   audioSource: {fileID: 2056149402}
   cuttingSound: {fileID: 8300000, guid: 1dbeff4fc88c6a74da28c10c6c7d4364, type: 3}
   cutCompleteSound: {fileID: 0}
@@ -6510,6 +6512,10 @@ PrefabInstance:
     - target: {fileID: 845288156776400643, guid: 2ba76af4bd72acf449844e1e68495013, type: 3}
       propertyPath: m_Name
       value: itemhand
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204333281892156110, guid: 2ba76af4bd72acf449844e1e68495013, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1513523443952552316, guid: 2ba76af4bd72acf449844e1e68495013, type: 3}
       propertyPath: sceneViewId

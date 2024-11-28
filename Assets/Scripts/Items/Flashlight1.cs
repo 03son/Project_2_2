@@ -65,9 +65,28 @@ public class Flashlight1 : MonoBehaviour
         return flashlightActive;
     }
 
-    private void Update()
+    void Update()
     {
-        if (isAcquired && transform.parent != null && transform.parent.name == "EquipItem")
+        if (transform.parent != null && transform.parent.name != "handitemattach")
+        {
+            // 손전등이 더 이상 장착된 상태가 아닌 경우 끄기
+            if (flashlightActive)
+            {
+                flashlightActive = false;
+                flashlightLight.SetActive(false);
+                Debug.Log("손전등이 장착 해제되어 자동으로 꺼졌습니다.");
+
+                // 애니메이션 상태 초기화
+                if (animator != null)
+                {
+                    animator.SetBool("isFlashlightOn", false);
+                }
+            }
+            return; // 더 이상 Update에서 다른 작업을 하지 않도록 함
+        }
+
+        // 아래는 손전등이 장착된 상태일 때만 작동
+        if (isAcquired && transform.parent != null && transform.parent.name == "handitemattach")
         {
             // 카메라 위치와 회전을 손전등에 동기화
             flashlightLight.transform.position = cameraTransform.position;
@@ -93,6 +112,7 @@ public class Flashlight1 : MonoBehaviour
             }
         }
     }
+
 
     private void AdjustFlashlight()
     {
