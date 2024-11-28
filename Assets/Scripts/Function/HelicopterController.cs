@@ -6,7 +6,7 @@ public class HelicopterController : MonoBehaviourPun
     private bool isChainRemoved = false; // 사슬 제거 여부
     private bool isFuelAdded = false;   // 연료 주입 여부
     private bool isStarted = false;     // 헬기 시동 여부
-    private Player_Equip playerEquip; // 플레이어의 Player_Equip 스크립트 참조
+
 
     public AudioSource audioSource;
     public AudioClip startSound;
