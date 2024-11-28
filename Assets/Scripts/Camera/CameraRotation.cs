@@ -30,6 +30,15 @@ public class CameraRot : MonoBehaviour
         player = this.gameObject.GetComponent<Transform>().parent.gameObject;
         playerTransform = player.transform;
 
+        // 플레이어의 자식 오브젝트로부터 cameraObject를 찾음
+        cameraObject = playerTransform.Find("Camera");
+
+        if (cameraObject == null)
+        {
+            Debug.LogError("Camera object not found!");
+            return;
+        }
+
         if (PhotonNetwork.IsConnected)
         {
             pv = player.GetComponent<PhotonView>();
@@ -52,8 +61,8 @@ public class CameraRot : MonoBehaviour
             GetComponent<AudioListener>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
         }
-
     }
+
 
     void Update()
     {
