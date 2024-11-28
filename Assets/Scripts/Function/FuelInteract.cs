@@ -38,19 +38,21 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
 
         isHolding = true; // 홀드 시작
 
-        // 연료 주입 사운드 시작
-        if (fuelAddingSound != null && audioSource != null)
-        {
-            audioSource.clip = fuelAddingSound;
-            audioSource.loop = true; // 반복 재생
-            audioSource.Play();
-        }
+        
 
         // 타임바 UI 활성화
         if (holdTimeBar != null)
         {
             holdTimeBar.gameObject.SetActive(true);
             holdTimeBar.fillAmount = 0f;
+        }
+
+        // 연료 주입 사운드 시작
+        if (fuelAddingSound != null && audioSource != null)
+        {
+            audioSource.clip = fuelAddingSound;
+            audioSource.loop = true; // 반복 재생
+            audioSource.Play();
         }
     }
 

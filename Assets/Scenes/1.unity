@@ -3824,7 +3824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helicopterController: {fileID: 796482193}
-  equipItem: {fileID: 1591436196840876180}
+  playerEquip: {fileID: 0}
   requiredItemName: HelicopterKey
 --- !u!136 &1547070258
 CapsuleCollider:
@@ -7472,7 +7472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116f682c3a203e940b7f6c7567f464c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraEmptyObject: {fileID: 0}
 --- !u!1 &8331061890701079442
 GameObject:
   m_ObjectHideFlags: 0

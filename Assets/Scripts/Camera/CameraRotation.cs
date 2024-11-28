@@ -27,29 +27,41 @@ public class CameraRot : MonoBehaviour
     }
     void Start()
     {
-        player = this.gameObject.GetComponent<Transform>().parent.gameObject;
-        playerTransform = player.transform;
+        // 부모 오브젝트를 찾기 위한 시도
+        if (this.transform.parent != null)
+        {
+            player = this.transform.parent.gameObject;
+            playerTransform = player.transform;
+        }
+        else
+        {
+            Debug.LogError("Player's parent object not found. Make sure the prefab is instantiated correctly.");
+            return;
+        }
 
-        // 플레이어의 자식 오브젝트로부터 cameraObject를 찾음
-        cameraObject = playerTransform.Find("Camera");
-
+        // 카메라 오브젝트 할당을 위해 빈 오브젝트 찾기
         if (cameraObject == null)
         {
-            Debug.LogError("Camera object not found!");
-            return;
+            cameraObject = playerTransform.Find("Camera"); // 플레이어의 자식 중 "Camera"라는 이름의 빈 오브젝트를 찾음
+            if (cameraObject == null)
+            {
+                Debug.LogError("Camera object not found under player. Ensure that there is a child named 'Camera'.");
+                return;
+            }
         }
 
         if (PhotonNetwork.IsConnected)
         {
             pv = player.GetComponent<PhotonView>();
-
-            if (pv.IsMine)
+            if (pv != null && pv.IsMine)
             {
+                // 로컬 플레이어인 경우 카메라 설정
                 GetComponent<AudioListener>().enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
+                // 네트워크에서 내 플레이어가 아닌 경우 처리
                 GetComponent<AudioListener>().enabled = false;
                 Destroy(FollowCam);
                 Destroy(EquipCamera);
@@ -58,10 +70,12 @@ public class CameraRot : MonoBehaviour
         }
         else
         {
+            // 싱글 플레이어일 경우
             GetComponent<AudioListener>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
+
 
 
     void Update()
