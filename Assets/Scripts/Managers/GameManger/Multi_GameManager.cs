@@ -22,6 +22,11 @@ public class Multi_GameManager : GameManager
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
 
         CreatePlayer();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CreateEnemy();
+        }
     }
 
     public override void CreatePlayer()
@@ -49,5 +54,12 @@ public class Multi_GameManager : GameManager
             }
             idx++;
         }
+    }
+    public override void CreateEnemy() //UI씬의 기준으로 작성함
+    {
+        Transform[] points =
+        GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
+       // PhotonNetwork.Instantiate("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
+        PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerMove : MonoBehaviourPunCallbacks
 {
@@ -175,5 +176,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             animator.SetBool("isWalking", isWalking);
            // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        Debug.Log("새로운 방장 : " + newMasterClient.NickName);
     }
 }

@@ -107,7 +107,7 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
         yield return null;
     }//싱글
     #endregion
-
+    #region 멀티
     static IEnumerator MultiGameLoadScene(string MapName)//멀티
     {
         loa.startGame = false;
@@ -168,42 +168,8 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
                 yield break;
             }
         }
-        /*
-        while (!loa.startGame && !GameInfo.IsMasterClient) //입장 불가 and 방원
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-            Debug.Log(GameInfo.IsMasterClient);
-        }
-        if (loa.startGame || GameInfo.IsMasterClient)//입장 가능 or 방장
-        {
-            PhotonNetwork.LoadLevel(MapName); // <- 4명 모두가 입장 가능 상태일때 실행
-
-            loa.playerCP = new HashTable() { { "loadcompletePlayer", 1 } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(loa.playerCP);
-
-            if (GameInfo.IsMasterClient)//입장가능으로 바꿈
-            {
-                loa.startGame = true;
-                loa.roomCP = new HashTable() { { "startGame", loa.startGame} };
-                PhotonNetwork.CurrentRoom.SetCustomProperties(loa.roomCP);
-            }
-        }
-        while (PhotonNetwork.LevelLoadingProgress < 1f)
-        {
-            yield return new WaitForSecondsRealtime(0.001f);
-            if (PhotonNetwork.LevelLoadingProgress >= 1f)
-            {
-                loa.LoadingBar.value = 1;
-                yield return null;
-                if (loa.loadingBarObj.activeSelf)
-                {
-                    loa.loadingBarObj.SetActive(false);
-                }
-                yield break;
-            }
-        }
-        */
     }
+    #endregion
     void loadingImage(int MapNum) // 이미지
     {
         background_LoadingImage.GetComponent<Image>().sprite = loadingImages[MapNum];

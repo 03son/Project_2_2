@@ -2,39 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Voice;
+using Photon.Realtime;
 
 public class PhotonMonster : MonoBehaviourPun
 {
     void Update()
     {
-        /*
         if (PhotonNetwork.IsConnected)
         {
-            // 마스터 클라이언트만 적 몬스터 제어
             if (PhotonNetwork.IsMasterClient)
             {
-                Monstertransform();
+                if (transform.hasChanged)
+                {
+                    StartCoroutine(MosterSync());
+                }
             }
-        }*/
+        }
+    }
+
+    IEnumerator MosterSync()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
         Monstertransform();
     }
 
     void Monstertransform()
     {
-        photonView.RPC("SyncMonsterPosition", RpcTarget.All, transform.position, transform.localRotation);
+        photonView.RPC("SyncMonsterPosition", RpcTarget.Others, transform.position, transform.localRotation);
     }
 
     [PunRPC]
-    void SyncMonsterPosition(Vector3 position ,Quaternion quaternion)
+    public void SyncMonsterPosition(Vector3 position ,Quaternion quaternion)
     {
         if (PhotonNetwork.IsConnected)
         {
-            // 다른 클라이언트에서 동기화
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                transform.position = position;
-                transform.localRotation = quaternion;
-            }
+            // 부드럽게 위치를 보간
+            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, quaternion, Time.deltaTime * 10f);
         }
     }
 }

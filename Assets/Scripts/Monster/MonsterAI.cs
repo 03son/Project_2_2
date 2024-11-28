@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,8 +34,17 @@ public class MonsterAI : MonoBehaviour
 
     private void Start()
     {
+        PhotonView photonView = GetComponent<PhotonView>();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RequestOwnership();
+        }
+
         // NavMeshAgent 초기화
         agent = GetComponent<NavMeshAgent>();
+
+        //순찰 지점들의 부모 오브젝트 가져오기
+        patrolParent = GameObject.Find("발판0").gameObject.transform;
 
         // 순찰 지점 배열을 자식 오브젝트에서 자동으로 가져오기
         if (patrolParent != null)
@@ -73,6 +83,13 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
+        if (PhotonNetwork.IsConnected) // 멀티 경우에
+        {
+            //방장이면 몬스터 AI 실행
+            if (!PhotonNetwork.IsMasterClient) return;
+        }
+
+        
         // 추후 제작할 예외 처리 (몬스터가 하나의 플레이어만 따라가지 않도록 바꾸기)
         // 예외 처리 (몬스터가 움직임이 없으면 순찰 상태로 변경
         if (agent.velocity.magnitude < 0.1f && !agent.pathPending)
@@ -339,7 +356,7 @@ public class MonsterAI : MonoBehaviour
 
             // Mic에서 실시간으로 계산된 데시벨 값 가져오기
             float decibel = micScript.GetDecibelAtDistance(transform.position);
-            Debug.Log(decibel);
+           // Debug.Log(decibel);
 
             // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
