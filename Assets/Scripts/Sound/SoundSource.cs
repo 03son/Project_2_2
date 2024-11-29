@@ -27,7 +27,7 @@ public class SoundSource : MonoBehaviour
             float distance = Vector3.Distance(transform.position, position);
 
             // 데시벨 계산 (거리 기반 감소)
-            float decibel = baseDecibel - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
+            float decibel = baseDecibel - 20 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
             Debug.Log(decibel);
             return Mathf.Max(0, decibel); // 음수 방지
         }
