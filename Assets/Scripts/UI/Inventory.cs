@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour
 
     private GameObject equippedItemObject; // ���� ������ �������� GameObject�� �����ϴ� ����
 
-   
+
     private void Awake()
     {
         if (instance == null)
@@ -274,5 +274,18 @@ public class Inventory : MonoBehaviour
         equippedItemObject = itemObject;
     }
 
+    void ThrowItem(itemData item)
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            // PhotonNetwork를 사용해 프리팹 생성 (드롭 위치에)
+            PhotonNetwork.Instantiate(item.dropPerfab.name, dropPos.position, Quaternion.identity);
+        }
+        else
+        {
+            // 싱글플레이에서는 로컬에서만 생성
+            Instantiate(item.dropPerfab, dropPos.position, Quaternion.identity);
+        }
+    }
 
 }
