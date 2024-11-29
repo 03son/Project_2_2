@@ -258,7 +258,7 @@ public class Inventory : MonoBehaviour
     void ThrowItem(itemData item)
     {
         Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-    }
+    } 
 
     private void Update()
     {
@@ -274,7 +274,7 @@ public class Inventory : MonoBehaviour
         equippedItemObject = itemObject;
     }
 
-    void ThrowItem(itemData item)
+   /* void ThrowItem(itemData item)
     {
         if (PhotonNetwork.IsConnected)
         {
@@ -286,6 +286,6 @@ public class Inventory : MonoBehaviour
             // 싱글플레이에서는 로컬에서만 생성
             Instantiate(item.dropPerfab, dropPos.position, Quaternion.identity);
         }
-    }
+    } */
 
 }

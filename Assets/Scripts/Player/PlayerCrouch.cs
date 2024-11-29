@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerCrouch : MonoBehaviour
 {
-    public float crouchHeight = 1.0f;    // �ɾ��� �� ����
-    public float normalHeight = 2.0f;    // �� ���� �� ����
+    public float crouchHeight = 0.125f;    // �ɾ��� �� ����
+    public float normalHeight = 0.25f;    // �� ���� �� ����
     public float crouchSpeed = 0.1f;     // �ɱ�� ���� ��ȯ �ӵ�
     private CharacterController characterController;
     private Animator animator;           // Animator �߰�

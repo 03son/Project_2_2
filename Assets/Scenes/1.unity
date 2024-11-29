@@ -409,6 +409,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: StunGun
       objectReference: {fileID: 0}
+    - target: {fileID: 1191402134849681354, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4389836030814688525, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      propertyPath: m_UseWorldSpace
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -424,6 +432,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5886610769345879300, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
   m_PrefabInstance: {fileID: 1486326041}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &216289823
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2317572969349058412, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: sceneViewId
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3174909007707241206, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: sceneViewId
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4520835399152146124, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_Name
+      value: "\uD1A0\uB07C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8000125095836650575, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: sceneViewId
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 111.559
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 381.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.96942866
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 2.2852176e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.24537331
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 9.028508e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -388.408
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
 --- !u!4 &318294607 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5623932915574257, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
@@ -475,6 +552,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _radius: 1
+--- !u!4 &351088346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9189067814254076894, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+  m_PrefabInstance: {fileID: 216289823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &353954464
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &371170518
 Transform:
   m_ObjectHideFlags: 0
@@ -1651,7 +1733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &777638019
 Transform:
   m_ObjectHideFlags: 0
@@ -2022,7 +2104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &902102816
 Transform:
   m_ObjectHideFlags: 0
@@ -2631,6 +2713,18 @@ PrefabInstance:
     - target: {fileID: 1191402134849681354, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
       propertyPath: m_Name
       value: StunGun (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191402134849681354, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4389836030814688525, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4389836030814688525, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      propertyPath: m_UseWorldSpace
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5250,6 +5344,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2392c5171387544a920482fa0c8dce7, type: 3}
   m_PrefabInstance: {fileID: 821836802}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1860683663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4520835399152146124, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+  m_PrefabInstance: {fileID: 216289823}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1860683683 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+  m_PrefabInstance: {fileID: 216289823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1881840055
 GameObject:
   m_ObjectHideFlags: 0
@@ -6867,6 +6971,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: 1361055328311988718, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 434d5feddd823074793ee01915cf859a, type: 2}
     - target: {fileID: 5544210761962123603, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
       propertyPath: m_Name
       value: Flashlight
@@ -7602,9 +7710,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSpeed: 2
-  playerTransform: {fileID: 0}
-  cameraObject: {fileID: 0}
-  player: {fileID: 0}
+  playerTransform: {fileID: 1860683683}
+  cameraObject: {fileID: 351088346}
+  player: {fileID: 1860683663}
   offset: {x: 0, y: 0, z: 0}
   FollowCam: {fileID: 1586328093126080412}
   EquipCamera: {fileID: 3791820408516909211}
@@ -7668,3 +7776,4 @@ SceneRoots:
   - {fileID: 1363005747}
   - {fileID: 1687665432}
   - {fileID: 777638019}
+  - {fileID: 216289823}
