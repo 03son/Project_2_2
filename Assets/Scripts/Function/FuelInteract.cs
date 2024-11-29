@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.UI; // UI 관련 네임스페이스 추가
+using UnityEngine.EventSystems; // Layout 관련 네임스페이스 추가
 
 public class FuelInteract : MonoBehaviourPun, IInteractable
 {
@@ -61,31 +63,33 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (isHolding && !isFuelAdded)
         {
-            if (Input.GetKey(KeyCode.F)) // F 키를 꾹 누르고 있는 경우
+            if (Input.GetKey(KeyCode.F))
             {
-                holdProgress += Time.deltaTime; // 진행 시간 증가
-                if (holdProgress >= holdTime) // 홀드 시간이 완료되면
-                {
-                    CompleteInteract(); // 작업 완료
-                }
+                holdProgress += Time.deltaTime;
 
-                // 타임바 업데이트
-                if (holdTimeBar != null && holdTimeBar.gameObject.activeInHierarchy)
+                if (holdTimeBar != null)
                 {
                     holdTimeBar.fillAmount = holdProgress / holdTime;
-                    Debug.Log($"FillAmount: {holdTimeBar.fillAmount}, Progress: {holdProgress / holdTime}");
+                    Debug.Log($"FuelInteract (LateUpdate) - FillAmount: {holdTimeBar.fillAmount}");
+                }
+
+                if (holdProgress >= holdTime)
+                {
+                    CompleteInteract();
                 }
             }
             else
             {
-                CancelInteract(); // 키를 떼면 작업 취소
+                CancelInteract();
             }
         }
     }
+
+
 
 
     private void CompleteInteract()
