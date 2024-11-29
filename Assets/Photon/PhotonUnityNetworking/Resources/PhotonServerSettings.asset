@@ -69,6 +69,8 @@ MonoBehaviour:
   - MonsterUpdate
   - MonsterStart
   - SendDecibelToMaster
+  - SyncItemState
+  - RPC_HandleItemPickup
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
