@@ -87,7 +87,7 @@ public class CameraRot : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (popup_escMenu && state == PlayerState.playerState.����) //esc â�� ���������� ī�޶� ȸ��X
+        if (popup_escMenu && state == PlayerState.playerState.생존) //esc â�� ���������� ī�޶� ȸ��X
             return;
 
         mouseSpeed = GameInfo.MouseSensitivity; //���� ����ȭ

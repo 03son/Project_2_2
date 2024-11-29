@@ -37,7 +37,7 @@ public class PlayerDashJump : MonoBehaviourPunCallbacks
 
         // esc â�� �������� �� && ������ �� ����
         playerState.GetState(out state);
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.����)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
         {
             HandleMovement();
             HandleDash();

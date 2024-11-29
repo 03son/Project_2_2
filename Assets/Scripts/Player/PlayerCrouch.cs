@@ -65,11 +65,10 @@ public class PlayerCrouch : MonoBehaviour
         Vector3 targetCenter = isCrouching ? crouchCenter : normalCenter;
 
         playerState.GetState(out state);
-        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.����)
+        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
             return;
 
         // Control Ű�� ������ �ִ� ���� crouchHeight�� ��ȯ, ���� normalHeight�� ���ư�
-        float targetHeight = Input.GetKey(KeyCode.LeftControl) ? crouchHeight : normalHeight;
         characterController.height = Mathf.Lerp(characterController.height, targetHeight, crouchSpeed);
         characterController.center = Vector3.Lerp(characterController.center, targetCenter, crouchSpeed);
 

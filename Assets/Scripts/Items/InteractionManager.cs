@@ -67,7 +67,7 @@ public class InteractionManager : MonoBehaviour
 
         //escâ�� �����ְ� �÷��̾ ������ �� ����
         playerState.GetState(out state);
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.����)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
             return;
 
         //���������� üũ�� �ð��� checkRate�� �Ѱ�ٸ�
