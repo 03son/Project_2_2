@@ -344,7 +344,7 @@ public class MonsterAI : MonoBehaviourPun
         }
 
         // 오브젝트 사운드 감지 추가
-        if (CanHearSoundSource(transform))
+        if (CanHearSoundSource())
         {
             currentState = State.Investigate;
         }
@@ -386,7 +386,7 @@ public class MonsterAI : MonoBehaviourPun
         }
         return false;  // 시야 내에 없으면 false 반환
     }
-    private bool CanHearSoundSource(Transform listener)
+    private bool CanHearSoundSource()
     {
         // 청각 범위 내의 콜라이더 검색
         Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRange);
@@ -455,13 +455,17 @@ public class MonsterAI : MonoBehaviourPun
             GetComponent<NavMeshAgent>().SetDestination(playerPosition);
         }
     }
-    public void HandleItemSound(float decibel, Vector3 playerPosition)
+    public void HandleItemSound(float decibel, Vector3 v_playerpos)
     {
         if (decibel > 0)//임계값 설정
         {
-            GetComponent<NavMeshAgent>().SetDestination(playerPosition);
+            if (CanHearSoundSource())
+            {
+                GetComponent<NavMeshAgent>().SetDestination(v_playerpos);
+            }
         }
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

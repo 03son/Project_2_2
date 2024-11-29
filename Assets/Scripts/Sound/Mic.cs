@@ -1,4 +1,4 @@
-susing Photon.Voice.Unity;
+using Photon.Voice.Unity;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;

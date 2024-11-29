@@ -54,8 +54,8 @@ public class Multi_GameManager : GameManager
             }
             idx++;
         }
-        if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.InstantiateRoomObject("GlassCup (2)" , points[4].position, points[4].rotation, 0);
+       // if (PhotonNetwork.IsMasterClient)
+         //   PhotonNetwork.InstantiateRoomObject("GlassCup (2)" , points[4].position, points[4].rotation, 0);
     }
     
     public override void CreateEnemy() //UI씬의 기준으로 작성함
