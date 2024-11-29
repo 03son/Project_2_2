@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9189067814254076894}
   m_Layer: 0
-  m_Name: 'Camera '
+  m_Name: Camera
   m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 2836256177583279669}
   - component: {fileID: 7755055098040124067}
   m_Layer: 0
-  m_Name: "\uD1A0\uB07C"
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
