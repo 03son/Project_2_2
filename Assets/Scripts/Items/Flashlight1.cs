@@ -3,61 +3,61 @@ using UnityEngine;
 
 public class Flashlight1 : MonoBehaviour
 {
-    [SerializeField] private GameObject flashlightLight; // Spot Light ¿ÀºêÁ§Æ®
+    [SerializeField] private GameObject flashlightLight; // Spot Light ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     private bool flashlightActive = false;
     private bool isAcquired = false;
     private Transform cameraTransform;
     private Light flashlightComponent;
-    private Animator animator; // Animator ÄÄÆ÷³ÍÆ® Ãß°¡
+    private Animator animator; // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
 
-    [SerializeField] private float intensity = 15f; // ±âº» ÀÎÅÙ½ÃÆ¼ °ª
-    [SerializeField] private float range = 10f; // ±âº» ·»Áö °ª
-    [SerializeField] private float minSpotAngle = 30f; // ºûÀÌ °¡Àå Á¼À» ¶§ÀÇ °¢µµ
-    [SerializeField] private float maxSpotAngle = 80f; // ºûÀÌ °¡Àå ³ÐÀ» ¶§ÀÇ °¢µµ
-    [SerializeField] private float minIntensity = 1f; // °¡±î¿ï ¶§ÀÇ ºû °­µµ
-    [SerializeField] private float maxIntensity = 3f; // ¸Ö ¶§ÀÇ ºû °­µµ
-    [SerializeField] private float maxDistance = 10f; // ÃÖ´ë °Å¸®
+    [SerializeField] private float intensity = 15f; // ï¿½âº» ï¿½ï¿½ï¿½Ù½ï¿½Æ¼ ï¿½ï¿½
+    [SerializeField] private float range = 10f; // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    [SerializeField] private float minSpotAngle = 30f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float maxSpotAngle = 80f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float minIntensity = 1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float maxIntensity = 3f; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float maxDistance = 10f; // ï¿½Ö´ï¿½ ï¿½Å¸ï¿½
 
-    private float currentSpotAngle; // ÇöÀç ºûÀÇ °¢µµ
-    private float currentIntensity; // ÇöÀç ºûÀÇ °­µµ
-    private float smoothTime = 0.1f; // ºÎµå·´°Ô º¯È­ÇÏ´Â ½Ã°£
+    private float currentSpotAngle; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float currentIntensity; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float smoothTime = 0.1f; // ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½È­ï¿½Ï´ï¿½ ï¿½Ã°ï¿½
 
     private void Start()
     {
         if (flashlightLight == null)
         {
-            Debug.LogWarning("Spot Light°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogWarning("Spot Lightï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
         }
         else
         {
             flashlightComponent = flashlightLight.GetComponent<Light>();
             flashlightComponent.intensity = intensity;
             flashlightComponent.range = range;
-            flashlightLight.SetActive(false);; // ½ÃÀÛ ½Ã ²¨Áø »óÅÂ
-            currentSpotAngle = maxSpotAngle; // ÃÊ±â °¢µµ ¼³Á¤
-            currentIntensity = maxIntensity; // ÃÊ±â °­µµ ¼³Á¤
+            flashlightLight.SetActive(false);; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            currentSpotAngle = maxSpotAngle; // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            currentIntensity = maxIntensity; // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         cameraTransform = Camera.main.transform;
-        animator = GetComponent<Animator>(); // Animator ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        animator = GetComponent<Animator>(); // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         if (animator == null)
         {
-            Debug.LogError("Animator ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ¼ÕÀüµî ¿ÀºêÁ§Æ®¿¡ Animator°¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù.");
+            Debug.LogError("Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Animatorï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.");
         }
     }
 
     public void AcquireFlashlight()
     {
         isAcquired = true;
-        Debug.Log("¼ÕÀüµî È¹µæ ¿Ï·á");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ ï¿½Ï·ï¿½");
     }
 
-    // ¼ÕÀüµî ÄÑ±â/²ô±â »óÅÂ ÀüÈ¯ ¸Þ¼­µå Ãß°¡
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
   /*  public void ToggleFlashlight(bool state)
     {
         flashlightActive = state;
         flashlightLight.SetActive(flashlightActive);
-        Debug.Log("¼ÕÀüµî " + (flashlightActive ? "ÄÑÁü" : "²¨Áü"));
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ " + (flashlightActive ? "ï¿½ï¿½ï¿½ï¿½" : "ï¿½ï¿½ï¿½ï¿½"));
     }  */
 
     public bool IsFlashlightActive()
@@ -69,37 +69,37 @@ public class Flashlight1 : MonoBehaviour
     {
         if (transform.parent != null && transform.parent.name != "handitemattach")
         {
-            // ¼ÕÀüµîÀÌ ´õ ÀÌ»ó ÀåÂøµÈ »óÅÂ°¡ ¾Æ´Ñ °æ¿ì ²ô±â
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (flashlightActive)
             {
                 flashlightActive = false;
                 flashlightLight.SetActive(false);
-                Debug.Log("¼ÕÀüµîÀÌ ÀåÂø ÇØÁ¦µÇ¾î ÀÚµ¿À¸·Î ²¨Á³½À´Ï´Ù.");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 
-                // ¾Ö´Ï¸ÞÀÌ¼Ç »óÅÂ ÃÊ±âÈ­
+                // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                 if (animator != null)
                 {
                     animator.SetBool("isFlashlightOn", false);
                 }
             }
-            return; // ´õ ÀÌ»ó Update¿¡¼­ ´Ù¸¥ ÀÛ¾÷À» ÇÏÁö ¾Êµµ·Ï ÇÔ
+            return; // ï¿½ï¿½ ï¿½Ì»ï¿½ Updateï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½
         }
 
-        // ¾Æ·¡´Â ¼ÕÀüµîÀÌ ÀåÂøµÈ »óÅÂÀÏ ¶§¸¸ ÀÛµ¿
+        // ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½
         if (isAcquired && transform.parent != null && transform.parent.name == "handitemattach")
         {
-            // Ä«¸Þ¶ó À§Ä¡¿Í È¸ÀüÀ» ¼ÕÀüµî¿¡ µ¿±âÈ­
+            // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½È­
             flashlightLight.transform.position = cameraTransform.position;
             flashlightLight.transform.rotation = cameraTransform.rotation;
 
-            // ¸¶¿ì½º ÁÂÅ¬¸¯À¸·Î ¼ÕÀüµî ÄÑ±â/²ô±â
+            // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½/ï¿½ï¿½ï¿½ï¿½
             if (Input.GetMouseButtonDown(0))
             {
                 flashlightActive = !flashlightActive;
                 flashlightLight.SetActive(flashlightActive);
-                Debug.Log("¼ÕÀüµî " + (flashlightActive ? "ÄÑÁü" : "²¨Áü"));
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ " + (flashlightActive ? "ï¿½ï¿½ï¿½ï¿½" : "ï¿½ï¿½ï¿½ï¿½"));
 
-                // ¼ÕÀüµî ÄÑ°í ²ô±â ¾Ö´Ï¸ÞÀÌ¼Ç ¼³Á¤
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (animator != null)
                 {
                     animator.SetBool("isFlashlightOn", flashlightActive);
@@ -108,7 +108,7 @@ public class Flashlight1 : MonoBehaviour
 
             if (flashlightActive)
             {
-                AdjustFlashlight(); // ¼ÕÀüµîÀÇ ºû Á¶Àý
+                AdjustFlashlight(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
         }
     }
@@ -119,24 +119,24 @@ public class Flashlight1 : MonoBehaviour
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
         RaycastHit hit;
 
-        // ·¹ÀÌÄ³½ºÆ®¸¦ ÅëÇØ º®ÀÌ³ª ¹°Ã¼¿¡ ºÎµúÇû´ÂÁö È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
             float distance = hit.distance;
 
-            // °Å¸®¿¡ µû¶ó Spot Angle°ú Intensity Á¶Àý
-            float t = distance / maxDistance; // °Å¸®¿¡ ´ëÇÑ ºñÀ² °è»ê (0¿¡¼­ 1 »çÀÌ)
+            // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Spot Angleï¿½ï¿½ Intensity ï¿½ï¿½ï¿½ï¿½
+            float t = distance / maxDistance; // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (0ï¿½ï¿½ï¿½ï¿½ 1 ï¿½ï¿½ï¿½ï¿½)
 
             float targetSpotAngle = Mathf.Lerp(minSpotAngle, maxSpotAngle, t);
             float targetIntensity = Mathf.Lerp(minIntensity, maxIntensity, t);
 
-            // ºÎµå·´°Ô º¯È­½ÃÅ°±â
+            // ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½Å°ï¿½ï¿½
             flashlightComponent.spotAngle = Mathf.SmoothDamp(flashlightComponent.spotAngle, targetSpotAngle, ref currentSpotAngle, smoothTime);
             flashlightComponent.intensity = Mathf.SmoothDamp(flashlightComponent.intensity, targetIntensity, ref currentIntensity, smoothTime);
         }
         else
         {
-            // º®¿¡ ºÎµúÈ÷Áö ¾Ê¾ÒÀ» ¶§ ±âº» ÃÖ´ë °ª »ç¿ë
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½âº» ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
             float targetSpotAngle = maxSpotAngle;
             float targetIntensity = maxIntensity;
 

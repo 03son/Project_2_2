@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class RevivePlayer : MonoBehaviour
@@ -9,8 +10,13 @@ public class RevivePlayer : MonoBehaviour
     private PlayerDeathManager targetPlayer; // 타겟 플레이어의 PlayerDeathManager
     public MedkitTimerUI medkitTimerUI; // 타이머 UI 스크립트
 
+    PlayerState playerState;
+    PlayerState.playerState state;
+
     void Start()
     {
+        playerState = GetComponent<PlayerState>();
+
         // MedkitTimerUI가 Inspector에서 연결되지 않았을 경우 자동으로 찾기
         if (medkitTimerUI == null)
         {
@@ -28,6 +34,10 @@ public class RevivePlayer : MonoBehaviour
 
     void Update()
     {
+        playerState.GetState(out state);
+        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
+            return;
+
         if (targetPlayer != null && Input.GetKey(KeyManager.Interaction_Key)) // 상호작용
         {
             isHolding = true;
@@ -57,11 +67,13 @@ public class RevivePlayer : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        /*
         if (other.CompareTag("Player") && other.GetComponent<PlayerDeathManager>().isDead)
         {
             targetPlayer = other.GetComponent<PlayerDeathManager>();
             Debug.Log("죽은 플레이어 발견. E 키를 눌러 부활 가능.");
         }
+        */
     }
 
     void OnTriggerExit(Collider other)

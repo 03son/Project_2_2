@@ -10,8 +10,8 @@ using UnityEngine.UI;
 
 public interface IInteractable
 {
-    string GetInteractPrompt(); // ÇÁ·ÒÇÁÆ® ¹Þ¾Æ¿À´Â ¸Þ¼­µå
-    void OnInteract(); // »óÈ£ÀÛ¿ë ÈÄ ½ÇÇàµÉ ¸Þ¼­µå
+    string GetInteractPrompt(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
+    void OnInteract(); // ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
 }
 
 public class InteractionManager : MonoBehaviour
@@ -28,11 +28,15 @@ public class InteractionManager : MonoBehaviour
     new Camera camera;
 
     PhotonView pv;
-    private Animator animator; // ¾Ö´Ï¸ÞÀÌÅÍ Ãß°¡
+    private Animator animator; // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+
+    PlayerState.playerState state;
+    PlayerState playerState;
+
 
     void Start()
     {
-        if (PhotonNetwork.IsConnected) // ¸ÖÆ¼
+        if (PhotonNetwork.IsConnected) // ï¿½ï¿½Æ¼
         {
             pv = GetComponent<PhotonView>();
 
@@ -40,15 +44,16 @@ public class InteractionManager : MonoBehaviour
                 return;
         }
 
+        playerState = GetComponent<PlayerState>();
         Crosshair = GameObject.Find("Crosshair_Image").GetComponent<Crosshair_Image>();
         camera = Camera.main;
 
-        // Animator ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         animator = GetComponent<Animator>();
 
         if (animator == null)
         {
-            Debug.LogError("Animator ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¿¡ Animator°¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù.");
+            Debug.LogError("Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Animatorï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -60,22 +65,27 @@ public class InteractionManager : MonoBehaviour
                 return;
         }
 
-        // ¸¶Áö¸·À¸·Î Ã¼Å©ÇÑ ½Ã°£ÀÌ checkRate¸¦ ³Ñ°å´Ù¸é
+        //escÃ¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        playerState.GetState(out state);
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.ï¿½ï¿½ï¿½ï¿½)
+            return;
+
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ checkRateï¿½ï¿½ ï¿½Ñ°ï¿½Ù¸ï¿½
         if (Time.time - lastCheckTime > checkRate)
         {
             lastCheckTime = Time.time;
 
-            // È­¸éÀÇ Á¤Áß¾Ó¿¡ »óÈ£ÀÛ¿ë °¡´ÉÇÑ ¹°Ã¼°¡ ÀÖ´ÂÁö È®ÀÎÇÏ±â
+            // È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß¾Ó¿ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½
             Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
 
-            // ray¿¡ ¹º°¡ Ãæµ¹Çß´Ù¸é hit¿¡ Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®¿¡ ´ëÇÑ Á¤º¸°¡ ³Ñ¾î°¨
+            // rayï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½ß´Ù¸ï¿½ hitï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¨
             if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
             {
-                // ºÎµúÈù ¿ÀºêÁ§Æ®°¡ ¿ì¸®°¡ ÀúÀåÇØ ³õÀº »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿ÀºêÁ§Æ®ÀÎÁö È®ÀÎ
+                // ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ì¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
                 if (hit.collider.gameObject != curInteractGameobject)
                 {
-                    // Ãæµ¹ÇÑ ¹°Ã¼ °¡Á®¿À±â
+                    // ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     curInteractGameobject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
                     Crosshair.Interaction();
@@ -83,7 +93,7 @@ public class InteractionManager : MonoBehaviour
             }
             else
             {
-                // È­¸é Áß¾Ó¿¡ »óÈ£ÀÛ¿ë °¡´ÉÇÑ ¹°Ã¼°¡ ¾ø´Â °æ¿ì
+                // È­ï¿½ï¿½ ï¿½ß¾Ó¿ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 curInteractGameobject = null;
                 curInteractable = null;
                 Crosshair.Not_Interaction();
@@ -95,19 +105,19 @@ public class InteractionManager : MonoBehaviour
 
     public void OnInteractInput()
     {
-        // FÅ°¸¦ ´©¸¥ ½ÃÁ¡¿¡¼­ ÇöÀç ¹Ù¶óº¸´Â curInteractable ¿ÀºêÁ§Æ®°¡ ÀÖ´Ù¸é
+        // FÅ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸´ï¿½ curInteractable ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
         if (Input.GetKeyDown(KeyManager.Interaction_Key) && curInteractable != null)
         {
-            // ¾ÆÀÌÅÛÀ» È¹µæÇÏ¸é ¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (animator != null)
             {
-                animator.SetTrigger("PickupItem"); // È¹µæ ¾Ö´Ï¸ÞÀÌ¼Ç Æ®¸®°Å ¼³Á¤
+                animator.SetTrigger("PickupItem"); // È¹ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
 
-            // ¾ÆÀÌÅÛ°ú »óÈ£ÀÛ¿ëÀ» ÁøÇàÇÏ°í ÃÊ±âÈ­
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ê±ï¿½È­
             curInteractable.OnInteract();
 
-            // ºó °÷ ¹øÈ£ Ã£±â
+            // ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È£ Ã£ï¿½ï¿½
             for (int i = 0; i < GetComponent<Inventory>().slots.Length; i++)
             {
                 if (GetComponent<Inventory>().slots[i].item != null)

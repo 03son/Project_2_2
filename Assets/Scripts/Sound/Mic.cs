@@ -1,4 +1,4 @@
-using Photon.Voice.Unity;
+susing Photon.Voice.Unity;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +9,12 @@ public class Mic : MonoBehaviour
 {
     public static Mic Instance;
 
-    [Header("¸ÖÆ¼ ¿ë")]
-    public Recorder recorder; // Photon VoiceÀÇ Recorder
-    private float currentDb = 0f; // ÇöÀç µ¥½Ãº§ °ª
-    private PhotonView photonView; // ·ÎÄÃ ÇÃ·¹ÀÌ¾î È®ÀÎ¿ë
+    [Header("ï¿½ï¿½Æ¼ ï¿½ï¿½")]
+    public Recorder recorder; // Photon Voiceï¿½ï¿½ Recorder
+    private float currentDb = 0f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½
+    private PhotonView photonView; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ È®ï¿½Î¿ï¿½
 
-    [Header("½Ì±Û ¿ë")]
+    [Header("ï¿½Ì±ï¿½ ï¿½ï¿½")]
     public AudioSource mic; 
     private AudioClip micClip;
     private int sampleRate = 44100; 
@@ -23,7 +23,7 @@ public class Mic : MonoBehaviour
     public bool singleMic = false; 
 
 
-    [SerializeField]GameObject Microphone_Decibel_Bar; //ÀÎ°ÔÀÓ ¸¶ÀÌÅ© µ¥½Ãº§ UI
+    [SerializeField]GameObject Microphone_Decibel_Bar; //ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½Ãºï¿½ UI
 
     bool single;
 
@@ -38,7 +38,7 @@ public class Mic : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-            if (!photonView.IsMine) // ·ÎÄÃ ÇÃ·¹ÀÌ¾î°¡ ¾Æ´Ï¸é ½ºÅ©¸³Æ® ºñÈ°¼ºÈ­
+            if (!photonView.IsMine) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
             {
                 enabled = false;
                 return;
@@ -54,7 +54,7 @@ public class Mic : MonoBehaviour
 
         if (Global_Microphone.UseMic != null)
         {
-            //¸ÖÆ¼¿¡ »ç¿ëÇÒ ¸¶ÀÌÅ© ¼³Á¤
+            //ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½
             recorder.MicrophoneType = Recorder.MicType.Unity;
             recorder.MicrophoneDevice = new Photon.Voice.DeviceInfo(0, Global_Microphone.UseMic);
             recorder.RestartRecording();
@@ -72,13 +72,13 @@ public class Mic : MonoBehaviour
         if (single)
             mic.volume = 0;
 
-        //¸¶ÀÌÅ© µ¥½Ãº§ UI ÇÒ´ç
+        //ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½Ãºï¿½ UI ï¿½Ò´ï¿½
         Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
     }
 
     void Update()
     {
-        //¸¶ÀÌÅ© offÀÏ ¶§ UI ¸·´ë °ª = 0
+        //ï¿½ï¿½ï¿½ï¿½Å© offï¿½ï¿½ ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ = 0
          if (!recorder.TransmitEnabled || !singleMic)
              Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
 
@@ -86,16 +86,16 @@ public class Mic : MonoBehaviour
         if (Global_Microphone.UseMic == null)
             return;
 
-        if (single) //½Ì±ÛÀÏ ¶§
+        if (single) //ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
             Single_DecibelLevel();
         }
-        else //¸ÖÆ¼ÀÏ ¶§
+        else //ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½
         {
             Multi_DecibelLevel();
         }
     }
-    #region ½Ì±ÛÀÏ ¶§ ¸¶ÀÌÅ©
+    #region ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å©
 
     void Single_DecibelLevel()
     {
@@ -144,44 +144,58 @@ public class Mic : MonoBehaviour
     }
     #endregion
 
-    #region ¸ÖÆ¼ÀÏ ¶§ ¸¶ÀÌÅ©
+    #region ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å©
 
-    void Multi_DecibelLevel() //¸ÖÆ¼ ÀÏ ¶§ µ¥½Ãº§ °è»ê
+    void Multi_DecibelLevel() //ï¿½ï¿½Æ¼ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ï¿½
     {
         if (recorder != null && recorder.IsCurrentlyTransmitting)
         {
-            // µ¥½Ãº§ °è»ê
+            // ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ï¿½
             float rms = recorder.LevelMeter.CurrentAvgAmp;
-            currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6f·Î ·Î±× ¹æÁö
+            currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6fï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            Debug.Log("Current Decibel Level: " + currentDb);
+            // Debug.Log("Current Decibel Level: " + currentDb);
+
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, currentDb, transform.position);
+            }
 
             SetMicDecibel_UI();
         }
     }
 
-    // µ¥½Ãº§À» ¹ÝÈ¯ÇÏ´Â ÇÔ¼ö (ÇÊ¿äÇÒ °æ¿ì »ç¿ë)
+    // ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½ (ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
     public float GetDecibelAtDistance(Vector3 listenerPosition)
     {
-        // ¸¶ÀÌÅ©¿ÍÀÇ °Å¸® °è»ê
+        // ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
         float distance = Vector3.Distance(listenerPosition, transform.position);
         if (recorder.TransmitEnabled == true || isRecording == true)
         {
-            // ÇöÀç µ¥½Ãº§ °ªÀ» ¹ÝÈ¯ÇÏ°í, °Å¸® ±â¹ÝÀ¸·Î °¨¼è Àû¿ë
-            return currentDb - 10 * Mathf.Log10(distance + 1e-6f);  // °Å¸® ±â¹ÝÀ¸·Î µ¥½Ãº§ °ª Á¶Á¤ (´ÜÀ§: dB)
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï°ï¿½, ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            return currentDb - 10 * Mathf.Log10(distance + 1e-6f);  // ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½: dB)
         }
-        return 0f; // ¸¶ÀÌÅ©°¡ ÄÑÁ®ÀÖÁö ¾ÊÀ¸¸é 0À» Ãâ·Â
+        return 0f; // ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ï¿½
+    }
+
+    [PunRPC]
+    public void SendDecibelToMaster(float decibel, Vector3 playerPosition)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            MonsterAI.Instance.HandlePlayerSound(decibel, playerPosition);
+        }
     }
     #endregion
 
-    //¸¶ÀÌÅ© µ¥½Ãº§À» ½½¶óÀÌ´õ UI¿¡ Àü¼Û
+    //ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetMicDecibel_UI()
     {
         if(recorder.TransmitEnabled) 
         {
-            //currentDbÀÇ °ªÀ» UIÀÇ Value ¹üÀ§¿¡ ¸Â°Ô Á¶Á¤ ÈÄ Àû¿ë
+            //currentDbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ Value ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
-            Debug.Log("UI µ¥½Ãº§ °ª" + Mathf.InverseLerp(30, 60, (int)currentDb));
+            //Debug.Log("UI ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½" + Mathf.InverseLerp(30, 60, (int)currentDb));
         }
     }
 }

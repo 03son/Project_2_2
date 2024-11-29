@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerMove : MonoBehaviourPunCallbacks
 {
     [SerializeField] float normalSpeed = 5f;
-    [SerializeField] float crouchSpeed = 2f;   // ¾ÉÀ» ¶§ ÀÌµ¿ ¼Óµµ
+    [SerializeField] float crouchSpeed = 2f;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
     [SerializeField] float mouseSpeed = 8f;
     [SerializeField] Transform cameraTransform;
 
@@ -20,8 +21,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private float gravity = -9.81f;
     private float mouseX;
 
-    private Animator animator; // Animator Ãß°¡
+    private Animator animator; // Animator ï¿½ß°ï¿½
     private bool isWalking;
+
+    PlayerState playerState;
+    PlayerState.playerState state;
 
     void Start()
     {
@@ -32,8 +36,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             return;
         }
 
+        playerState = GetComponent<PlayerState>();
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>(); // Animator ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        animator = GetComponent<Animator>(); // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         if (animator == null)
         {
@@ -56,25 +61,33 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void Update()
     {
         
-        // Photon View È®ÀÎ
+        // Photon View È®ï¿½ï¿½
+        playerState.GetState(out state);
+
+        // Height ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (controller.height != 0.1f)
+        {
+            controller.height = 0.1f;
+        }
+        // Photon View È®ï¿½ï¿½
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             Debug.Log("Not my PhotonView, skipping Update.");
             return;
         }
 
-        mouseSpeed = GameInfo.MouseSensitivity; // °¨µµ µ¿±âÈ­
+        mouseSpeed = GameInfo.MouseSensitivity; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
 
-        // esc Ã¢ÀÌ ¿­·ÁÀÖÁö ¾ÊÀ» ¶§¸¸ ¿òÁ÷ÀÓ Ã³¸®
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        // esc Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.ï¿½ï¿½ï¿½ï¿½)
         {
             HandleMouseLook();
             HandleMovement();
-            UpdateWalkingAnimation(); // ¿öÅ· »óÅÂ ¾÷µ¥ÀÌÆ®
+            UpdateWalkingAnimation(); // ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         }
         else
         {
-            // esc Ã¢ÀÌ ¿­·ÁÀÖÀ» ¶§´Â ÀÌµ¿ Á¤Áö
+            // esc Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
             PlayerVelocity(Vector3.zero, 0f, 0f);
         }
     }
@@ -91,16 +104,16 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     {
         if (controller == null || cameraTransform == null) return;
 
-        // ÇöÀç ÀÌµ¿ ¼Óµµ ¼³Á¤: ¾ÉÀº »óÅÂÀÎÁö ¿©ºÎ¿¡ µû¶ó °áÁ¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float currentSpeed = Input.GetKey(KeyManager.SitDown_Key) ? crouchSpeed : normalSpeed;
 
         float moveX = 0;
         float moveZ = 0;
 
-        if (Input.GetKey(KeyManager.Front_Key)) moveZ = 1; // ¾Õ (W Å°)
-        if (Input.GetKey(KeyManager.Back_Key)) moveZ = -1; // µÚ (S Å°)
-        if (Input.GetKey(KeyManager.Left_Key)) moveX = -1; // ÁÂ (A Å°)
-        if (Input.GetKey(KeyManager.Right_Key)) moveX = 1; // ¿ì (D Å°)
+        if (Input.GetKey(KeyManager.Front_Key)) moveZ = 1; // ï¿½ï¿½ (W Å°)
+        if (Input.GetKey(KeyManager.Back_Key)) moveZ = -1; // ï¿½ï¿½ (S Å°)
+        if (Input.GetKey(KeyManager.Left_Key)) moveX = -1; // ï¿½ï¿½ (A Å°)
+        if (Input.GetKey(KeyManager.Right_Key)) moveX = 1; // ï¿½ï¿½ (D Å°)
 
         Vector3 direction = cameraTransform.forward * moveZ + cameraTransform.right * moveX;
         direction.y = 0f;
@@ -110,15 +123,16 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         PlayerVelocity(mov, moveX, moveZ);
 
-        // ¾Ö´Ï¸ÞÀÌÅÍ¿¡ ÆÄ¶ó¹ÌÅÍ ¼³Á¤
+        // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         isWalking = (moveX != 0 || moveZ != 0);
 
         bool isHoldingItem = playerEquip != null && playerEquip.HasAnyEquippedItem();
 
-        // °È´Â ¾Ö´Ï¸ÞÀÌ¼Ç »óÅÂ ÀüÈ¯ ·ÎÁ÷
+        // ï¿½È´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½
         if (isWalking)
         {
-            if (moveZ > 0) // ¾ÕÀ¸·Î ÀÌµ¿ ÁßÀÏ ¶§ (W Å°)
+            if (moveZ > 0) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (W Å°)
             {
                 if (isHoldingItem)
                 {
@@ -133,7 +147,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                     animator.SetBool("isMovingBackward", false);
                 }
             }
-            else if (moveZ < 0) // µÚ·Î ÀÌµ¿ ÁßÀÏ ¶§ (S Å°)
+            else if (moveZ < 0) // ï¿½Ú·ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (S Å°)
             {
                 if (isHoldingItem)
                 {
@@ -151,14 +165,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
         else
         {
-            // °ÈÁö ¾Ê´Â °æ¿ì ¸ðµç »óÅÂ¸¦ ÃÊ±âÈ­ÇÏ°í, ¾ÆÀÌÅÛÀ» µé°í ÀÖÀ» ¶§´Â ¾ÆÀÌÅÛ ¾ÆÀÌµé »óÅÂ·Î ÀüÈ¯
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
             animator.SetBool("isWalking", false);
             animator.SetBool("isWalkingWithItem", false);
             animator.SetBool("isMovingBackward", false);
 
             if (isHoldingItem)
             {
-                // ¾ÆÀÌÅÛÀ» µé°í ÀÖÀ» ¶§ ¾ÆÀÌÅÛ ¾ÆÀÌµé »óÅÂ·Î ÀüÈ¯
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
                 animator.SetBool("isItemIdle", true);
             }
             else
@@ -172,7 +186,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
-        // Áß·Â Ã³¸®
+        // ï¿½ß·ï¿½ Ã³ï¿½ï¿½
         if (controller.isGrounded)
         {
             velocity.y = -2f;
@@ -184,7 +198,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         controller.Move((mov + velocity) * Time.deltaTime);
 
-        // °ÉÀ½ ¼Ò¸® Ã³¸®
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ Ã³ï¿½ï¿½
         if ((moveX != 0 || moveZ != 0) && controller.isGrounded)
         {
             if (!walkSound.isPlaying)
@@ -193,6 +207,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             }
             walkSound.volume = walkVolume;
             isWalking = true;
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
+            }
         }
         else if (isWalking)
         {
@@ -200,14 +218,26 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             isWalking = false;
         }
     }
-
+    [PunRPC]
+    public void SendDecibelToMaster(float decibel, Vector3 playerPosition)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            MonsterAI.Instance.HandleItemSound(decibel, playerPosition);
+        }
+    }
     private void UpdateWalkingAnimation()
     {
-        // Animator¿¡ °ª ¼³Á¤
+        // Animatorï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (animator != null)
         {
             animator.SetBool("isWalking", isWalking);
            // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        Debug.Log("ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + newMasterClient.NickName);
     }
 }

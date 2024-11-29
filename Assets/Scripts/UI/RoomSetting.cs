@@ -11,7 +11,6 @@ using JetBrains.Annotations;
 using Photon.Pun.Demo.PunBasics;
 using System.Reflection;
 using static UnityEngine.Rendering.VolumeComponent;
-using static RoomManager;
 using UnityEngine.EventSystems;
 
 public class RoomManager : MonoBehaviourPunCallbacks
@@ -29,7 +28,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public Sprite nullPlayerImage;
 
-    public Button start_testversion;
+    public Button start_testversion;//테스트
     void Awake()
     {   
         if (PhotonNetwork.IsConnected)
@@ -51,10 +50,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
             // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
             PhotonNetwork.CurrentRoom.IsOpen = false;
 
-            LoadingSceneManager.InGameLoading(GameInfo.InGameScenes, 1);
+            PhotonView photonView = GetComponent<PhotonView>();//테스트
+
+            photonView.RPC("LoadGame", RpcTarget.All);
         }
     }
-
     void SetRoomName()
     {
         roomName.text = $"방 이름: {PhotonNetwork.CurrentRoom.Name}";
@@ -138,12 +138,23 @@ public class RoomManager : MonoBehaviourPunCallbacks
             player_RoomInfo[3].GetComponent<Player_RoomInfo>().isReady
             )
         {
-            // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
-            PhotonNetwork.CurrentRoom.IsOpen = false;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
+                PhotonNetwork.CurrentRoom.IsOpen = false;
 
-            LoadingSceneManager.InGameLoading(GameInfo.InGameScenes, 1);
-            return;
+                PhotonView photonView = GetComponent<PhotonView>();//테스트
+
+                photonView.RPC("LoadGame", RpcTarget.All);
+            }
         }
+    }
+    [PunRPC]
+    public void LoadGame()
+    {
+        LoadingSceneManager.InGameLoading(GameInfo.InGameScenes, 1);
+
+        GameInfo.IsMasterClient = PhotonNetwork.IsMasterClient ? true : false;
     }
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, HashTable changedProps)
     {
@@ -184,6 +195,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 }
             }
            GameStart();
+            return;
         }
     }
 }

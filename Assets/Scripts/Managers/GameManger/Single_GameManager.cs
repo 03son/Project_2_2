@@ -8,6 +8,7 @@ public class Single_GameManager : GameManager
     //싱글플레이 게임매니저
 
     GameObject player;
+    GameObject Enemy;
     GameObject 토끼;
     void Awake()
     {
@@ -18,8 +19,10 @@ public class Single_GameManager : GameManager
         GetComponent<Multi_GameManager>().enabled = false;
 
         player = Resources.Load<GameObject>("Player");
+        Enemy = Resources.Load<GameObject>("UI_Resources_Enemy");
 
         CreatePlayer();
+        CreateEnemy();
     }
 
     public override void CreatePlayer()
@@ -30,5 +33,12 @@ public class Single_GameManager : GameManager
 
         GameObject.Instantiate(player, points[1].position, points[1].rotation);
         //GameObject.Instantiate(토끼 , points[1].position, points[1].rotation);
+    }
+    public override void CreateEnemy() //UI씬을 기준으로 작성함
+    {
+        Transform[] points =
+         GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
+
+        Instantiate(Enemy, points[1].position, points[1].rotation);
     }
 }

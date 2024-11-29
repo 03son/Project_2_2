@@ -46,8 +46,6 @@ public class Inventory : MonoBehaviour
 
         pv = GetComponent<PhotonView>();
 
-        ConnectUi_itemSlot();
-
         // Player_Equip 초기화
         playerEquip = FindObjectOfType<Player_Equip>();
         if (playerEquip == null)
@@ -59,17 +57,22 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        slots = new ItemSlot[ui_itemSlot.Length];
-
-        for (int i = 0; i < slots.Length; i++)
+        if (pv.IsMine)
         {
-            slots[i] = new ItemSlot();
-            ui_itemSlot[i].Clear();
+            ConnectUi_itemSlot();
+
+            slots = new ItemSlot[ui_itemSlot.Length];
+
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i] = new ItemSlot();
+                ui_itemSlot[i].Clear();
+            }
+
+            dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
+
+            ClearSelectItemWindows();
         }
-
-        dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
-
-        ClearSelectItemWindows();
     }
 
     void ConnectUi_itemSlot()
