@@ -61,7 +61,7 @@ public class CameraRot : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (popup_escMenu && state == PlayerState.playerState.생존) //esc 창이 열려있으면 카메라 회전X
+        if (popup_escMenu && state == PlayerState.playerState.Survival) //esc 창이 열려있으면 카메라 회전X
             return;
 
         mouseSpeed = GameInfo.MouseSensitivity; //감도 동기화

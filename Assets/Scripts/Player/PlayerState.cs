@@ -6,9 +6,9 @@ public class PlayerState : MonoBehaviour
 {
 
     public enum playerState
-    { 
-        »ýÁ¸,
-        Á×À½
+    {
+        Survival,
+        Die
     }
     playerState state;
     public playerState State
@@ -18,12 +18,12 @@ public class PlayerState : MonoBehaviour
         {
             switch (value)
             {
-                case playerState.»ýÁ¸:
-                    state = playerState.»ýÁ¸;
+                case playerState.Survival:
+                    state = playerState.Survival;
                     break;
 
-                case playerState.Á×À½:
-                    state = playerState.Á×À½;
+                case playerState.Die:
+                    state = playerState.Die;
                     break;
             }
             state = value;

@@ -14,7 +14,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     {
         playerState = GetComponent<PlayerState>();
 
-        playerState.State = PlayerState.playerState.»ýÁ¸;
+        playerState.State = PlayerState.playerState.Survival;
         playerState.GetState(out state);
         Debug.Log(state);
     }
@@ -23,7 +23,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            playerState.State = PlayerState.playerState.Á×À½;
+            playerState.State = PlayerState.playerState.Die;
             playerState.GetState(out state);
             Debug.Log(state);
             Die();

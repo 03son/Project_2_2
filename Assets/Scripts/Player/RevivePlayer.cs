@@ -35,7 +35,7 @@ public class RevivePlayer : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
+        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
             return;
 
         if (targetPlayer != null && Input.GetKey(KeyManager.Interaction_Key)) // 상호작용

@@ -60,7 +60,7 @@ public class InteractionManager : MonoBehaviour
 
         //esc창이 열려있고 플레이어가 죽음일 때 리턴
         playerState.GetState(out state);
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.죽음)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
             return;
 
         //마지막으로 체크한 시간이 checkRate를 넘겼다면

@@ -54,7 +54,7 @@ public class Player_Equip : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Á×À½) return;
+        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
 
         numberKey();
         mouseWheelScroll();

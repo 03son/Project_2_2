@@ -72,7 +72,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         mouseSpeed = GameInfo.MouseSensitivity; // ���� ����ȭ
 
         // esc â�� �������� ���� ���� ������ ó��
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.생존)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
             HandleMouseLook();
             HandleMovement();

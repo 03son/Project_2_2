@@ -35,7 +35,7 @@ public class PlayerDashJump : MonoBehaviour
 
         // esc 창이 닫혀있을 때 && 생존일 때 동작
         playerState.GetState(out state);
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.생존)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
             HandleMovement();
             HandleDash();
