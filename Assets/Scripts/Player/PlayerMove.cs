@@ -72,11 +72,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         mouseSpeed = GameInfo.MouseSensitivity; // ���� ����ȭ
 
         // esc â�� �������� ���� ���� ������ ó��
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
         {
-            HandleMouseLook();
-            HandleMovement();
-            UpdateWalkingAnimation(); // ��ŷ ���� ������Ʈ
+            if (state == PlayerState.playerState.Survival)
+            {
+                HandleMouseLook();
+                HandleMovement();
+                UpdateWalkingAnimation();
+            }
         }
         else
         {
@@ -160,7 +163,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             }
             walkSound.volume = walkVolume;
             isWalking = true;
-            if (!PhotonNetwork.IsMasterClient)
+            if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
             {
                 photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
             }
@@ -174,9 +177,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SendDecibelToMaster(float decibel, Vector3 playerPosition)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
         {
-            MonsterAI.Instance.HandleItemSound(decibel, playerPosition);
+            MonsterAI.Instance.HandleItemSound(playerPosition);
         }
     }
     private void UpdateWalkingAnimation()

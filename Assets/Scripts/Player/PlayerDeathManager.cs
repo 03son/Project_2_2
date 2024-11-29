@@ -10,7 +10,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     PlayerState.playerState state;
     PlayerState playerState;
 
-    void Start()
+    private void Awake()
     {
         playerState = GetComponent<PlayerState>();
 

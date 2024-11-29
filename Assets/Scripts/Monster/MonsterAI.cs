@@ -47,7 +47,11 @@ public class MonsterAI : MonoBehaviourPun
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
+        {
+            MonsterUpdate();
+        }
+        else if (!PhotonNetwork.IsConnected)
         {
             MonsterUpdate();
         }
@@ -193,6 +197,12 @@ public class MonsterAI : MonoBehaviourPun
         }
         // 가장 가까운 플레이어를 추적
         Transform closestPlayer = GetClosestPlayer();
+
+        if (!CanSeePlayeState(closestPlayer))//플레이어가 죽음 상태일 때 
+        {
+            currentState = State.Search; //수색 모드 전환
+            return;
+        }
         if (closestPlayer != null)
         {
             agent.SetDestination(closestPlayer.position);
@@ -332,7 +342,7 @@ public class MonsterAI : MonoBehaviourPun
         foreach (GameObject playerObject in playerObjects)
         {
             Transform playerTransform = playerObject.transform;
-
+            
             // 플레이어 감지 로직
             if (CanSeePlayer(playerTransform) || CanHearVoiceSource(playerTransform))
             {
@@ -342,6 +352,7 @@ public class MonsterAI : MonoBehaviourPun
                 }
                 currentPlayers.Add(playerTransform);
             }
+
         }
 
         // 오브젝트 사운드 감지 추가
@@ -450,6 +461,20 @@ public class MonsterAI : MonoBehaviourPun
         return false;
     }
 
+    bool CanSeePlayeState(Transform player)//플레이어 상태 체크
+    {
+        PlayerState playerState;
+        playerState = player.gameObject.GetComponent<PlayerState>();
+        PlayerState.playerState state;
+        playerState.gameObject.GetComponent<PlayerState>().GetState(out state);
+        Debug.Log($"{player.gameObject.name} & {state}");
+        if (state == PlayerState.playerState.Survival)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void HandlePlayerSound(float decibel,Vector3 playerPosition)
     {
         if (decibel > 50 )//임계값 설정
@@ -457,17 +482,44 @@ public class MonsterAI : MonoBehaviourPun
             GetComponent<NavMeshAgent>().SetDestination(playerPosition);
         }
     }
-    public void HandleItemSound(float decibel, Vector3 v_playerpos)
+    public void HandleItemSound( Vector3 v_playerpos)
     {
-        if (decibel > 0)//임계값 설정
+        if (HandleCanHearSoundSource(v_playerpos))
         {
-            if (CanHearSoundSource())
-            {
-                GetComponent<NavMeshAgent>().SetDestination(v_playerpos);
-            }
+            GetComponent<NavMeshAgent>().SetDestination(v_playerpos);
         }
     }
+    bool HandleCanHearSoundSource(Vector3 v_soundpos)
+    {
+        // 모든 SoundSource 오브젝트를 검색 (태그나 관리 시스템을 활용 가능)
+        soundSources = FindObjectsOfType<SoundSource>();
 
+        foreach (SoundSource soundSource in soundSources)
+        {
+            // SoundSource 오브젝트의 위치
+            Vector3 sourcePosition = v_soundpos;
+
+            // 해당 SoundSource가 청각 범위 내에 있는지 확인
+            float distance = Vector3.Distance(transform.position, sourcePosition);
+            Debug.Log("22222222222"+distance);
+            if (distance <= hearingRange)
+            {
+                // 데시벨 계산
+                float decibel = soundSource.GetDecibelAtDistance(sourcePosition);
+                Debug.Log(decibel);
+                // 데시벨이 최소 감지 값 이상인지 확인
+                if (decibel >= 0)
+                {
+                    Debug.Log($"사운드 소스 감지: {soundSource.gameObject.name}, 데시벨: {decibel}, 소리 범위: {soundSource.range}, 기본 데시벨: {soundSource.baseDecibel}");
+                    SetInvestigatePoint(sourcePosition);
+                    currentInvestigateDecibel = decibel;
+                    return true; // 사운드 소스가 감지됨
+                }
+            }
+        }
+
+        return false; // 감지된 소리가 없음
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

@@ -170,6 +170,7 @@ MonoBehaviour:
   fieldOfView: 120
   hearingRange: 15
   minDecibelToDetect: 30
+  soundSources: []
   currentState: 0
 --- !u!114 &1388522411804051230
 MonoBehaviour:
