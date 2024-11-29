@@ -442,19 +442,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2317572969349058412, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
       propertyPath: sceneViewId
-      value: 17
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3174909007707241206, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
       propertyPath: sceneViewId
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4520835399152146124, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
       propertyPath: m_Name
       value: "\uD1A0\uB07C"
-      objectReference: {fileID: 0}
-    - target: {fileID: 8000125095836650575, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
-      propertyPath: sceneViewId
-      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -462,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 111.559
+      value: 113.42
       objectReference: {fileID: 0}
     - target: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
       propertyPath: m_LocalPosition.z

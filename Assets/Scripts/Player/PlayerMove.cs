@@ -92,6 +92,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
     }
 
+
+    /*void LateUpdate()
+    {
+        Vector3 fixedPosition = transform.position;
+        fixedPosition.y = 0.0f; // 땅 높이에 고정
+        transform.position = fixedPosition;
+    } */
+
     private void HandleMouseLook()
     {
         if (cameraTransform == null) return;
