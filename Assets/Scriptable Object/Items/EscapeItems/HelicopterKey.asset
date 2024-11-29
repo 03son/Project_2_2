@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64834aa160065ac44be0db2926e5027b, type: 3}
   m_Name: HelicopterKey
   m_EditorClassIdentifier: 
-  ItemName: "\uD5EC\uB9AC\uCF65\uD130 \uC5F4\uC1E0"
+  ItemName: HelicopterKey
   Description: "\uD5EC\uB9AC\uCF65\uD130\uC758 \uC2DC\uB3D9\uC744 \uAC78 \uC218 \uC788\uB2E4"
+  spawnCount: 0
   type: 0
   icon: {fileID: 21300000, guid: c8e1350a56582644897943bc50d14fcc, type: 3}
   dropPerfab: {fileID: 3950096876930700298, guid: 8fd596bb20e00284db89d985f2f79d17, type: 3}
+  itemID: 

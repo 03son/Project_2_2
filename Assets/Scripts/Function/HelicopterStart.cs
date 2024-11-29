@@ -6,8 +6,22 @@ public class HelicopterStart : MonoBehaviour, IInteractable
     public Transform equipItem; // 플레이어의 EquipItem 객체
     private bool isPlayerNearby = false; // 플레이어가 근처에 있는지 여부
     public string requiredItemName = "HelicopterKey"; // 필요한 아이템 이름
+    private Player_Equip playerEquip; // 플레이어의 Player_Equip 스크립트 참조
 
     // 인터페이스 메서드: 상호작용 메시지 반환
+
+    void Start()
+    {
+        // playerEquip을 동적으로 할당
+        if (playerEquip == null)
+        {
+            playerEquip = FindObjectOfType<Player_Equip>();
+            if (playerEquip == null)
+            {
+                Debug.LogError("Player_Equip 스크립트를 찾을 수 없습니다.");
+            }
+        }
+    }
     public string GetInteractPrompt()
     {
         return $"키를 눌러 헬리콥터 시동 ({requiredItemName} 필요)";
@@ -25,14 +39,25 @@ public class HelicopterStart : MonoBehaviour, IInteractable
             return;
         }
 
-        // EquipItem의 자식 객체를 확인
-        Transform equippedItem = equipItem.Find(requiredItemName);
-        if (equippedItem != null)
+        // Player_Equip에서 현재 장착된 아이템이 필요한 아이템인지 확인
+        if (playerEquip != null && playerEquip.HasEquippedItem(requiredItemName))
         {
-            // 필요한 아이템이 장착되어 있으면 시동 걸기
+            // 필요한 아이템이 장착되어 있으면 시동 시도
             Debug.Log($"{requiredItemName}를 사용하여 헬리콥터 시동을 겁니다.");
-            Destroy(equippedItem.gameObject); // 아이템 사용 후 제거
-            helicopterController.StartHelicopter();
+
+            bool startSuccess = helicopterController.StartHelicopter(); // 시동 시도 후 성공 여부 반환
+
+            if (startSuccess)
+            {
+                // 시동이 성공하면 아이템 제거
+                playerEquip.RemoveEquippedItem(requiredItemName);
+                Debug.Log($"{requiredItemName}가 사용되었습니다.");
+            }
+            else
+            {
+                // 시동이 실패하면 아이템 유지
+                Debug.Log("헬리콥터 시동 실패. 아이템을 유지합니다.");
+            }
         }
         else
         {
@@ -40,6 +65,7 @@ public class HelicopterStart : MonoBehaviour, IInteractable
             Debug.Log($"{requiredItemName} 아이템이 필요합니다!");
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

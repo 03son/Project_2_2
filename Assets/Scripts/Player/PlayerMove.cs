@@ -125,32 +125,27 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                     animator.SetBool("isWalkingWithItem", true);
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isMovingBackward", true);
-                    animator.SetBool("isMovingBackwardWithItem", false);
                 }
                 else
                 {
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isWalkingWithItem", false);
                     animator.SetBool("isMovingBackward", false);
-                    animator.SetBool("isMovingBackwardWithItem", false);
                 }
             }
             else if (moveZ < 0) // 뒤로 이동 중일 때 (S 키)
             {
                 if (isHoldingItem)
                 {
-                    animator.SetBool("isWalkingWithItem", false);
-                   // animator.SetBool("isWalking", false);
-                   // animator.SetBool("isMovingBackward", false);
-                    animator.SetBool("isMovingBackwardWithItem", true);
+                    animator.SetBool("isWalkingWithItem", true);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isMovingBackward", true);
                 }
                 else
                 {
-                    // 아이템 없이 뒤로 걷는 경우
-                    animator.SetBool("isMovingBackward", true);
-                  //  animator.SetBool("isWalkingWithItem", false);
                     animator.SetBool("isWalking", false);
-                  //  animator.SetBool("isMovingBackwardWithItem", false);
+                    animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isMovingBackward", true);
                 }
             }
         }
@@ -160,7 +155,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             animator.SetBool("isWalking", false);
             animator.SetBool("isWalkingWithItem", false);
             animator.SetBool("isMovingBackward", false);
-            animator.SetBool("isMovingBackwardWithItem", false);
 
             if (isHoldingItem)
             {
@@ -173,6 +167,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             }
         }
     }
+
 
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)

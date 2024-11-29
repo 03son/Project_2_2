@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerDashJump : MonoBehaviour
+public class PlayerDashJump : MonoBehaviourPunCallbacks
 {
     [SerializeField] float dashSpeed = 5;
     [SerializeField] float jumpForce = 5f;
@@ -11,6 +11,7 @@ public class PlayerDashJump : MonoBehaviour
     private Transform cameraTransform;
     private Animator animator;
     private PhotonView pv;
+    private Player_Equip playerEquip;
 
     private Vector3 velocity;
     private bool isDashing = false;
@@ -21,6 +22,7 @@ public class PlayerDashJump : MonoBehaviour
         cameraTransform = Camera.main.transform;
         animator = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
+        playerEquip = GetComponent<Player_Equip>(); // Player_Equip 스크립트 참조 가져오기
     }
 
     void Update()
@@ -57,10 +59,23 @@ public class PlayerDashJump : MonoBehaviour
 
     private void HandleDash()
     {
+        bool isHoldingItem = playerEquip != null && playerEquip.HasAnyEquippedItem(); // 아이템 들고 있는지 확인
+
         if (Input.GetKey(KeyManager.Run_Key) && controller.isGrounded && !isDashing)
         {
             isDashing = true;
-            animator.SetBool("isRunning", true); // 달리기 애니메이션 시작
+
+            // 아이템을 들고 있으면 아이템을 들고 뛰는 애니메이션 실행
+            if (isHoldingItem)
+            {
+                animator.SetBool("isRunningWithItem", true);
+                animator.SetBool("isRunning", false);
+            }
+            else
+            {
+                animator.SetBool("isRunning", true); // 기본 달리기 애니메이션 시작
+                animator.SetBool("isRunningWithItem", false);
+            }
         }
 
         if (isDashing)
@@ -76,6 +91,7 @@ public class PlayerDashJump : MonoBehaviour
             {
                 isDashing = false; // 대쉬 종료
                 animator.SetBool("isRunning", false); // 달리기 애니메이션 종료
+                animator.SetBool("isRunningWithItem", false); // 아이템 들고 뛰기 애니메이션 종료
             }
         }
     }
@@ -94,6 +110,7 @@ public class PlayerDashJump : MonoBehaviour
                 animator.SetBool("isJumping", true); // 점프 애니메이션 시작
                 isDashing = false; // 대쉬 중 점프하면 대쉬 종료
                 animator.SetBool("isRunning", false); // 대쉬 애니메이션 종료
+                animator.SetBool("isRunningWithItem", false); // 아이템 들고 뛰기 애니메이션 종료
             }
         }
         else

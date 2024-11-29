@@ -30,6 +30,7 @@ public class Player_Equip : MonoBehaviour
     private GameObject currentGlassCup;
     private Animator animator;           // Animator 추가
     private CharacterController characterController;
+    private bool isFlashlightOn = false; // 손전등 상태를 저장할 변수
 
     void Start()
     {
@@ -40,7 +41,7 @@ public class Player_Equip : MonoBehaviour
         invenSlot[0].GetComponent<ItemSlotUI>().equipped = true;
 
         inventory = GetComponent<Inventory>();
-        equipItem = GameObject.Find("EquipItem").gameObject;
+        equipItem = GameObject.Find("handitemattach").gameObject;
         ItemName = GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
         ItemName.text = "";
 
@@ -210,11 +211,18 @@ public class Player_Equip : MonoBehaviour
             if (Item.name == "Flashlight")
             {
                 Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
-                if (flashlightScript != null)
+               if (flashlightScript != null)
                 {
                     Debug.Log("손전등 획득 및 사용");
                     flashlightScript.AcquireFlashlight();
-                }
+
+                    // 손전등 켜기/끄기 처리
+                    isFlashlightOn = !isFlashlightOn;
+                //    flashlightScript.ToggleFlashlight(isFlashlightOn);
+
+                    // 애니메이션 파라미터 설정
+                    animator.SetBool("isFlashlightOn", isFlashlightOn);
+                } 
             }
             // 유리컵 아이템 처리
             else if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
@@ -234,9 +242,39 @@ public class Player_Equip : MonoBehaviour
             }
         }
     }
+    public void ChangeOrRemoveItem()
+    {
+        // 현재 장착 중인 아이템이 손전등인지 확인
+        if (Item != null && Item.name == "Flashlight")
+        {
+            // 손전등이 켜져 있는 상태에서 아이템을 변경하거나 버리는 경우, 애니메이션 파라미터 초기화
+            if (isFlashlightOn)
+            {
+                isFlashlightOn = false;
+                animator.SetBool("isFlashlightOn", false);
+            }
+        }
+
+        // 기존 아이템을 제거하기 전에 항상 애니메이션 상태를 초기화
+        if (animator != null)
+        {
+            // 손전등이 켜져 있는 애니메이션을 포함하여 모든 아이템 관련 상태를 초기화
+            animator.SetBool("isFlashlightOn", false);
+            animator.SetBool("isHoldingItem", false);
+        }
+
+        // 기존 아이템을 제거
+        if (Item != null)
+        {
+            Destroy(Item);
+            Item = null;
+            ItemName.text = "";
+        }
+    }
 
 
-       
+
+
 
 
     void StartThrowing()
@@ -252,8 +290,12 @@ public class Player_Equip : MonoBehaviour
 
     void ChargeThrow()
     {
+        isCharging = true;
         chargeTime += Time.deltaTime;
         float currentForce = Mathf.Min(chargeTime * throwForce, maxForce);
+
+        // 애니메이터 파라미터 설정: 충전 중인 상태
+        animator.SetBool("isChargingThrow", true);
 
         // 궤적 업데이트
         Vector3 throwDirection = Camera.main.transform.forward;
@@ -285,16 +327,22 @@ public class Player_Equip : MonoBehaviour
             if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
-            } 
+            }
 
-                hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
-           currentGlassCup = null;  // 유리컵 참조 해제
+            hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
+            currentGlassCup = null;  // 유리컵 참조 해제
 
             if (trajectoryLine != null)
             {
                 trajectoryLine.enabled = false;  // 궤적 표시 비활성화
             }
         }
+
+        // 충전 중 상태 해제
+        animator.SetBool("isChargingThrow", false);
+
+        // 던지기 애니메이션 트리거 설정
+        animator.SetTrigger("isThrowing");
 
         isCharging = false;
     }
@@ -305,6 +353,9 @@ public class Player_Equip : MonoBehaviour
         isCharging = false;
         chargeTime = 0f;
 
+        // 충전 상태 해제
+        animator.SetBool("isChargingThrow", false);
+
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;  // 궤적 표시 비활성화
@@ -312,6 +363,7 @@ public class Player_Equip : MonoBehaviour
 
         Debug.Log("던지기 취소됨");
     }
+
 
 
 

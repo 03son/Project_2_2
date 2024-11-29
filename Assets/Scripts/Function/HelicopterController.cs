@@ -7,6 +7,7 @@ public class HelicopterController : MonoBehaviourPun
     private bool isFuelAdded = false;   // 연료 주입 여부
     private bool isStarted = false;     // 헬기 시동 여부
 
+
     public AudioSource audioSource;
     public AudioClip startSound;
 
@@ -58,9 +59,9 @@ public class HelicopterController : MonoBehaviourPun
     }
 
     // 헬기 시동 메서드
-    public void StartHelicopter()
+    public bool StartHelicopter()
     {
-        if (isStarted) return;
+        if (isStarted) return false; // 이미 시동이 걸린 상태라면 false 반환
 
         if (CanStart())
         {
@@ -80,12 +81,15 @@ public class HelicopterController : MonoBehaviourPun
 
             // 헬기 탈출 연출 실행
             Invoke(nameof(EscapeSequence), 3.0f);
+            return true; // 시동이 성공했으면 true 반환
         }
         else
         {
             Debug.Log("사슬과 연료 상태를 확인하세요.");
+            return false; // 시동 조건이 충족되지 않으면 false 반환
         }
     }
+
 
     private void EscapeSequence()
     {
@@ -130,4 +134,8 @@ public class HelicopterController : MonoBehaviourPun
             StartHelicopter();
         }
     }
+
+    
+
+
 }
