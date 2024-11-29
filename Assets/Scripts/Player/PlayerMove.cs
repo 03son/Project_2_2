@@ -65,10 +65,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         playerState.GetState(out state);
 
         // Height �� ���� ����
-        if (controller.height != 0.1f)
+      /*  if (controller.height != 0.1f)
         {
             controller.height = 0.1f;
-        }
+        } */
         // Photon View Ȯ��
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
