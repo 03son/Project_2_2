@@ -711,9 +711,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e55c1890a3b3b498fa004d31d9e6ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 871516554574796596}
   baseDecibel: 50
   range: 20
+  audioSource: {fileID: 871516554574796596}
 --- !u!120 &4320829190080339560
 LineRenderer:
   serializedVersion: 2

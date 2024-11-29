@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2564313218033489458}
   - component: {fileID: 2330607573187188924}
   - component: {fileID: 8246658457605909015}
+  - component: {fileID: 6456583965373455967}
   m_Layer: 3
   m_Name: GlassCup
   m_TagString: Untagged
@@ -185,8 +186,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 20
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -221,7 +222,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -261,3 +262,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6456583965373455967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3682569839948213715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e55c1890a3b3b498fa004d31d9e6ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDecibel: 100
+  range: 30
+  audioSource: {fileID: 8246658457605909015}
