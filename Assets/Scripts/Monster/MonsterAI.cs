@@ -337,6 +337,7 @@ public class MonsterAI : MonoBehaviourPun
             // 데시벨이 감지 가능한 최소 데시벨 값 이상이고, 소리의 범위 내에 있어야 감지
             if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, player.position) <= soundSource.range)
             {
+                Debug.Log($"몬스터가 듣는 데시벨 : {decibel}");
                 return true; // 소리가 감지됨
             }
         }
@@ -383,7 +384,13 @@ public class MonsterAI : MonoBehaviourPun
             GetComponent<NavMeshAgent>().SetDestination(playerPosition);
         }
     }
-
+    public void HandleItemSound(float decibel, Vector3 playerPosition)
+    {
+        if (decibel > 0)//임계값 설정
+        {
+            GetComponent<NavMeshAgent>().SetDestination(playerPosition);
+        }
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

@@ -160,6 +160,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             }
             walkSound.volume = walkVolume;
             isWalking = true;
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
+            }
         }
         else if (isWalking)
         {
@@ -167,7 +171,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             isWalking = false;
         }
     }
-
+    [PunRPC]
+    public void SendDecibelToMaster(float decibel, Vector3 playerPosition)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            MonsterAI.Instance.HandleItemSound(decibel, playerPosition);
+        }
+    }
     private void UpdateWalkingAnimation()
     {
         // Animator에 값 설정
