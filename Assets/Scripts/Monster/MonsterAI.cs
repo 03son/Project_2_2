@@ -14,7 +14,7 @@ public class MonsterAI : MonoBehaviourPun
     public Transform[] patrolPoints;               // 순찰 지점 배열
     public LayerMask playerLayer;                  // 플레이어가 속한 레이어
     public float moveSpeed = 3.5f;                 // 순찰 시 이동 속도
-    public float chaseSpeed = 10.0f;                // 추적 시 이동 속도
+    public float chaseSpeed = 4.5f;                // 추적 시 이동 속도
     public float waitTimeBeforePatrol = 2.0f;      // 순찰 시작 전 대기 시간
     public float idleTimeBeforePatrol = 5.0f;      // 예외 처리 - 정지 후 순찰로 돌아가는 시간
     private float currentInvestigateDecibel = 0f;  // 현재 조사 중인 데시벨 값
@@ -32,6 +32,7 @@ public class MonsterAI : MonoBehaviourPun
     public float minDecibelToDetect = 30f;        // 감지 가능한 최소 데시벨 값
     private Mic micScript;                        // Mic 스크립트 참조
     public SoundSource[] soundSources;
+    private Animator animator;                    // Animator 컴포넌트
 
     public enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Idle 추가)
     public State currentState;                    // 현재 상태
@@ -60,6 +61,7 @@ public class MonsterAI : MonoBehaviourPun
     {
         // NavMeshAgent 초기화
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>(); // Animator 초기화
 
         //순찰 지점들의 부모 오브젝트 가져오기
         patrolParent = GameObject.Find("발판0").gameObject.transform;
@@ -94,6 +96,7 @@ public class MonsterAI : MonoBehaviourPun
 
         // 초기 상태 설정
         currentState = State.Idle;
+        animator.SetTrigger("Idle"); // Idle 상태 애니메이션 트리거
         currentPatrolIndex = 0;
         detectedPlayers = new List<Transform>();
         waitTimer = waitTimeBeforePatrol;
@@ -148,7 +151,7 @@ public class MonsterAI : MonoBehaviourPun
     private void Idle()
     {
         // 대기 타이머를 갱신
-        if (waitTimer < 0)
+        if (waitTimer <= 0)
         {
             waitTimer = waitTimeBeforePatrol;
         }
@@ -159,6 +162,8 @@ public class MonsterAI : MonoBehaviourPun
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
+            animator.SetFloat("Speed", 4.5f); // 추적 애니메이션
+            waitTimer = 0; // 타이머 초기화
             return;
         }
 
@@ -166,26 +171,37 @@ public class MonsterAI : MonoBehaviourPun
         if (waitTimer <= 0f)
         {
             currentState = State.Patrol;
+            animator.SetFloat("Speed", 3.5f); // 순찰 애니메이션
             GoToNextPatrolPoint();
+            waitTimer = 0; // 타이머 초기화
         }
     }
 
     private void Patrol() // 순찰모드
     {
+        animator.SetFloat("Speed", 3.5f); // 순찰 애니메이션
         if (agent.speed == chaseSpeed)
         {
             agent.speed = moveSpeed;
         }
-        // 순찰 상태: 다음 순찰 지점으로 이동
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        // 경로가 계산 중이 아니고, 남은 거리가 0.5f 이하일 때만 다음 상태로 전환
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            Idle(); // 순찰이 끝나면 잠시 대기모드로 전환
+            // 남은 거리가 0일 때 경로 도달로 간주
+            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            {
+                Idle(); // 지점 도달 후 Idle 상태로 전환
+                animator.SetFloat("Speed", 0f); // Idle 애니메이션
+                waitTimer = waitTimeBeforePatrol;
+                return;
+            }
         }
 
         // 플레이어를 감지하면 추적 상태로 전환
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
+            animator.SetFloat("Speed", 4.5f); // 추적 애니메이션
         }
     }
 
@@ -213,6 +229,7 @@ public class MonsterAI : MonoBehaviourPun
         if (detectedPlayers.Count == 0)
         {
             currentState = State.Search;
+            animator.SetFloat("Speed", 4.5f); // 추적 애니메이션
         }
     }
 
@@ -225,12 +242,14 @@ public class MonsterAI : MonoBehaviourPun
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentState = State.Patrol;
+            animator.SetFloat("Speed", 3.5f); // 순찰 애니메이션
         }
 
         // 다시 플레이어를 발견하면 추적 상태로 전환
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
+            animator.SetFloat("Speed", 3.5f); // 순찰 애니메이션
         }
     }
     private void Investigate() // 조사 상태
@@ -261,6 +280,7 @@ public class MonsterAI : MonoBehaviourPun
         {
             currentInvestigateDecibel = 0f; // 조사 데시벨 초기화
             currentState = State.Patrol;   // 순찰 상태로 전환
+            animator.SetFloat("Speed", 3.5f); // 순찰 애니메이션
             Debug.Log("조사 완료. 데시벨 초기화.");
         }
 
@@ -268,26 +288,35 @@ public class MonsterAI : MonoBehaviourPun
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
+            animator.SetFloat("Speed", 4.5f);
         }
     }
     private void UpdateState() //우선순위
     {
+        if (currentState == State.Idle || currentState == State.Patrol)
+        {
+            // Idle 또는 Patrol 상태일 때 추가 상태 전환 없음
+            return;
+        }
         // 1. Chase 상태: 플레이어가 감지된 경우
         if (detectedPlayers.Count > 0)
         {
             currentState = State.Chase;
+            animator.SetFloat("Speed", 4.5f);
             return;
         }
 
         // 2. Investigate 상태: 특정 조사 지점이 설정된 경우
         if (currentState == State.Investigate)
         {
+            animator.SetFloat("Speed", 3.5f);
             return; // 조사 중이면 상태 유지
         }
 
         // 3. Search 상태: 플레이어를 놓쳤고 마지막 위치를 기억하는 경우
         if (currentState == State.Search && lastKnownPosition != Vector3.zero)
         {
+            animator.SetFloat("Speed", 4.5f);
             return; // 수색 중이면 상태 유지
         }
 
@@ -295,11 +324,13 @@ public class MonsterAI : MonoBehaviourPun
         if (patrolPoints.Length > 0 && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentState = State.Patrol;
+            animator.SetFloat("Speed", 3.5f);
             return;
         }
 
         // 5. Idle 상태: 다른 조건이 모두 충족되지 않으면 대기
         currentState = State.Idle;
+        animator.SetFloat("Speed", 0f);
     }
 
     public void SetInvestigatePoint(Vector3 point)
@@ -385,8 +416,10 @@ public class MonsterAI : MonoBehaviourPun
             // 시야 거리 내에 있는지 확인
             if (Vector3.Distance(transform.position, player.position) <= viewDistance)
             {
+                // 시야의 Y값을 0.5f 올림
+                Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, directionToPlayer, out hit, viewDistance))
+                if (Physics.Raycast(rayOrigin, directionToPlayer, out hit, viewDistance))
                 {
                     // 플레이어와의 사이에 장애물이 없는지 확인
                     if (hit.transform == player)
@@ -527,7 +560,7 @@ public class MonsterAI : MonoBehaviourPun
         // 부채꼴을 그리기 위한 세그먼트 개수
         int segments = 20;
         float angleStep = fieldOfView / segments; // 각도 단위
-        Vector3 origin = transform.position; // 몬스터의 위치
+        Vector3 origin = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z); // 몬스터의 위치
 
         // 시야각 부채꼴 그리기
         for (int i = 0; i <= segments; i++)
