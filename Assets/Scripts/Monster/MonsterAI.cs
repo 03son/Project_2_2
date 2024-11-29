@@ -31,6 +31,7 @@ public class MonsterAI : MonoBehaviourPun
     public float hearingRange = 50f;               // 청각 범위
     public float minDecibelToDetect = 30f;        // 감지 가능한 최소 데시벨 값
     private Mic micScript;                        // Mic 스크립트 참조
+    public SoundSource[] soundSources;
 
     public enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Idle 추가)
     public State currentState;                    // 현재 상태
@@ -388,23 +389,26 @@ public class MonsterAI : MonoBehaviourPun
     }
     private bool CanHearSoundSource(Transform listener)
     {
-        // 청각 범위 내의 콜라이더 검색
-        Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRange);
+        // 모든 SoundSource 오브젝트를 검색 (태그나 관리 시스템을 활용 가능)
+        soundSources = FindObjectsOfType<SoundSource>();
 
-        foreach (Collider collider in colliders)
+        foreach (SoundSource soundSource in soundSources)
         {
-            // SoundSource 컴포넌트 확인
-            SoundSource soundSource = collider.GetComponent<SoundSource>();
+            // SoundSource 오브젝트의 위치
+            Vector3 sourcePosition = soundSource.transform.position;
 
-            if (soundSource != null)
+            // 해당 SoundSource가 청각 범위 내에 있는지 확인
+            float distance = Vector3.Distance(transform.position, sourcePosition);
+            if (distance <= hearingRange)
             {
                 // 데시벨 계산
                 float decibel = soundSource.GetDecibelAtDistance(transform.position);
+                Debug.Log(decibel);
                 // 데시벨이 최소 감지 값 이상인지 확인
                 if (decibel >= minDecibelToDetect)
                 {
-                    Debug.Log($"사운드 소스 감지: {collider.gameObject.name}, 데시벨: {decibel}, 소리 범위: {soundSource.range}, 기본 데시벨: {soundSource.baseDecibel}");
-                    SetInvestigatePoint(soundSource.transform.position);
+                    Debug.Log($"사운드 소스 감지: {soundSource.gameObject.name}, 데시벨: {decibel}, 소리 범위: {soundSource.range}, 기본 데시벨: {soundSource.baseDecibel}");
+                    SetInvestigatePoint(sourcePosition);
                     currentInvestigateDecibel = decibel;
                     return true; // 사운드 소스가 감지됨
                 }
@@ -413,8 +417,6 @@ public class MonsterAI : MonoBehaviourPun
 
         return false; // 감지된 소리가 없음
     }
-
-
     private bool CanHearVoiceSource(Transform monster)
     {
         // 모든 플레이어 객체를 가져오기
