@@ -20,6 +20,7 @@ public class Single_GameManager : GameManager
 
         player = Resources.Load<GameObject>("Player");
         Enemy = Resources.Load<GameObject>("UI_Resources_Enemy");
+        Åä³¢ = Resources.Load<GameObject>("Åä³¢");
 
         CreatePlayer();
         CreateEnemy();
@@ -31,8 +32,8 @@ public class Single_GameManager : GameManager
         Transform[] points =
         GameObject.Find("PlayerSpawnPointGroup").gameObject.GetComponentsInChildren<Transform>();
 
-        GameObject.Instantiate(player, points[1].position, points[1].rotation);
-        //GameObject.Instantiate(Åä³¢ , points[1].position, points[1].rotation);
+      //  GameObject.Instantiate(player, points[1].position, points[1].rotation);
+        GameObject.Instantiate(Åä³¢ , points[1].position, points[1].rotation);
     }
     public override void CreateEnemy() //UI¾ÀÀ» ±âÁØÀ¸·Î ÀÛ¼ºÇÔ
     {

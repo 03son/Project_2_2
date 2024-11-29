@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 2444431448682953168}
   - component: {fileID: 9097295955767114178}
   - component: {fileID: 2836256177583279669}
+  - component: {fileID: 7755055098040124067}
   m_Layer: 0
   m_Name: "\uD1A0\uB07C"
   m_TagString: Player
@@ -240,6 +241,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3139719893892236345}
+  - {fileID: 7755055098040124067}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -492,6 +494,78 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7755055098040124067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4520835399152146124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: isWalking
+  - Type: 4
+    SynchronizeType: 1
+    Name: isRunning
+  - Type: 4
+    SynchronizeType: 1
+    Name: isJumping
+  - Type: 4
+    SynchronizeType: 1
+    Name: isClimbingUpStairs
+  - Type: 4
+    SynchronizeType: 1
+    Name: isClimbingDownStairs
+  - Type: 4
+    SynchronizeType: 1
+    Name: isMovingBackward
+  - Type: 4
+    SynchronizeType: 1
+    Name: isCrouching
+  - Type: 1
+    SynchronizeType: 1
+    Name: crouchMoveSpeed
+  - Type: 4
+    SynchronizeType: 1
+    Name: 'isMovingWhileCrouched '
+  - Type: 4
+    SynchronizeType: 1
+    Name: isHoldingItem
+  - Type: 4
+    SynchronizeType: 1
+    Name: isWalkingWithItem
+  - Type: 4
+    SynchronizeType: 1
+    Name: isMovingBackwardWithItem
+  - Type: 4
+    SynchronizeType: 1
+    Name: isRunningWithItem
+  - Type: 4
+    SynchronizeType: 1
+    Name: isChargingThrow
+  - Type: 9
+    SynchronizeType: 1
+    Name: isThrowing
+  - Type: 4
+    SynchronizeType: 1
+    Name: isFlashlightOn
+  - Type: 9
+    SynchronizeType: 1
+    Name: PickupItem
+  - Type: 4
+    SynchronizeType: 1
+    Name: isChangingItem
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &7518041095886509107
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,10 +832,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8497756325959581627}
     m_Modifications:
-    - target: {fileID: 1248705952267402174, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
-      propertyPath: sceneViewId
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4010722637098814229, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -806,13 +876,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uD1A0\uB07C\uBAA8\uB378\uB9C1"
       objectReference: {fileID: 0}
-    - target: {fileID: 7010097090254164335, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5058137210348043992, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
