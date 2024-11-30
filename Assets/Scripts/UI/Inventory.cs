@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using static PlayerState;
 
 public class ItemSlot
 {
@@ -32,7 +33,8 @@ public class Inventory : MonoBehaviour
 
     private GameObject equippedItemObject; // ���� ������ �������� GameObject�� �����ϴ� ����
 
-   
+    PlayerState playerState;
+    PlayerState.playerState state;
     private void Awake()
     {
         if (instance == null)
@@ -70,6 +72,8 @@ public class Inventory : MonoBehaviour
             }
 
             dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
+
+            playerState = GetComponent<PlayerState>();
 
             ClearSelectItemWindows();
         }
@@ -256,9 +260,13 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyManager.Drop_Key))
+        playerState.GetState(out state);
+        if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
-            RemoveSelectedItem();
+            if (Input.GetKeyDown(KeyManager.Drop_Key))
+            {
+                RemoveSelectedItem();
+            }
         }
     }
 

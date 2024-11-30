@@ -23,7 +23,7 @@ public class PlayerCrouch : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
             return;
 
         // Control 키를 누르고 있는 동안 crouchHeight로 전환, 떼면 normalHeight로 돌아감
