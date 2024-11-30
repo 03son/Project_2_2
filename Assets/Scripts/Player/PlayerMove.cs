@@ -90,15 +90,38 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             // esc â�� �������� ���� �̵� ����
             PlayerVelocity(Vector3.zero, 0f, 0f);
         }
+
+        RaycastHit hit;
+        Vector3 rayOrigin = transform.position + Vector3.up * 1f; // 캐릭터 중심에서 약간 위로 시작
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 2.5f))
+        {
+            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+            Debug.Log($"Slope Angle: {slopeAngle}");
+
+            if (slopeAngle > 10) // 10도 이상이면 계단으로 판단
+            {
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    animator.SetBool("isClimbingUpStairs", true);
+                    animator.SetBool("isClimbingDownStairs", false);
+                }
+                else if (Input.GetAxis("Vertical") < 0)
+                {
+                    animator.SetBool("isClimbingUpStairs", false);
+                    animator.SetBool("isClimbingDownStairs", true);
+                }
+            }
+            else
+            {
+                animator.SetBool("isClimbingUpStairs", false);
+                animator.SetBool("isClimbingDownStairs", false);
+            }
+        }
+
     }
 
 
-    /*void LateUpdate()
-    {
-        Vector3 fixedPosition = transform.position;
-        fixedPosition.y = 0.0f; // 땅 높이에 고정
-        transform.position = fixedPosition;
-    } */
+
 
     private void HandleMouseLook()
     {
@@ -190,34 +213,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
     }
 
-    private void HandleStairs()
-    {
-        RaycastHit hit;
-        Vector3 rayOrigin = transform.position + Vector3.up * 0.5f; // 레이캐스트가 중앙에서 약간 위에서 시작하도록 수정
-        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 5f))
-        {
-            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
-
-            if (slopeAngle > 20) // 20도 이상이면 계단으로 판단
-            {
-                if (Input.GetAxis("Vertical") > 0)
-                {
-                    animator.SetBool("isClimbingUpStairs", true);
-                    animator.SetBool("isClimbingDownStairs", false);
-                }
-                else if (Input.GetAxis("Vertical") < 0)
-                {
-                    animator.SetBool("isClimbingUpStairs", false);
-                    animator.SetBool("isClimbingDownStairs", true);
-                }
-            }
-            else
-            {
-                animator.SetBool("isClimbingUpStairs", false);
-                animator.SetBool("isClimbingDownStairs", false);
-            }
-        }
-    }
+    
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
