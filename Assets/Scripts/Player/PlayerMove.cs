@@ -72,19 +72,19 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         mouseSpeed = GameInfo.MouseSensitivity; // ���� ����ȭ
 
         // esc â�� �������� ���� ���� ������ ó��
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
-            if (state == PlayerState.playerState.Survival)
-            {
-                HandleMouseLook();
-                HandleMovement();
-                UpdateWalkingAnimation();
-            }
+            HandleMouseLook();
+            HandleMovement();
+            UpdateWalkingAnimation();
         }
         else
         {
-            // esc â�� �������� ���� �̵� ����
-            PlayerVelocity(Vector3.zero, 0f, 0f);
+            if (state == PlayerState.playerState.Die)
+            {
+                // esc â�� �������� ���� �̵� ����
+                PlayerVelocity(Vector3.zero, 0f, 0f);
+            }
         }
     }
 
@@ -154,8 +154,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         controller.Move((mov + velocity) * Time.deltaTime);
 
-        // ���� �Ҹ� ó��
-        if ((moveX != 0 || moveZ != 0) && controller.isGrounded)
+        playerState.GetState(out state);
+            // ���� �Ҹ� ó��
+        if ((moveX != 0 || moveZ != 0) && controller.isGrounded && state == PlayerState.playerState.Survival)
         {
             if (!walkSound.isPlaying)
             {
@@ -168,7 +169,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                 photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
             }
         }
-        else if (isWalking)
+        else
         {
             walkSound.Stop();
             isWalking = false;

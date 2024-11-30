@@ -33,6 +33,9 @@ public class MonsterAI : MonoBehaviourPun
     private Mic micScript;                        // Mic 스크립트 참조
     public SoundSource[] soundSources;
 
+    PlayerState playerState;                      //PlayerState
+    PlayerState.playerState state;
+
     public enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Idle 추가)
     public State currentState;                    // 현재 상태
 
@@ -437,24 +440,29 @@ public class MonsterAI : MonoBehaviourPun
         // 각 플레이어에 대해 확인
         foreach (GameObject playerObject in playerObjects)
         {
-            // 플레이어의 Mic 컴포넌트 찾기
-            micScript = playerObject.GetComponentInChildren<Mic>();
-
-            // Mic가 없으면 감지할 수 없음
-            if (micScript == null)
+            //해당 플레이어가 생존 상태일 때
+            playerObject.GetComponent<PlayerState>().GetState(out state);
+            if (state == PlayerState.playerState.Survival)
             {
-                continue;
-            }
+                // 플레이어의 Mic 컴포넌트 찾기
+                micScript = playerObject.GetComponentInChildren<Mic>();
 
-            // Mic에서 실시간으로 계산된 데시벨 값 가져오기
-            float decibel = micScript.GetDecibelAtDistance(transform.position);
-            //Debug.Log("몬스터가 듣는 데시벨" + decibel);
+                // Mic가 없으면 감지할 수 없음
+                if (micScript == null)
+                {
+                    continue;
+                }
 
-            // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
-            if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
-            {
-                Debug.Log("목소리 청취");
-                return true;  // 소리가 감지됨
+                // Mic에서 실시간으로 계산된 데시벨 값 가져오기
+                float decibel = micScript.GetDecibelAtDistance(transform.position);
+                //Debug.Log("몬스터가 듣는 데시벨" + decibel);
+
+                // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
+                if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
+                {
+                    Debug.Log("목소리 청취");
+                    return true;  // 소리가 감지됨
+                }
             }
         }
         // 어느 플레이어의 소리도 감지되지 않으면 false 반환
