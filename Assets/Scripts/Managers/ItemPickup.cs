@@ -17,7 +17,7 @@ public class ItemPickup : MonoBehaviourPun
         if (PhotonNetwork.IsConnected)
         {
             // Photon RPC로 모든 클라이언트에서 비활성화
-            photonView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
+          //  photonView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
         }
         else
         {
