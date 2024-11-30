@@ -3691,6 +3691,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7129547770309612214, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4847,6 +4851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSpeed: 2
   playerTransform: {fileID: 0}
+  cameraObject: {fileID: 0}
   player: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
   FollowCam: {fileID: 1586328093126080412}
