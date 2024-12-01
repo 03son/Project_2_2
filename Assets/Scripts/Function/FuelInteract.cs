@@ -6,7 +6,7 @@ using UnityEngine.EventSystems; // Layout 관련 네임스페이스 추가
 
 public class FuelInteract : MonoBehaviourPun, IInteractable
 {
-    public string requiredItem = "Sump"; // 필요한 아이템 이름
+    public string requiredItem = "헬기 연료통"; // 필요한 아이템 이름
     public float holdTime = 10f;         // 홀드 시간
     private bool isFuelAdded = false;    // 연료 추가 여부
     private float holdProgress = 0f;     // 홀드 진행 시간

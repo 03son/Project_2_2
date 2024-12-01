@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2f41b67c57de74a838b3d286352915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredItem: Sump
+  requiredItem: "\uD5EC\uAE30 \uC5F0\uB8CC\uD1B5"
   holdTime: 5
   audioSource: {fileID: 485696396}
   fuelAddingSound: {fileID: 8300000, guid: 2e1d3eba35d9a7a4d8cfd14172d77104, type: 3}
@@ -2974,7 +2974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1363005745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5917,7 +5917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b743905f6f8264b9588143ecb13e0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredItem: Cutter
+  requiredItem: "\uC808\uB2E8\uAE30"
   holdTime: 5
   holdTimeBar: {fileID: 1687665433}
   audioSource: {fileID: 2056149402}
@@ -7012,7 +7012,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5518456526652017941, guid: 339b405d3f994d04c888964b5b224263, type: 3}
       propertyPath: m_Name
-      value: Cutter
+      value: "\uC808\uB2E8\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 8359285765216314493, guid: 339b405d3f994d04c888964b5b224263, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7175,10 +7175,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
-    - target: {fileID: 3520230096525616863, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
-      propertyPath: sceneViewId
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 8293842065114286196, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.67
@@ -7221,7 +7217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8370939266880707758, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
       propertyPath: m_Name
-      value: Sump
+      value: "\uD5EC\uAE30 \uC5F0\uB8CC\uD1B5"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

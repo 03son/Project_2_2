@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WoodenPlank : MonoBehaviour, IInteractable
 {
@@ -9,6 +10,7 @@ public class WoodenPlank : MonoBehaviour, IInteractable
 
     [SerializeField] private AudioSource audioSource; // AudioSource 컴포넌트
     [SerializeField] private AudioClip holdSound; // 키를 누르고 있을 때 효과음
+    [SerializeField] private Image progressBar; // 원형 프로그레스 바 UI
 
     void Start()
     {
@@ -17,19 +19,31 @@ public class WoodenPlank : MonoBehaviour, IInteractable
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+
+        if (progressBar != null)
+        {
+            progressBar.gameObject.SetActive(false); // 초기 비활성화
+        }
     }
 
     void Update()
     {
-        if (isRemoving)
+        // F 키를 누르고 있을 때만 타이머 진행
+        if (isRemoving && Input.GetKey(KeyCode.F))
         {
             // 타이머 진행
             holdCounter += Time.deltaTime;
 
+            // UI 업데이트
+            if (progressBar != null)
+            {
+                progressBar.fillAmount = holdCounter / holdTime;
+            }
+
             // 효과음 재생
             if (!audioSource.isPlaying && holdSound != null)
             {
-                audioSource.loop = true;
+                audioSource.loop = true; // 반복 재생
                 audioSource.clip = holdSound;
                 audioSource.Play();
             }
@@ -39,6 +53,11 @@ public class WoodenPlank : MonoBehaviour, IInteractable
             {
                 RemovePlank();
             }
+        }
+        else if (isRemoving && Input.GetKeyUp(KeyCode.F))
+        {
+            // 키를 떼면 제거 중단
+            StopRemoving();
         }
     }
 
@@ -66,6 +85,12 @@ public class WoodenPlank : MonoBehaviour, IInteractable
     {
         isRemoving = true;
         holdCounter = 0f;
+
+        if (progressBar != null)
+        {
+            progressBar.gameObject.SetActive(true); // 타이머 UI 활성화
+            progressBar.fillAmount = 0f; // 초기화
+        }
     }
 
     private void StopRemoving()
@@ -77,6 +102,15 @@ public class WoodenPlank : MonoBehaviour, IInteractable
         {
             audioSource.Stop();
         }
+
+        // UI 비활성화
+        if (progressBar != null)
+        {
+            progressBar.gameObject.SetActive(false);
+        }
+
+        // 타이머 초기화
+        holdCounter = 0f;
     }
 
     private void RemovePlank()
@@ -84,10 +118,10 @@ public class WoodenPlank : MonoBehaviour, IInteractable
         StopRemoving();
         Debug.Log("판자가 제거되었습니다.");
 
-        // CrowBar 제거
+        // CrowBar 제거 호출
         if (playerEquip != null)
         {
-            playerEquip.RemoveEquippedItem("CrowBar"); // CrowBar 제거 메서드 호출
+            playerEquip.RemoveEquippedItem("쇠지렛대"); // CrowBar 제거
         }
 
         Destroy(gameObject); // 판자 제거

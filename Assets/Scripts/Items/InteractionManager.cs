@@ -121,7 +121,7 @@ public class InteractionManager : MonoBehaviour
                     itemView.OwnershipTransfer = OwnershipOption.Takeover;
 
                     // 아이템 비활성화 처리를 모든 클라이언트에 동기화
-                    itemView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
+                 //   itemView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
                 }
             }
             else

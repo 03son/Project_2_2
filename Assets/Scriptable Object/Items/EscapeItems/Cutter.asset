@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64834aa160065ac44be0db2926e5027b, type: 3}
   m_Name: Cutter
   m_EditorClassIdentifier: 
-  ItemName: Cutter
+  ItemName: "\uC808\uB2E8\uAE30"
   Description: "\uC808\uB2E8\uAE30\uC774\uB2E4."
   spawnCount: 0
   type: 1

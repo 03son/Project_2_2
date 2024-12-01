@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ChainInteract : MonoBehaviourPun, IInteractable
 {
-    public string requiredItem = "Cutter"; // 필요한 아이템 이름
+    public string requiredItem = "절단기"; // 필요한 아이템 이름
     public float holdTime = 10f;           // 홀드 시간
     private bool isChainRemoved = false;   // 사슬 제거 여부
     private float holdProgress = 0f;       // 홀드 진행 시간

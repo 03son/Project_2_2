@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64834aa160065ac44be0db2926e5027b, type: 3}
   m_Name: Sump
   m_EditorClassIdentifier: 
-  ItemName: Sump
+  ItemName: "\uD5EC\uAE30 \uC5F0\uB8CC\uD1B5"
   Description: "\uD5EC\uB9AC\uCF65\uD130\uC758 \uAE30\uB984\uC744 \uCC44\uC6B8 \uC218
     \uC788\uB2E4"
   spawnCount: 0
