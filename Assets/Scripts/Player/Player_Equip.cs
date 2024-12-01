@@ -506,6 +506,22 @@ public class Player_Equip : MonoBehaviour
         }
     }
 
+    public bool HasEquippedCrowBar()
+    {
+        // CrowBar 아이템이 장착되어 있는지 확인
+        Transform crowBarObject = equipItem.transform.Find("CrowBar");
+        if (crowBarObject != null)
+        {
+            ItemObject equippedItem = crowBarObject.GetComponent<ItemObject>();
+            if (equippedItem != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public bool HasEquippedKey()
     {
         Transform keyObject = equipItem.transform.Find("Key");
