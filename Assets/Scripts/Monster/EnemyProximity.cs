@@ -5,9 +5,9 @@ public class EnemyProximity : MonoBehaviour
 {
     private Transform player; // 플레이어의 Transform
     public float detectionRange = 20f; // 적이 플레이어에 접근하는 거리 기준
+    public float maxShakeMagnitude = 0.3f; // 최대 진동 강도
     public float shakeDuration = 0.1f; // 진동 지속 시간
-    public float shakeMagnitude = 0.1f; // 진동 강도
-    public float shakeInterval = 0.1f; // 진동 간격 (1초마다 진동)
+    public float shakeInterval = 0.5f; // 진동 간격
     public AudioSource footstepSound; // 발소리 오디오 소스
 
     private CameraShake cameraShake;
@@ -45,18 +45,31 @@ public class EnemyProximity : MonoBehaviour
             {
                 StartCoroutine(ShakeAndPlaySoundRepeatedly());
             }
+
+            // 거리 비례하여 진동 강도 및 발소리 볼륨 계산
+            float proximity = 1 - (distance / detectionRange); // 가까울수록 1에 가깝고, 멀수록 0에 가까움
+            float currentShakeMagnitude = Mathf.Lerp(0, maxShakeMagnitude, proximity);
+            float currentVolume = Mathf.Lerp(0, 1, proximity);
+
+            if (footstepSound != null)
+            {
+                footstepSound.volume = currentVolume;
+            }
+
+            // 진동 강도를 카메라 흔들기 함수에 전달
+            cameraShake.SetShakeMagnitude(currentShakeMagnitude);
         }
         else
         {
             StopAllCoroutines();
             isShaking = false;
+
             if (footstepSound != null && footstepSound.isPlaying)
             {
                 footstepSound.Stop(); // 범위에서 벗어나면 발소리 멈춤
             }
         }
     }
-
 
     IEnumerator ShakeAndPlaySoundRepeatedly()
     {
@@ -65,10 +78,13 @@ public class EnemyProximity : MonoBehaviour
         while (isShaking)
         {
             // 진동 시작
-            StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
+            if (cameraShake != null)
+            {
+                StartCoroutine(cameraShake.Shake(shakeDuration));
+            }
 
             // 발소리 재생
-            if (footstepSound != null)
+            if (footstepSound != null && !footstepSound.isPlaying)
             {
                 footstepSound.Play();
             }

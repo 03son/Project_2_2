@@ -1,25 +1,33 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class CameraShake : MonoBehaviour
 {
-    public IEnumerator Shake(float duration, float magnitude)
+    private float shakeMagnitude = 0.1f; // 기본 진동 강도
+
+    public void SetShakeMagnitude(float magnitude)
     {
-        Vector3 originalPosition = transform.localPosition; // 원래 카메라 위치 저장
+        shakeMagnitude = magnitude; // 진동 강도를 설정
+    }
+
+    public IEnumerator Shake(float duration)
+    {
+        Vector3 originalPosition = transform.localPosition;
+
         float elapsed = 0.0f;
 
         while (elapsed < duration)
         {
-            float x = Random.Range(-1f, 1f) * magnitude; // 진동 크기만큼 랜덤으로 이동
-            float y = Random.Range(-1f, 1f) * magnitude;
+            float offsetX = Random.Range(-1f, 1f) * shakeMagnitude;
+            float offsetY = Random.Range(-1f, 1f) * shakeMagnitude;
 
-            transform.localPosition = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
+            transform.localPosition = new Vector3(originalPosition.x + offsetX, originalPosition.y + offsetY, originalPosition.z);
 
-            elapsed += Time.deltaTime; // 시간 경과
+            elapsed += Time.deltaTime;
 
-            yield return null; // 프레임마다 대기
+            yield return null;
         }
 
-        transform.localPosition = originalPosition; // 진동 후 원래 위치로 복구
+        transform.localPosition = originalPosition;
     }
 }

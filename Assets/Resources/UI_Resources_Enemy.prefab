@@ -283,8 +283,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 25
+  maxShakeMagnitude: 0.065
   shakeDuration: 0.1
-  shakeMagnitude: 0.065
   shakeInterval: 0.5
   footstepSound: {fileID: 1734623120430788607}
 --- !u!82 &1734623120430788607
