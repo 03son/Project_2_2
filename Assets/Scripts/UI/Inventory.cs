@@ -59,26 +59,36 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        if (pv.IsMine)
+        if (PhotonNetwork.IsConnected)
         {
-            ConnectUi_itemSlot();
-
-            slots = new ItemSlot[ui_itemSlot.Length];
-
-            for (int i = 0; i < slots.Length; i++)
+            if (pv.IsMine)
             {
-                slots[i] = new ItemSlot();
-                ui_itemSlot[i].Clear();
+                SetInven();
             }
-
-            dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
-
-            playerState = GetComponent<PlayerState>();
-
-            ClearSelectItemWindows();
+        }
+        else
+        {
+            SetInven();
         }
     }
+    void SetInven()
+    {
+        ConnectUi_itemSlot();
 
+        slots = new ItemSlot[ui_itemSlot.Length];
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = new ItemSlot();
+            ui_itemSlot[i].Clear();
+        }
+
+        dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
+
+        playerState = GetComponent<PlayerState>();
+
+        ClearSelectItemWindows();
+    }
     void ConnectUi_itemSlot()
     {
         ui_itemSlot[0] = GameObject.Find("ItemSlot").GetComponent<ItemSlotUI>();
