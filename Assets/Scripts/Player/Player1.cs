@@ -47,7 +47,6 @@ public class Player1 : MonoBehaviour
             notMine();
         }
     }
-
     // Update is called once per frame
     void Update()
     {

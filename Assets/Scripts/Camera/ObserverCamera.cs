@@ -1,7 +1,9 @@
 ﻿using Cinemachine;
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using static PlayerState;
@@ -15,12 +17,16 @@ public class ObserverCamera : MonoBehaviour
     //플레이어들 오브젝트 목록
     GameObject[] playerObjects = new GameObject[4];
 
+    TextMeshProUGUI NickNameText;
+
     bool FirstRun;
 
     PlayerState playerState;
     PlayerState.playerState state;
 
     int playerNumber = 0;
+
+    bool escMenu = false;
     void Start()
     {
         if (PhotonNetwork.IsConnected)
@@ -48,14 +54,42 @@ public class ObserverCamera : MonoBehaviour
 
         FirstRun = true;
     }
+    private void OnEnable()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
 
+            NickNameText = GameObject.Find("NickNameText").GetComponent<TextMeshProUGUI>();
+            NickNameText.text = PhotonNetwork.LocalPlayer.NickName;
+        }
+    }
+    public CinemachineFreeLook freeLookCamera;
+
+    private float lastXAxisValue; // 마지막 X축 값
+    private float lastYAxisValue; // 마지막 Y축 값
     void Update()
     {
         if (PhotonNetwork.IsConnected)
         {
-            //esc 창이 열려있으면 ,open esc
-            GetComponent<CinemachineFreeLook>().enabled =
-            CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu ? false : true;
+            freeLookCamera = GetComponent<CinemachineFreeLook>();
+            if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu)
+            {
+                if (!escMenu)
+                {
+                    escMenu = true;
+                    LockRotation();
+                    return;
+                }
+            }
+            if(CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu == false)
+            {
+                if (escMenu)
+                {
+                    escMenu = false;
+                    UnlockRotation();
+                    return;
+                }
+            }
         }
     }
 
@@ -111,21 +145,25 @@ public class ObserverCamera : MonoBehaviour
                     target = playerObjects[index].transform;
                     CameraMove();
                     LookAround();
+                    PlayerNickName();
                     break;
                 case 1:
                     target = playerObjects[index].transform;
                     CameraMove();
                     LookAround();
+                    PlayerNickName();
                     break;
                 case 2:
                     target = playerObjects[index].transform;
                     CameraMove();
                     LookAround();
+                    PlayerNickName();
                     break;
                 case 3:
                     target = playerObjects[index].transform;
                     CameraMove();
                     LookAround();
+                    PlayerNickName();
                     break;
             }
         }
@@ -139,6 +177,11 @@ public class ObserverCamera : MonoBehaviour
         FirstRun = true;
     }
 
+    void PlayerNickName()
+    {
+        NickNameText.text = playerObjects[playerNumber].GetComponent<PhotonView>().Owner.NickName;
+    }
+
     private void CameraMove()
     {
         GetComponent<CinemachineFreeLook>().Follow = target;
@@ -147,5 +190,32 @@ public class ObserverCamera : MonoBehaviour
     private void LookAround()
     {
         GetComponent<CinemachineFreeLook>().LookAt = target;
-    }   
+    }
+
+    public void LockRotation()
+    {
+        // 입력을 비활성화하여 카메라 회전 고정
+        freeLookCamera.m_XAxis.m_InputAxisName = ""; // X축(수평) 입력 제거
+        freeLookCamera.m_YAxis.m_InputAxisName = ""; // Y축(수직) 입력 제거
+
+        // 현재 X축과 Y축 값을 저장
+        lastXAxisValue = freeLookCamera.m_XAxis.Value;
+        lastYAxisValue = freeLookCamera.m_YAxis.Value;
+
+        // 저장된 값을 회전값으로 고정
+        freeLookCamera.m_XAxis.Value = lastXAxisValue;
+        freeLookCamera.m_YAxis.Value = lastYAxisValue;
+
+        freeLookCamera.m_YAxis.m_MaxSpeed = 0;
+        freeLookCamera.m_XAxis.m_MaxSpeed = 0;
+    }
+    public void UnlockRotation()
+    {
+        // 입력 복원하여 카메라 회전 활성화
+        freeLookCamera.m_XAxis.m_InputAxisName = "Mouse X";
+        freeLookCamera.m_YAxis.m_InputAxisName = "Mouse Y";
+
+        freeLookCamera.m_YAxis.m_MaxSpeed = 2;
+        freeLookCamera.m_XAxis.m_MaxSpeed = 300;
+    }
 }
