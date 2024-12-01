@@ -143,6 +143,15 @@ public class Player_Equip : MonoBehaviour
 
     public void SetEquipItem(string item)
     {
+
+        // 유리컵을 장착한 경우 던질 수 있도록 설정
+        if (item == "GlassCup")
+        {
+            hasGlassCup = true;
+            currentGlassCup = Item;
+        }
+
+
         if (Item != null)
             Destroy(Item);
 
