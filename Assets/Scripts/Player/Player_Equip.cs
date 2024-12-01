@@ -170,8 +170,15 @@ public class Player_Equip : MonoBehaviour
                 // 아이템 복제
                 GameObject itemForOthers = Instantiate(Item);
 
-                // 복제한 아이템의 레이어 변경 (3인칭용으로 설정)
-                itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
+                // 본인의 경우, LocalPlayerBody 레이어 설정
+                if (pv.IsMine)
+                {
+                    itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
+                }
+                else // 다른 플레이어의 경우, RemotePlayerBody 레이어 설정
+                {
+                    itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
+                }
 
                 // 3인칭 모델링의 왼손 위치에 장착
                 itemForOthers.transform.SetParent(thirdPersonHand);
@@ -183,6 +190,7 @@ public class Player_Equip : MonoBehaviour
             }
         }
     }
+
 
 
 
