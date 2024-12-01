@@ -7054,40 +7054,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &4226141952648646952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4615742892516559649}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &4268734592219119818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7215,8 +7181,8 @@ GameObject:
   - component: {fileID: 6934854050855213242}
   - component: {fileID: 1019405169916074366}
   - component: {fileID: 8097146714274682412}
-  - component: {fileID: 4226141952648646952}
   - component: {fileID: 8097146714274682413}
+  - component: {fileID: 8097146714274682414}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7657,6 +7623,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116f682c3a203e940b7f6c7567f464c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8097146714274682414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4615742892516559649}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df13e7b18a348c4aac8406dc6fe8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 10
+  shakeIntensity: 0.2
+  shakeDuration: 0.5
 --- !u!1 &8331061890701079442
 GameObject:
   m_ObjectHideFlags: 0

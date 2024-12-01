@@ -18,6 +18,8 @@ public class ItemPickup : MonoBehaviourPun
         {
             // Photon RPC로 모든 클라이언트에서 비활성화
             photonView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
+
+           
         }
         else
         {
@@ -25,4 +27,5 @@ public class ItemPickup : MonoBehaviourPun
             gameObject.SetActive(false);
         }
     }
+
 }

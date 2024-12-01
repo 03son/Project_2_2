@@ -153,6 +153,17 @@ public class Player_Equip : MonoBehaviour
         Item.transform.localPosition = Vector3.zero;
         Item.transform.localRotation = Quaternion.identity;
 
+        // 아이템의 PhotonView 가져오기
+        PhotonView itemPhotonView = Item.GetComponent<PhotonView>();
+        if (itemPhotonView != null && !itemPhotonView.IsMine)
+        {
+            // 아이템의 소유권 요청
+            itemPhotonView.RequestOwnership();
+
+            // 소유권 전환 방식을 Takeover로 설정
+            itemPhotonView.OwnershipTransfer = OwnershipOption.Takeover;
+        }
+
         // 3인칭 모델링에도 아이템 장착 (다른 사람이 보는 것)
         Transform thirdPersonHand = transform.Find("토끼모델링/rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:LeftShoulder/rabbit:LeftArm/rabbit:LeftForeArm/rabbit:LeftHand/rabbit:LeftHandIndex1/rabbit:LeftHandIndex2/rabbit:LeftHandIndex3/itemhand");
 
@@ -185,6 +196,16 @@ public class Player_Equip : MonoBehaviour
         // 아이템 복제
         GameObject itemForOthers = Instantiate(itemPrefab);
 
+        // PhotonView 컴포넌트가 있는지 확인하고 추가
+        PhotonView itemPhotonView = itemForOthers.GetComponent<PhotonView>();
+        if (itemPhotonView == null)
+        {
+            itemPhotonView = itemForOthers.AddComponent<PhotonView>();
+            itemPhotonView.OwnershipTransfer = OwnershipOption.Takeover;
+        }
+
+       
+
         // 본인의 경우, LocalPlayerBody 레이어 설정
         if (pv.IsMine)
         {
@@ -195,10 +216,20 @@ public class Player_Equip : MonoBehaviour
             itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
         }
 
+        // 소유권 요청 및 설정
+        if (!itemPhotonView.IsMine)
+        {
+            itemPhotonView.RequestOwnership();
+            itemPhotonView.OwnershipTransfer = OwnershipOption.Takeover;
+        }
+
+
         // 3인칭 모델링의 왼손 위치에 장착
         itemForOthers.transform.SetParent(thirdPersonHand);
         itemForOthers.transform.localPosition = Vector3.zero;
         itemForOthers.transform.localRotation = Quaternion.identity;
+
+        
 
         // 3인칭용 아이템의 크기 설정 (크기 조정 예시)
         itemForOthers.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f);

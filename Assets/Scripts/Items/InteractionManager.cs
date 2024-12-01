@@ -112,6 +112,15 @@ public class InteractionManager : MonoBehaviour
                 PhotonView itemView = curInteractGameobject.GetComponent<PhotonView>();
                 if (itemView != null)
                 {
+                    // 아이템의 소유권을 획득
+                    if (!itemView.IsMine)
+                    {
+                        itemView.RequestOwnership(); // 소유권 요청
+                    }
+                    // 소유권 전환 방식을 Takeover로 설정
+                    itemView.OwnershipTransfer = OwnershipOption.Takeover;
+
+                    // 아이템 비활성화 처리를 모든 클라이언트에 동기화
                     itemView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
                 }
             }
@@ -127,4 +136,5 @@ public class InteractionManager : MonoBehaviour
             Crosshair.Not_Interaction();
         }
     }
+
 }

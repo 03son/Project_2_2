@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 750072059765496300}
   m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,6 +138,7 @@ MonoBehaviour:
   fieldOfView: 120
   hearingRange: 15
   minDecibelToDetect: 30
+  currentState: 0
 --- !u!114 &5381806166814717864
 MonoBehaviour:
   m_ObjectHideFlags: 0
