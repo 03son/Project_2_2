@@ -66,7 +66,7 @@ public class ItemManager : MonoBehaviourPun
                     Player_Equip playerEquip = player.GetComponent<Player_Equip>();
                     if (playerEquip != null)
                     {
-                        playerEquip.RPC_SetEquipItemForOthers(item.name);
+                    //    playerEquip.RPC_SetEquipItemForOthers(item.name);
                     }
                 }
             }

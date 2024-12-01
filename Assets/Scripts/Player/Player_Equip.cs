@@ -141,17 +141,8 @@ public class Player_Equip : MonoBehaviour
         }
     }
 
-    public void SetEquipItem(string item)
+    public void setEquipItem(string item)
     {
-
-        // 유리컵을 장착한 경우 던질 수 있도록 설정
-        if (item == "GlassCup")
-        {
-            hasGlassCup = true;
-            currentGlassCup = Item;
-        }
-
-
         if (Item != null)
             Destroy(Item);
 
@@ -162,88 +153,36 @@ public class Player_Equip : MonoBehaviour
         Item.transform.localPosition = Vector3.zero;
         Item.transform.localRotation = Quaternion.identity;
 
-        // 아이템의 PhotonView 가져오기
-        PhotonView itemPhotonView = Item.GetComponent<PhotonView>();
-        if (itemPhotonView != null && !itemPhotonView.IsMine)
+        // 유리컵을 장착한 경우 던질 수 있도록 설정
+        if (item == "GlassCup")
         {
-            // 아이템의 소유권 요청
-            itemPhotonView.RequestOwnership();
-
-            // 소유권 전환 방식을 Takeover로 설정
-            itemPhotonView.OwnershipTransfer = OwnershipOption.Takeover;
+            hasGlassCup = true;
+            currentGlassCup = Item;
         }
 
         // 3인칭 모델링에도 아이템 장착 (다른 사람이 보는 것)
-        Transform thirdPersonHand = transform.Find("토끼모델링/rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:LeftShoulder/rabbit:LeftArm/rabbit:LeftForeArm/rabbit:LeftHand/rabbit:LeftHandIndex1/rabbit:LeftHandIndex2/rabbit:LeftHandIndex3/itemhand");
-
-        if (thirdPersonHand != null)
-        {
-            // 아이템을 복제하여 모든 클라이언트에 반영하기 위해 RPC 호출
-            pv.RPC("RPC_SetEquipItemForOthers", RpcTarget.AllBuffered, item);
-        }
-    }
-
-    [PunRPC]
-    public void RPC_SetEquipItemForOthers(string item)
-    {
-        // 정확한 경로로 수정된 부분
-        Transform thirdPersonHand = transform.Find("토끼모델링/rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:LeftShoulder/rabbit:LeftArm/rabbit:LeftForeArm/rabbit:LeftHand/rabbit:LeftHandIndex1/rabbit:LeftHandIndex2/rabbit:LeftHandIndex3/itemhand");
-
-        if (thirdPersonHand == null)
-        {
-            Debug.LogError("Cannot find third person hand transform. Please check the path.");
-            return;
-        }
-
-        // 아이템을 리소스에서 동적으로 불러오기
-        GameObject itemPrefab = Resources.Load<GameObject>($"Prefabs/Items/{item}");
-        if (itemPrefab == null)
-        {
-            Debug.LogError($"Item prefab '{item}' could not be found in Resources.");
-            return;
-        }
-        // 아이템 복제
-        GameObject itemForOthers = Instantiate(itemPrefab);
-
-        // PhotonView 컴포넌트가 있는지 확인하고 추가
-        PhotonView itemPhotonView = itemForOthers.GetComponent<PhotonView>();
-        if (itemPhotonView == null)
-        {
-            itemPhotonView = itemForOthers.AddComponent<PhotonView>();
-            itemPhotonView.OwnershipTransfer = OwnershipOption.Takeover;
-        }
-
-       
-
-        // 본인의 경우, LocalPlayerBody 레이어 설정
         if (pv.IsMine)
         {
-            itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
+            Transform thirdPersonHand = transform.Find("토끼모델링/rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:LeftShoulder/rabbit:LeftArm/rabbit:LeftForeArm/rabbit:LeftHand/rabbit:LeftHandIndex1/rabbit:LeftHandIndex2/rabbit:LeftHandIndex3/itemhand");
+
+            if (thirdPersonHand != null)
+            {
+                // 아이템 복제
+                GameObject itemForOthers = Instantiate(Item);
+
+                // 복제한 아이템의 레이어 변경 (3인칭용으로 설정)
+                itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
+
+                // 3인칭 모델링의 왼손 위치에 장착
+                itemForOthers.transform.SetParent(thirdPersonHand);
+                itemForOthers.transform.localPosition = Vector3.zero;
+                itemForOthers.transform.localRotation = Quaternion.identity;
+
+                // 3인칭용 아이템의 크기 설정 (크기 조정 예시)
+                itemForOthers.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f); // 3인칭 아이템 크기 더 크게 설정
+            }
         }
-        else // 다른 플레이어의 경우, RemotePlayerBody 레이어 설정
-        {
-            itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
-        }
-
-        // 소유권 요청 및 설정
-        if (!itemPhotonView.IsMine)
-        {
-            itemPhotonView.RequestOwnership();
-            itemPhotonView.OwnershipTransfer = OwnershipOption.Takeover;
-        }
-
-
-        // 3인칭 모델링의 왼손 위치에 장착
-        itemForOthers.transform.SetParent(thirdPersonHand);
-        itemForOthers.transform.localPosition = Vector3.zero;
-        itemForOthers.transform.localRotation = Quaternion.identity;
-
-        
-
-        // 3인칭용 아이템의 크기 설정 (크기 조정 예시)
-        itemForOthers.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f);
     }
-
 
 
 
@@ -291,7 +230,7 @@ public class Player_Equip : MonoBehaviour
 
             if (inventory.slots[index - 1].item != null)
             {
-                SetEquipItem(inventory.slots[index - 1].item.name);
+                setEquipItem(inventory.slots[index - 1].item.name);
                 inventory.EquipItem(Item); // 장착된 아이템을 Inventory에도 반영
 
                 //아이템 이름 출력
