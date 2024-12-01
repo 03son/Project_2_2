@@ -153,7 +153,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5544210761962123603}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 981f4e4466c698c4bbeab7287d02572c, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 8cf885a6c80a26044b08dafba8951684, type: 3}
   m_Controller: {fileID: 9100000, guid: 33b31578b8b15b547b0ddc75c756a39b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9cf8742ce3a9f746900a2a4c6a6bbd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Flashlight
+  item: {fileID: 11400000, guid: 434d5feddd823074793ee01915cf859a, type: 2}
 --- !u!114 &7129547770309612214
 MonoBehaviour:
   m_ObjectHideFlags: 0

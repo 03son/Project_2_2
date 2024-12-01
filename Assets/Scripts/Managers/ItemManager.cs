@@ -1,47 +1,27 @@
-using System.Collections.Generic; // Dictionary 사용을 위해 필요
-using UnityEngine; // Unity 기본 API
-using Photon.Pun; // Photon 네트워크 동기화를 위해 필요
+using System.Collections.Generic;
+using UnityEngine;
+using Photon.Pun;
 
-public class ItemManager : MonoBehaviourPun // Photon 동기화를 위해 photonView 사용
+public class ItemManager : MonoBehaviourPun
 {
-    // 싱글톤 패턴으로 쉽게 접근할 수 있도록 설정
     public static ItemManager Instance;
 
-    // 아이템 상태를 저장할 Dictionary (이름, 획득 여부)
     private Dictionary<string, bool> itemStates = new Dictionary<string, bool>();
 
     private void Awake()
     {
-        // 싱글톤 초기화
         if (Instance == null)
         {
             Instance = this;
         }
         else
         {
-            Destroy(gameObject); // 중복된 ItemManager가 있으면 제거
+            Destroy(gameObject);
         }
     }
 
-    // 아이템 상태를 변경 (획득 처리)
-    public void SetItemState(string itemName, bool isPickedUp)
-    {
-        if (!itemStates.ContainsKey(itemName))
-        {
-            itemStates.Add(itemName, isPickedUp); // 새로운 아이템이면 추가
-        }
-        else
-        {
-            itemStates[itemName] = isPickedUp; // 기존 아이템이면 상태 업데이트
-        }
-
-        // 모든 클라이언트에 상태 동기화
-        photonView.RPC("SyncItemState", RpcTarget.AllBuffered, itemName, isPickedUp);
-    }
-
-    // 아이템 상태 동기화 (RPC로 호출)
-    [PunRPC]
-    private void SyncItemState(string itemName, bool isPickedUp)
+    // 아이템 상태를 설정하고 동기화하는 메서드
+    public void SetItemState(string itemName, bool isPickedUp, PhotonView playerPhotonView)
     {
         if (!itemStates.ContainsKey(itemName))
         {
@@ -52,11 +32,44 @@ public class ItemManager : MonoBehaviourPun // Photon 동기화를 위해 photonView �
             itemStates[itemName] = isPickedUp;
         }
 
-        // 해당 아이템 비활성화 처리
+        // 모든 클라이언트에 상태 동기화
+        photonView.RPC("SyncItemState", RpcTarget.AllBuffered, itemName, isPickedUp, playerPhotonView.ViewID);
+    }
+
+    // 아이템 상태 동기화 (RPC로 호출)
+    [PunRPC]
+    private void SyncItemState(string itemName, bool isPickedUp, int playerViewID)
+    {
+        if (!itemStates.ContainsKey(itemName))
+        {
+            itemStates.Add(itemName, isPickedUp);
+        }
+        else
+        {
+            itemStates[itemName] = isPickedUp;
+        }
+
+        // 아이템이 획득된 경우, 해당 아이템을 비활성화하고 플레이어에 장착
         GameObject item = GameObject.Find(itemName);
         if (item != null)
         {
             item.SetActive(!isPickedUp); // 획득된 아이템이면 비활성화
+
+            if (isPickedUp)
+            {
+                // 플레이어 객체를 찾고 아이템을 손 위치에 장착
+                PhotonView playerPhotonView = PhotonView.Find(playerViewID);
+                if (playerPhotonView != null)
+                {
+                    GameObject player = playerPhotonView.gameObject;
+                    // 이미 손에 장착하는 부분이 구현되어 있으므로, 그 함수를 호출
+                    Player_Equip playerEquip = player.GetComponent<Player_Equip>();
+                    if (playerEquip != null)
+                    {
+                        playerEquip.RPC_SetEquipItemForOthers(item.name);
+                    }
+                }
+            }
         }
     }
 
@@ -64,12 +77,5 @@ public class ItemManager : MonoBehaviourPun // Photon 동기화를 위해 photonView �
     public bool GetItemState(string itemName)
     {
         return itemStates.ContainsKey(itemName) && itemStates[itemName];
-    }
-
-    [PunRPC] // RPC 어트리뷰트 추가
-    public void RPC_HandleItemPickup()
-    {
-        // 아이템 비활성화 처리
-        gameObject.SetActive(false);
     }
 }
