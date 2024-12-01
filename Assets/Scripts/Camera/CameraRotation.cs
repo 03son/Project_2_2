@@ -24,6 +24,8 @@ public class CameraRot : MonoBehaviour
     PlayerState.playerState state;
 
     public bool popup_escMenu = false; //esc T/F����
+
+    public bool isControlledExternally = false;  // 외부에서 카메라를 제어하는 동안 true로 설정
     void Awake()
     {
        
@@ -87,10 +89,13 @@ public class CameraRot : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (popup_escMenu && state == PlayerState.playerState.생존) //esc â�� ���������� ī�޶� ȸ��X
+        if (popup_escMenu && state == PlayerState.playerState.생존)
             return;
 
-        mouseSpeed = GameInfo.MouseSensitivity; //���� ����ȭ
+        if (isControlledExternally)
+            return; // 외부에서 제어 중일 때는 Update 중단
+
+        mouseSpeed = GameInfo.MouseSensitivity;
 
         if (PhotonNetwork.IsConnected)
         {
