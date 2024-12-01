@@ -19,7 +19,7 @@ public class ObserverCamera : MonoBehaviour
 
     TextMeshProUGUI NickNameText;
 
-    bool FirstRun;
+    public bool FirstRun;
 
     PlayerState playerState;
     PlayerState.playerState state;
