@@ -50,10 +50,7 @@ public class Brightness : MonoBehaviour
         brightnessImage.color = new Color(brightnessValue, brightnessValue, brightnessValue, Mathf.Lerp(0f, 1f, brightness.value));
 
         PlayerPrefs.SetFloat("brightnessValue", brightness.value);
-
-        if (sceneName.name == "UI") //인게임이면 변경된 값을 바로 적용
-        {
-            GameObject.Find("Global Volume").GetComponent<GlobalVolume>().SetVolumeEffect();
-        }
+       
+        GameObject.Find("Global Volume").GetComponent<GlobalVolume>().SetVolumeEffect();
     }
 }
