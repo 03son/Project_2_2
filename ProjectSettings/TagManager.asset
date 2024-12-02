@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - EquipItem
+  - Camera
+  - Enemy\
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,9 +18,9 @@ TagManager:
   - Item
   - Equip
   - Enemy
-  - 
-  - 
-  - 
+  - PlayerBody
+  - LocalPlayerBody
+  - RemotePlayerBody
   - 
   - 
   - 

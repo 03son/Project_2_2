@@ -30,10 +30,20 @@ public class Player_Equip : MonoBehaviour
     private float chargeTime = 0f;
     private bool hasGlassCup = false;
     private GameObject currentGlassCup;
+    private Animator animator;           // Animator 추가
+    private CharacterController characterController;
+    private bool isFlashlightOn = false; // 손전등 상태를 저장할 변수
 
     void Start()
     {
         pv = GetComponent<PhotonView>();
+
+        // PhotonView가 null인지 체크
+        if (pv == null)
+        {
+            Debug.LogError("PhotonView component not found.");
+            return;
+        }
         playerState = GetComponent<PlayerState>();
 
         ConnectUi_itemSlot();
@@ -41,13 +51,21 @@ public class Player_Equip : MonoBehaviour
         invenSlot[0].GetComponent<ItemSlotUI>().equipped = true;
 
         inventory = GetComponent<Inventory>();
-        equipItem = GameObject.Find("EquipItem").gameObject;
+        equipItem = GameObject.Find("handitemattach").gameObject;
         ItemName = GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
         ItemName.text = "";
 
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;  // 궤적 표시 초기화
+        }
+
+        // Animator 컴포넌트 가져오기
+        animator = GetComponent<Animator>();
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator 컴포넌트를 찾을 수 없습니다. 플레이어 오브젝트에 Animator가 있어야 합니다.");
         }
     }
 
@@ -75,6 +93,9 @@ public class Player_Equip : MonoBehaviour
         {
             CancelThrow();
         }
+        // 아이템 장착 상태에 따라 애니메이션 파라미터 설정
+        bool isHoldingAnyItem = HasAnyEquippedItem();
+        animator.SetBool("isHoldingItem", isHoldingAnyItem);
     }
 
     void ConnectUi_itemSlot()
@@ -125,6 +146,7 @@ public class Player_Equip : MonoBehaviour
         if (Item != null)
             Destroy(Item);
 
+        // 1인칭 손 모델링에 장착 (본인이 보는 것)
         Item = resoure.Instantiate($"Items/{item}");
         Item.layer = LayerMask.NameToLayer("Equip");
         Item.transform.SetParent(equipItem.transform);
@@ -137,7 +159,43 @@ public class Player_Equip : MonoBehaviour
             hasGlassCup = true;
             currentGlassCup = Item;
         }
+
+        // 3인칭 모델링에도 아이템 장착 (다른 사람이 보는 것)
+        if (pv.IsMine)
+        {
+            Transform thirdPersonHand = transform.Find("토끼모델링/rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:LeftShoulder/rabbit:LeftArm/rabbit:LeftForeArm/rabbit:LeftHand/rabbit:LeftHandIndex1/rabbit:LeftHandIndex2/rabbit:LeftHandIndex3/itemhand");
+
+            if (thirdPersonHand != null)
+            {
+                // 아이템 복제
+                GameObject itemForOthers = Instantiate(Item);
+
+                // 본인의 경우, LocalPlayerBody 레이어 설정
+                if (pv.IsMine)
+                {
+                    itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
+                }
+                else // 다른 플레이어의 경우, RemotePlayerBody 레이어 설정
+                {
+                    itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
+                }
+
+                // 3인칭 모델링의 왼손 위치에 장착
+                itemForOthers.transform.SetParent(thirdPersonHand);
+                itemForOthers.transform.localPosition = Vector3.zero;
+                itemForOthers.transform.localRotation = Quaternion.identity;
+
+                // 3인칭용 아이템의 크기 설정 (크기 조정 예시)
+                itemForOthers.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f); // 3인칭 아이템 크기 더 크게 설정
+            }
+        }
     }
+
+
+
+
+
+
 
     void numberKey()
     {
@@ -203,11 +261,18 @@ public class Player_Equip : MonoBehaviour
             if (Item.name == "Flashlight")
             {
                 Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
-                if (flashlightScript != null)
+               if (flashlightScript != null)
                 {
                     Debug.Log("손전등 획득 및 사용");
                     flashlightScript.AcquireFlashlight();
-                }
+
+                    // 손전등 켜기/끄기 처리
+                    isFlashlightOn = !isFlashlightOn;
+                //    flashlightScript.ToggleFlashlight(isFlashlightOn);
+
+                    // 애니메이션 파라미터 설정
+                    animator.SetBool("isFlashlightOn", isFlashlightOn);
+                } 
             }
             // 유리컵 아이템 처리
             else if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
@@ -227,9 +292,39 @@ public class Player_Equip : MonoBehaviour
             }
         }
     }
+    public void ChangeOrRemoveItem()
+    {
+        // 현재 장착 중인 아이템이 손전등인지 확인
+        if (Item != null && Item.name == "Flashlight")
+        {
+            // 손전등이 켜져 있는 상태에서 아이템을 변경하거나 버리는 경우, 애니메이션 파라미터 초기화
+            if (isFlashlightOn)
+            {
+                isFlashlightOn = false;
+                animator.SetBool("isFlashlightOn", false);
+            }
+        }
+
+        // 기존 아이템을 제거하기 전에 항상 애니메이션 상태를 초기화
+        if (animator != null)
+        {
+            // 손전등이 켜져 있는 애니메이션을 포함하여 모든 아이템 관련 상태를 초기화
+            animator.SetBool("isFlashlightOn", false);
+            animator.SetBool("isHoldingItem", false);
+        }
+
+        // 기존 아이템을 제거
+        if (Item != null)
+        {
+            Destroy(Item);
+            Item = null;
+            ItemName.text = "";
+        }
+    }
 
 
-       
+
+
 
 
     void StartThrowing()
@@ -245,8 +340,12 @@ public class Player_Equip : MonoBehaviour
 
     void ChargeThrow()
     {
+        isCharging = true;
         chargeTime += Time.deltaTime;
         float currentForce = Mathf.Min(chargeTime * throwForce, maxForce);
+
+        // 애니메이터 파라미터 설정: 충전 중인 상태
+        animator.SetBool("isChargingThrow", true);
 
         // 궤적 업데이트
         Vector3 throwDirection = Camera.main.transform.forward;
@@ -278,16 +377,22 @@ public class Player_Equip : MonoBehaviour
             if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
-            } 
+            }
 
-                hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
-           currentGlassCup = null;  // 유리컵 참조 해제
+            hasGlassCup = false;  // 던진 후 유리컵 소지 상태 해제
+            currentGlassCup = null;  // 유리컵 참조 해제
 
             if (trajectoryLine != null)
             {
                 trajectoryLine.enabled = false;  // 궤적 표시 비활성화
             }
         }
+
+        // 충전 중 상태 해제
+        animator.SetBool("isChargingThrow", false);
+
+        // 던지기 애니메이션 트리거 설정
+        animator.SetTrigger("isThrowing");
 
         isCharging = false;
     }
@@ -298,6 +403,9 @@ public class Player_Equip : MonoBehaviour
         isCharging = false;
         chargeTime = 0f;
 
+        // 충전 상태 해제
+        animator.SetBool("isChargingThrow", false);
+
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;  // 궤적 표시 비활성화
@@ -305,6 +413,7 @@ public class Player_Equip : MonoBehaviour
 
         Debug.Log("던지기 취소됨");
     }
+
 
 
 
@@ -352,6 +461,22 @@ public class Player_Equip : MonoBehaviour
             return;
         }
     }
+
+    public bool HasEquippedCrowBar()
+    {
+        // CrowBar 아이템이 장착되어 있는지 확인
+        Transform crowBarObject = equipItem.transform.Find("CrowBar");
+        if (crowBarObject != null)
+        {
+            ItemObject equippedItem = crowBarObject.GetComponent<ItemObject>();
+            if (equippedItem != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public bool HasEquippedKey()
     {
@@ -443,6 +568,13 @@ public class Player_Equip : MonoBehaviour
             }
         }
         return false; // 장착된 아이템이 없으면 false 반환
+    }
+
+    public bool HasAnyEquippedItem()
+    {
+        // equipItem의 모든 자식에서 ItemObject 컴포넌트를 검색하여 아이템이 장착되어 있는지 확인
+        ItemObject[] equippedItems = equipItem.GetComponentsInChildren<ItemObject>();
+        return equippedItems.Length > 0; // 하나라도 장착되어 있으면 true 반환
     }
 
 

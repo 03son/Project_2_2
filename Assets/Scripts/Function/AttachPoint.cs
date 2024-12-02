@@ -24,14 +24,13 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             return;
         }
 
-        Inventory inventory = Inventory.instance;
-
-        if (inventory.HasItem(requiredItemName))
+        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
+        if (playerEquip != null && playerEquip.HasEquippedItem(requiredItemName))
         {
-            Debug.Log($"{requiredItemName} 아이템이 인벤토리에 있음. 부착 시작");
+            Debug.Log($"{requiredItemName} 아이템이 장착되어 있음. 부착 시작");
 
             // 아이템 제거
-            inventory.RemoveItem(requiredItemName);
+            playerEquip.RemoveEquippedItem(requiredItemName);
 
             // 부착 상태 동기화 (RPC 호출)
             photonView.RPC("RPC_AttachItem", RpcTarget.All);
@@ -42,6 +41,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             Debug.Log($"{requiredItemName}이(가) 필요합니다.");
         }
     }
+
 
     [PunRPC]
     void RPC_AttachItem()

@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class PlayerDeathManager : MonoBehaviourPunCallbacks
 {
-    public GameObject deathEffect; // Á×À½ È¿°ú (¾Ö´Ï¸ÞÀÌ¼Ç, ÆÄÆ¼Å¬ µî)
+    public GameObject deathEffect; // ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ (ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½, ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½)
 
     PlayerState.playerState state;
     PlayerState playerState;
@@ -36,7 +36,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
             }
         }
 
-        //1ÀÎÄª È°¼ºÈ­
+        //1ï¿½ï¿½Äª È°ï¿½ï¿½È­
         CameraInfo.UseMainCam();
     }
 
@@ -58,15 +58,92 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     IEnumerator die()
     {
-        //UI ´Ù ²ô±â - ¸ó½ºÅÍ °ø°Ý ÀÌº¥Æ®
+        //UI ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®
         SetUICanvas.OpenUI("");
 
         yield return new WaitForSecondsRealtime(2);
 
-        //°üÀü Ä«¸Þ¶ó È°¼ºÈ­
+        //ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ È°ï¿½ï¿½È­
         CameraInfo.UseObserverCam();
 
-        //1ÀÎÄª UI ²ô°í °üÀü UIÄÑ±â
+        //1ï¿½ï¿½Äª UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UIï¿½Ñ±ï¿½
         SetUICanvas.OpenUI("Observer");
     }
 }
+
+   /* void Start()
+   {
+        /*   playerState = GetComponent<PlayerState>();
+           //state = GetComponent<PlayerState>().State;
+
+           GetComponent<PlayerState>().State = PlayerState.playerState.ï¿½ï¿½ï¿½ï¿½;
+           playerState.GetState(out state);
+           Debug.Log(state);
+       } 
+
+       private void OnTriggerEnter(Collider other)
+       {
+           if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+           {
+               GetComponent<PlayerState>().State = PlayerState.playerState.ï¿½ï¿½ï¿½ï¿½;
+               Debug.Log(GetComponent<PlayerState>().State);
+           }
+       } */
+
+
+/*
+public void Die()
+{
+    if (isDead) return;
+
+    isDead = true;
+    deathPosition = transform.position;
+
+    // ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ Ç¥ï¿½ï¿½
+    if (deathEffect != null)
+        Instantiate(deathEffect, deathPosition, Quaternion.identity);
+
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ù¸ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
+    //photonView.RPC("RPC_Die", RpcTarget.All, deathPosition);
+
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ß±ï¿½
+    GetComponent<PlayerMove>().enabled = false;
+    GetComponent<PlayerDash>().enabled = false;
+}
+
+//[PunRPC]
+void RPC_Die(Vector3 position)
+{
+    Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½: " + position);
+    isDead = true;
+
+    // ï¿½Ù¸ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ß±ï¿½
+    GetComponent<PlayerMove>().enabled = false;
+    GetComponent<PlayerDash>().enabled = false;
+}
+
+public void Revive()
+{
+    if (!isDead) return;
+
+    isDead = false;
+
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½È° ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    transform.position = deathPosition;
+    GetComponent<PlayerMove>().enabled = true;
+    GetComponent<PlayerDash>().enabled = true;
+
+    // ï¿½ï¿½È° ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½È­
+    photonView.RPC("RPC_Revive", RpcTarget.All);
+}
+
+//[PunRPC]
+void RPC_Revive()
+{
+    isDead = false;
+    GetComponent<PlayerMove>().enabled = true;
+    GetComponent<PlayerDash>().enabled = true;
+    Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½È°ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
+}
+
+} */

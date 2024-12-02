@@ -239,8 +239,14 @@ public class Inventory : MonoBehaviour
     void UnEquip(int index)
     {
         if (GetComponent<Player_Equip>().Item != null)
+        {
             Destroy(GetComponent<Player_Equip>().Item);
+            GetComponent<Player_Equip>().Item = null;
+
+            // 자동으로 다른 슬롯을 선택하지 않음
+        }
     }
+
 
     void RemoveSelectedItem()
     {
@@ -266,7 +272,7 @@ public class Inventory : MonoBehaviour
     void ThrowItem(itemData item)
     {
         Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-    }
+    } 
 
     private void Update()
     {
@@ -286,5 +292,18 @@ public class Inventory : MonoBehaviour
         equippedItemObject = itemObject;
     }
 
+   /* void ThrowItem(itemData item)
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            // PhotonNetwork를 사용해 프리팹 생성 (드롭 위치에)
+            PhotonNetwork.Instantiate(item.dropPerfab.name, dropPos.position, Quaternion.identity);
+        }
+        else
+        {
+            // 싱글플레이에서는 로컬에서만 생성
+            Instantiate(item.dropPerfab, dropPos.position, Quaternion.identity);
+        }
+    } */
 
 }

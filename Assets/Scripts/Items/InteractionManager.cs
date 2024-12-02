@@ -1,121 +1,140 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using Photon.Pun;
-using System;
+using Photon.Pun; // Photon ë„¤ì„ìŠ¤í˜ì´ìŠ¤
 using UnityEngine.UI;
 
 public interface IInteractable
 {
-    string GetInteractPrompt();//ÇÁ·ÒÇÁÆ® ¹Ş¾Æ¿À´Â ¸Ş¼­µå
-    void OnInteract();//»óÈ£ÀÛ¿ë ÈÄ ½ÇÇà µÉ ¸Ş¼­µå
+    string GetInteractPrompt(); // ìƒí˜¸ì‘ìš© í”„ë¡¬í”„íŠ¸ë¥¼ ë°˜í™˜
+    void OnInteract(); // ìƒí˜¸ì‘ìš© ì‹¤í–‰
 }
+
 public class InteractionManager : MonoBehaviour
-{   //¾ÆÀÌÅÛ »óÈ£ÀÛ¿ë ¸Å´ÏÀú
+{
+    public float checkRate = 0.05f; // ì²´í¬ ì£¼ê¸°
+    private float lastCheckTime;
+    public float maxCheckDistance; // ìƒí˜¸ì‘ìš© ìµœëŒ€ ê±°ë¦¬
+    public LayerMask layerMask; // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œ ë ˆì´ì–´
 
-    public float checkRate = 0.05f;
-    float lastCheckTime;
-    public float maxCheckDistance;
-    public LayerMask layerMask;
-
-    GameObject curInteractGameobject;
-    IInteractable curInteractable;
+    private GameObject curInteractGameobject;
+    private IInteractable curInteractable;
     public Crosshair_Image Crosshair;
 
-    new Camera camera;
+    private Camera camera;
+    private PhotonView pv;
+    private Animator animator; // ì• ë‹ˆë©”ì´í„°
 
-    PhotonView pv;
-
-    PlayerState.playerState state;
-    PlayerState playerState;
-
+    private PlayerState.playerState state;
+    private PlayerState playerState;
 
     void Start()
     {
-        if (PhotonNetwork.IsConnected) //¸ÖÆ¼
+        // Photon ì—°ê²° í™•ì¸
+        if (PhotonNetwork.IsConnected)
         {
             pv = GetComponent<PhotonView>();
-
-            if (!pv.IsMine)
-                return;
+            if (!pv.IsMine) return; // ìì‹ ì˜ ê°ì²´ê°€ ì•„ë‹ˆë©´ ì‹¤í–‰í•˜ì§€ ì•ŠìŒ
         }
 
         playerState = GetComponent<PlayerState>();
         Crosshair = GameObject.Find("Crosshair_Image").GetComponent<Crosshair_Image>();
-
         camera = Camera.main;
+
+        // Animator ì»´í¬ë„ŒíŠ¸ í™•ì¸
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogWarning("Animator ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì• ë‹ˆë©”ì´ì…˜ì´ ë¹„í™œì„±í™”ë©ë‹ˆë‹¤.");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            if (!pv.IsMine)
-                return;
-        }
+        // ìì‹ ì˜ ê°ì²´ë§Œ ë™ì‘
+        if (PhotonNetwork.IsConnected && !pv.IsMine) return;
 
-        //escÃ¢ÀÌ ¿­·ÁÀÖ°í ÇÃ·¹ÀÌ¾î°¡ Á×À½ÀÏ ¶§ ¸®ÅÏ
+        // ESC ë©”ë‰´ ë˜ëŠ” ì£½ìŒ ìƒíƒœì¼ ë•Œ ì¤‘ë‹¨
         playerState.GetState(out state);
         if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
             return;
 
-        //¸¶Áö¸·À¸·Î Ã¼Å©ÇÑ ½Ã°£ÀÌ checkRate¸¦ ³Ñ°å´Ù¸é
+        // ìƒí˜¸ì‘ìš© ëŒ€ìƒ í™•ì¸ (checkRate ì£¼ê¸°ë¡œ ì‹¤í–‰)
         if (Time.time - lastCheckTime > checkRate)
-        { 
+        {
             lastCheckTime = Time.time;
-            // È­¸éÀÇ Á¤Áß¾Ó¿¡ »óÈ£ÀÛ¿ë °¡´ÉÇÑ ¹°Ã¼°¡ ÀÖ´ÂÁö È®ÀÎÇÏ±â
-
-            //È­¸é Áß¾Ó¿¡¼­ Ray ¹ß»ç
-            Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2));
-            RaycastHit hit;
-
-            //ray¿¡ ¹º°¡ Ãæµ¹Çß´Ù¸é hit¿¡ Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®¿¡ ´ëÇÑ Á¤º¸°¡ ³Ñ¾î°¨
-            if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
-            {
-                //ºÎµúÈù ¿ÀºêÁ§Æ®°¡ ¿ì¸®°¡ ÀúÀåÇØ ³õÀº »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿ÀºêÁ§Æ®ÀÎÁö È®ÀÎ
-                if (hit.collider.gameObject != curInteractGameobject)
-                {
-                    //Ãæµ¹ÇÑ ¹°Ã¼ °¡Á®¿À±â
-                    curInteractGameobject = hit.collider.gameObject;
-                    curInteractable = hit.collider.GetComponent<IInteractable>();
-                    Crosshair.Interaction();
-                }
-            }
-            else
-            {
-                //È­¸é Áß¾Ó¿¡ »óÈ£ÀÛ¿ë °¡´ÉÇÑ ¹°Ã¼°¡ ¾ø´Â °æ¿ì
-                curInteractGameobject = null;
-                curInteractable = null;
-                Crosshair.Not_Interaction();
-            }
+            CheckForInteractable();
         }
+
+        // ìƒí˜¸ì‘ìš© ì…ë ¥ ì²˜ë¦¬
         OnInteractInput();
     }
 
-    public void OnInteractInput()
+    // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œ ê°ì²´ í™•ì¸
+    private void CheckForInteractable()
     {
-        //FÅ°¸¦ ´©¸¥ ½ÃÁ¡¿¡¼­ ÇöÀç ¹Ù¶óº¸´Â curInteractable ¿ÀºêÁ§Æ®°¡ ÀÖ´Ù¸é
-        if (Input.GetKeyDown(KeyManager.Interaction_Key) && curInteractable != null)
+        Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
         {
-            //¾ÆÀÌÅÛÀ» Å‰µæÇÏ¸é ¾ÆÀÌÅÛ°ú »óÈ£ÀÛ¿ëÀ» ÁøÇàÇÏ°í ÃÊ±âÈ­
-            curInteractable.OnInteract();
-
-            //ºó°÷ ¹øÈ£ Ã£±â
-            for (int i = 0; i < GetComponent<Inventory>().slots.Length; i++)
+            // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œ ê°ì²´ê°€ ë°”ë€Œì—ˆì„ ë•Œë§Œ ê°±ì‹ 
+            if (hit.collider.gameObject != curInteractGameobject)
             {
-                if (GetComponent<Inventory>().slots[i].item != null)
-                {
-                    GetComponent<Player_Equip>().numderKeySelectSlot(i + 1);
-                }
+                curInteractGameobject = hit.collider.gameObject;
+                curInteractable = hit.collider.GetComponent<IInteractable>();
+                Crosshair.Interaction(); // í¬ë¡œìŠ¤í—¤ì–´ ìƒí˜¸ì‘ìš© í‘œì‹œ
             }
-
+        }
+        else
+        {
+            // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œ ê°ì²´ê°€ ì—†ì„ ë•Œ ì´ˆê¸°í™”
             curInteractGameobject = null;
             curInteractable = null;
             Crosshair.Not_Interaction();
         }
     }
+
+    // ìƒí˜¸ì‘ìš© ì…ë ¥ ì²˜ë¦¬
+    public void OnInteractInput()
+    {
+        if (Input.GetKeyDown(KeyManager.Interaction_Key) && curInteractable != null)
+        {
+            // ìƒí˜¸ì‘ìš© ì• ë‹ˆë©”ì´ì…˜
+            animator?.SetTrigger("PickupItem");
+
+            // ìƒí˜¸ì‘ìš© ì‹¤í–‰
+            curInteractable.OnInteract();
+
+            // ë©€í‹°í”Œë ˆì´ ë™ê¸°í™”
+            if (PhotonNetwork.IsConnected && curInteractGameobject != null)
+            {
+                PhotonView itemView = curInteractGameobject.GetComponent<PhotonView>();
+                if (itemView != null)
+                {
+                    // ì•„ì´í…œì˜ ì†Œìœ ê¶Œì„ íšë“
+                    if (!itemView.IsMine)
+                    {
+                        itemView.RequestOwnership(); // ì†Œìœ ê¶Œ ìš”ì²­
+                    }
+                    // ì†Œìœ ê¶Œ ì „í™˜ ë°©ì‹ì„ Takeoverë¡œ ì„¤ì •
+                    itemView.OwnershipTransfer = OwnershipOption.Takeover;
+
+                    // ì•„ì´í…œ ë¹„í™œì„±í™” ì²˜ë¦¬ë¥¼ ëª¨ë“  í´ë¼ì´ì–¸íŠ¸ì— ë™ê¸°í™”
+                 //   itemView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
+                }
+            }
+            else
+            {
+                // ì‹±ê¸€í”Œë ˆì´ ì²˜ë¦¬
+                curInteractGameobject?.SetActive(false);
+            }
+
+            // ìƒí˜¸ì‘ìš© ì´ˆê¸°í™”
+            curInteractGameobject = null;
+            curInteractable = null;
+            Crosshair.Not_Interaction();
+        }
+    }
+
 }

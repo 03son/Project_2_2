@@ -7,7 +7,7 @@ using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class Multi_GameManager : GameManager
 {
-    //¸ÖÆ¼ÇÃ·¹ÀÌ °ÔÀÓ¸Å´ÏÀú
+    //ï¿½ï¿½Æ¼ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¸Å´ï¿½ï¿½ï¿½
 
     HashTable playerCP;
 
@@ -31,7 +31,7 @@ public class Multi_GameManager : GameManager
 
     public override void CreatePlayer()
     {
-        // ÃâÇö À§Ä¡ Á¤º¸¸¦ ¹è¿­¿¡ÀúÀå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Transform[] points =
         GameObject.Find("PlayerSpawnPointGroup").gameObject.GetComponentsInChildren<Transform>();
 
@@ -42,9 +42,9 @@ public class Multi_GameManager : GameManager
             Number[index] = player;
             index++;
         }
-        Array.Sort(Number);//¿À¸§Â÷¼øÀ¸·Î ¾×ÅÍ³Ñ¹ö¸¦ Á¤·Ä
+        Array.Sort(Number);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í³Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        int idx = 1;//0Àº PlayerSpawnPointGroup ¿ÀºêÁ§Æ®¿¡¼­ ½ºÆù µÊ
+        int idx = 1;//0ï¿½ï¿½ PlayerSpawnPointGroup ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         foreach (int playerNumber in Number)
         {
             if (playerNumber == PhotonNetwork.LocalPlayer.ActorNumber)
@@ -58,7 +58,7 @@ public class Multi_GameManager : GameManager
          //   PhotonNetwork.InstantiateRoomObject("GlassCup (2)" , points[4].position, points[4].rotation, 0);
     }
     
-    public override void CreateEnemy() //UI¾ÀÀÇ ±âÁØÀ¸·Î ÀÛ¼ºÇÔ
+    public override void CreateEnemy() //UIï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½
     {
         Transform[] points =
         GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();

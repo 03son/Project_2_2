@@ -6,14 +6,14 @@ using UnityEngine;
 
 public class CameraRot : MonoBehaviour
 {
-    [SerializeField] private float mouseSpeed = 8f; // È¸Àü ¼Óµµ
-    [SerializeField] private Transform playerTransform; // ÇÃ·¹ÀÌ¾îÀÇ Transform
+    [SerializeField] private float mouseSpeed = 8f; // È¸ï¿½ï¿½ ï¿½Óµï¿½
+    [SerializeField] private Transform playerTransform; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Transform
+    [SerializeField] private Transform cameraObject; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Transform
+    [SerializeField] GameObject player;//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½
 
-    [SerializeField] GameObject player;//ÇÃ·¹ÀÌ¾î
-
-    private float mouseX = 0f; // ÁÂ¿ì È¸Àü °ª
-    private float mouseY = 0f; // À§¾Æ·¡ È¸Àü °ª
-    [SerializeField] private Vector3 offset; // Ä«¸Ş¶ó¿Í ÇÃ·¹ÀÌ¾î »çÀÌÀÇ °£°İ
+    private float mouseX = 0f; // ï¿½Â¿ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½
+    private float mouseY = 0f; // ï¿½ï¿½ï¿½Æ·ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½
+    [SerializeField] private Vector3 offset; // Ä«ï¿½Ş¶ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     PhotonView pv;
 
@@ -23,27 +23,53 @@ public class CameraRot : MonoBehaviour
     PlayerState playerState;
     PlayerState.playerState state;
 
-    public bool popup_escMenu = false; //esc T/F¿©ºÎ
+    public bool popup_escMenu = false; //esc T/Fï¿½ï¿½ï¿½ï¿½
+
+    public bool isControlledExternally = false;  // ì™¸ë¶€ì—ì„œ ì¹´ë©”ë¼ë¥¼ ì œì–´í•˜ëŠ” ë™ì•ˆ trueë¡œ ì„¤ì •
     void Awake()
     {
        
     }
     void Start()
     {
+        // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ãµï¿½
+        if (this.transform.parent != null)
+        {
+            player = this.transform.parent.gameObject;
+            playerTransform = player.transform;
+        }
+        else
+        {
+            Debug.LogError("Player's parent object not found. Make sure the prefab is instantiated correctly.");
+            return;
+        }
+
+        // Ä«ï¿½Ş¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
+        if (cameraObject == null)
+        {
+            cameraObject = playerTransform.Find("Camera"); // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ "Camera"ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½
+            if (cameraObject == null)
+            {
+                Debug.LogError("Camera object not found under player. Ensure that there is a child named 'Camera'.");
+                return;
+            }
+        }
+
         player = this.gameObject.GetComponent<Transform>().parent.gameObject;
         playerTransform = player.transform;
         playerState = player.gameObject.GetComponent<PlayerState>();
         if (PhotonNetwork.IsConnected)
         {
             pv = player.GetComponent<PhotonView>();
-
-            if (pv.IsMine)
+            if (pv != null && pv.IsMine)
             {
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ä«ï¿½Ş¶ï¿½ ï¿½ï¿½ï¿½ï¿½
                 GetComponent<AudioListener>().enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
+                // ï¿½ï¿½Æ®ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 GetComponent<AudioListener>().enabled = false;
                 Destroy(FollowCam);
                 Destroy(EquipCamera);
@@ -52,19 +78,24 @@ public class CameraRot : MonoBehaviour
         }
         else
         {
+            // ï¿½Ì±ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             GetComponent<AudioListener>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
         }
-
     }
+
+
 
     void Update()
     {
         playerState.GetState(out state);
-        if (popup_escMenu || state == PlayerState.playerState.Die) //esc Ã¢ÀÌ ¿­·ÁÀÖ°Å³ª Á×¾îÀÖÀ¸¸é Ä«¸Ş¶ó È¸ÀüX
+        if (popup_escMenu || state == PlayerState.playerState.Die) //esc Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö°Å³ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Ş¶ï¿½ È¸ï¿½ï¿½X
             return;
 
-        mouseSpeed = GameInfo.MouseSensitivity; //°¨µµ µ¿±âÈ­
+        if (isControlledExternally)
+            return; // ì™¸ë¶€ì—ì„œ ì œì–´ ì¤‘ì¼ ë•ŒëŠ” Update ì¤‘ë‹¨
+
+        mouseSpeed = GameInfo.MouseSensitivity;
 
         if (PhotonNetwork.IsConnected)
         {
@@ -81,17 +112,17 @@ public class CameraRot : MonoBehaviour
 
     void cameraPos()
     {
-        // ¸¶¿ì½º ÀÔ·ÂÀ» ¹Ş¾Æ Ä«¸Ş¶ó È¸Àü Ã³¸®
+        // ï¿½ï¿½ï¿½ì½º ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ş¾ï¿½ Ä«ï¿½Ş¶ï¿½ È¸ï¿½ï¿½ Ã³ï¿½ï¿½
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
         mouseY -= Input.GetAxis("Mouse Y") * mouseSpeed;
 
-        // À§¾Æ·¡ È¸Àü °¢µµ Á¦ÇÑ
-        mouseY = Mathf.Clamp(mouseY, -50f, 30f);
+        // ï¿½ï¿½ï¿½Æ·ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        mouseY = Mathf.Clamp(mouseY, -90f, 90f);
 
-        // Ä«¸Ş¶óÀÇ È¸Àü Àû¿ë (ÇÃ·¹ÀÌ¾îÀÇ È¸ÀüÀ» µû¶ó°¨)
+        // Ä«ï¿½Ş¶ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         this.transform.localEulerAngles = new Vector3(mouseY, mouseX, 0);
 
-        // Ä«¸Ş¶ó À§Ä¡¸¦ ÇÃ·¹ÀÌ¾î À§Ä¡¿¡ °íÁ¤
-        this.transform.position = playerTransform.position + offset;
+        // Ä«ï¿½Ş¶ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®(Camera) ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        this.transform.position = cameraObject.position;
     }
 }

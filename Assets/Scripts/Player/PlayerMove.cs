@@ -5,7 +5,8 @@ using Photon.Realtime;
 
 public class PlayerMove : MonoBehaviourPunCallbacks
 {
-    [SerializeField] float speed = 5f;
+    [SerializeField] float normalSpeed = 5f;
+    [SerializeField] float crouchSpeed = 2f;   // ���� �� �̵� �ӵ�
     [SerializeField] float mouseSpeed = 8f;
     [SerializeField] Transform cameraTransform;
 
@@ -13,6 +14,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     [SerializeField] AudioClip walkingClip;
     [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
 
+
+    private Player_Equip playerEquip;
     private CharacterController controller;
     private Vector3 velocity;
     private float gravity = -9.81f;
@@ -26,6 +29,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Start()
     {
+
+        playerEquip = GetComponent<Player_Equip>();
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             return;
@@ -55,13 +60,15 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        
+        // Photon View Ȯ��
         playerState.GetState(out state);
 
         // Height �� ���� ����
-        if (controller.height != 0.1f)
+      /*  if (controller.height != 0.1f)
         {
             controller.height = 0.1f;
-        }
+        } */
         // Photon View Ȯ��
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
@@ -86,7 +93,38 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                 PlayerVelocity(Vector3.zero, 0f, 0f);
             }
         }
+
+        RaycastHit hit;
+        Vector3 rayOrigin = transform.position + Vector3.up * 1f; // 캐릭터 중심에서 약간 위로 시작
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 2.5f))
+        {
+            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+            Debug.Log($"Slope Angle: {slopeAngle}");
+
+            if (slopeAngle > 10) // 10도 이상이면 계단으로 판단
+            {
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    animator.SetBool("isClimbingUpStairs", true);
+                    animator.SetBool("isClimbingDownStairs", false);
+                }
+                else if (Input.GetAxis("Vertical") < 0)
+                {
+                    animator.SetBool("isClimbingUpStairs", false);
+                    animator.SetBool("isClimbingDownStairs", true);
+                }
+            }
+            else
+            {
+                animator.SetBool("isClimbingUpStairs", false);
+                animator.SetBool("isClimbingDownStairs", false);
+            }
+        }
+
     }
+
+
+
 
     private void HandleMouseLook()
     {
@@ -100,6 +138,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     {
         if (controller == null || cameraTransform == null) return;
 
+        // ���� �̵� �ӵ� ����: ���� �������� ���ο� ���� ����
+        float currentSpeed = Input.GetKey(KeyManager.SitDown_Key) ? crouchSpeed : normalSpeed;
+
         float moveX = 0;
         float moveZ = 0;
 
@@ -112,33 +153,70 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         direction.y = 0f;
         direction.Normalize();
 
-        Vector3 mov = direction * speed;
+        Vector3 mov = direction * currentSpeed;
 
         PlayerVelocity(mov, moveX, moveZ);
 
         // �ִϸ����Ϳ� �Ķ���� ����
         isWalking = (moveX != 0 || moveZ != 0);
 
+        bool isHoldingItem = playerEquip != null && playerEquip.HasAnyEquippedItem();
+
+        // �ȴ� �ִϸ��̼� ���� ��ȯ ����
         // �̵� ���⿡ ���� �ִϸ��̼� ���� ��ȯ ����
         if (isWalking)
         {
             if (moveZ > 0) // ������ �̵� ���� �� (W Ű)
             {
-                animator.SetBool("isWalking", true);
-                animator.SetBool("isMovingBackward", false);
+                if (isHoldingItem)
+                {
+                    animator.SetBool("isWalkingWithItem", true);
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isMovingBackward", true);
+                }
+                else
+                {
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isMovingBackward", false);
+                }
             }
             else if (moveZ < 0) // �ڷ� �̵� ���� �� (S Ű)
             {
-                animator.SetBool("isWalking", false);
-                animator.SetBool("isMovingBackward", true);
+                if (isHoldingItem)
+                {
+                    animator.SetBool("isWalkingWithItem", true);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isMovingBackward", true);
+                }
+                else
+                {
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isMovingBackward", true);
+                }
             }
         }
         else
         {
+            // ���� �ʴ� ��� ��� ���¸� �ʱ�ȭ�ϰ�, �������� ��� ���� ���� ������ ���̵� ���·� ��ȯ
             animator.SetBool("isWalking", false);
+            animator.SetBool("isWalkingWithItem", false);
             animator.SetBool("isMovingBackward", false);
+
+            if (isHoldingItem)
+            {
+                // �������� ��� ���� �� ������ ���̵� ���·� ��ȯ
+                animator.SetBool("isItemIdle", true);
+            }
+            else
+            {
+                animator.SetBool("isItemIdle", false);
+            }
         }
     }
+
+    
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
@@ -197,4 +275,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     {
         Debug.Log("���ο� ���� : " + newMasterClient.NickName);
     }
+
+
 }

@@ -14,6 +14,9 @@ GameObject:
   - component: {fileID: 1484216994367705664}
   - component: {fileID: 7983013488085746910}
   - component: {fileID: 7062830536781684765}
+  - component: {fileID: 863028553889471386}
+  - component: {fileID: 1361055328311988718}
+  - component: {fileID: 7129547770309612214}
   m_Layer: 3
   m_Name: Flashlight
   m_TagString: Untagged
@@ -136,6 +139,67 @@ MonoBehaviour:
   flashlightLight: {fileID: 5770808728839445457}
   intensity: 15
   range: 10
+  minSpotAngle: 30
+  maxSpotAngle: 80
+  minIntensity: 1
+  maxIntensity: 3
+  maxDistance: 10
+--- !u!95 &863028553889471386
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544210761962123603}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 8cf885a6c80a26044b08dafba8951684, type: 3}
+  m_Controller: {fileID: 9100000, guid: 33b31578b8b15b547b0ddc75c756a39b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1361055328311988718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544210761962123603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9cf8742ce3a9f746900a2a4c6a6bbd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 434d5feddd823074793ee01915cf859a, type: 2}
+--- !u!114 &7129547770309612214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544210761962123603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &7794099459561185711
 PrefabInstance:
   m_ObjectHideFlags: 0
