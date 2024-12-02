@@ -11,6 +11,10 @@ public class CameraRot : MonoBehaviour
     [SerializeField] private Transform cameraObject; // �� ������Ʈ Transform
     [SerializeField] GameObject player;//�÷��̾�
 
+    public Transform mainCamera; // 메인 카메라 Transform
+    public Transform playerModel; // 플레이어 모델링 Transform
+
+
     private float mouseX = 0f; // �¿� ȸ�� ��
     private float mouseY = 0f; // ���Ʒ� ȸ�� ��
     [SerializeField] private Vector3 offset; // ī�޶�� �÷��̾� ������ ����
@@ -82,6 +86,26 @@ public class CameraRot : MonoBehaviour
             GetComponent<AudioListener>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
         }
+
+        // 동적으로 생성된 플레이어 오브젝트 찾기
+        if (this.transform.parent != null)
+        {
+            player = this.transform.parent.gameObject;
+            playerTransform = player.transform;
+
+            // Player Modeling 찾기
+            playerModel = playerTransform.Find("토끼모델링"); // "PlayerModel"은 모델링의 이름
+            if (playerModel == null)
+            {
+                Debug.LogError("PlayerModel object not found under the player prefab.");
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogError("Player's parent object not found. Make sure the prefab is instantiated correctly.");
+            return;
+        }
     }
 
 
@@ -107,6 +131,13 @@ public class CameraRot : MonoBehaviour
         else
         {
             cameraPos();
+        }
+
+        if (mainCamera != null && playerModel != null)
+        {
+            // 카메라의 Y축 회전을 모델링에 동기화
+            Vector3 cameraRotation = mainCamera.rotation.eulerAngles;
+            playerModel.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
         }
     }
 

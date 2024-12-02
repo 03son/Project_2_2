@@ -81,7 +81,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         // esc â�� �������� ���� ���� ������ ó��
         if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
-            HandleMouseLook();
+          //  HandleMouseLook();
             HandleMovement();
             UpdateWalkingAnimation();
         }
@@ -126,13 +126,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
 
 
-    private void HandleMouseLook()
+  /*  private void HandleMouseLook()
     {
         if (cameraTransform == null) return;
 
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
         transform.localRotation = Quaternion.Euler(0, mouseX, 0);
-    }
+    } */
 
     private void HandleMovement()
     {
