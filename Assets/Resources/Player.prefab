@@ -417,7 +417,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdTime: 5
-  medkitTimerUI: {fileID: 0}
 --- !u!114 &2607870563341614953
 MonoBehaviour:
   m_ObjectHideFlags: 0

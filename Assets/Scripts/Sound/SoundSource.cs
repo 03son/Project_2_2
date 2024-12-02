@@ -28,7 +28,7 @@ public class SoundSource : MonoBehaviour
 
             // 데시벨 계산 (거리 기반 감소)
             float decibel = baseDecibel - 10 * Mathf.Log10(distance + 1e-6f);  // 거리 기반으로 데시벨 값 조정 (단위: dB)
-            Debug.Log(decibel);
+        //    Debug.Log(decibel);
             return Mathf.Max(0, decibel); // 음수 방지
         }
         return 0; // 소리가 재생 중이 아니면 데시벨 0
