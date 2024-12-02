@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class EnemyJumpScare : MonoBehaviour
+public class EnemyJumpScare : MonoBehaviourPun
 {
     public Transform enemyFacePosition; // 적의 얼굴 위치를 바라보는 Transform
     public float zoomInDuration = 0.5f; // 줌인 시간
@@ -15,6 +16,13 @@ public class EnemyJumpScare : MonoBehaviour
 
     void Start()
     {
+        if (!photonView.IsMine)
+        {
+            // PhotonView가 로컬 플레이어의 것이 아니라면 이 스크립트를 비활성화
+            enabled = false;
+            return;
+        }
+
         mainCamera = Camera.main;
         if (mainCamera == null)
         {
@@ -90,8 +98,16 @@ public class EnemyJumpScare : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("플레이어와 충돌 감지. JumpScare 트리거 호출");
-            TriggerJumpScare();
+            // 충돌한 객체에서 PhotonView 컴포넌트를 가져옵니다.
+            PhotonView playerPhotonView = other.GetComponent<PhotonView>();
+
+            // 플레이어가 로컬 클라이언트일 경우에만 점프 스케어를 실행
+            if (playerPhotonView != null && playerPhotonView.IsMine)
+            {
+                Debug.Log("플레이어와 충돌 감지. JumpScare 트리거 호출");
+                TriggerJumpScare();
+            }
         }
     }
+
 }
