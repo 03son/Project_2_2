@@ -50,7 +50,10 @@ public class Brightness : MonoBehaviour
         brightnessImage.color = new Color(brightnessValue, brightnessValue, brightnessValue, Mathf.Lerp(0f, 1f, brightness.value));
 
         PlayerPrefs.SetFloat("brightnessValue", brightness.value);
-       
-        GameObject.Find("Global Volume").GetComponent<GlobalVolume>().SetVolumeEffect();
+
+        if (sceneName.name == "Level_Map")
+        {
+            GameObject.Find("Global Volume").GetComponent<GlobalVolume>().SetVolumeEffect();
+        }
     }
 }
