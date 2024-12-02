@@ -6,92 +6,29 @@ public class EnemyJumpScare : MonoBehaviourPun
 {
     public Transform enemyFacePosition; // 적의 얼굴 위치를 바라보는 Transform
     public float zoomInDuration = 0.5f; // 줌인 시간
-    private Camera mainCamera;
-    private float originalFieldOfView;
+    public AudioClip jumpScareSound;    // 점프스케어 사운드
+    public float soundVolume = 1f;      // 사운드 볼륨 (0~1)
 
-    private Vector3 originalPosition;
-    private Quaternion originalRotation;
-
-    private bool isJumpScareActive = false;
+    private Camera mainCamera;          // 로컬 플레이어의 카메라
+    private AudioSource audioSource;    // AudioSource 컴포넌트
+    private Vector3 originalPosition;   // 원래 위치 저장
+    private Quaternion originalRotation; // 원래 회전 저장
 
     void Start()
     {
-        if (!photonView.IsMine)
+        // AudioSource 초기화
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
         {
-            // PhotonView가 로컬 플레이어의 것이 아니라면 이 스크립트를 비활성화
-            enabled = false;
-            return;
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
+        audioSource.volume = soundVolume;
+        audioSource.playOnAwake = false;
 
-      /*  mainCamera = Camera.main;
-        if (mainCamera == null)
+        // jumpScareSound 확인
+        if (jumpScareSound == null)
         {
-            Debug.LogError("Main Camera를 찾을 수 없습니다. 카메라를 확인해주세요.");
-        }
-        else
-        {
-            originalFieldOfView = mainCamera.fieldOfView;
-            Debug.Log("Main Camera와 FOV 초기화 완료");
-        } */
-    }
-
-    void Update()
-    {
-        if (isJumpScareActive && mainCamera.transform.parent == enemyFacePosition)
-        {
-            // enemyFacePosition의 자식으로 있는 동안 카메라의 위치와 회전을 지속적으로 설정
-            mainCamera.transform.localPosition = Vector3.zero;
-            mainCamera.transform.localRotation = Quaternion.identity;
-        }
-    }
-
-    public void TriggerJumpScare()
-    {
-        mainCamera = Camera.main;
-        if (mainCamera != null)
-        {
-            Debug.Log("JumpScare 시작");
-            StartCoroutine(ZoomInOnEnemy());
-        }
-        else
-        {
-            Debug.LogError("Main Camera가 초기화되지 않았습니다. JumpScare를 시작할 수 없습니다.");
-        }
-    }
-
-    IEnumerator ZoomInOnEnemy()
-    {
-        // 현재 카메라의 부모를 원래 부모로부터 분리하고, enemyFacePosition의 자식으로 설정합니다.
-        Transform originalParent = mainCamera.transform.parent;
-        CameraRot cameraRotScript = mainCamera.GetComponent<CameraRot>();
-
-        if (cameraRotScript != null)
-        {
-            cameraRotScript.isControlledExternally = true;  // CameraRot 업데이트 멈추기
-        }
-
-        mainCamera.transform.SetParent(enemyFacePosition);
-        Debug.Log("카메라가 enemyFacePosition의 자식으로 설정되었습니다.");
-
-        // 카메라의 위치 및 회전을 enemyFacePosition에 맞춰 강제로 설정
-        mainCamera.transform.localPosition = Vector3.zero;
-        mainCamera.transform.localRotation = Quaternion.identity;
-        Debug.Log("카메라의 위치와 회전을 enemyFacePosition에 맞춰 설정되었습니다.");
-
-        // 줌인 시간 동안 유지 (줌인이 필요 없으므로 바로 대기)
-        yield return new WaitForSeconds(zoomInDuration);
-
-        yield return new WaitForSeconds(1f); // 1초 동안 유지
-
-        // 원래 부모로 다시 연결하고 위치와 회전을 복귀시킵니다.
-        mainCamera.transform.SetParent(originalParent);
-        mainCamera.transform.position = originalPosition;
-        mainCamera.transform.rotation = originalRotation;
-        Debug.Log("카메라가 원래 부모로 다시 연결되었습니다.");
-
-        if (cameraRotScript != null)
-        {
-            cameraRotScript.isControlledExternally = false;  // CameraRot 업데이트 재개
+            Debug.LogError("JumpScare 사운드가 설정되지 않았습니다. Inspector에서 추가하세요.");
         }
     }
 
@@ -99,16 +36,61 @@ public class EnemyJumpScare : MonoBehaviourPun
     {
         if (other.CompareTag("Player"))
         {
-            // 충돌한 객체에서 PhotonView 컴포넌트를 가져옵니다.
             PhotonView playerPhotonView = other.GetComponent<PhotonView>();
 
-            // 플레이어가 로컬 클라이언트일 경우에만 점프 스케어를 실행
             if (playerPhotonView != null && playerPhotonView.IsMine)
             {
-                Debug.Log("플레이어와 충돌 감지. JumpScare 트리거 호출");
+                // 로컬 플레이어에게만 점프스케어 트리거
                 TriggerJumpScare();
             }
         }
     }
 
+    void TriggerJumpScare()
+    {
+        mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogError("Main Camera를 찾을 수 없습니다.");
+            return;
+        }
+
+        // 점프스케어 사운드와 카메라 효과 실행
+        PlayJumpScareSound();
+        StartCoroutine(ZoomInOnEnemy());
+    }
+
+    private void PlayJumpScareSound()
+    {
+        if (jumpScareSound != null)
+        {
+            audioSource.PlayOneShot(jumpScareSound);
+        }
+        else
+        {
+            Debug.LogWarning("점프스케어 사운드가 설정되지 않았습니다.");
+        }
+    }
+
+    IEnumerator ZoomInOnEnemy()
+    {
+        Transform originalParent = mainCamera.transform.parent;
+
+        // 원래 위치와 회전 저장
+        originalPosition = mainCamera.transform.localPosition;
+        originalRotation = mainCamera.transform.localRotation;
+
+        // 카메라를 적 얼굴로 이동
+        mainCamera.transform.SetParent(enemyFacePosition);
+        mainCamera.transform.localPosition = Vector3.zero;
+        mainCamera.transform.localRotation = Quaternion.identity;
+
+        // 줌인 유지
+        yield return new WaitForSeconds(zoomInDuration);
+
+        // 원래 부모 및 위치/회전으로 복구
+        mainCamera.transform.SetParent(originalParent);
+        mainCamera.transform.localPosition = originalPosition;
+        mainCamera.transform.localRotation = originalRotation;
+    }
 }

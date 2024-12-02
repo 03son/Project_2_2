@@ -73,6 +73,8 @@ MonoBehaviour:
   - RPC_HandleItemPickup
   - RPC_SetEquipItemForOthers
   - OnInteract
+  - PlayAlertSounds
+  - TriggerJumpScare_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

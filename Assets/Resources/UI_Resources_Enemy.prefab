@@ -416,6 +416,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFacePosition: {fileID: 6165426964139387851}
   zoomInDuration: 1
+  jumpScareSound: {fileID: 8300000, guid: 77d50097df370104281fc04f507607c3, type: 3}
+  soundVolume: 5
 --- !u!114 &7091092439977422110
 MonoBehaviour:
   m_ObjectHideFlags: 0
