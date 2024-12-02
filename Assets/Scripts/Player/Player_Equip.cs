@@ -118,6 +118,9 @@ public class Player_Equip : MonoBehaviour
 
     public void selectSlot(int index)
     {
+        playerState.GetState(out state);
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
+        
         if (index > 0 && index <= invenSlot.Length)
         {
             if (Input.GetKeyDown((KeyCode)(48 + index)))
@@ -436,6 +439,9 @@ public class Player_Equip : MonoBehaviour
     }
     void mouseWheelScroll()
     {
+        playerState.GetState(out state);
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
+
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
 
         if (wheelInput < 0)
