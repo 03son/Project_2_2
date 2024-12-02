@@ -55,7 +55,6 @@ GameObject:
   - component: {fileID: 1390481486682980952}
   - component: {fileID: 1134312647876554048}
   - component: {fileID: 2607870563341614953}
-  - component: {fileID: 3813240328338727440}
   - component: {fileID: 2444431448682953168}
   - component: {fileID: 9097295955767114178}
   - component: {fileID: 2836256177583279669}
@@ -435,21 +434,6 @@ MonoBehaviour:
   normalHeight: 0.1
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
---- !u!114 &3813240328338727440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4520835399152146124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46392b88a45b48f40a58f44f1d358d7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashSpeed: 5
-  jumpForce: 10
-  gravity: -9.81
 --- !u!114 &2444431448682953168
 MonoBehaviour:
   m_ObjectHideFlags: 0

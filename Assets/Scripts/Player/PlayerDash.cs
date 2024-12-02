@@ -9,7 +9,8 @@ public class PlayerDash : MonoBehaviour
     private Transform cameraTransform;
 
     private Animator animator; // Animator 추가
-    PhotonView pv;
+    private PhotonView pv;
+    private Player_Equip playerEquip; // Player_Equip 스크립트 참조
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class PlayerDash : MonoBehaviour
         cameraTransform = Camera.main.transform;
         animator = GetComponentInChildren<Animator>(); // Animator 컴포넌트 가져오기
         pv = GetComponent<PhotonView>();
+        playerEquip = GetComponent<Player_Equip>(); // Player_Equip 컴포넌트 가져오기
     }
 
     void Update()
@@ -31,7 +33,9 @@ public class PlayerDash : MonoBehaviour
         }
         else
         {
-            animator.SetBool("isRunning", false); // 스프린트 종료
+            // 스프린트 종료
+            animator.SetBool("isRunning", false);
+            animator.SetBool("isRunningWithItem", false);
         }
     }
 
@@ -44,7 +48,16 @@ public class PlayerDash : MonoBehaviour
         // 스프린트 처리
         controller.Move(dashDirection * dashSpeed * Time.deltaTime);
 
-        // Animator 업데이트 (달리기 상태로 전환)
-        animator.SetBool("isRunning", true);
+        // 아이템 장착 여부에 따라 애니메이션 설정
+        if (playerEquip != null && playerEquip.HasAnyEquippedItem())
+        {
+            animator.SetBool("isRunningWithItem", true);
+            animator.SetBool("isRunning", false);
+        }
+        else
+        {
+            animator.SetBool("isRunning", true);
+            animator.SetBool("isRunningWithItem", false);
+        }
     }
 }
