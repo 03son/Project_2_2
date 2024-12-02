@@ -44,6 +44,8 @@ public class Mic : MonoBehaviour
                 return;
             }
         }
+        //����ũ ���ú� UI �Ҵ�
+        Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
 
         if (recorder == null)
         {
@@ -61,6 +63,7 @@ public class Mic : MonoBehaviour
         }
         else
         {
+            Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
             this.gameObject.SetActive(false);
         }
 
@@ -71,16 +74,13 @@ public class Mic : MonoBehaviour
 
         if (single)
             mic.volume = 0;
-
-        //����ũ ���ú� UI �Ҵ�
-        Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
     }
 
     void Update()
     {
         //����ũ off�� �� UI ���� �� = 0
-         if (!recorder.TransmitEnabled || !singleMic)
-             Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
+        // if (!recorder.TransmitEnabled || !singleMic)
+            // Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
 
 
         if (Global_Microphone.UseMic == null)
