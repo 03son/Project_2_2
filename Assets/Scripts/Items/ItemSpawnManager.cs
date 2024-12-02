@@ -66,7 +66,8 @@ public class ItemSpawnManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = spawnPoints[randomIndex].position;
 
             // PhotonNetwork를 사용해 동기화된 생성 수행
-            PhotonNetwork.Instantiate(itemData.itemPrefab.name, spawnPosition, Quaternion.identity);
+           // PhotonNetwork.Instantiate($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
         }
     }
 }
