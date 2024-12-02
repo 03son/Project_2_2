@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour
     PlayerState.playerState state;
     private void Awake()
     {
+        pv = GetComponent<PhotonView>();
         if (instance == null)
         {
             instance = this;
@@ -45,8 +46,6 @@ public class Inventory : MonoBehaviour
         {
             Destroy(this);
         }
-
-        pv = GetComponent<PhotonView>();
 
         // Player_Equip 초기화
         playerEquip = FindObjectOfType<Player_Equip>();
@@ -64,6 +63,10 @@ public class Inventory : MonoBehaviour
             if (pv.IsMine)
             {
                 SetInven();
+            }
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
             }
         }
         else
@@ -256,6 +259,10 @@ public class Inventory : MonoBehaviour
             {
                 UnEquip(selectedItemIndex);
                 ThrowItem(slots[selectedItemIndex].item);
+                if (PhotonNetwork.IsConnected)
+                {
+                  GetComponent<PhotonThrowItem>().ThrowItem(slots[selectedItemIndex].item);
+                }
             }
             GetComponent<Player_Equip>().ItemName.text = "";
             slots[selectedItemIndex].item = null;
@@ -273,15 +280,20 @@ public class Inventory : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
+            /*
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{item.dropPerfab.name}", dropPos.position, Quaternion.identity);
             }
             else
             {
-                 string itemName = item.dropPerfab.name;
-                 pv.RPC("PhotonThrowItem", RpcTarget.MasterClient, itemName);
+                if (pv.IsMine)
+                {
+                    string itemName = item.dropPerfab.name;
+                    pv.RPC("PhotonThrowItem", RpcTarget.MasterClient, itemName);
+                }
             }
+            */
         }
         else
         {
@@ -294,6 +306,7 @@ public class Inventory : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log($"RPC : {itemName}");
             PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", dropPos.position, Quaternion.identity);
         }
     }
@@ -314,19 +327,4 @@ public class Inventory : MonoBehaviour
         // EquipItem �޼���� ������ �������� ����
         equippedItemObject = itemObject;
     }
-
-   /* void ThrowItem(itemData item)
-    {
-        if (PhotonNetwork.IsConnected)
-        {
-            // PhotonNetwork를 사용해 프리팹 생성 (드롭 위치에)
-            PhotonNetwork.Instantiate(item.dropPerfab.name, dropPos.position, Quaternion.identity);
-        }
-        else
-        {
-            // 싱글플레이에서는 로컬에서만 생성
-            Instantiate(item.dropPerfab, dropPos.position, Quaternion.identity);
-        }
-    } */
-
 }

@@ -244,7 +244,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             isWalking = true;
             if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
             {
-                photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
+                if (MonsterAI.Instance != null)
+                {
+                    photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
+                }
+                else
+                {
+                    Debug.Log("몬스터 없음2");
+                }
             }
         }
         else

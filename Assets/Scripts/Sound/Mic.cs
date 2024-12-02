@@ -46,6 +46,7 @@ public class Mic : MonoBehaviour
         }
         //����ũ ���ú� UI �Ҵ�
         Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
+        Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
 
         if (recorder == null)
         {
@@ -63,7 +64,6 @@ public class Mic : MonoBehaviour
         }
         else
         {
-            Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
             this.gameObject.SetActive(false);
         }
 
@@ -183,7 +183,14 @@ public class Mic : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            MonsterAI.Instance.HandlePlayerSound(decibel, playerPosition);
+            if (MonsterAI.Instance != null)
+            {
+                MonsterAI.Instance.HandlePlayerSound(decibel, playerPosition);
+            }
+            else
+            {
+                Debug.Log("몬스터 없음");
+            }
         }
     }
     #endregion
