@@ -23,7 +23,7 @@ public class EnemyJumpScare : MonoBehaviourPun
             return;
         }
 
-        mainCamera = Camera.main;
+      /*  mainCamera = Camera.main;
         if (mainCamera == null)
         {
             Debug.LogError("Main Camera를 찾을 수 없습니다. 카메라를 확인해주세요.");
@@ -32,7 +32,7 @@ public class EnemyJumpScare : MonoBehaviourPun
         {
             originalFieldOfView = mainCamera.fieldOfView;
             Debug.Log("Main Camera와 FOV 초기화 완료");
-        }
+        } */
     }
 
     void Update()
@@ -47,6 +47,7 @@ public class EnemyJumpScare : MonoBehaviourPun
 
     public void TriggerJumpScare()
     {
+        mainCamera = Camera.main;
         if (mainCamera != null)
         {
             Debug.Log("JumpScare 시작");
