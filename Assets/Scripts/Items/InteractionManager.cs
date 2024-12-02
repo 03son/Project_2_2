@@ -106,6 +106,7 @@ public class InteractionManager : MonoBehaviour
             // 상호작용 실행
             curInteractable.OnInteract();
 
+            /*
             // 멀티플레이 동기화
             if (PhotonNetwork.IsConnected && curInteractGameobject != null)
             {
@@ -129,7 +130,7 @@ public class InteractionManager : MonoBehaviour
                 // 싱글플레이 처리
                 curInteractGameobject?.SetActive(false);
             }
-
+            */
             // 상호작용 초기화
             curInteractGameobject = null;
             curInteractable = null;

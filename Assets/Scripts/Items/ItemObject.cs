@@ -7,12 +7,17 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     private GlassCupThrower glassCupThrower;
 
+    PhotonView PhotonView;
     void Start()
     {
         glassCupThrower = FindObjectOfType<GlassCupThrower>();
         if (glassCupThrower == null)
         {
         //   Debug.LogError("GlassCupThrower 컴포넌트를 찾을 수 없습니다!");
+        }
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonView = GetComponent<PhotonView>();
         }
     }
 
@@ -60,15 +65,36 @@ public class ItemObject : MonoBehaviour, IInteractable
                 }
             }
 
-            // 아이템을 획득한 후 제거
-            Destroy(gameObject);
+            if (PhotonNetwork.IsConnected)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.Destroy(this.gameObject);
+                }
+                else
+                {
+                    PhotonView.RPC("PhotonDestroyItem", RpcTarget.Others);
+                }
+            }
+            else
+            {
+                // 아이템을 획득한 후 제거
+                Destroy(gameObject);
+            }
         }
         else
         {
             Debug.LogWarning("인벤토리에 빈 슬롯이 없습니다. 아이템을 획득할 수 없습니다.");
         }
     }
-
+    [PunRPC]
+    void PhotonDestroyItem()
+    {
+        if (PhotonView.IsMine)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+    }
 
     bool addSlot()
     {

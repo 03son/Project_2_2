@@ -271,9 +271,32 @@ public class Inventory : MonoBehaviour
 
     void ThrowItem(itemData item)
     {
-        Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-    } 
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{item.dropPerfab.name}", dropPos.position, Quaternion.identity);
+            }
+            else
+            {
+                 string itemName = item.dropPerfab.name;
+                 pv.RPC("PhotonThrowItem", RpcTarget.MasterClient, itemName);
+            }
+        }
+        else
+        {
+            Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+        }
+    }
 
+    [PunRPC]
+    public void PhotonThrowItem(string itemName)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", dropPos.position, Quaternion.identity);
+        }
+    }
     private void Update()
     {
         playerState.GetState(out state);
