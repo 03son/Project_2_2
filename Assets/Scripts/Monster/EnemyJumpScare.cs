@@ -23,7 +23,7 @@ public class EnemyJumpScare : MonoBehaviourPun
             return;
         }
 
-        mainCamera = Camera.main;
+        mainCamera = CameraInfo.MainCam;
         if (mainCamera == null)
         {
             Debug.LogError("Main Camera를 찾을 수 없습니다. 카메라를 확인해주세요.");
@@ -47,6 +47,7 @@ public class EnemyJumpScare : MonoBehaviourPun
 
     public void TriggerJumpScare()
     {
+        mainCamera = CameraInfo.MainCam;
         if (mainCamera != null)
         {
             Debug.Log("JumpScare 시작");
