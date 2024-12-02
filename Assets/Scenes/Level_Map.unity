@@ -2724,7 +2724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8967025079390218491, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       propertyPath: m_IsActive
@@ -2968,6 +2968,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3809626471150277197, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 484205700}
+    - targetCorrespondingSourceObject: {fileID: 893028508065694267, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1681809349}
     - targetCorrespondingSourceObject: {fileID: -9041742729550302291, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1897914132}
@@ -8029,7 +8032,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floors:
   - floorSpawnArea: {fileID: 141888522}
-    itemsToSpawn: []
+    itemsToSpawn:
+    - itemPrefab: {fileID: 5544210761962123603, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
+      spawnCount: 30
   - floorSpawnArea: {fileID: 2138591652}
     itemsToSpawn: []
   - floorSpawnArea: {fileID: 1688356962}
@@ -9281,7 +9286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3100332399246796471, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_IsActive
@@ -12496,6 +12501,32 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.019999996, y: 0.02, z: 0.019999998}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1681809348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 893028508065694267, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+  m_PrefabInstance: {fileID: 447882547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1681809349
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681809348}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.019999994, z: 0.019999998}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &1686464697
 MeshCollider:

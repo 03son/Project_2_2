@@ -50,7 +50,7 @@ public class Multi_GameManager : GameManager
             if (playerNumber == PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
-                // PhotonNetwork.Instantiate($"Character/{playerCP["animalName"]}", points[idx].position, points[idx].rotation, 0);
+                //PhotonNetwork.Instantiate($"Character/{playerCP["animalName"]}", points[idx].position, points[idx].rotation, 0);
             }
             idx++;
         }
