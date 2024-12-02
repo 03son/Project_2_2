@@ -420,7 +420,7 @@ public class MonsterAI : MonoBehaviourPun
             if (Vector3.Distance(transform.position, player.position) <= viewDistance)
             {
                 // 시야의 Y값을 0.5f 올림
-                Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
                 RaycastHit hit;
                 if (Physics.Raycast(rayOrigin, directionToPlayer, out hit, viewDistance))
                 {
@@ -568,7 +568,7 @@ public class MonsterAI : MonoBehaviourPun
         // 부채꼴을 그리기 위한 세그먼트 개수
         int segments = 20;
         float angleStep = fieldOfView / segments; // 각도 단위
-        Vector3 origin = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z); // 몬스터의 위치
+        Vector3 origin = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z); // 몬스터의 위치
 
         // 시야각 부채꼴 그리기
         for (int i = 0; i <= segments; i++)

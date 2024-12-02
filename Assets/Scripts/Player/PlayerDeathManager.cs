@@ -1,16 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
 public class PlayerDeathManager : MonoBehaviourPunCallbacks
 {
-    public GameObject deathEffect; // ���� ȿ�� (�ִϸ��̼�, ��ƼŬ ��)
+    public GameObject deathEffect; // 사망 효과 (애니메이션, 파티클 등)
 
     PlayerState.playerState state;
     PlayerState playerState;
 
     PhotonView pv;
+    private Animator animator; // Animator 추가
+
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
@@ -20,6 +21,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         Debug.Log(state);
 
         pv = GetComponent<PhotonView>();
+        animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
 
         GameObject[] mainCameras = GameObject.FindGameObjectsWithTag("MainCamera");
         foreach (GameObject Cam in mainCameras)
@@ -36,7 +38,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
             }
         }
 
-        //1��Ī Ȱ��ȭ
+        // 메인 카메라 활성화
         CameraInfo.UseMainCam();
     }
 
@@ -53,97 +55,32 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     void Die()
     {
+        if (animator != null)
+        {
+            animator.SetTrigger("Death"); // Death 애니메이션 트리거 발동
+            Debug.Log("Death 애니메이션 발동");
+        }
+
         StartCoroutine(die());
     }
 
     IEnumerator die()
     {
-        //UI �� ���� - ���� ���� �̺�Ʈ
+        // UI 및 효과 적용
         SetUICanvas.OpenUI("");
 
         yield return new WaitForSecondsRealtime(2);
 
-        //���� ī�޶� Ȱ��ȭ
+        // 사망 효과 추가 (필요시)
+        if (deathEffect != null)
+        {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        }
+
+        // 관찰 카메라 활성화
         CameraInfo.UseObserverCam();
 
-        //1��Ī UI ���� ���� UI�ѱ�
+        // 관찰자 UI 띄우기
         SetUICanvas.OpenUI("Observer");
     }
 }
-
-   /* void Start()
-   {
-        /*   playerState = GetComponent<PlayerState>();
-           //state = GetComponent<PlayerState>().State;
-
-           GetComponent<PlayerState>().State = PlayerState.playerState.����;
-           playerState.GetState(out state);
-           Debug.Log(state);
-       } 
-
-       private void OnTriggerEnter(Collider other)
-       {
-           if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-           {
-               GetComponent<PlayerState>().State = PlayerState.playerState.����;
-               Debug.Log(GetComponent<PlayerState>().State);
-           }
-       } */
-
-
-/*
-public void Die()
-{
-    if (isDead) return;
-
-    isDead = true;
-    deathPosition = transform.position;
-
-    // ���� ȿ�� ǥ��
-    if (deathEffect != null)
-        Instantiate(deathEffect, deathPosition, Quaternion.identity);
-
-    // ���� ���¸� �ٸ� Ŭ���̾�Ʈ�� ����ȭ
-    //photonView.RPC("RPC_Die", RpcTarget.All, deathPosition);
-
-    // ���� �÷��̾��� �����Ӱ� ��ȣ�ۿ� ���߱�
-    GetComponent<PlayerMove>().enabled = false;
-    GetComponent<PlayerDash>().enabled = false;
-}
-
-//[PunRPC]
-void RPC_Die(Vector3 position)
-{
-    Debug.Log("�÷��̾ �� ��ġ���� �׾����ϴ�: " + position);
-    isDead = true;
-
-    // �ٸ� Ŭ���̾�Ʈ������ �����Ӱ� ��ȣ�ۿ� ���߱�
-    GetComponent<PlayerMove>().enabled = false;
-    GetComponent<PlayerDash>().enabled = false;
-}
-
-public void Revive()
-{
-    if (!isDead) return;
-
-    isDead = false;
-
-    // �÷��̾� ��Ȱ ��ġ �� ���� ����
-    transform.position = deathPosition;
-    GetComponent<PlayerMove>().enabled = true;
-    GetComponent<PlayerDash>().enabled = true;
-
-    // ��Ȱ ���¸� ����ȭ
-    photonView.RPC("RPC_Revive", RpcTarget.All);
-}
-
-//[PunRPC]
-void RPC_Revive()
-{
-    isDead = false;
-    GetComponent<PlayerMove>().enabled = true;
-    GetComponent<PlayerDash>().enabled = true;
-    Debug.Log("�÷��̾ ��Ȱ�߽��ϴ�.");
-}
-
-} */

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 245539513923518613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.027, y: 0.102, z: 1.154}
+  m_LocalPosition: {x: -0.027, y: 0.82, z: 0.476}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 3463863203771072633}
   - component: {fileID: 1734623120430788607}
   - component: {fileID: 897067910287213137}
+  - component: {fileID: 7091092439977422110}
   m_Layer: 8
   m_Name: UI_Resources_Enemy
   m_TagString: Enemy
@@ -100,7 +101,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4406684050512021317}
@@ -198,7 +199,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   moveSpeed: 3.5
-  chaseSpeed: 4.5
+  chaseSpeed: 14
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
   viewDistance: 13
@@ -414,7 +415,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyFacePosition: {fileID: 6165426964139387851}
-  zoomInDuration: 3
+  zoomInDuration: 1
+--- !u!114 &7091092439977422110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4984942339017157801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27649f98784747f49bf3456bbb7a9200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 25
+  maxShakeMagnitude: 0.05
+  shakeDuration: 0.1
+  shakeInterval: 0.1
+  footstepSound: {fileID: 1734623120430788607}
 --- !u!1001 &6657985665348049226
 PrefabInstance:
   m_ObjectHideFlags: 0
