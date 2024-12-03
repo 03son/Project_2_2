@@ -29,7 +29,7 @@ public class GlobalVolume : MonoBehaviour
         if (volumeProfile.TryGet(out colorAdjustments))
         {
             //슬라이더 값을 변환함
-            colorAdjustments.postExposure.value = Mathf.Lerp(-5f, 2f, PlayerPrefs.GetFloat("brightnessValue"));
+            colorAdjustments.postExposure.value = Mathf.Lerp(-3f, 5f, PlayerPrefs.GetFloat("brightnessValue"));
         }
     }
 }

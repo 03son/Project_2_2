@@ -33,9 +33,6 @@ public class Player_Equip : MonoBehaviour
     private Animator animator;           // Animator 추가
     private CharacterController characterController;
     private bool isFlashlightOn = false; // 손전등 상태를 저장할 변수
-
-    [Header("3인칭 아이템 위치")]
-    public Transform thirdPersonHand; //3인칭 아이템 위치
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -164,91 +161,7 @@ public class Player_Equip : MonoBehaviour
             hasGlassCup = true;
             currentGlassCup = Item;
         }
-        if (PhotonNetwork.IsConnected)
-        {
-            // 3인칭 모델링에도 아이템 장착
-            if (pv.IsMine)
-            {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    ThirdPersonHandItem(item, PhotonNetwork.LocalPlayer.ActorNumber);
-                }
-                else
-                {
-                    ThirdPersonHandItem(item, PhotonNetwork.LocalPlayer.ActorNumber);
-                    pv.RPC("ThirdPersonHandItem", RpcTarget.MasterClient, item, PhotonNetwork.LocalPlayer.ActorNumber);
-                }
-            }
-        }
-    }
-    Transform __thirdPersonHand;
-    [PunRPC]
-    public void ThirdPersonHandItem(string itemName, int actorNumber)
-    {
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            if (player.GetComponent<PhotonView>().Owner.ActorNumber == actorNumber)
-            {
-                __thirdPersonHand = player.GetComponent<Player_Equip>().thirdPersonHand;
-                if (__thirdPersonHand != null)
-                {
-                    // 아이템 복제
-                    GameObject itemForOthers;
-
-                    if (PhotonNetwork.IsMasterClient || pv.IsMine)
-                    {
-                        itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
-                        itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
-                    }
-                    else //수정
-                    {
-                        itemForOthers = PhotonNetwork.Instantiate($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
-                        itemForOthers = Instantiate(Item, __thirdPersonHand.position, Quaternion.identity);
-                        itemForOthers.layer = LayerMask.NameToLayer("Default");
-                        /*
-                        GameObject Item = Resources.Load<GameObject>($"Prefabs/Items/{itemName}");
-                        itemForOthers = Instantiate(Item, __thirdPersonHand.position, Quaternion.identity);
-                        itemForOthers.layer = LayerMask.NameToLayer("Default");
-                        */
-                    }
-
-                    // 3인칭 모델링의 왼손 위치에 장착
-                    itemForOthers.transform.SetParent(__thirdPersonHand);
-                    itemForOthers.transform.localPosition = Vector3.zero;
-                    itemForOthers.transform.localRotation = Quaternion.identity;
-                    //itemForOthers.layer = LayerMask.NameToLayer("Default");
-                   // itemForOthers.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
-                }
-                else
-                {
-                    Debug.Log("thirdPersonHand = null");
-                }
-            }
-        }
-    }
-    /*
-    public void MasterThirdPersonHandItem(string itemName)
-    {
-        if (thirdPersonHand != null)
-        {
-            // 아이템 복제
-            GameObject itemForOthers;
-
-            itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", thirdPersonHand.position, Quaternion.identity);
-            
-            // 3인칭 모델링의 왼손 위치에 장착
-            itemForOthers.transform.SetParent(thirdPersonHand);
-            itemForOthers.transform.localPosition = Vector3.zero;
-            itemForOthers.transform.localRotation = Quaternion.identity;
-            itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
-            // itemForOthers.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
-        }
-        else
-        {
-            Debug.Log("thirdPersonHand = null");
-        }
-    }
-    */
+    } 
     void numberKey()
     {
         foreach (KeyValuePair<KeyCode, System.Action> entry in keyCodeDic)
@@ -291,6 +204,10 @@ public class Player_Equip : MonoBehaviour
             if (inventory.slots[index - 1].item != null)
             {
                 setEquipItem(inventory.slots[index - 1].item.name);
+                if (PhotonNetwork.IsConnected)
+                {
+                    GetComponent<PhotonItem>().setPhotonEquipItem(inventory.slots[index - 1].item.name);
+                }
                 inventory.EquipItem(Item); // 장착된 아이템을 Inventory에도 반영
 
                 //아이템 이름 출력
@@ -300,6 +217,10 @@ public class Player_Equip : MonoBehaviour
             {
                 Destroy(Item);
                 ItemName.text = "";
+                if (PhotonNetwork.IsConnected)
+                {
+                    GetComponent<PhotonItem>().RemoveEquippedItem(Item.name);
+                }
             }
         }
     }
@@ -463,9 +384,6 @@ public class Player_Equip : MonoBehaviour
     }
 
 
-
-
-
     void ShowTrajectory(Vector3 origin, Vector3 speed)
     {
         if (trajectoryLine == null) return;
@@ -559,30 +477,8 @@ public class Player_Equip : MonoBehaviour
                 Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
                 Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
 
-                if (itemObject.item.ItemName == itemName)
-                {
-                    Debug.Log($"장착된 아이템 이름 {itemObject.item.ItemName}이(가) 제거하려는 아이템 이름과 일치합니다.");
-
-                    // 인벤토리에서 제거
-                    Inventory.instance.RemoveItem(itemName);
-
-                    if (PhotonNetwork.IsConnected && pv.IsMine)
-                    {
-                        PhotonNetwork.Destroy(itemObject.gameObject);
-                    }
-                    else
-                    {
-                        // 장착된 아이템 제거
-                        Destroy(itemObject.gameObject);
-                    }
-
-                    Debug.Log($"장착된 아이템 {itemName}이(가) 제거되었습니다.");
-                    return; // 아이템 제거 후 메서드 종료
-                }
-                else
-                {
-                    Debug.LogWarning($"이름이 일치하지 않음: {itemObject.item.ItemName} != {itemName}");
-                }
+                // 장착된 아이템 제거
+                Destroy(itemObject.gameObject);
             }
 
             Debug.LogWarning($"equipItem의 모든 자식에서 {itemName} 이름을 가진 아이템을 찾을 수 없습니다.");
@@ -592,11 +488,6 @@ public class Player_Equip : MonoBehaviour
             Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
         }
     }
-
-
-
-
-
 
 
     public bool HasEquippedCardKey()

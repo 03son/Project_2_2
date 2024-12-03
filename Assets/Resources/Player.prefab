@@ -201,7 +201,6 @@ MonoBehaviour:
   throwForce: 12
   maxForce: 15
   trajectoryLine: {fileID: 1827983650127665421}
-  thirdPersonHand: {fileID: 8095400622324652812}
 --- !u!114 &7035027276750304151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,6 +757,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5dbc98a77b4618429568bcdaa2378a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipItem: {fileID: 0}
+  thirdPersonHand: {fileID: 8095400622324652812}
+  itemForOthers: {fileID: 0}
 --- !u!1 &7518041095886509107
 GameObject:
   m_ObjectHideFlags: 0

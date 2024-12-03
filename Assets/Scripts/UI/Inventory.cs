@@ -247,7 +247,8 @@ public class Inventory : MonoBehaviour
                 ThrowItem(slots[selectedItemIndex].item);
                 if (PhotonNetwork.IsConnected)
                 {
-                  GetComponent<PhotonThrowItem>().ThrowItem(slots[selectedItemIndex].item);
+                  GetComponent<PhotonItem>().ThrowItem(slots[selectedItemIndex].item);
+                  GetComponent<PhotonItem>().RemoveEquippedItem(slots[selectedItemIndex].item.name);
                 }
             }
             GetComponent<Player_Equip>().ItemName.text = "";
