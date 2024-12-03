@@ -556,6 +556,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: Death
+  - Type: 9
+    SynchronizeType: 1
+    Name: Survival
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0

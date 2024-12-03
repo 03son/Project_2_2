@@ -9,6 +9,7 @@ public class RevivePlayer : MonoBehaviourPun
     private bool isHolding = false;
 
     private PlayerDeathManager targetPlayer; // 타겟 플레이어의 PlayerDeathManager
+
     private Image timerBar; // TimerBar의 Image 컴포넌트
     private RectTransform timerBarTransform; // TimerBar의 Transform
 
@@ -140,18 +141,53 @@ public class RevivePlayer : MonoBehaviourPun
     {
         if (targetPlayer != null)
         {
-            targetPlayer.GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
-            Debug.Log("플레이어가 부활했습니다");
+            Debug.Log($"타겟 플레이어: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
+
+            // 타겟 플레이어의 상태를 서바이벌로 변경 (RPC로 처리)
             targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
+
+            // 로컬에서만 Survival 메서드 호출
+            if (targetPlayer.photonView.IsMine)
+            {
+                Debug.Log("로컬 플레이어가 부활 처리 중...");
+                targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
+            }
+        }
+        else
+        {
+            Debug.LogError("타겟 플레이어가 null입니다. 부활 처리 실패.");
         }
     }
+
+
+
 
     [PunRPC]
     void SyncStateToSurvival()
     {
-        GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
-        Debug.Log($"{photonView.Owner.NickName} 상태가 Survival로 변경되었습니다.");
+        playerState.State = PlayerState.playerState.Survival; // 상태 변경
+        Debug.Log("모든 클라이언트에서 Survival 상태 동기화.");
+
+        // 로컬 플레이어일 경우에만 Survival 메서드 호출
+        if (photonView.IsMine)
+        {
+            Debug.Log("로컬 플레이어가 부활 처리 중...");
+
+            // PlayerDeathManager 인스턴스를 가져와서 Survival 메서드 호출
+            PlayerDeathManager playerDeathManager = GetComponent<PlayerDeathManager>();
+            if (playerDeathManager != null)
+            {
+                playerDeathManager.Survival(); // Survival 메서드 호출
+            }
+            else
+            {
+                Debug.LogError("PlayerDeathManager를 찾을 수 없습니다.");
+            }
+        }
     }
+
+
+
 
 
     void CheckForDeadPlayer()
