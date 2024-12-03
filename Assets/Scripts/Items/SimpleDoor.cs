@@ -1,34 +1,33 @@
 using UnityEngine;
+using Photon.Pun; // Photon 네트워킹 관련 네임스페이스 추가
 
-public class SimpleDoor : MonoBehaviour, IInteractable
+public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
 {
     private Animator animator;
     private bool isOpen = false; // 문이 열려있는 상태
-    private bool openDoor = false; // 문이 닫혀있는 상태
 
     [SerializeField] private AudioSource audioSource; // AudioSource 컴포넌트
     [SerializeField] private AudioClip openSound; // 열리는 소리 클립
     [SerializeField] private AudioClip closeSound; // 닫히는 소리 클립
 
+    private PhotonView photonView; // PhotonView 참조
+
     void Start()
     {
-        animator = GetComponent<Animator>();
-
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>(); // AudioSource 컴포넌트가 없으면 추가
-        }
+        animator = GetComponentInParent<Animator>();
+        photonView = GetComponentInParent<PhotonView>(); // PhotonView 컴포넌트 가져오기
     }
 
     public void OnInteract()
     {
-        if (isOpen)
+        if (PhotonNetwork.IsConnected)
         {
-            CloseDoor(); // 문 닫기
+            photonView.RPC("ToggleDoor", RpcTarget.All, !isOpen);
         }
         else
         {
-            OpenDoor(); // 문 열기
+            // 로컬 동작만 수행 (싱글플레이 상태)
+            ToggleDoor(!isOpen);
         }
     }
 
@@ -37,43 +36,85 @@ public class SimpleDoor : MonoBehaviour, IInteractable
         return isOpen ? "문 닫기" : "문 열기"; // 프롬프트 텍스트 반환
     }
 
+    [PunRPC]
+    public void ToggleDoor(bool open)
+    {
+        animator = GetComponentInParent<Animator>();
+        if (open) //T
+        {
+            OpenDoor(); // 문 열기
+        }
+        else // F
+        {
+            CloseDoor(); // 문 닫기
+        }
+        isOpen = open;
+    }
+
     void OpenDoor()
     {
-        if (animator != null)
+        if (!isOpen) // 중복 실행 방지
         {
-            animator.SetBool("isOpen", true); // 문 열기 애니메이션 실행
-        }
-        else
-        {
-            transform.position += -transform.forward * 1.5f; // 문을 오른쪽으로 약간 이동
-        }
+            if (animator != null)
+            {
+                // animator.SetTrigger("isOpen"); // 문 열기 애니메이션 실행
+                animator.SetBool("Open",true);
+            }
 
-        isOpen = true;
-
-        // 열리는 소리 재생
-        if (audioSource != null && openSound != null)
-        {
-            audioSource.PlayOneShot(openSound);
+            // 열리는 소리 재생
+            if (audioSource != null && openSound != null)
+            {
+                audioSource.PlayOneShot(openSound);
+            }
         }
     }
 
     void CloseDoor()
     {
-        if (animator != null)
+        if (isOpen) // 중복 실행 방지
         {
-            animator.SetBool("isOpen", false); // 문 닫기 애니메이션 실행
+            // 닫히는 소리 재생
+            if (audioSource != null && closeSound != null)
+            {
+                audioSource.PlayOneShot(closeSound);
+            }
+            if (animator != null)
+            {
+                //animator.SetTrigger("isClose"); // 문 닫기 애니메이션 실행
+                animator.SetBool("Open", false);
+                return;
+            }
+        }
+    }
+    /*
+    // 상태 동기화를 위한 메서드
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 로컬 상태를 네트워크로 전송
+            stream.SendNext(isOpen);
         }
         else
         {
-            transform.position -= -transform.forward * 1.5f; // 문을 왼쪽으로 약간 이동
-        }
+            // 네트워크 상태를 로컬에 반영
+            bool networkIsOpen = (bool)stream.ReceiveNext();
 
-        isOpen = false;
-
-        // 닫히는 소리 재생
-        if (audioSource != null && closeSound != null)
-        {
-            audioSource.PlayOneShot(closeSound);
+            // 상태 값이 변경될 때만 처리
+            if (networkIsOpen != isOpen)
+            {
+                isOpen = networkIsOpen;
+                // 상태에 맞는 동작 실행
+                if (isOpen)
+                {
+                    OpenDoor();
+                }
+                else
+                {
+                    CloseDoor();
+                }
+            }
         }
     }
+    */
 }

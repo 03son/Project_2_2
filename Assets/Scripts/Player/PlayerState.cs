@@ -5,6 +5,11 @@ using Photon.Pun;
 
 public class PlayerState : MonoBehaviourPun
 {
+   public static PlayerState instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     public enum playerState
     {
         Survival,
@@ -18,9 +23,9 @@ public class PlayerState : MonoBehaviourPun
         get => state;
         set
         {
-            if (photonView.IsMine) // ·ÎÄÃ ÇÃ·¹ÀÌ¾î¸¸ »óÅÂ¸¦ º¯°æ
+            if (photonView.IsMine) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¸ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
-                photonView.RPC(nameof(SyncState), RpcTarget.All, (int)value); // »óÅÂ µ¿±âÈ­
+                photonView.RPC(nameof(SyncState), RpcTarget.All, (int)value); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
             }
             state = value;
         }
@@ -36,7 +41,7 @@ public class PlayerState : MonoBehaviourPun
     {
         state = (playerState)newState;
 
-        // »óÅÂ º¯°æ È®ÀÎ¿ë µð¹ö±× ¸Þ½ÃÁö
-        Debug.Log($"ÇÃ·¹ÀÌ¾î »óÅÂ°¡ {state}·Î µ¿±âÈ­µÇ¾ú½À´Ï´Ù. (ActorNumber: {photonView.Owner.ActorNumber})");
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½
+        Debug.Log($"ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ {state}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. (ActorNumber: {photonView.Owner.ActorNumber})");
     }
 }

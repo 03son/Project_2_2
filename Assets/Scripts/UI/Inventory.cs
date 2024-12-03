@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour
     PlayerState.playerState state;
     private void Awake()
     {
+        pv = GetComponent<PhotonView>();
         if (instance == null)
         {
             instance = this;
@@ -45,8 +46,6 @@ public class Inventory : MonoBehaviour
         {
             Destroy(this);
         }
-
-        pv = GetComponent<PhotonView>();
 
         // Player_Equip 초기화
         playerEquip = FindObjectOfType<Player_Equip>();
@@ -64,6 +63,10 @@ public class Inventory : MonoBehaviour
             if (pv.IsMine)
             {
                 SetInven();
+            }
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
             }
         }
         else
@@ -111,20 +114,6 @@ public class Inventory : MonoBehaviour
 
             // �������� ȹ���ϰ� ���� Player_Equip�� invenUtil�� ȣ���� ������
             GetComponent<Player_Equip>().invenUtil(addItemIndex + 1);
-
-            // ������ �������� �߰��� �� Flashlight1�� AcquireFlashlight �޼��带 ȣ��
-            if (item.ItemName == "Flashlight")
-            {
-                GameObject flashlightObject = GameObject.Find("Flashlight");
-                if (flashlightObject != null)
-                {
-                    Flashlight1 flashlightScript = flashlightObject.GetComponent<Flashlight1>();
-                    if (flashlightScript != null)
-                    {
-                        flashlightScript.AcquireFlashlight();
-                    }
-                }
-            }
 
             return;
         }
@@ -256,6 +245,11 @@ public class Inventory : MonoBehaviour
             {
                 UnEquip(selectedItemIndex);
                 ThrowItem(slots[selectedItemIndex].item);
+                if (PhotonNetwork.IsConnected)
+                {
+                  GetComponent<PhotonItem>().ThrowItem(slots[selectedItemIndex].item);
+                  GetComponent<PhotonItem>().RemoveEquippedItem(slots[selectedItemIndex].item.name);
+                }
             }
             GetComponent<Player_Equip>().ItemName.text = "";
             slots[selectedItemIndex].item = null;
@@ -271,9 +265,15 @@ public class Inventory : MonoBehaviour
 
     void ThrowItem(itemData item)
     {
-        Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-    } 
+        if (PhotonNetwork.IsConnected)
+        {
 
+        }
+        else
+        {
+            Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+        }
+    }
     private void Update()
     {
         playerState.GetState(out state);
@@ -291,19 +291,4 @@ public class Inventory : MonoBehaviour
         // EquipItem �޼���� ������ �������� ����
         equippedItemObject = itemObject;
     }
-
-   /* void ThrowItem(itemData item)
-    {
-        if (PhotonNetwork.IsConnected)
-        {
-            // PhotonNetwork를 사용해 프리팹 생성 (드롭 위치에)
-            PhotonNetwork.Instantiate(item.dropPerfab.name, dropPos.position, Quaternion.identity);
-        }
-        else
-        {
-            // 싱글플레이에서는 로컬에서만 생성
-            Instantiate(item.dropPerfab, dropPos.position, Quaternion.identity);
-        }
-    } */
-
 }

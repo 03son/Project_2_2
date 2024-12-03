@@ -106,30 +106,6 @@ public class InteractionManager : MonoBehaviour
             // 상호작용 실행
             curInteractable.OnInteract();
 
-            // 멀티플레이 동기화
-            if (PhotonNetwork.IsConnected && curInteractGameobject != null)
-            {
-                PhotonView itemView = curInteractGameobject.GetComponent<PhotonView>();
-                if (itemView != null)
-                {
-                    // 아이템의 소유권을 획득
-                    if (!itemView.IsMine)
-                    {
-                        itemView.RequestOwnership(); // 소유권 요청
-                    }
-                    // 소유권 전환 방식을 Takeover로 설정
-                    itemView.OwnershipTransfer = OwnershipOption.Takeover;
-
-                    // 아이템 비활성화 처리를 모든 클라이언트에 동기화
-                 //   itemView.RPC("RPC_HandleItemPickup", RpcTarget.AllBuffered);
-                }
-            }
-            else
-            {
-                // 싱글플레이 처리
-                curInteractGameobject?.SetActive(false);
-            }
-
             // 상호작용 초기화
             curInteractGameobject = null;
             curInteractable = null;

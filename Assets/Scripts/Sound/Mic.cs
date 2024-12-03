@@ -44,6 +44,9 @@ public class Mic : MonoBehaviour
                 return;
             }
         }
+        //����ũ ���ú� UI �Ҵ�
+        Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
+        Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
 
         if (recorder == null)
         {
@@ -71,16 +74,13 @@ public class Mic : MonoBehaviour
 
         if (single)
             mic.volume = 0;
-
-        //����ũ ���ú� UI �Ҵ�
-        Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
     }
 
     void Update()
     {
         //����ũ off�� �� UI ���� �� = 0
-         if (!recorder.TransmitEnabled || !singleMic)
-             Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
+        // if (!recorder.TransmitEnabled || !singleMic)
+            // Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
 
 
         if (Global_Microphone.UseMic == null)
@@ -183,7 +183,14 @@ public class Mic : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            MonsterAI.Instance.HandlePlayerSound(decibel, playerPosition);
+            if (MonsterAI.Instance != null)
+            {
+                MonsterAI.Instance.HandlePlayerSound(decibel, playerPosition);
+            }
+            else
+            {
+                Debug.Log("몬스터 없음");
+            }
         }
     }
     #endregion

@@ -50,7 +50,7 @@ public class Multi_GameManager : GameManager
             if (playerNumber == PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
-                // PhotonNetwork.Instantiate($"Character/{playerCP["animalName"]}", points[idx].position, points[idx].rotation, 0);
+                //PhotonNetwork.Instantiate($"Character/{playerCP["animalName"]}", points[idx].position, points[idx].rotation, 0);
             }
             idx++;
         }
@@ -63,7 +63,7 @@ public class Multi_GameManager : GameManager
         Transform[] points =
         GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
        // PhotonNetwork.Instantiate("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
-        PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
+        //PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
          
     }
    

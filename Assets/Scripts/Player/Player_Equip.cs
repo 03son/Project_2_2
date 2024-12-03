@@ -33,7 +33,6 @@ public class Player_Equip : MonoBehaviour
     private Animator animator;           // Animator 추가
     private CharacterController characterController;
     private bool isFlashlightOn = false; // 손전등 상태를 저장할 변수
-
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -72,7 +71,7 @@ public class Player_Equip : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu || state == PlayerState.playerState.Die) return;
 
         numberKey();
         mouseWheelScroll();
@@ -118,6 +117,9 @@ public class Player_Equip : MonoBehaviour
 
     public void selectSlot(int index)
     {
+        playerState.GetState(out state);
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
+
         if (index > 0 && index <= invenSlot.Length)
         {
             if (Input.GetKeyDown((KeyCode)(48 + index)))
@@ -159,44 +161,7 @@ public class Player_Equip : MonoBehaviour
             hasGlassCup = true;
             currentGlassCup = Item;
         }
-
-        // 3인칭 모델링에도 아이템 장착 (다른 사람이 보는 것)
-        if (pv.IsMine)
-        {
-            Transform thirdPersonHand = transform.Find("토끼모델링/rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:LeftShoulder/rabbit:LeftArm/rabbit:LeftForeArm/rabbit:LeftHand/rabbit:LeftHandIndex1/rabbit:LeftHandIndex2/rabbit:LeftHandIndex3/itemhand");
-
-            if (thirdPersonHand != null)
-            {
-                // 아이템 복제
-                GameObject itemForOthers = Instantiate(Item);
-
-                // 본인의 경우, LocalPlayerBody 레이어 설정
-                if (pv.IsMine)
-                {
-                    itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
-                }
-                else // 다른 플레이어의 경우, RemotePlayerBody 레이어 설정
-                {
-                    itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
-                }
-
-                // 3인칭 모델링의 왼손 위치에 장착
-                itemForOthers.transform.SetParent(thirdPersonHand);
-                itemForOthers.transform.localPosition = Vector3.zero;
-                itemForOthers.transform.localRotation = Quaternion.identity;
-
-                // 3인칭용 아이템의 크기 설정 (크기 조정 예시)
-                itemForOthers.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f); // 3인칭 아이템 크기 더 크게 설정
-            }
-        }
-    }
-
-
-
-
-
-
-
+    } 
     void numberKey()
     {
         foreach (KeyValuePair<KeyCode, System.Action> entry in keyCodeDic)
@@ -239,6 +204,10 @@ public class Player_Equip : MonoBehaviour
             if (inventory.slots[index - 1].item != null)
             {
                 setEquipItem(inventory.slots[index - 1].item.name);
+                if (PhotonNetwork.IsConnected)
+                {
+                    GetComponent<PhotonItem>().setPhotonEquipItem(inventory.slots[index - 1].item.name);
+                }
                 inventory.EquipItem(Item); // 장착된 아이템을 Inventory에도 반영
 
                 //아이템 이름 출력
@@ -248,6 +217,10 @@ public class Player_Equip : MonoBehaviour
             {
                 Destroy(Item);
                 ItemName.text = "";
+                if (PhotonNetwork.IsConnected)
+                {
+                    GetComponent<PhotonItem>().RemoveEquippedItem(Item.name);
+                }
             }
         }
     }
@@ -264,7 +237,7 @@ public class Player_Equip : MonoBehaviour
                if (flashlightScript != null)
                 {
                     Debug.Log("손전등 획득 및 사용");
-                    flashlightScript.AcquireFlashlight();
+                   flashlightScript.AcquireFlashlight();
 
                     // 손전등 켜기/끄기 처리
                     isFlashlightOn = !isFlashlightOn;
@@ -321,10 +294,6 @@ public class Player_Equip : MonoBehaviour
             ItemName.text = "";
         }
     }
-
-
-
-
 
 
     void StartThrowing()
@@ -415,9 +384,6 @@ public class Player_Equip : MonoBehaviour
     }
 
 
-
-
-
     void ShowTrajectory(Vector3 origin, Vector3 speed)
     {
         if (trajectoryLine == null) return;
@@ -436,6 +402,9 @@ public class Player_Equip : MonoBehaviour
     }
     void mouseWheelScroll()
     {
+        playerState.GetState(out state);
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu || state == PlayerState.playerState.Die) return;
+
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
 
         if (wheelInput < 0)
@@ -508,23 +477,8 @@ public class Player_Equip : MonoBehaviour
                 Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
                 Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
 
-                if (itemObject.item.ItemName == itemName)
-                {
-                    Debug.Log($"장착된 아이템 이름 {itemObject.item.ItemName}이(가) 제거하려는 아이템 이름과 일치합니다.");
-
-                    // 인벤토리에서 제거
-                    Inventory.instance.RemoveItem(itemName);
-
-                    // 장착된 아이템 제거
-                    Destroy(itemObject.gameObject);
-
-                    Debug.Log($"장착된 아이템 {itemName}이(가) 제거되었습니다.");
-                    return; // 아이템 제거 후 메서드 종료
-                }
-                else
-                {
-                    Debug.LogWarning($"이름이 일치하지 않음: {itemObject.item.ItemName} != {itemName}");
-                }
+                // 장착된 아이템 제거
+                Destroy(itemObject.gameObject);
             }
 
             Debug.LogWarning($"equipItem의 모든 자식에서 {itemName} 이름을 가진 아이템을 찾을 수 없습니다.");
@@ -534,11 +488,6 @@ public class Player_Equip : MonoBehaviour
             Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
         }
     }
-
-
-
-
-
 
 
     public bool HasEquippedCardKey()

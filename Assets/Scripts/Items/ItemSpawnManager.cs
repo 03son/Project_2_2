@@ -1,8 +1,9 @@
+using Photon.Pun; 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSpawnManager : MonoBehaviour
+public class ItemSpawnManager : MonoBehaviourPunCallbacks
 {
     [System.Serializable]
     public class FloorSpawnData
@@ -16,7 +17,10 @@ public class ItemSpawnManager : MonoBehaviour
 
     void Start()
     {
-        SpawnItemsPerFloor();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SpawnItemsPerFloor(); // MasterClient만 스폰 수행
+        }
     }
 
     void SpawnItemsPerFloor()
@@ -60,7 +64,10 @@ public class ItemSpawnManager : MonoBehaviour
 
             usedIndexes.Add(randomIndex);
             Vector3 spawnPosition = spawnPoints[randomIndex].position;
-            Instantiate(itemData.itemPrefab, spawnPosition, Quaternion.identity);
+
+            // PhotonNetwork를 사용해 동기화된 생성 수행
+           // PhotonNetwork.Instantiate($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
         }
     }
 }

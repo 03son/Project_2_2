@@ -73,11 +73,21 @@ MonoBehaviour:
   - RPC_HandleItemPickup
   - RPC_SetEquipItemForOthers
   - OnInteract
+  - PhotonDestroyItem
+  - PhotonThrowItem
+  - PhotonThrowItem_
+  - AdjustFlashlight
+  - UseFashlight
   - PlayAlertSounds
   - TriggerJumpScare_RPC
   - SyncDieState
   - SyncState
   - SyncStateToSurvival
+  - ThirdPersonHandItem
+  - ToggleDoor
+  - RequestToggleDoor
+  - ThirdPersonPhotonDestroyItem
+  - UseFlashlight
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -33,13 +33,13 @@ public class Single_GameManager : GameManager
         GameObject.Find("PlayerSpawnPointGroup").gameObject.GetComponentsInChildren<Transform>();
 
       //  GameObject.Instantiate(player, points[1].position, points[1].rotation);
-        GameObject.Instantiate(토끼 , points[1].position, points[1].rotation);
+        GameObject.Instantiate(player, points[1].position, points[1].rotation);
     }
     public override void CreateEnemy() //UI씬을 기준으로 작성함
     {
         Transform[] points =
          GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
 
-        Instantiate(Enemy, points[1].position, points[1].rotation);
+       // Instantiate(Enemy, points[1].position, points[1].rotation);
     }
 }

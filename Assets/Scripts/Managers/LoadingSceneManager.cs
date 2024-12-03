@@ -7,6 +7,7 @@ using Photon.Pun;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using static Player_RoomInfo;
 using Photon.Realtime;
+using TMPro;
 
 public class LoadingSceneManager : MonoBehaviourPunCallbacks
 {
@@ -15,10 +16,12 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
     static bool hasRunOnce = false;
 
     [SerializeField] Slider LoadingBar;
-    [SerializeField] Image background_LoadingImage;
+   // [SerializeField] Image background_LoadingImage;
 
     [SerializeField] Sprite[] loadingImages;
     [SerializeField] GameObject loadingBarObj;
+
+    [SerializeField] TextMeshProUGUI loadingText;
 
     HashTable roomCP;
     HashTable playerCP;
@@ -59,6 +62,8 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
             loa.StartCoroutine(acc_LoadScene(MapName));//ΩÃ±€
 
         loa.loadingImage(ImageNumber - 1);
+
+        loa.StartCoroutine(LoadingText());
     }
     #region ΩÃ±€
     static IEnumerator acc_LoadScene(string MapName)
@@ -172,7 +177,20 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
     #endregion
     void loadingImage(int MapNum) // ¿ÃπÃ¡ˆ
     {
-        background_LoadingImage.GetComponent<Image>().sprite = loadingImages[MapNum];
+       // background_LoadingImage.GetComponent<Image>().sprite = loadingImages[MapNum];
+    }
+
+    public static IEnumerator LoadingText()
+    {
+        for (int i = 0; i<5; i++)
+        {
+            string repeatedcom = new string('.', i);
+            loa.loadingText.text = $"Loading{repeatedcom}";
+            yield return new WaitForSecondsRealtime(0.1f);
+           
+            if (i == 4)
+                i = 0;
+        }
     }
 
     public override void OnRoomPropertiesUpdate(HashTable propertiesThatChanged)
