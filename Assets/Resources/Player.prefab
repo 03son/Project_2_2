@@ -416,7 +416,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520835399152146124}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 113eb4e7ff3f58747a2f1c1080bb2fb9, type: 3}
   m_Name: 
@@ -764,6 +764,7 @@ GameObject:
   - component: {fileID: 5558050709445496603}
   - component: {fileID: 6336469663906377411}
   - component: {fileID: 837250356730881852}
+  - component: {fileID: 1486159915252124868}
   m_Layer: 0
   m_Name: 'Voice  '
   m_TagString: Untagged
@@ -1006,6 +1007,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba537b2ec88e55d43a0a56306fa6773f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!164 &1486159915252124868
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7518041095886509107}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: 0
+  m_DecayTime: 2.91
+  m_DecayHFRatio: 1.3
+  m_ReflectionsLevel: -602
+  m_ReverbLevel: -302
+  m_ReverbDelay: 0.022
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 9
 --- !u!1001 &9102456621331150833
 PrefabInstance:
   m_ObjectHideFlags: 0
