@@ -200,7 +200,7 @@ public class Player_Equip : MonoBehaviour
                         itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
                         itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
                     }
-                    else
+                    else //¼öÁ¤
                     {
                         GameObject Item = Resources.Load<GameObject>($"Prefabs/Items/{itemName}");
                         itemForOthers = Instantiate(Item, __thirdPersonHand.position, Quaternion.identity);
