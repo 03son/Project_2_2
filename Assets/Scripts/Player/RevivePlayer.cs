@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RevivePlayer : MonoBehaviour
+public class RevivePlayer : MonoBehaviourPun
 {
     public float holdTime = 5f; // 입력을 유지해야 하는 시간
     private float holdCounter = 0f;
@@ -14,6 +14,7 @@ public class RevivePlayer : MonoBehaviour
 
     PlayerState playerState;
     PlayerState.playerState state;
+    
 
     void Start()
     {
@@ -50,6 +51,14 @@ public class RevivePlayer : MonoBehaviour
                 Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
                 isHolding = true;
                 holdCounter += Time.deltaTime;
+
+
+                // 타임바 활성화
+                if (timerBar != null && !timerBar.gameObject.activeSelf)
+                {
+                    timerBar.gameObject.SetActive(true); // 타임바 활성화
+                    Debug.Log("타임바 활성화됨");
+                }
 
                 if (timerBar != null)
                 {
@@ -132,15 +141,18 @@ public class RevivePlayer : MonoBehaviour
         if (targetPlayer != null)
         {
             targetPlayer.GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
-            Debug.Log("플레이어가 부활했습니다.");
-
-            if (timerBar != null)
-            {
-                timerBar.gameObject.SetActive(false); // TimerBar 비활성화
-                timerBar.fillAmount = 0; // 초기화
-            }
+            Debug.Log("플레이어가 부활했습니다");
+            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
         }
     }
+
+    [PunRPC]
+    void SyncStateToSurvival()
+    {
+        GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
+        Debug.Log($"{photonView.Owner.NickName} 상태가 Survival로 변경되었습니다.");
+    }
+
 
     void CheckForDeadPlayer()
     {
