@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun; // Photon 네트워킹 관련 네임스페이스 추가
 
-public class SimpleDoor : MonoBehaviour, IInteractable, IPunObservable
+public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
 {
     private Animator animator;
     private bool isOpen = false; // 문이 열려있는 상태
@@ -20,9 +20,8 @@ public class SimpleDoor : MonoBehaviour, IInteractable, IPunObservable
 
     public void OnInteract()
     {
-        if (PhotonNetwork.IsConnected && photonView != null && photonView.IsMine)
+        if (PhotonNetwork.IsConnected)
         {
-            // 네트워크를 통해 RPC 호출하고, isOpen 값을 넘겨서 상태 동기화
             photonView.RPC("ToggleDoor", RpcTarget.All, !isOpen);
         }
         else
@@ -40,11 +39,12 @@ public class SimpleDoor : MonoBehaviour, IInteractable, IPunObservable
     [PunRPC]
     public void ToggleDoor(bool open)
     {
-        if (open)
+        animator = GetComponentInParent<Animator>();
+        if (open) //T
         {
             OpenDoor(); // 문 열기
         }
-        else
+        else // F
         {
             CloseDoor(); // 문 닫기
         }
@@ -57,7 +57,8 @@ public class SimpleDoor : MonoBehaviour, IInteractable, IPunObservable
         {
             if (animator != null)
             {
-                animator.SetTrigger("isOpen"); // 문 열기 애니메이션 실행
+                // animator.SetTrigger("isOpen"); // 문 열기 애니메이션 실행
+                animator.SetBool("Open",true);
             }
 
             // 열리는 소리 재생
@@ -72,19 +73,20 @@ public class SimpleDoor : MonoBehaviour, IInteractable, IPunObservable
     {
         if (isOpen) // 중복 실행 방지
         {
-            if (animator != null)
-            {
-                animator.SetTrigger("isClose"); // 문 닫기 애니메이션 실행
-            }
-
             // 닫히는 소리 재생
             if (audioSource != null && closeSound != null)
             {
                 audioSource.PlayOneShot(closeSound);
             }
+            if (animator != null)
+            {
+                //animator.SetTrigger("isClose"); // 문 닫기 애니메이션 실행
+                animator.SetBool("Open", false);
+                return;
+            }
         }
     }
-
+    /*
     // 상태 동기화를 위한 메서드
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -114,4 +116,5 @@ public class SimpleDoor : MonoBehaviour, IInteractable, IPunObservable
             }
         }
     }
+    */
 }
