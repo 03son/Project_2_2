@@ -115,20 +115,6 @@ public class Inventory : MonoBehaviour
             // �������� ȹ���ϰ� ���� Player_Equip�� invenUtil�� ȣ���� ������
             GetComponent<Player_Equip>().invenUtil(addItemIndex + 1);
 
-            // ������ �������� �߰��� �� Flashlight1�� AcquireFlashlight �޼��带 ȣ��
-            if (item.ItemName == "Flashlight")
-            {
-                GameObject flashlightObject = GameObject.Find("Flashlight");
-                if (flashlightObject != null)
-                {
-                    Flashlight1 flashlightScript = flashlightObject.GetComponent<Flashlight1>();
-                    if (flashlightScript != null)
-                    {
-                        flashlightScript.AcquireFlashlight();
-                    }
-                }
-            }
-
             return;
         }
     }
@@ -280,34 +266,11 @@ public class Inventory : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-            /*
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{item.dropPerfab.name}", dropPos.position, Quaternion.identity);
-            }
-            else
-            {
-                if (pv.IsMine)
-                {
-                    string itemName = item.dropPerfab.name;
-                    pv.RPC("PhotonThrowItem", RpcTarget.MasterClient, itemName);
-                }
-            }
-            */
+
         }
         else
         {
             Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-        }
-    }
-
-    [PunRPC]
-    public void PhotonThrowItem(string itemName)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log($"RPC : {itemName}");
-            PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", dropPos.position, Quaternion.identity);
         }
     }
     private void Update()

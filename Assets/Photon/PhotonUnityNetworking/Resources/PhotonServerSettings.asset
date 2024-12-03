@@ -76,6 +76,8 @@ MonoBehaviour:
   - PhotonDestroyItem
   - PhotonThrowItem
   - PhotonThrowItem_
+  - AdjustFlashlight
+  - UseFashlight
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public class Flashlight1 : MonoBehaviour
+public class Flashlight1 : Item
 {
     [SerializeField] private GameObject flashlightLight; // Spot Light ������Ʈ
     private bool flashlightActive = false;
@@ -52,14 +53,6 @@ public class Flashlight1 : MonoBehaviour
         Debug.Log("������ ȹ�� �Ϸ�");
     }
 
-    // ������ �ѱ�/���� ���� ��ȯ �޼��� �߰�
-  /*  public void ToggleFlashlight(bool state)
-    {
-        flashlightActive = state;
-        flashlightLight.SetActive(flashlightActive);
-        Debug.Log("������ " + (flashlightActive ? "����" : "����"));
-    }  */
-
     public bool IsFlashlightActive()
     {
         return flashlightActive;
@@ -96,7 +89,17 @@ public class Flashlight1 : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 flashlightActive = !flashlightActive;
-                flashlightLight.SetActive(flashlightActive);
+                if (PhotonNetwork.IsConnected)
+                {
+                    if (this.gameObject != null)
+                    {
+                       // pv.RPC("UseFashlight", RpcTarget.All , flashlightActive);
+                    }
+                }
+                else
+                {
+                    UseFashlight(flashlightActive);
+                }
                 Debug.Log("������ " + (flashlightActive ? "����" : "����"));
 
                 // ������ �Ѱ� ���� �ִϸ��̼� ����
@@ -105,43 +108,11 @@ public class Flashlight1 : MonoBehaviour
                     animator.SetBool("isFlashlightOn", flashlightActive);
                 }
             }
-
-            if (flashlightActive)
-            {
-                AdjustFlashlight(); // �������� �� ����
-            }
         }
     }
-
-
-    private void AdjustFlashlight()
+    [PunRPC]
+   public void UseFashlight(bool flashlightActive)
     {
-        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
-        RaycastHit hit;
-
-        // ����ĳ��Ʈ�� ���� ���̳� ��ü�� �ε������� Ȯ��
-        if (Physics.Raycast(ray, out hit, maxDistance))
-        {
-            float distance = hit.distance;
-
-            // �Ÿ��� ���� Spot Angle�� Intensity ����
-            float t = distance / maxDistance; // �Ÿ��� ���� ���� ��� (0���� 1 ����)
-
-            float targetSpotAngle = Mathf.Lerp(minSpotAngle, maxSpotAngle, t);
-            float targetIntensity = Mathf.Lerp(minIntensity, maxIntensity, t);
-
-            // �ε巴�� ��ȭ��Ű��
-            flashlightComponent.spotAngle = Mathf.SmoothDamp(flashlightComponent.spotAngle, targetSpotAngle, ref currentSpotAngle, smoothTime);
-            flashlightComponent.intensity = Mathf.SmoothDamp(flashlightComponent.intensity, targetIntensity, ref currentIntensity, smoothTime);
-        }
-        else
-        {
-            // ���� �ε����� �ʾ��� �� �⺻ �ִ� �� ���
-            float targetSpotAngle = maxSpotAngle;
-            float targetIntensity = maxIntensity;
-
-            flashlightComponent.spotAngle = Mathf.SmoothDamp(flashlightComponent.spotAngle, targetSpotAngle, ref currentSpotAngle, smoothTime);
-            flashlightComponent.intensity = Mathf.SmoothDamp(flashlightComponent.intensity, targetIntensity, ref currentIntensity, smoothTime);
-        }
+        flashlightLight.SetActive(flashlightActive);
     }
 }

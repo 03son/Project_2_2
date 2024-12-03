@@ -34,37 +34,6 @@ public class ItemObject : MonoBehaviour, IInteractable
             Inventory.instance.Additem(item);
             Debug.Log($"아이템 획득: {item.ItemName}");
 
-            // 유리컵 획득 처리
-            if (item.ItemName == "GlassCup")
-            {
-                Debug.Log("유리컵을 획득하려고 합니다...");
-
-                if (glassCupThrower != null)
-                {
-                    Debug.Log("GlassCupThrower.PickUpGlassCup 호출 준비됨");
-                    glassCupThrower.PickUpGlassCup(gameObject);
-                    gameObject.SetActive(false); // 비활성화
-                }
-                else
-                {
-                    Debug.LogWarning("GlassCupThrower가 존재하지 않습니다. 유리컵을 획득할 수 없습니다.");
-                }
-            }
-            // 손전등 획득 처리
-            else if (item.ItemName == "Flashlight")
-            {
-                Flashlight1 flashlightScript = FindObjectOfType<Flashlight1>();
-                if (flashlightScript != null)
-                {
-                    Debug.Log("손전등 획득 처리 중...");
-                    flashlightScript.AcquireFlashlight();
-                }
-                else
-                {
-                    Debug.LogWarning("Flashlight1 스크립트를 찾을 수 없습니다. 손전등을 획득할 수 없습니다.");
-                }
-            }
-
             if (PhotonNetwork.IsConnected)
             {
                 if (PhotonNetwork.IsMasterClient)
@@ -87,15 +56,6 @@ public class ItemObject : MonoBehaviour, IInteractable
             Debug.LogWarning("인벤토리에 빈 슬롯이 없습니다. 아이템을 획득할 수 없습니다.");
         }
     }
-    [PunRPC]
-    void PhotonDestroyItem()
-    {
-        if (PhotonView.IsMine)
-        {
-            PhotonNetwork.Destroy(this.gameObject);
-        }
-    }
-
     bool addSlot()
     {
         // 인벤토리에 빈 슬롯이 있는지 확인

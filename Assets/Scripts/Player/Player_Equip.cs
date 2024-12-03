@@ -34,6 +34,8 @@ public class Player_Equip : MonoBehaviour
     private CharacterController characterController;
     private bool isFlashlightOn = false; // 손전등 상태를 저장할 변수
 
+    [Header("3인칭 아이템 위치")]
+    public Transform thirdPersonHand; //3인칭 아이템 위치
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -72,7 +74,7 @@ public class Player_Equip : MonoBehaviour
     void Update()
     {
         playerState.GetState(out state);
-        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu || state == PlayerState.playerState.Die) return;
 
         numberKey();
         mouseWheelScroll();
@@ -166,13 +168,21 @@ public class Player_Equip : MonoBehaviour
         // 3인칭 모델링에도 아이템 장착 (다른 사람이 보는 것)
         if (pv.IsMine)
         {
-            Transform thirdPersonHand = transform.Find("토끼모델링/rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:LeftShoulder/rabbit:LeftArm/rabbit:LeftForeArm/rabbit:LeftHand/rabbit:LeftHandIndex1/rabbit:LeftHandIndex2/rabbit:LeftHandIndex3/itemhand");
-
             if (thirdPersonHand != null)
             {
                 // 아이템 복제
-                GameObject itemForOthers = Instantiate(Item);
+                GameObject itemForOthers;
 
+                if (PhotonNetwork.IsConnected)
+                {
+                    itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{item}", thirdPersonHand.position, Quaternion.identity);
+                }
+                else
+                {
+                    itemForOthers = resoure.Instantiate($"Items/{item}");
+                }
+
+                /*
                 // 본인의 경우, LocalPlayerBody 레이어 설정
                 if (pv.IsMine)
                 {
@@ -182,7 +192,7 @@ public class Player_Equip : MonoBehaviour
                 {
                     itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
                 }
-
+                */
                 // 3인칭 모델링의 왼손 위치에 장착
                 itemForOthers.transform.SetParent(thirdPersonHand);
                 itemForOthers.transform.localPosition = Vector3.zero;
@@ -190,6 +200,10 @@ public class Player_Equip : MonoBehaviour
 
                 // 3인칭용 아이템의 크기 설정 (크기 조정 예시)
                 itemForOthers.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f); // 3인칭 아이템 크기 더 크게 설정
+            }
+            else
+            {
+                Debug.Log("thirdPersonHand = null");
             }
         }
     }
@@ -267,7 +281,7 @@ public class Player_Equip : MonoBehaviour
                if (flashlightScript != null)
                 {
                     Debug.Log("손전등 획득 및 사용");
-                    flashlightScript.AcquireFlashlight();
+                   flashlightScript.AcquireFlashlight();
 
                     // 손전등 켜기/끄기 처리
                     isFlashlightOn = !isFlashlightOn;
@@ -440,7 +454,7 @@ public class Player_Equip : MonoBehaviour
     void mouseWheelScroll()
     {
         playerState.GetState(out state);
-        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu || state == PlayerState.playerState.Die) return;
 
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
 
