@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 2823931961959453839}
   - component: {fileID: 6607217315788394578}
   - component: {fileID: -3523335529485268683}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -711,8 +711,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
-  m_Height: 0.1
+  m_Radius: 0.05
+  m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &-3523335529485268683

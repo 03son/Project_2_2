@@ -3803,8 +3803,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armsTransform: {fileID: 1257129060}
-  bobSpeed: 5
-  bobAmount: 0.1
+  bobSpeed: 8
+  bobAmount: 0.15
 --- !u!4 &1291784320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8982704434552452063, guid: 51e8a9b495b7b4c459acd06cc0a5a694, type: 3}
