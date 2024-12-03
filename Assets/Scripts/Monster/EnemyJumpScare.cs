@@ -4,94 +4,31 @@ using Photon.Pun;
 
 public class EnemyJumpScare : MonoBehaviourPun
 {
-    public Transform enemyFacePosition; // ÀûÀÇ ¾ó±¼ À§Ä¡¸¦ ¹Ù¶óº¸´Â Transform
-    public float zoomInDuration = 0.5f; // ÁÜÀÎ ½Ã°£
-    private Camera mainCamera;
-    private float originalFieldOfView;
+    public Transform enemyFacePosition; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ù¶óº¸´ï¿½ Transform
+    public float zoomInDuration = 0.5f; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public AudioClip jumpScareSound;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float soundVolume = 1f;      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (0~1)
 
-    private Vector3 originalPosition;
-    private Quaternion originalRotation;
-
-    private bool isJumpScareActive = false;
+    private Camera mainCamera;          // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½
+    private AudioSource audioSource;    // AudioSource ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    private Vector3 originalPosition;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+    private Quaternion originalRotation; // ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     void Start()
     {
-        if (!photonView.IsMine)
+        // AudioSource ï¿½Ê±ï¿½È­
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
         {
-            // PhotonView°¡ ·ÎÄÃ ÇÃ·¹ÀÌ¾îÀÇ °ÍÀÌ ¾Æ´Ï¶ó¸é ÀÌ ½ºÅ©¸³Æ®¸¦ ºñÈ°¼ºÈ­
-            enabled = false;
-            return;
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
+        audioSource.volume = soundVolume;
+        audioSource.playOnAwake = false;
 
-        mainCamera = CameraInfo.MainCam;
-        if (mainCamera == null)
+        // jumpScareSound È®ï¿½ï¿½
+        if (jumpScareSound == null)
         {
-            Debug.LogError("Main Camera¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. Ä«¸Þ¶ó¸¦ È®ÀÎÇØÁÖ¼¼¿ä.");
-        }
-        else
-        {
-            originalFieldOfView = mainCamera.fieldOfView;
-            Debug.Log("Main Camera¿Í FOV ÃÊ±âÈ­ ¿Ï·á");
-        }
-    }
-
-    void Update()
-    {
-        if (isJumpScareActive && mainCamera.transform.parent == enemyFacePosition)
-        {
-            // enemyFacePositionÀÇ ÀÚ½ÄÀ¸·Î ÀÖ´Â µ¿¾È Ä«¸Þ¶óÀÇ À§Ä¡¿Í È¸ÀüÀ» Áö¼ÓÀûÀ¸·Î ¼³Á¤
-            mainCamera.transform.localPosition = Vector3.zero;
-            mainCamera.transform.localRotation = Quaternion.identity;
-        }
-    }
-
-    public void TriggerJumpScare()
-    {
-        mainCamera = CameraInfo.MainCam;
-        if (mainCamera != null)
-        {
-            Debug.Log("JumpScare ½ÃÀÛ");
-            StartCoroutine(ZoomInOnEnemy());
-        }
-        else
-        {
-            Debug.LogError("Main Camera°¡ ÃÊ±âÈ­µÇÁö ¾Ê¾Ò½À´Ï´Ù. JumpScare¸¦ ½ÃÀÛÇÒ ¼ö ¾ø½À´Ï´Ù.");
-        }
-    }
-
-    IEnumerator ZoomInOnEnemy()
-    {
-        // ÇöÀç Ä«¸Þ¶óÀÇ ºÎ¸ð¸¦ ¿ø·¡ ºÎ¸ð·ÎºÎÅÍ ºÐ¸®ÇÏ°í, enemyFacePositionÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
-        Transform originalParent = mainCamera.transform.parent;
-        CameraRot cameraRotScript = mainCamera.GetComponent<CameraRot>();
-
-        if (cameraRotScript != null)
-        {
-            cameraRotScript.isControlledExternally = true;  // CameraRot ¾÷µ¥ÀÌÆ® ¸ØÃß±â
-        }
-
-        mainCamera.transform.SetParent(enemyFacePosition);
-        Debug.Log("Ä«¸Þ¶ó°¡ enemyFacePositionÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤µÇ¾ú½À´Ï´Ù.");
-
-        // Ä«¸Þ¶óÀÇ À§Ä¡ ¹× È¸ÀüÀ» enemyFacePosition¿¡ ¸ÂÃç °­Á¦·Î ¼³Á¤
-        mainCamera.transform.localPosition = Vector3.zero;
-        mainCamera.transform.localRotation = Quaternion.identity;
-        Debug.Log("Ä«¸Þ¶óÀÇ À§Ä¡¿Í È¸ÀüÀ» enemyFacePosition¿¡ ¸ÂÃç ¼³Á¤µÇ¾ú½À´Ï´Ù.");
-
-        // ÁÜÀÎ ½Ã°£ µ¿¾È À¯Áö (ÁÜÀÎÀÌ ÇÊ¿ä ¾øÀ¸¹Ç·Î ¹Ù·Î ´ë±â)
-        yield return new WaitForSeconds(zoomInDuration);
-
-        yield return new WaitForSeconds(1f); // 1ÃÊ µ¿¾È À¯Áö
-
-        // ¿ø·¡ ºÎ¸ð·Î ´Ù½Ã ¿¬°áÇÏ°í À§Ä¡¿Í È¸ÀüÀ» º¹±Í½ÃÅµ´Ï´Ù.
-        mainCamera.transform.SetParent(originalParent);
-        mainCamera.transform.position = originalPosition;
-        mainCamera.transform.rotation = originalRotation;
-        Debug.Log("Ä«¸Þ¶ó°¡ ¿ø·¡ ºÎ¸ð·Î ´Ù½Ã ¿¬°áµÇ¾ú½À´Ï´Ù.");
-
-        if (cameraRotScript != null)
-        {
-            cameraRotScript.isControlledExternally = false;  // CameraRot ¾÷µ¥ÀÌÆ® Àç°³
+            Debug.LogError("JumpScare ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½. Inspectorï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
         }
     }
 
@@ -99,16 +36,61 @@ public class EnemyJumpScare : MonoBehaviourPun
     {
         if (other.CompareTag("Player"))
         {
-            // Ãæµ¹ÇÑ °´Ã¼¿¡¼­ PhotonView ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
             PhotonView playerPhotonView = other.GetComponent<PhotonView>();
 
-            // ÇÃ·¹ÀÌ¾î°¡ ·ÎÄÃ Å¬¶óÀÌ¾ðÆ®ÀÏ °æ¿ì¿¡¸¸ Á¡ÇÁ ½ºÄÉ¾î¸¦ ½ÇÇà
             if (playerPhotonView != null && playerPhotonView.IsMine)
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹ °¨Áö. JumpScare Æ®¸®°Å È£Ãâ");
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½Ô¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½
                 TriggerJumpScare();
             }
         }
     }
 
+    void TriggerJumpScare()
+    {
+        mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogError("Main Cameraï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+            return;
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        PlayJumpScareSound();
+        StartCoroutine(ZoomInOnEnemy());
+    }
+
+    private void PlayJumpScareSound()
+    {
+        if (jumpScareSound != null)
+        {
+            audioSource.PlayOneShot(jumpScareSound);
+        }
+        else
+        {
+            Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
+        }
+    }
+
+    IEnumerator ZoomInOnEnemy()
+    {
+        Transform originalParent = mainCamera.transform.parent;
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        originalPosition = mainCamera.transform.localPosition;
+        originalRotation = mainCamera.transform.localRotation;
+
+        // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ ï¿½ó±¼·ï¿½ ï¿½Ìµï¿½
+        mainCamera.transform.SetParent(enemyFacePosition);
+        mainCamera.transform.localPosition = Vector3.zero;
+        mainCamera.transform.localRotation = Quaternion.identity;
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        yield return new WaitForSeconds(zoomInDuration);
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡/È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        mainCamera.transform.SetParent(originalParent);
+        mainCamera.transform.localPosition = originalPosition;
+        mainCamera.transform.localRotation = originalRotation;
+    }
 }

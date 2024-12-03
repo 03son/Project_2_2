@@ -202,7 +202,7 @@ public class Mic : MonoBehaviour
         {
             //currentDb�� ���� UI�� Value ������ �°� ���� �� ����
             Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
-            //Debug.Log("UI ���ú� ��" + Mathf.InverseLerp(30, 60, (int)currentDb));
+          //  Debug.Log("UI ���ú� ��" + Mathf.InverseLerp(30, 60, (int)currentDb));
         }
     }
 }
