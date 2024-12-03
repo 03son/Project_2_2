@@ -89,17 +89,7 @@ public class Flashlight1 : Item
             if (Input.GetMouseButtonDown(0))
             {
                 flashlightActive = !flashlightActive;
-                if (PhotonNetwork.IsConnected)
-                {
-                    if (this.gameObject != null)
-                    {
-                       // pv.RPC("UseFashlight", RpcTarget.All , flashlightActive);
-                    }
-                }
-                else
-                {
-                    UseFashlight(flashlightActive);
-                }
+                UseFashlight(flashlightActive);
                 Debug.Log("������ " + (flashlightActive ? "����" : "����"));
 
                 // ������ �Ѱ� ���� �ִϸ��̼� ����
@@ -110,7 +100,7 @@ public class Flashlight1 : Item
             }
         }
     }
-    [PunRPC]
+
    public void UseFashlight(bool flashlightActive)
     {
         flashlightLight.SetActive(flashlightActive);
