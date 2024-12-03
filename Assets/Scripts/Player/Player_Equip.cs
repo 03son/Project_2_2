@@ -202,9 +202,14 @@ public class Player_Equip : MonoBehaviour
                     }
                     else //¼öÁ¤
                     {
+                        itemForOthers = PhotonNetwork.Instantiate($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
+                        itemForOthers = Instantiate(Item, __thirdPersonHand.position, Quaternion.identity);
+                        itemForOthers.layer = LayerMask.NameToLayer("Default");
+                        /*
                         GameObject Item = Resources.Load<GameObject>($"Prefabs/Items/{itemName}");
                         itemForOthers = Instantiate(Item, __thirdPersonHand.position, Quaternion.identity);
                         itemForOthers.layer = LayerMask.NameToLayer("Default");
+                        */
                     }
 
                     // 3ÀÎÄª ¸ðµ¨¸µÀÇ ¿Þ¼Õ À§Ä¡¿¡ ÀåÂø
