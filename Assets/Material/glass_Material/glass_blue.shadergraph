@@ -307,8 +307,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 0.0,
-            "y": 0.0
+            "x": -0.000024557113647460938,
+            "y": -7.4999918937683109
         },
         "m_Blocks": [
             {
@@ -750,9 +750,9 @@
     "m_ShaderOutputName": "Emission",
     "m_StageCapability": 2,
     "m_Value": {
-        "x": 0.1105375587940216,
-        "y": 0.12175152450799942,
-        "z": 0.12735849618911744
+        "x": 0.0644802376627922,
+        "y": 0.1662958264350891,
+        "z": 0.19811320304870606
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -2210,7 +2210,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Alpha",
     "m_StageCapability": 2,
-    "m_Value": -0.7900000214576721,
+    "m_Value": 0.4000000059604645,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }

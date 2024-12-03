@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-
+   public static PlayerState instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     public enum playerState
     {
         Survival,
