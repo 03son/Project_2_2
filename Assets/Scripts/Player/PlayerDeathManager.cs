@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq;
+
 
 public class PlayerDeathManager : MonoBehaviourPunCallbacks
 {
@@ -46,10 +48,34 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
         {
-            playerState.State = PlayerState.playerState.Die;
-            playerState.GetState(out state);
-            Debug.Log(state);
-            Die();
+            Debug.Log("적과 충돌하여 사망 상태로 전환.");
+
+            // RPC 호출 시 ActorNumber 전달
+            photonView.RPC("SyncDieState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+        }
+    }
+
+
+    [PunRPC]
+    void SyncDieState(int actorNumber)
+    {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
+        {
+            Debug.Log("로컬 플레이어가 죽은 상태로 전환됩니다.");
+            playerState.State = PlayerState.playerState.Die; // 로컬 플레이어 상태 변경
+            Die(); // 로컬에서 Die 메서드 호출
+        }
+        else
+        {
+            Debug.Log($"ActorNumber {actorNumber}의 상태를 동기화.");
+            PlayerDeathManager targetPlayer = PhotonNetwork.PlayerList
+                .FirstOrDefault(p => p.ActorNumber == actorNumber)?
+                .TagObject as PlayerDeathManager;
+
+            if (targetPlayer != null)
+            {
+                targetPlayer.playerState.State = PlayerState.playerState.Die; // 다른 클라이언트 동기화
+            }
         }
     }
 

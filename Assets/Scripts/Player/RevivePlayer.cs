@@ -21,10 +21,12 @@ public class RevivePlayer : MonoBehaviour
 
         // TimerBar 찾기
         timerBar = FindTimerBar();
+
         if (timerBar != null)
         {
+            Debug.Log("TimerBar를 성공적으로 찾았습니다.");
             timerBar.fillAmount = 0f; // 초기화
-            timerBar.gameObject.SetActive(false); // 초기에는 비활성화
+                                      // 여기서 gameObject를 비활성화하지 않음.
         }
         else
         {
@@ -32,52 +34,89 @@ public class RevivePlayer : MonoBehaviour
         }
     }
 
+
     void Update()
     {
         playerState.GetState(out state);
         if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
             return;
 
-        if (targetPlayer != null && Input.GetKey(KeyManager.Interaction_Key)) // 상호작용
+        if (targetPlayer != null)
         {
-            isHolding = true;
-            holdCounter += Time.deltaTime;
+            Debug.Log("타겟 플레이어 발견: " + targetPlayer.gameObject.name);
 
-            if (timerBar != null)
+            if (Input.GetKey(KeyManager.Interaction_Key)) // 상호작용 키 확인
             {
-                timerBar.gameObject.SetActive(true); // TimerBar 활성화
-                timerBar.fillAmount = holdCounter / holdTime; // 진행 상태 업데이트
+                Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
+                isHolding = true;
+                holdCounter += Time.deltaTime;
+
+                if (timerBar != null)
+                {
+                    timerBar.fillAmount = holdCounter / holdTime; // 타이머 진행 상태 업데이트
+                    Debug.Log($"타이머 진행 중: {timerBar.fillAmount * 100}% 완료");
+                }
+
+                if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
+                {
+                    Debug.Log("부활 조건 충족. 부활 시도 중...");
+                    ReviveTargetPlayer(); // 부활 호출
+                    holdCounter = 0f; // 타이머 초기화
+                }
             }
-
-            if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
+            else
             {
-                ReviveTargetPlayer(); // 부활 호출
-                ResetHold();
+              Debug.Log("인터랙션 키가 눌리지 않았습니다.");
             }
         }
-        else if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
+        else
+        {
+        //    Debug.Log("타겟 플레이어가 설정되지 않았습니다.");
+        }
+
+        if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
         {
             if (timerBar != null)
             {
-                timerBar.gameObject.SetActive(false); // TimerBar 비활성화
-                timerBar.fillAmount = 0f; // 초기화
+                timerBar.fillAmount = 0f; // 타이머 초기화
             }
+       //     Debug.Log("인터랙션 키가 떼어짐 또는 상호작용 중단됨.");
             ResetHold();
         }
     }
+
+
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             PlayerState otherPlayerState = other.GetComponent<PlayerState>();
-            if (otherPlayerState != null && otherPlayerState.State == PlayerState.playerState.Die)
+            if (otherPlayerState != null)
             {
-                targetPlayer = other.GetComponent<PlayerDeathManager>();
-                Debug.Log("죽은 플레이어 발견. 상호작용으로 부활 가능.");
+                Debug.Log($"PlayerState 발견: {other.gameObject.name}");
+
+                if (otherPlayerState.State == PlayerState.playerState.Die)
+                {
+                    targetPlayer = other.GetComponent<PlayerDeathManager>();
+                    Debug.Log($"죽은 플레이어 발견: {targetPlayer.gameObject.name}. 상호작용 가능.");
+                }
+                else
+                {
+                    Debug.Log("해당 플레이어는 죽은 상태가 아님.");
+                }
+            }
+            else
+            {
+                Debug.Log("PlayerState가 없습니다.");
             }
         }
+        else
+        {
+            Debug.Log($"Player 태그가 아님: {other.gameObject.name}");
+        }
     }
+
 
     void OnTriggerExit(Collider other)
     {
@@ -120,13 +159,16 @@ public class RevivePlayer : MonoBehaviour
                 if (otherPlayerState.State == PlayerState.playerState.Die)
                 {
                     targetPlayer = hit.collider.GetComponent<PlayerDeathManager>();
-                    Debug.Log("죽은 플레이어 발견. 상호작용으로 부활 가능.");
+                    Debug.Log($"죽은 플레이어 발견: {targetPlayer.gameObject.name}. 상호작용 가능.");
+                }
+                else
+                {
+                    Debug.Log("해당 플레이어는 죽은 상태가 아님.");
                 }
             }
             else
             {
                 Debug.Log("PlayerState 컴포넌트가 없습니다.");
-                targetPlayer = null;
             }
         }
         else
@@ -134,6 +176,7 @@ public class RevivePlayer : MonoBehaviour
             Debug.Log("레이캐스트가 아무것도 감지하지 못했습니다.");
         }
     }
+
 
 
 

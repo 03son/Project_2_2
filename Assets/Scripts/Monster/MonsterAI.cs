@@ -450,7 +450,7 @@ public class MonsterAI : MonoBehaviourPun
             {
                 // 데시벨 계산
                 float decibel = soundSource.GetDecibelAtDistance(transform.position);
-                Debug.Log(decibel);
+              //  Debug.Log(decibel);
                 // 데시벨이 최소 감지 값 이상인지 확인
                 if (decibel >= minDecibelToDetect)
                 {
