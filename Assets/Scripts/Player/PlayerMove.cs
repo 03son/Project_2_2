@@ -99,7 +99,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 2.5f))
         {
             float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
-            Debug.Log($"Slope Angle: {slopeAngle}");
+            //Debug.Log($"Slope Angle: {slopeAngle}");
 
             if (slopeAngle > 10) // 10도 이상이면 계단으로 판단
             {
