@@ -175,6 +175,7 @@ public class Player_Equip : MonoBehaviour
                 }
                 else
                 {
+                    ThirdPersonHandItem(item, PhotonNetwork.LocalPlayer.ActorNumber);
                     pv.RPC("ThirdPersonHandItem", RpcTarget.MasterClient, item, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
             }
@@ -194,7 +195,7 @@ public class Player_Equip : MonoBehaviour
                     // 아이템 복제
                     GameObject itemForOthers;
 
-                    if (PhotonNetwork.IsMasterClient)
+                    if (PhotonNetwork.IsMasterClient || pv.IsMine)
                     {
                         itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
                         itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
