@@ -56,6 +56,14 @@ public class ItemObject : MonoBehaviour, IInteractable
             Debug.LogWarning("인벤토리에 빈 슬롯이 없습니다. 아이템을 획득할 수 없습니다.");
         }
     }
+    [PunRPC]
+    public void PhotonDestroyItem()
+    {
+        if (PhotonView.IsMine)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+    }
     bool addSlot()
     {
         // 인벤토리에 빈 슬롯이 있는지 확인

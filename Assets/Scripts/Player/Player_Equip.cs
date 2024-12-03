@@ -122,7 +122,7 @@ public class Player_Equip : MonoBehaviour
     {
         playerState.GetState(out state);
         if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die) return;
-        
+
         if (index > 0 && index <= invenSlot.Length)
         {
             if (Input.GetKeyDown((KeyCode)(48 + index)))
@@ -164,56 +164,85 @@ public class Player_Equip : MonoBehaviour
             hasGlassCup = true;
             currentGlassCup = Item;
         }
-
-        // 3인칭 모델링에도 아이템 장착 (다른 사람이 보는 것)
-        if (pv.IsMine)
+        if (PhotonNetwork.IsConnected)
         {
-            if (thirdPersonHand != null)
+            // 3인칭 모델링에도 아이템 장착
+            if (pv.IsMine)
             {
-                // 아이템 복제
-                GameObject itemForOthers;
-
-                if (PhotonNetwork.IsConnected)
+                if (PhotonNetwork.IsMasterClient)
                 {
-                    itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{item}", thirdPersonHand.position, Quaternion.identity);
+                    ThirdPersonHandItem(item, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
                 else
                 {
-                    itemForOthers = resoure.Instantiate($"Items/{item}");
+                    pv.RPC("ThirdPersonHandItem", RpcTarget.MasterClient, item, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
-
-                /*
-                // 본인의 경우, LocalPlayerBody 레이어 설정
-                if (pv.IsMine)
-                {
-                    itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
-                }
-                else // 다른 플레이어의 경우, RemotePlayerBody 레이어 설정
-                {
-                    itemForOthers.layer = LayerMask.NameToLayer("RemotePlayerBody");
-                }
-                */
-                // 3인칭 모델링의 왼손 위치에 장착
-                itemForOthers.transform.SetParent(thirdPersonHand);
-                itemForOthers.transform.localPosition = Vector3.zero;
-                itemForOthers.transform.localRotation = Quaternion.identity;
-
-                // 3인칭용 아이템의 크기 설정 (크기 조정 예시)
-                itemForOthers.transform.localScale = new Vector3(0.003f, 0.003f, 0.003f); // 3인칭 아이템 크기 더 크게 설정
-            }
-            else
-            {
-                Debug.Log("thirdPersonHand = null");
             }
         }
     }
+    Transform __thirdPersonHand;
+    [PunRPC]
+    public void ThirdPersonHandItem(string itemName, int actorNumber)
+    {
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == actorNumber)
+            {
+                __thirdPersonHand = player.GetComponent<Player_Equip>().thirdPersonHand;
+                if (__thirdPersonHand != null)
+                {
+                    // 아이템 복제
+                    GameObject itemForOthers;
 
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
+                        itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
+                    }
+                    else
+                    {
+                        GameObject Item = Resources.Load<GameObject>($"Prefabs/Items/{itemName}");
+                        itemForOthers = Instantiate(Item, __thirdPersonHand.position, Quaternion.identity);
+                        itemForOthers.layer = LayerMask.NameToLayer("Default");
+                    }
 
+                    // 3인칭 모델링의 왼손 위치에 장착
+                    itemForOthers.transform.SetParent(__thirdPersonHand);
+                    itemForOthers.transform.localPosition = Vector3.zero;
+                    itemForOthers.transform.localRotation = Quaternion.identity;
+                    //itemForOthers.layer = LayerMask.NameToLayer("Default");
+                   // itemForOthers.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
+                }
+                else
+                {
+                    Debug.Log("thirdPersonHand = null");
+                }
+            }
+        }
+    }
+    /*
+    public void MasterThirdPersonHandItem(string itemName)
+    {
+        if (thirdPersonHand != null)
+        {
+            // 아이템 복제
+            GameObject itemForOthers;
 
-
-
-
-
+            itemForOthers = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", thirdPersonHand.position, Quaternion.identity);
+            
+            // 3인칭 모델링의 왼손 위치에 장착
+            itemForOthers.transform.SetParent(thirdPersonHand);
+            itemForOthers.transform.localPosition = Vector3.zero;
+            itemForOthers.transform.localRotation = Quaternion.identity;
+            itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
+            // itemForOthers.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
+        }
+        else
+        {
+            Debug.Log("thirdPersonHand = null");
+        }
+    }
+    */
     void numberKey()
     {
         foreach (KeyValuePair<KeyCode, System.Action> entry in keyCodeDic)
@@ -338,10 +367,6 @@ public class Player_Equip : MonoBehaviour
             ItemName.text = "";
         }
     }
-
-
-
-
 
 
     void StartThrowing()
@@ -535,8 +560,15 @@ public class Player_Equip : MonoBehaviour
                     // 인벤토리에서 제거
                     Inventory.instance.RemoveItem(itemName);
 
-                    // 장착된 아이템 제거
-                    Destroy(itemObject.gameObject);
+                    if (PhotonNetwork.IsConnected && pv.IsMine)
+                    {
+                        PhotonNetwork.Destroy(itemObject.gameObject);
+                    }
+                    else
+                    {
+                        // 장착된 아이템 제거
+                        Destroy(itemObject.gameObject);
+                    }
 
                     Debug.Log($"장착된 아이템 {itemName}이(가) 제거되었습니다.");
                     return; // 아이템 제거 후 메서드 종료

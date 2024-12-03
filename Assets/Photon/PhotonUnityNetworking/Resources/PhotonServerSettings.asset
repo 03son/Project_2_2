@@ -81,6 +81,7 @@ MonoBehaviour:
   - PlayAlertSounds
   - TriggerJumpScare_RPC
   - SyncDieState
+  - ThirdPersonHandItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
