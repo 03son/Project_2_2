@@ -137,13 +137,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashlightLight: {fileID: 5770808728839445457}
-  intensity: 15
-  range: 10
-  minSpotAngle: 30
+  intensity: 70
+  range: 30
+  minSpotAngle: 60
   maxSpotAngle: 80
-  minIntensity: 1
-  maxIntensity: 3
-  maxDistance: 10
+  minIntensity: 50
+  maxIntensity: 70
+  maxDistance: 30
 --- !u!95 &863028553889471386
 Animator:
   serializedVersion: 5
@@ -277,6 +277,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4301368589579951855, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: maxIntensity
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301368589579951855, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: minIntensity
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4340401175393712766, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
       propertyPath: m_Name
       value: Flashlight1
@@ -303,7 +311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
       propertyPath: m_Intensity
-      value: 15
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
