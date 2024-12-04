@@ -202,9 +202,9 @@ MonoBehaviour:
   chaseSpeed: 14
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
-  viewDistance: 13
+  viewDistance: 20
   fieldOfView: 120
-  hearingRange: 15
+  hearingRange: 30
   minDecibelToDetect: 30
   soundSources: []
   currentState: 0
@@ -327,9 +327,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -337,22 +337,31 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.0049207304
+      value: 0.99251556
+      inSlope: -0.10933166
+      outSlope: -0.10933166
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.48530206
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.49745458
+      value: 0.5959091
+      inSlope: -0.12461432
+      outSlope: -0.12461432
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.08985304
+      outWeight: 0.41346946
+    - serializedVersion: 3
+      time: 0.9847641
+      value: 0.02720642
+      inSlope: -3.0742743
+      outSlope: -3.0742743
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15998617
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
