@@ -201,6 +201,8 @@ MonoBehaviour:
   throwForce: 12
   maxForce: 15
   trajectoryLine: {fileID: 1827983650127665421}
+  thirdPersonHand: {fileID: 0}
+  itemForOthers: {fileID: 0}
 --- !u!114 &7035027276750304151
 MonoBehaviour:
   m_ObjectHideFlags: 0

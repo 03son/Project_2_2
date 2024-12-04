@@ -199,6 +199,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -1059075982372267285, guid: 707d1258161f73a4d898f8f974b09097, type: 3}
+      propertyPath: sceneViewId
+      value: 23
+      objectReference: {fileID: 0}
     - target: {fileID: 2184383618051390682, guid: 707d1258161f73a4d898f8f974b09097, type: 3}
       propertyPath: m_Icon
       value: 
@@ -416,6 +420,10 @@ PrefabInstance:
     - target: {fileID: 4389836030814688525, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
       propertyPath: m_UseWorldSpace
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862343439432692409, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      propertyPath: sceneViewId
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -948,6 +956,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -8163699580270881522, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+      propertyPath: sceneViewId
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 1996919381580387149, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
       propertyPath: keyID
       value: 1
@@ -1536,6 +1548,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -6432134132428881120, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      propertyPath: sceneViewId
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
       propertyPath: m_Name
       value: GlassCup
@@ -1607,6 +1623,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -4708000764916881432, guid: 51e8a9b495b7b4c459acd06cc0a5a694, type: 3}
+      propertyPath: sceneViewId
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 5481775352141382299, guid: 51e8a9b495b7b4c459acd06cc0a5a694, type: 3}
       propertyPath: m_Name
       value: Battery (1)
@@ -2572,6 +2592,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -2521024512920920732, guid: 71e34ac832d9e154f8259b3b72bb8744, type: 3}
+      propertyPath: sceneViewId
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2147448548842381719, guid: 71e34ac832d9e154f8259b3b72bb8744, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.85
@@ -3261,6 +3285,10 @@ PrefabInstance:
       propertyPath: m_UseWorldSpace
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8862343439432692409, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      propertyPath: sceneViewId
+      value: 27
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3319,6 +3347,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -3018730694449834809, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      propertyPath: sceneViewId
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
       propertyPath: m_Name
       value: CrowBar
@@ -4217,6 +4249,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -6432134132428881120, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      propertyPath: sceneViewId
+      value: 29
+      objectReference: {fileID: 0}
     - target: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
       propertyPath: m_Name
       value: GlassCup (1)
@@ -4533,6 +4569,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -6432134132428881120, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      propertyPath: sceneViewId
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
       propertyPath: m_Name
       value: GlassCup (2)
@@ -7874,6 +7914,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -5139411266554285236, guid: 315fd5d1315112a41ae5b668feab47c0, type: 3}
+      propertyPath: sceneViewId
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 3621140277268620246, guid: 315fd5d1315112a41ae5b668feab47c0, type: 3}
       propertyPath: m_Name
       value: Submarine Key
@@ -8083,6 +8127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -4708000764916881432, guid: 51e8a9b495b7b4c459acd06cc0a5a694, type: 3}
+      propertyPath: sceneViewId
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 5481775352141382299, guid: 51e8a9b495b7b4c459acd06cc0a5a694, type: 3}
       propertyPath: m_Name
       value: Battery
@@ -8140,6 +8188,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: 3590691768079393489, guid: 339b405d3f994d04c888964b5b224263, type: 3}
+      propertyPath: sceneViewId
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 5518456526652017941, guid: 339b405d3f994d04c888964b5b224263, type: 3}
       propertyPath: m_Name
       value: "\uC808\uB2E8\uAE30"
@@ -8284,6 +8336,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7107934937644940653, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
+      propertyPath: sceneViewId
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 7129547770309612214, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
       propertyPath: sceneViewId
       value: 15
@@ -8305,6 +8361,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: 2895171462283870813, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
+      propertyPath: sceneViewId
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8293842065114286196, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.67
@@ -8451,6 +8511,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasementKey
       objectReference: {fileID: 0}
+    - target: {fileID: 9127660132168916080, guid: 67ef7e521fe5ccc4f8045ecbf683d04f, type: 3}
+      propertyPath: sceneViewId
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8464,6 +8528,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: 618005662412549125, guid: 8fd596bb20e00284db89d985f2f79d17, type: 3}
+      propertyPath: sceneViewId
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 3950096876930700298, guid: 8fd596bb20e00284db89d985f2f79d17, type: 3}
       propertyPath: m_Name
       value: HelicopterKey
@@ -8811,6 +8879,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: 2171293343356957015, guid: a5031acd652ceed42b203a9c851da17f, type: 3}
+      propertyPath: sceneViewId
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 6960481127933375914, guid: a5031acd652ceed42b203a9c851da17f, type: 3}
       propertyPath: m_Name
       value: Propeller
@@ -8868,6 +8940,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1881840056}
     m_Modifications:
+    - target: {fileID: -3018730694449834809, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      propertyPath: sceneViewId
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
       propertyPath: m_Name
       value: CrowBar
@@ -8952,6 +9028,8 @@ MonoBehaviour:
   playerTransform: {fileID: 8497756325959581627, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
   cameraObject: {fileID: 0}
   player: {fileID: 4520835399152146124, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
+  mainCamera: {fileID: 0}
+  playerModel: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
   FollowCam: {fileID: 1586328093126080412}
   EquipCamera: {fileID: 3791820408516909211}

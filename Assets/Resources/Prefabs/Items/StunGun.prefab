@@ -143,7 +143,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   lineRenderer: {fileID: 4389836030814688525}
-  laserDuration: 0.1
+  laserDuration: 0.5
   fireSound: {fileID: 8300000, guid: d0152e090173d174cae908904c5becbe, type: 3}
 --- !u!120 &4389836030814688525
 LineRenderer:
