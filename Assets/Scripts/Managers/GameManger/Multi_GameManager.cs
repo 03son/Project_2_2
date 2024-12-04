@@ -74,7 +74,7 @@ public class Multi_GameManager : GameManager
         Transform[] points =
         GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
        // PhotonNetwork.Instantiate("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
-        //PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
+        PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
          
     }
 
