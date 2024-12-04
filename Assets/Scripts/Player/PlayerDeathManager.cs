@@ -95,7 +95,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         // UI 및 효과 적용
         SetUICanvas.OpenUI("");
 
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(1f);
 
         // 사망 효과 추가 (필요시)
         if (deathEffect != null)
@@ -109,19 +109,4 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         // 관찰자 UI 띄우기
         SetUICanvas.OpenUI("Observer");
     }
-
-    public void Survival()
-    {
-        if (animator != null)
-        {
-            animator.SetTrigger("Survival"); // Survival 애니메이션 트리거 발동
-            Debug.Log("Survival 애니메이션 발동");
-        }
-
-        // UI 복구
-        CameraInfo.UseMainCam(); // 메인 카메라 활성화
-        SetUICanvas.OpenUI("HUD"); // HUD UI 활성화
-    }
-
-    
 }

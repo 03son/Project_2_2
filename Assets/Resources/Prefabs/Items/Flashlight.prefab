@@ -201,21 +201,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 10
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
+    SynchronizeEnabled: 1
+    InterpolateOption: 2
     InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
+    InterpolateLerpSpeed: 10
   m_ScaleModel:
     SynchronizeEnabled: 0
     InterpolateOption: 0
@@ -267,11 +267,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 221756478018173505, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -13.541
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301368589579951855, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: intensity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301368589579951855, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4340401175393712766, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
       propertyPath: m_Name
       value: Flashlight1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340401175393712766, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: m_Range
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: m_Cookie
+      value: 
+      objectReference: {fileID: 2800000, guid: 7df2e44ecf2632f4e968e561833f1656, type: 3}
+    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: m_Color.b
+      value: 0.759434
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9752359
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
+      propertyPath: m_Intensity
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

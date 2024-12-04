@@ -2,20 +2,18 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RevivePlayer : MonoBehaviourPun
+public class RevivePlayer : MonoBehaviour
 {
     public float holdTime = 5f; // 입력을 유지해야 하는 시간
     private float holdCounter = 0f;
     private bool isHolding = false;
 
     private PlayerDeathManager targetPlayer; // 타겟 플레이어의 PlayerDeathManager
-
     private Image timerBar; // TimerBar의 Image 컴포넌트
     private RectTransform timerBarTransform; // TimerBar의 Transform
 
     PlayerState playerState;
     PlayerState.playerState state;
-    
 
     void Start()
     {
@@ -52,14 +50,6 @@ public class RevivePlayer : MonoBehaviourPun
                 Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
                 isHolding = true;
                 holdCounter += Time.deltaTime;
-
-
-                // 타임바 활성화
-                if (timerBar != null && !timerBar.gameObject.activeSelf)
-                {
-                    timerBar.gameObject.SetActive(true); // 타임바 활성화
-                    Debug.Log("타임바 활성화됨");
-                }
 
                 if (timerBar != null)
                 {
@@ -141,54 +131,16 @@ public class RevivePlayer : MonoBehaviourPun
     {
         if (targetPlayer != null)
         {
-            Debug.Log($"타겟 플레이어: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
+            targetPlayer.GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
+            Debug.Log("플레이어가 부활했습니다.");
 
-            // 타겟 플레이어의 상태를 서바이벌로 변경 (RPC로 처리)
-            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
-
-            // 로컬에서만 Survival 메서드 호출
-            if (targetPlayer.photonView.IsMine)
+            if (timerBar != null)
             {
-                Debug.Log("로컬 플레이어가 부활 처리 중...");
-                targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
-            }
-        }
-        else
-        {
-            Debug.LogError("타겟 플레이어가 null입니다. 부활 처리 실패.");
-        }
-    }
-
-
-
-
-    [PunRPC]
-    void SyncStateToSurvival()
-    {
-        playerState.State = PlayerState.playerState.Survival; // 상태 변경
-        Debug.Log("모든 클라이언트에서 Survival 상태 동기화.");
-
-        // 로컬 플레이어일 경우에만 Survival 메서드 호출
-        if (photonView.IsMine)
-        {
-            Debug.Log("로컬 플레이어가 부활 처리 중...");
-
-            // PlayerDeathManager 인스턴스를 가져와서 Survival 메서드 호출
-            PlayerDeathManager playerDeathManager = GetComponent<PlayerDeathManager>();
-            if (playerDeathManager != null)
-            {
-                playerDeathManager.Survival(); // Survival 메서드 호출
-            }
-            else
-            {
-                Debug.LogError("PlayerDeathManager를 찾을 수 없습니다.");
+                timerBar.gameObject.SetActive(false); // TimerBar 비활성화
+                timerBar.fillAmount = 0; // 초기화
             }
         }
     }
-
-
-
-
 
     void CheckForDeadPlayer()
     {

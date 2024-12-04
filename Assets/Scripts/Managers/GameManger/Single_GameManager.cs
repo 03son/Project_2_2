@@ -7,11 +7,15 @@ public class Single_GameManager : GameManager
 {
     //싱글플레이 게임매니저
 
+    public static Single_GameManager instance;
+
     GameObject player;
     GameObject Enemy;
     GameObject 토끼;
     void Awake()
     {
+        instance = this;
+
         if (PhotonNetwork.IsConnected)
             return;
 

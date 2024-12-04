@@ -81,17 +81,17 @@ MonoBehaviour:
   - PlayAlertSounds
   - TriggerJumpScare_RPC
   - SyncDieState
-  - SyncState
-  - SyncStateToSurvival
   - ThirdPersonHandItem
   - ToggleDoor
   - RequestToggleDoor
   - ThirdPersonPhotonDestroyItem
   - UseFlashlight
-  - RPC_CloseDoor
-  - RPC_OpenDoor
-  - RPC_UnlockDoor
-  - RemoveEquippedItem
+  - Escape_Basement_Item
+  - RPC_Escape_Basement_Item
+  - RPC_Escape_Helicopter_Item
+  - RPC_Escape_Basement
+  - RPC_Escape_Helicopter
+  - Rpc_SubmarineStart
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

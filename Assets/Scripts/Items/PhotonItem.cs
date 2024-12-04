@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static PlayerState;
 
-public class PhotonItem : MonoBehaviourPun
+public class PhotonItem : MonoBehaviour
 {
     Transform dropPos;
     Vector3 v_dropPos;

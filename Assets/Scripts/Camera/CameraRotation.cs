@@ -6,18 +6,18 @@ using UnityEngine;
 
 public class CameraRot : MonoBehaviour
 {
-    [SerializeField] private float mouseSpeed = 8f; // 회전 속도
-    [SerializeField] private Transform playerTransform; // 플레이어 Transform
-    [SerializeField] private Transform cameraObject; // 카메라 오브젝트 Transform
-    [SerializeField] GameObject player; // 플레이어 오브젝트
+    [SerializeField] private float mouseSpeed = 8f; // ȸ�� �ӵ�
+    [SerializeField] private Transform playerTransform; // �÷��̾��� Transform
+    [SerializeField] private Transform cameraObject; // �� ������Ʈ Transform
+    [SerializeField] GameObject player;//�÷��̾�
 
     public Transform mainCamera; // 메인 카메라 Transform
     public Transform playerModel; // 플레이어 모델링 Transform
-    public Transform headBone; // 머리 본 (Head Bone)
 
-    private float mouseX = 0f; // 좌우 회전 값
-    private float mouseY = 0f; // 위아래 회전 값
-    [SerializeField] private Vector3 offset; // 카메라와 플레이어 사이 거리
+
+    private float mouseX = 0f; // �¿� ȸ�� ��
+    private float mouseY = 0f; // ���Ʒ� ȸ�� ��
+    [SerializeField] private Vector3 offset; // ī�޶�� �÷��̾� ������ ����
 
     PhotonView pv;
 
@@ -27,38 +27,27 @@ public class CameraRot : MonoBehaviour
     PlayerState playerState;
     PlayerState.playerState state;
 
-    public bool popup_escMenu = false; // esc 메뉴 활성화 여부
+    public bool popup_escMenu = false; //esc T/F����
 
     public bool isControlledExternally = false;  // 외부에서 카메라를 제어하는 동안 true로 설정
-
+    void Awake()
+    {
+       
+    }
     void Start()
     {
+        // �θ� ������Ʈ�� ã�� ���� �õ�
         if (this.transform.parent != null)
         {
             player = this.transform.parent.gameObject;
             playerTransform = player.transform;
-
-            // PlayerModel 찾기
-            playerModel = playerTransform.Find("토끼모델링");
-            if (playerModel == null)
-            {
-                Debug.LogError("PlayerModel object not found under the player prefab.");
-                return;
-            }
-
-            // HeadBone 찾기
-            headBone = playerModel.Find("rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:Neck/Head");
-            if (headBone == null)
-            {
-                Debug.LogError("HeadBone object not found in PlayerModel.");
-                return;
-            }
         }
         else
         {
             Debug.LogError("Player's parent object not found. Make sure the prefab is instantiated correctly.");
             return;
         }
+
         // ī�޶� ������Ʈ �Ҵ��� ���� �� ������Ʈ ã��
         if (cameraObject == null)
         {
@@ -78,11 +67,13 @@ public class CameraRot : MonoBehaviour
             pv = player.GetComponent<PhotonView>();
             if (pv != null && pv.IsMine)
             {
+                // ���� �÷��̾��� ��� ī�޶� ����
                 GetComponent<AudioListener>().enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
+                // ��Ʈ��ũ���� �� �÷��̾ �ƴ� ��� ó��
                 GetComponent<AudioListener>().enabled = false;
                 Destroy(FollowCam);
                 Destroy(EquipCamera);
@@ -91,6 +82,7 @@ public class CameraRot : MonoBehaviour
         }
         else
         {
+            // �̱� �÷��̾��� ���
             GetComponent<AudioListener>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -116,15 +108,16 @@ public class CameraRot : MonoBehaviour
         }
     }
 
+
+
     void Update()
     {
-
         playerState.GetState(out state);
-        if (popup_escMenu || state == PlayerState.playerState.Die) // esc 메뉴 활성화 또는 죽었을 때
+        if (popup_escMenu || state == PlayerState.playerState.Die) //esc â�� �����ְų� �׾������� ī�޶� ȸ��X
             return;
 
         if (isControlledExternally)
-            return;
+            return; // 외부에서 제어 중일 때는 Update 중단
 
         mouseSpeed = GameInfo.MouseSensitivity;
 
@@ -145,23 +138,22 @@ public class CameraRot : MonoBehaviour
             // 카메라의 Y축 회전을 모델링에 동기화
             Vector3 cameraRotation = mainCamera.rotation.eulerAngles;
             playerModel.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
-
-            // 카메라의 X축 회전을 머리 본에 적용
-            if (headBone != null)
-            {
-                float headRotationX = Mathf.Clamp(mouseY, -30f, 30f); // 머리 각도 제한 (예: -30도 ~ 30도)
-                headBone.localRotation = Quaternion.Euler(headRotationX, 0, 0);
-            }
         }
     }
 
     void cameraPos()
     {
+        // ���콺 �Է��� �޾� ī�޶� ȸ�� ó��
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
         mouseY -= Input.GetAxis("Mouse Y") * mouseSpeed;
+
+        // ���Ʒ� ȸ�� ���� ����
         mouseY = Mathf.Clamp(mouseY, -90f, 90f);
 
+        // ī�޶��� ȸ�� ���� (�÷��̾��� ȸ���� ����)
         this.transform.localEulerAngles = new Vector3(mouseY, mouseX, 0);
+
+        // ī�޶� ��ġ�� �� ������Ʈ(Camera) ��ġ�� ����
         this.transform.position = cameraObject.position;
     }
 }

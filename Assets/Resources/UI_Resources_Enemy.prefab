@@ -101,7 +101,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4406684050512021317}
@@ -202,9 +202,9 @@ MonoBehaviour:
   chaseSpeed: 14
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
-  viewDistance: 13
+  viewDistance: 20
   fieldOfView: 120
-  hearingRange: 15
+  hearingRange: 30
   minDecibelToDetect: 30
   soundSources: []
   currentState: 0
@@ -327,9 +327,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -337,22 +337,31 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.0049207304
+      value: 0.99251556
+      inSlope: -0.10933166
+      outSlope: -0.10933166
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.48530206
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.49745458
+      value: 0.5959091
+      inSlope: -0.12461432
+      outSlope: -0.12461432
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.08985304
+      outWeight: 0.41346946
+    - serializedVersion: 3
+      time: 0.9847641
+      value: 0.02720642
+      inSlope: -3.0742743
+      outSlope: -3.0742743
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15998617
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -431,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 25
-  maxShakeMagnitude: 0.1
+  maxShakeMagnitude: 0.05
   shakeDuration: 0.1
   shakeInterval: 0.5
   footstepSound: {fileID: 1734623120430788607}
@@ -497,11 +506,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7464997043818902441, guid: ac47ed1b321f06b4094007cc9e981406, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00587
+      value: 0.005872
       objectReference: {fileID: 0}
     - target: {fileID: -7464997043818902441, guid: ac47ed1b321f06b4094007cc9e981406, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00498
+      value: 0.004805
       objectReference: {fileID: 0}
     - target: {fileID: -7464997043818902441, guid: ac47ed1b321f06b4094007cc9e981406, type: 3}
       propertyPath: m_LocalRotation.w
@@ -575,7 +584,7 @@ Light:
   m_InnerSpotAngle: 53.016533
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

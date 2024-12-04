@@ -1,14 +1,11 @@
-using Photon.Pun;
 using UnityEngine;
-using TMPro;
 
-public class Door : MonoBehaviourPunCallbacks, IInteractable
+public class Door : MonoBehaviour, IInteractable
 {
     private Animator animator;
     private bool isOpen = false;
     private bool openDoor = false;
     private Player_Equip playerEquip; // Player_Equip 스크립트 참조
-    private PhotonItem _PhotonItem; // Player_Equip 스크립트 참조
 
     [SerializeField] private AudioSource audioSource; // AudioSource 컴포넌트
     [SerializeField] private AudioClip lockedSound; // 잠겨있는 소리 클립
@@ -29,7 +26,7 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
     {
         if (openDoor == true)
         {
-            photonView.RPC("RPC_OpenDoor", RpcTarget.All); // 문 열기 동기화
+            OpenDoor();
             Debug.Log("문이 열립니다.");
             openDoor = false;
             return;
@@ -42,25 +39,8 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
             Debug.Log("문의 잠금을 해제했습니다.");
             openDoor = true;
 
-            playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
-
-
-            // 문 잠금 해제 상태를 모든 클라이언트에 동기화
-            photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
-
-            isOpen = true;
-            Debug.Log("문의 잠금을 해제했습니다.");
-            openDoor = true;
-            /*
-            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
-            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
-            Destroy(GetComponentInParent<Player_Equip>().Item);
-            */
-            GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().text = "";
-            Debug.Log(GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
-
-            // 문 잠금 해제 상태를 모든 클라이언트에 동기화
-            photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
+            // Player_Equip의 RemoveEquippedItem 호출
+            playerEquip.RemoveEquippedItem("Key");
 
             return;
         }
@@ -75,12 +55,13 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
 
         if (isOpen && openDoor == false)
         {
-            photonView.RPC("RPC_CloseDoor", RpcTarget.All); // 문 닫기 동기화
+            Closedoor();
             Debug.Log("문이 닫힙니다.");
             openDoor = true;
             return;
         }
     }
+
 
     public string GetInteractPrompt()
     {
@@ -99,12 +80,11 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
         return "???"; // 기본 반환값 추가
     }
 
-    [PunRPC]
-    void RPC_OpenDoor()
+    void OpenDoor()
     {
         if (animator != null)
         {
-            animator.SetBool("Open", true); // 문 열기 애니메이션 실행
+            animator.SetBool("isOpen", true); // 문 열기 애니메이션 실행
         }
         else
         {
@@ -118,22 +98,15 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
         }
     }
 
-    [PunRPC]
-    void RPC_CloseDoor()
+    void Closedoor()
     {
         if (animator != null)
         {
-            animator.SetBool("Open", false); // 문 닫기 애니메이션 실행
+            animator.SetBool("isClose", true); // 문 닫기 애니메이션 실행
         }
         else
         {
             transform.position -= -transform.forward * 1.5f; // 문을 왼쪽으로 약간 이동
         }
-    }
-
-    [PunRPC]
-    void RPC_UnlockDoor()
-    {
-        isOpen = true;
     }
 }
