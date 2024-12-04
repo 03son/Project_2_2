@@ -46,10 +46,10 @@ public class StunGunFunction : ItemFunction, IItemFunction
         // 열쇠 제거 동기화
         if (_PhotonItem != null && _PhotonItem.photonView != null)
         {
-            _PhotonItem.RemoveEquippedItem("StunGun");
-            Inventory.instance.RemoveItem("StunGun");
+            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
             Destroy(GetComponentInParent<Player_Equip>().Item);
-            GetComponentInParent<Player_Equip>().ItemName.text = "";
+            Tesettext();
             // _PhotonItem.photonView.("RemoveEquippedItem", RpcTarget.All, "Key");
         }
 
