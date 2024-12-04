@@ -143,8 +143,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   lineRenderer: {fileID: 4389836030814688525}
-  laserDuration: 0.1
-  fireSound: {fileID: 8300000, guid: d0152e090173d174cae908904c5becbe, type: 3}
+  laserDuration: 0.5
+  fireSound: {fileID: 8300000, guid: bee041eac19adea4caeefde36f42ef02, type: 3}
 --- !u!120 &4389836030814688525
 LineRenderer:
   serializedVersion: 2
@@ -246,7 +246,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 1
+  m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!82 &223406327759849324
@@ -259,7 +259,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d0152e090173d174cae908904c5becbe, type: 3}
+  m_audioClip: {fileID: 8300000, guid: bee041eac19adea4caeefde36f42ef02, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
