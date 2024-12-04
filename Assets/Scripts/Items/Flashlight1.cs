@@ -89,6 +89,35 @@ public class Flashlight1 : MonoBehaviour
 
     private void LateUpdate()
     {
+
+        // 디버깅 조건 확인
+        if (!isAcquired)
+        {
+            Debug.Log("손전등이 아직 획득되지 않았습니다.");
+            return;
+        }
+
+        if (transform.parent == null)
+        {
+            Debug.Log("손전등의 부모가 없습니다.");
+            return;
+        }
+
+        if (transform.parent.name != "handitemattach")
+        {
+            Debug.Log("손전등 부모 이름이 다릅니다: " + transform.parent.name);
+            return;
+        }
+
+        if (!flashlightActive)
+        {
+            Debug.Log("손전등이 활성화되지 않았습니다.");
+            return;
+        }
+
+        // 조건이 모두 충족된 경우
+        Debug.Log("손전등 조건 충족. LateUpdate 실행 중.");
+
         // 손전등이 획득되고, 활성화 상태이며, 올바른 부모를 가질 때만 실행
         if (isAcquired && transform.parent != null && transform.parent.name == "handitemattach" && flashlightActive)
         {
