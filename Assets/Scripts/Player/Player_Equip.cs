@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Player_Equip : MonoBehaviourPun
 {
+    public static Player_Equip instance;
+
     Dictionary<KeyCode, System.Action> keyCodeDic = new Dictionary<KeyCode, System.Action>();
 
     public ItemSlotUI[] invenSlot = new ItemSlotUI[6];
@@ -38,7 +40,10 @@ public class Player_Equip : MonoBehaviourPun
     public Transform thirdPersonHand; // 3인칭 아이템 위치
     public GameObject itemForOthers; // 3인칭 캐릭터가 들고 있는 아이템을 저장하는 변수 추가
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -169,7 +174,7 @@ public class Player_Equip : MonoBehaviourPun
             }
             else
             {
-                Debug.LogError("thirdPersonHand가 null입니다. 3인칭 아이템을 장착할 위치를 찾을 수 없습니다.");
+                Debug.LogWarning("thirdPersonHand가 null입니다. 3인칭 아이템을 장착할 위치를 찾을 수 없습니다.");
             }
         }
 

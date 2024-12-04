@@ -1,5 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
+using TMPro;
 
 public class Door : MonoBehaviourPunCallbacks, IInteractable
 {
@@ -7,6 +8,7 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
     private bool isOpen = false;
     private bool openDoor = false;
     private Player_Equip playerEquip; // Player_Equip 스크립트 참조
+    private PhotonItem _PhotonItem; // Player_Equip 스크립트 참조
 
     [SerializeField] private AudioSource audioSource; // AudioSource 컴포넌트
     [SerializeField] private AudioClip lockedSound; // 잠겨있는 소리 클립
@@ -46,13 +48,16 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
             // 문 잠금 해제 상태를 모든 클라이언트에 동기화
             photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
 
-            return;
             isOpen = true;
             Debug.Log("문의 잠금을 해제했습니다.");
             openDoor = true;
-
-            playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
-
+            /*
+            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
+            Destroy(GetComponentInParent<Player_Equip>().Item);
+            */
+            GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+            Debug.Log(GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
 
             // 문 잠금 해제 상태를 모든 클라이언트에 동기화
             photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
