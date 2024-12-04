@@ -199,10 +199,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   moveSpeed: 3.5
-  chaseSpeed: 14
+  chaseSpeed: 7
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
-  viewDistance: 20
+  viewDistance: 30
   fieldOfView: 120
   hearingRange: 30
   minDecibelToDetect: 30
