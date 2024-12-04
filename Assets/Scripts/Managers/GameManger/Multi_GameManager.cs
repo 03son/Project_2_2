@@ -78,6 +78,7 @@ public class Multi_GameManager : GameManager
          
     }
 
+    /* //잠수함 오브젝트에 rpc 있음
     public void Escape_Basement()
     {
         if (PhotonNetwork.IsConnected)
@@ -97,7 +98,7 @@ public class Multi_GameManager : GameManager
     {
         Debug.Log("잠수함 탈출");
     }
-
+    */
     public void Escape_Helicopter()
     {
         if (PhotonNetwork.IsConnected)

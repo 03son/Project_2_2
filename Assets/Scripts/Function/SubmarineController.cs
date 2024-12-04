@@ -51,7 +51,6 @@ public class SubmarineController : MonoBehaviourPun
         {
             isStarted = true;
             Debug.Log("잠수함 시동 시작!");
-            Multi_GameManager.instance.Escape_Basement();
             if (audioSource != null && startSound != null)
             {
                 audioSource.clip = startSound;
