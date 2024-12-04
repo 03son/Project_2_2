@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static PlayerState;
 
-public class PhotonItem : MonoBehaviour
+public class PhotonItem : MonoBehaviourPun
 {
     Transform dropPos;
     Vector3 v_dropPos;
@@ -17,8 +17,8 @@ public class PhotonItem : MonoBehaviour
 
     public GameObject equipItem;
 
-    [Header("3인칭 아이템 위치")]
-    public Transform thirdPersonHand; //3인칭 아이템 위치
+    [Header("3??? ?????? ???")]
+    public Transform thirdPersonHand; //3??? ?????? ???
     Transform __thirdPersonHand;
     public GameObject itemForOthers;
     void Awake()
@@ -46,7 +46,7 @@ public class PhotonItem : MonoBehaviour
         }
     }
     [PunRPC]
-    public void PhotonThrowItem_(string itemName , Vector3 pos)
+    public void PhotonThrowItem_(string itemName, Vector3 pos)
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -56,20 +56,20 @@ public class PhotonItem : MonoBehaviour
 
     public void RemoveEquippedItem(string itemName)
     {
-        Debug.Log($"RemoveEquippedItem 호출됨. 제거하려는 아이템: {itemName}");
+        Debug.Log($"RemoveEquippedItem ????. ????????? ??????: {itemName}");
 
         if (equipItem != null)
         {
-            Debug.Log("equipItem이 null이 아닙니다. 모든 자식에서 아이템을 검색합니다.");
+            Debug.Log("equipItem?? null?? ?????. ??? ??Ŀ??? ???????? ???????.");
 
-            // equipItem 하위 모든 자식에서 ItemObject를 검색
+            // equipItem ???? ??? ??Ŀ??? ItemObject?? ???
             ItemObject[] itemObjects = equipItem.GetComponentsInChildren<ItemObject>();
-            Debug.Log($"검색된 ItemObject 개수: {itemObjects.Length}");
+            Debug.Log($"????? ItemObject ????: {itemObjects.Length}");
 
             foreach (ItemObject itemObject in itemObjects)
             {
-                Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
-                Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
+                Debug.Log($"????? ??????: {itemObject.item.ItemName}");
+                Debug.Log($"?? ??: {itemObject.item.ItemName} == {itemName}");
 
                 if (PhotonNetwork.IsConnected)
                 {
@@ -80,20 +80,20 @@ public class PhotonItem : MonoBehaviour
                 }
                 else
                 {
-                    // 장착된 아이템 제거
+                    // ?????? ?????? ????
                     Destroy(itemObject.gameObject);
                 }
             }
 
-            Debug.LogWarning($"equipItem의 모든 자식에서 {itemName} 이름을 가진 아이템을 찾을 수 없습니다.");
+            Debug.LogWarning($"equipItem?? ??? ??Ŀ??? {itemName} ????? ???? ???????? ??? ?? ???????.");
         }
         else
         {
-            Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
+            Debug.LogWarning("equipItem?? null????. ?????? ???????? ???????.");
         }
     }
     [PunRPC]
-    public void ThirdPersonPhotonDestroyItem(string itemName,int actorNumber)
+    public void ThirdPersonPhotonDestroyItem(string itemName, int actorNumber)
     {
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -108,7 +108,7 @@ public class PhotonItem : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-            // 3인칭 모델링에도 아이템 장착
+            // 3??? ???????? ?????? ????
             if (pv.IsMine)
             {
                 if (PhotonNetwork.IsMasterClient || pv.IsMine)
@@ -145,7 +145,7 @@ public class PhotonItem : MonoBehaviour
                     }
                     itemForOthers.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 
-                    // 3인칭 모델링의 왼손 위치에 장착
+                    // 3??? ?????? ??? ????? ????
                     itemForOthers.transform.SetParent(__thirdPersonHand);
                     itemForOthers.transform.localPosition = Vector3.zero;
                     itemForOthers.transform.localRotation = Quaternion.identity;

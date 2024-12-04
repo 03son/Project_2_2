@@ -184,17 +184,16 @@ public class Inventory : MonoBehaviour
                 UpdateUI();
                 return;
             }
-        }
-
-        // Player_Equip에서 장착된 아이템 제거
-        if (playerEquip != null && playerEquip.equipItem != null)
-        {
-            ItemObject equippedItem = playerEquip.equipItem.GetComponent<ItemObject>();
-            if (equippedItem != null && equippedItem.item.ItemName == itemName)
+            // Player_Equip에서 장착된 아이템 제거
+            if (playerEquip != null && playerEquip.equipItem != null)
             {
-                Destroy(playerEquip.equipItem);
-                playerEquip.equipItem = null;
-                Debug.Log($"장착된 {itemName} 제거됨");
+                ItemObject equippedItem = playerEquip.equipItem.GetComponent<ItemObject>();
+                if (equippedItem != null && equippedItem.item.ItemName == itemName)
+                {
+                    Destroy(playerEquip.equipItem);
+                    playerEquip.equipItem = null;
+                    Debug.Log($"장착된 {itemName} 제거됨");
+                }
             }
         }
     }
@@ -247,8 +246,8 @@ public class Inventory : MonoBehaviour
                 ThrowItem(slots[selectedItemIndex].item);
                 if (PhotonNetwork.IsConnected)
                 {
-                  GetComponent<PhotonItem>().ThrowItem(slots[selectedItemIndex].item);
-                  GetComponent<PhotonItem>().RemoveEquippedItem(slots[selectedItemIndex].item.name);
+                    GetComponent<PhotonItem>().ThrowItem(slots[selectedItemIndex].item);
+                    GetComponent<PhotonItem>().RemoveEquippedItem(slots[selectedItemIndex].item.name);
                 }
             }
             GetComponent<Player_Equip>().ItemName.text = "";
