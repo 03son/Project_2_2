@@ -1544,14 +1544,14 @@ GameObject:
   - component: {fileID: 150562271}
   - component: {fileID: 150562274}
   - component: {fileID: 150562273}
-  - component: {fileID: 150562272}
+  - component: {fileID: 150562275}
   m_Layer: 0
   m_Name: Metal2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &150562271
 Transform:
   m_ObjectHideFlags: 0
@@ -1567,24 +1567,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2004016864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &150562272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150562270}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce2efcae64ac14edebdffc99a93e401a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CellPrototype: {fileID: 0}
-  ContentFeedback: {fileID: 0}
-  UpdateStatusText: {fileID: 0}
-  OnJoinRoom:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!23 &150562273
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1635,6 +1617,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150562270}
   m_Mesh: {fileID: 3484529583217265606, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+--- !u!114 &150562275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150562270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 69
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &150873006 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3265408912930324648, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
