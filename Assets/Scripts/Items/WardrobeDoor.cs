@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun; // Photon 네트워킹 관련 네임스페이스 추가
 
-public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
+public class WardrobeDoor : MonoBehaviour, IInteractable //IPunObservable
 {
     private Animator animator;
     private bool isOpen = false; // 문이 열려있는 상태
@@ -59,7 +59,7 @@ public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
             if (animator != null)
             {
                 // animator.SetTrigger("isOpen"); // 문 열기 애니메이션 실행
-                animator.SetBool("Open",true);
+                animator.SetBool("Open", true);
             }
 
             // 열리는 소리 재생

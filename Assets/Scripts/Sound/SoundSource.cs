@@ -12,11 +12,6 @@ public class SoundSource : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-
-        if (audioSource.clip == null)
-        {
-            Debug.LogError("AudioClip이 설정되지 않았습니다.");
-        }
     }
 
     // 특정 위치에서의 데시벨 계산
