@@ -15,6 +15,12 @@ public class EnemyProximity : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(start());
+    }
+
+    IEnumerator start()
+    {
+        yield return new WaitForSecondsRealtime(5);
         // 플레이어를 "Player" 태그를 이용해 찾습니다. 프리팹에 Player 태그를 미리 설정해야 합니다.
         GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
@@ -32,7 +38,6 @@ public class EnemyProximity : MonoBehaviour
             Debug.LogError("Player 태그를 가진 객체를 찾을 수 없습니다. 플레이어가 동적으로 생성되었는지 확인해 주세요.");
         }
     }
-
     void Update()
     {
         if (player == null) return;

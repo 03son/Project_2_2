@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class CameraRot : MonoBehaviour
@@ -35,11 +36,16 @@ public class CameraRot : MonoBehaviour
     {
         if (this.transform.parent != null)
         {
-            player = this.transform.parent.gameObject;
-            playerTransform = player.transform;
-
+            foreach (GameObject Player_ in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (Player_.GetComponent<PhotonView>().IsMine)
+                {
+                    player = this.transform.parent.gameObject;
+                    playerTransform = Player_.transform;
+                }
+            }
             // PlayerModel 찾기
-            playerModel = playerTransform.Find("토끼모델링");
+            playerModel = playerTransform.Find("캐릭터모델링");
             if (playerModel == null)
             {
                 Debug.LogError("PlayerModel object not found under the player prefab.");
@@ -50,8 +56,12 @@ public class CameraRot : MonoBehaviour
             headBone = playerModel.Find("rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:Neck/Head");
             if (headBone == null)
             {
-                Debug.LogError("HeadBone object not found in PlayerModel.");
-                return;
+                headBone = playerModel.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head");
+                if (headBone == null)
+                {
+                    Debug.LogError("HeadBone object not found in PlayerModel.");
+                    return;
+                }
             }
         }
         else
@@ -70,7 +80,7 @@ public class CameraRot : MonoBehaviour
             }
         }
 
-        player = this.gameObject.GetComponent<Transform>().parent.gameObject;
+       // player = this.gameObject.GetComponent<Transform>().parent.gameObject;
         playerTransform = player.transform;
         playerState = player.gameObject.GetComponent<PlayerState>();
         if (PhotonNetwork.IsConnected)
@@ -102,7 +112,7 @@ public class CameraRot : MonoBehaviour
             playerTransform = player.transform;
 
             // Player Modeling 찾기
-            playerModel = playerTransform.Find("토끼모델링"); // "PlayerModel"은 모델링의 이름
+            playerModel = playerTransform.Find("캐릭터모델링"); // "PlayerModel"은 모델링의 이름
             if (playerModel == null)
             {
                 Debug.LogError("PlayerModel object not found under the player prefab.");

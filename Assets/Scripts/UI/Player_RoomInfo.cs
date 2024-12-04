@@ -55,6 +55,9 @@ public class Player_RoomInfo : UI_Popup
         ReadyButtonCB.color = new Color(255, 0, 0, 255);
         ReadyButton.GetComponent<Image>().color = ReadyButtonCB.color;
 
+        playerCP = new HashTable() { { "animalName", "¹«ÀÛÀ§" } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
+
         Init();
     }
 
