@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class Door : MonoBehaviour, IInteractable
+public class Door : MonoBehaviourPunCallbacks, IInteractable
 {
     private Animator animator;
     private bool isOpen = false;
@@ -26,7 +27,7 @@ public class Door : MonoBehaviour, IInteractable
     {
         if (openDoor == true)
         {
-            OpenDoor();
+            photonView.RPC("RPC_OpenDoor", RpcTarget.All); // 문 열기 동기화
             Debug.Log("문이 열립니다.");
             openDoor = false;
             return;
@@ -42,6 +43,9 @@ public class Door : MonoBehaviour, IInteractable
             // Player_Equip의 RemoveEquippedItem 호출
             playerEquip.RemoveEquippedItem("Key");
 
+            // 문 잠금 해제 상태를 모든 클라이언트에 동기화
+            photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
+
             return;
         }
         else if (!isOpen)
@@ -55,13 +59,12 @@ public class Door : MonoBehaviour, IInteractable
 
         if (isOpen && openDoor == false)
         {
-            Closedoor();
+            photonView.RPC("RPC_CloseDoor", RpcTarget.All); // 문 닫기 동기화
             Debug.Log("문이 닫힙니다.");
             openDoor = true;
             return;
         }
     }
-
 
     public string GetInteractPrompt()
     {
@@ -80,11 +83,12 @@ public class Door : MonoBehaviour, IInteractable
         return "???"; // 기본 반환값 추가
     }
 
-    void OpenDoor()
+    [PunRPC]
+    void RPC_OpenDoor()
     {
         if (animator != null)
         {
-            animator.SetBool("isOpen", true); // 문 열기 애니메이션 실행
+            animator.SetBool("Open", true); // 문 열기 애니메이션 실행
         }
         else
         {
@@ -98,15 +102,22 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
-    void Closedoor()
+    [PunRPC]
+    void RPC_CloseDoor()
     {
         if (animator != null)
         {
-            animator.SetBool("isClose", true); // 문 닫기 애니메이션 실행
+            animator.SetBool("Open", false); // 문 닫기 애니메이션 실행
         }
         else
         {
             transform.position -= -transform.forward * 1.5f; // 문을 왼쪽으로 약간 이동
         }
+    }
+
+    [PunRPC]
+    void RPC_UnlockDoor()
+    {
+        isOpen = true;
     }
 }
