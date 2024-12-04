@@ -2,18 +2,20 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RevivePlayer : MonoBehaviour
+public class RevivePlayer : MonoBehaviourPun
 {
     public float holdTime = 5f; // 입력을 유지해야 하는 시간
     private float holdCounter = 0f;
     private bool isHolding = false;
 
     private PlayerDeathManager targetPlayer; // 타겟 플레이어의 PlayerDeathManager
+
     private Image timerBar; // TimerBar의 Image 컴포넌트
     private RectTransform timerBarTransform; // TimerBar의 Transform
 
     PlayerState playerState;
     PlayerState.playerState state;
+
 
     void Start()
     {
@@ -51,6 +53,14 @@ public class RevivePlayer : MonoBehaviour
                 isHolding = true;
                 holdCounter += Time.deltaTime;
 
+
+                // 타임바 활성화
+                if (timerBar != null && !timerBar.gameObject.activeSelf)
+                {
+                    timerBar.gameObject.SetActive(true); // 타임바 활성화
+                    Debug.Log("타임바 활성화됨");
+                }
+
                 if (timerBar != null)
                 {
                     timerBar.fillAmount = holdCounter / holdTime; // 타이머 진행 상태 업데이트
@@ -66,12 +76,12 @@ public class RevivePlayer : MonoBehaviour
             }
             else
             {
-              Debug.Log("인터랙션 키가 눌리지 않았습니다.");
+                Debug.Log("인터랙션 키가 눌리지 않았습니다.");
             }
         }
         else
         {
-        //    Debug.Log("타겟 플레이어가 설정되지 않았습니다.");
+            //    Debug.Log("타겟 플레이어가 설정되지 않았습니다.");
         }
 
         if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
@@ -80,7 +90,7 @@ public class RevivePlayer : MonoBehaviour
             {
                 timerBar.fillAmount = 0f; // 타이머 초기화
             }
-       //     Debug.Log("인터랙션 키가 떼어짐 또는 상호작용 중단됨.");
+            //     Debug.Log("인터랙션 키가 떼어짐 또는 상호작용 중단됨.");
             ResetHold();
         }
     }
@@ -131,16 +141,54 @@ public class RevivePlayer : MonoBehaviour
     {
         if (targetPlayer != null)
         {
-            targetPlayer.GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
-            Debug.Log("플레이어가 부활했습니다.");
+            Debug.Log($"타겟 플레이어: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
 
-            if (timerBar != null)
+            // 타겟 플레이어의 상태를 서바이벌로 변경 (RPC로 처리)
+            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
+
+            // 로컬에서만 Survival 메서드 호출
+            if (targetPlayer.photonView.IsMine)
             {
-                timerBar.gameObject.SetActive(false); // TimerBar 비활성화
-                timerBar.fillAmount = 0; // 초기화
+                Debug.Log("로컬 플레이어가 부활 처리 중...");
+                targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
+            }
+        }
+        else
+        {
+            Debug.LogError("타겟 플레이어가 null입니다. 부활 처리 실패.");
+        }
+    }
+
+
+
+
+    [PunRPC]
+    void SyncStateToSurvival()
+    {
+        playerState.State = PlayerState.playerState.Survival; // 상태 변경
+        Debug.Log("모든 클라이언트에서 Survival 상태 동기화.");
+
+        // 로컬 플레이어일 경우에만 Survival 메서드 호출
+        if (photonView.IsMine)
+        {
+            Debug.Log("로컬 플레이어가 부활 처리 중...");
+
+            // PlayerDeathManager 인스턴스를 가져와서 Survival 메서드 호출
+            PlayerDeathManager playerDeathManager = GetComponent<PlayerDeathManager>();
+            if (playerDeathManager != null)
+            {
+                playerDeathManager.Survival(); // Survival 메서드 호출
+            }
+            else
+            {
+                Debug.LogError("PlayerDeathManager를 찾을 수 없습니다.");
             }
         }
     }
+
+
+
+
 
     void CheckForDeadPlayer()
     {
