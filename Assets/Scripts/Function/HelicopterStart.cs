@@ -7,6 +7,7 @@ public class HelicopterStart : MonoBehaviour, IInteractable
     private bool isPlayerNearby = false; // 플레이어가 근처에 있는지 여부
     public string requiredItemName = "HelicopterKey"; // 필요한 아이템 이름
     private Player_Equip playerEquip; // 플레이어의 Player_Equip 스크립트 참조
+    private PhotonItem photonItem;
 
     // 인터페이스 메서드: 상호작용 메시지 반환
 
@@ -16,6 +17,7 @@ public class HelicopterStart : MonoBehaviour, IInteractable
         if (playerEquip == null)
         {
             playerEquip = FindObjectOfType<Player_Equip>();
+            photonItem = FindObjectOfType<PhotonItem>();
             if (playerEquip == null)
             {
                 Debug.LogError("Player_Equip 스크립트를 찾을 수 없습니다.");
@@ -50,7 +52,7 @@ public class HelicopterStart : MonoBehaviour, IInteractable
             if (startSuccess)
             {
                 // 시동이 성공하면 아이템 제거
-                playerEquip.RemoveEquippedItem(requiredItemName);
+                photonItem.RemoveEquippedItem(requiredItemName);
                 Debug.Log($"{requiredItemName}가 사용되었습니다.");
             }
             else

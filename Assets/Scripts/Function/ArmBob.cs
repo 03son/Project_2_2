@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class ArmBob : MonoBehaviour
@@ -17,13 +18,23 @@ public class ArmBob : MonoBehaviour
 
     void Update()
     {
-        if (PlayerState.instance.State == PlayerState.playerState.Survival)
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            gameObject.SetActive(true);
-        }
-        else
-        {
-            gameObject.SetActive(false);
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                PlayerState playerState = player.GetComponent<PlayerState>();
+                if (playerState != null)
+                {
+                    if (playerState.State == PlayerState.playerState.Survival)
+                    {
+                        gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        gameObject.SetActive(false);
+                    }
+                }
+            }
         }
         // 걷기나 달리기 상태에 따라 흔들림 효과 적용
         if (IsMoving())

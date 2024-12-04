@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -117,13 +118,18 @@ public class WoodenPlank : MonoBehaviour, IInteractable
     {
         StopRemoving();
         Debug.Log("판자가 제거되었습니다.");
-
-        // CrowBar 제거 호출
-        if (playerEquip != null)
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            playerEquip.RemoveEquippedItem("쇠지렛대"); // CrowBar 제거
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                PhotonItem photonItem = player.GetComponent<PhotonItem>();
+                if (photonItem != null)
+                {
+                    photonItem.RemoveEquippedItem("쇠지렛대");
+                    Debug.Log($"{"쇠지렛대"} 아이템이 제거되었습니다.");
+                }
+            }
         }
-
         Destroy(gameObject); // 판자 제거
     }
 

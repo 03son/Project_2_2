@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using Photon.Pun.UtilityScripts;
 
 public class ChainInteract : MonoBehaviourPun, IInteractable
 {
@@ -101,11 +102,17 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
             }
         }
 
-        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
-        if (playerEquip != null)
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            playerEquip.RemoveEquippedItem(requiredItem);
-            Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                PhotonItem photonItem = player.GetComponent<PhotonItem>();
+                if (photonItem != null)
+                {
+                    photonItem.RemoveEquippedItem(requiredItem);
+                    Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+                }
+            }
         }
 
         if (PhotonNetwork.IsConnected)

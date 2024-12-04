@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
-using Photon.Pun;
 using UnityEngine.UI; // UI 관련 네임스페이스 추가
+using Photon.Pun;
 using UnityEngine.EventSystems; // Layout 관련 네임스페이스 추가
 
 public class FuelInteract : MonoBehaviourPun, IInteractable
@@ -112,13 +111,17 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
         {
             holdTimeBar.gameObject.SetActive(false);
         }
-
-        // 인벤토리에서 연료통 제거
-        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
-        if (playerEquip != null)
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            playerEquip.RemoveEquippedItem(requiredItem);
-            Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                PhotonItem photonItem = player.GetComponent<PhotonItem>();
+                if (photonItem != null)
+                {
+                    photonItem.RemoveEquippedItem(requiredItem);
+                    Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+                }
+            }
         }
 
         if (PhotonNetwork.IsConnected)

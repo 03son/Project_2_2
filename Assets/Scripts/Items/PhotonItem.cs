@@ -48,10 +48,7 @@ public class PhotonItem : MonoBehaviourPun
     [PunRPC]
     public void PhotonThrowItem_(string itemName , Vector3 pos)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", pos, Quaternion.identity);
-        }
+        PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", pos, Quaternion.identity);
     }
 
     public void RemoveEquippedItem(string itemName)
@@ -99,7 +96,8 @@ public class PhotonItem : MonoBehaviourPun
         {
             if (player.GetComponent<PhotonView>().Owner.ActorNumber == actorNumber)
             {
-                PhotonNetwork.Destroy(player.GetComponent<PhotonItem>().itemForOthers);
+               // PhotonNetwork.Destroy(player.GetComponent<PhotonItem>().itemForOthers);
+                Destroy(player.GetComponent<PhotonItem>().itemForOthers);
             }
         }
     }
@@ -111,10 +109,7 @@ public class PhotonItem : MonoBehaviourPun
             // 3ÀÎÄª ¸ðµ¨¸µ¿¡µµ ¾ÆÀÌÅÛ ÀåÂø
             if (pv.IsMine)
             {
-                if (PhotonNetwork.IsMasterClient || pv.IsMine)
-                {
-                    pv.RPC("ThirdPersonHandItem", RpcTarget.All, item, PhotonNetwork.LocalPlayer.ActorNumber);
-                }
+                pv.RPC("ThirdPersonHandItem", RpcTarget.All, item, PhotonNetwork.LocalPlayer.ActorNumber);
             }
         }
     }
@@ -127,13 +122,16 @@ public class PhotonItem : MonoBehaviourPun
             {
                 if (itemForOthers != null)
                 {
-                    PhotonNetwork.Destroy(itemForOthers);
+                   // PhotonNetwork.Destroy(itemForOthers);
+                    Destroy(itemForOthers);
                 }
 
                 __thirdPersonHand = player.GetComponent<PhotonItem>().thirdPersonHand;
                 if (__thirdPersonHand != null)
                 {
-                    itemForOthers = PhotonNetwork.Instantiate($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
+                    GameObject item = Resources.Load<GameObject>($"Prefabs/Items/{itemName}");
+                    itemForOthers = Instantiate(item, __thirdPersonHand.position, Quaternion.identity);
+                    //itemForOthers = PhotonNetwork.Instantiate($"Prefabs/Items/{itemName}", __thirdPersonHand.position, Quaternion.identity);
 
                     if (pv.IsMine)
                     {
@@ -154,6 +152,7 @@ public class PhotonItem : MonoBehaviourPun
                 {
                     Debug.Log("thirdPersonHand = null");
                 }
+                return;
             }
         }
     }
