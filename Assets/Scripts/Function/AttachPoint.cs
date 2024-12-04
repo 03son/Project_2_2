@@ -15,7 +15,11 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
         else
             return $"{requiredItemName} 부착하기"; // 아직 부착되지 않았으면 프롬프트 표시
     }
-
+    void Start()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+    PhotonView pv;
     Player_Equip playerEquip;
     PhotonItem photonItem;
     GameObject _Player;
@@ -55,7 +59,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             }
 
             // 부착 상태 동기화 (RPC 호출)
-            photonView.RPC("RPC_AttachItem", RpcTarget.MasterClient);
+            pv.RPC("RPC_AttachItem", RpcTarget.All);
             Debug.Log("RPC_AttachItem 호출됨"); // 호출 확인용 로그
         }
         else
@@ -70,7 +74,9 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
     {
         Debug.Log($"{requiredItemName} 부착 완료");
 
-        GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{attachedItemPrefab.name}", transform.position, transform.rotation);
+        // GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{attachedItemPrefab.name}", transform.position, transform.rotation);
+        GameObject Item_ = Resources.Load<GameObject>($"Prefabs/Items/{attachedItemPrefab.name}");
+        GameObject item = Instantiate(Item_, transform.position, transform.rotation);
         item.GetComponent<Rigidbody>().isKinematic = true;
         isAttached = true;
 

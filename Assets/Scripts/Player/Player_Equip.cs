@@ -166,20 +166,14 @@ public class Player_Equip : MonoBehaviourPun
         Item.transform.localPosition = Vector3.zero;
         Item.transform.localRotation = Quaternion.identity;
         Item.GetComponent<Rigidbody>().isKinematic = true;
-        /*
-        if (Item.GetComponentInChildren<Transform>().childCount > 0)
-        {
-            foreach (GameObject childrenItem in Item.GetComponentInChildren<Transform>())
-            {
-                childrenItem.layer = LayerMask.NameToLayer("Equip");
-            }
-        }*/
+        SetLayerRecursively(Item, 7);
         // 3인칭 모델링에 장착 (다른 플레이어가 보는 것)
         if (PhotonNetwork.IsConnected)
         {
             if (itemForOthers != null)
             {
                 PhotonNetwork.Destroy(itemForOthers);
+                GetComponent<PhotonItem>().setPhotonEquipItem(item);
             }
             else
             {
@@ -529,7 +523,18 @@ public class Player_Equip : MonoBehaviourPun
         return equippedItems.Length > 0; // 하나라도 장착되어 있으면 true 반환
     }
 
+    // 오브젝트와 모든 자식 오브젝트의 레이어를 변경
+    void SetLayerRecursively(GameObject obj, int layer)
+    {
+        // 현재 오브젝트의 레이어 변경
+        obj.layer = layer;
 
+        // 자식 오브젝트 순회하며 레이어 변경
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
+        }
+    }
 }
 
 

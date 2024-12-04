@@ -111,7 +111,14 @@ public class Player1 : MonoBehaviour
     void SetLayerRecursively(GameObject obj, int layer)
     {
         // 현재 오브젝트의 레이어 변경
-        obj.layer = layer;
+        if (obj.name != "Light")
+        {
+            obj.layer = layer;
+        }
+        else
+        {
+            obj.SetActive(false);
+        }
 
         // 자식 오브젝트 순회하며 레이어 변경
         foreach (Transform child in obj.transform)
