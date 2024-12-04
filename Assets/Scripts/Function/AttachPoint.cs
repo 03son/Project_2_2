@@ -55,7 +55,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             }
 
             // 부착 상태 동기화 (RPC 호출)
-            photonView.RPC("RPC_AttachItem", RpcTarget.All);
+            photonView.RPC("RPC_AttachItem", RpcTarget.MasterClient);
             Debug.Log("RPC_AttachItem 호출됨"); // 호출 확인용 로그
         }
         else

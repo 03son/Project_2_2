@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9189067814254076894}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: Camera
   m_TagString: Camera
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 5936536526100464170}
   - component: {fileID: 6096963491368263911}
   - component: {fileID: 8753185035365884027}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520835399152146124}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 113eb4e7ff3f58747a2f1c1080bb2fb9, type: 3}
   m_Name: 
@@ -870,7 +870,7 @@ GameObject:
   - component: {fileID: 6336469663906377411}
   - component: {fileID: 837250356730881852}
   - component: {fileID: 1486159915252124868}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: 'Voice  '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
