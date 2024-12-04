@@ -11,13 +11,13 @@ public class Flashlight1 : Item
     private Light flashlightComponent;
     private Animator animator; // Animator ������Ʈ �߰�
 
-    [SerializeField] private float intensity = 15f; // �⺻ ���ٽ�Ƽ ��
-    [SerializeField] private float range = 10f; // �⺻ ���� ��
+    [SerializeField] private float intensity = 100f; // �⺻ ���ٽ�Ƽ ��
+    [SerializeField] private float range = 30f; // �⺻ ���� ��
     [SerializeField] private float minSpotAngle = 30f; // ���� ���� ���� ���� ����
     [SerializeField] private float maxSpotAngle = 80f; // ���� ���� ���� ���� ����
-    [SerializeField] private float minIntensity = 1f; // ����� ���� �� ����
-    [SerializeField] private float maxIntensity = 3f; // �� ���� �� ����
-    [SerializeField] private float maxDistance = 10f; // �ִ� �Ÿ�
+    [SerializeField] private float minIntensity = 100f; // ����� ���� �� ����
+    [SerializeField] private float maxIntensity = 101f; // �� ���� �� ����
+    [SerializeField] private float maxDistance = 30f; // �ִ� �Ÿ�
 
     private float currentSpotAngle; // ���� ���� ����
     private float currentIntensity; // ���� ���� ����

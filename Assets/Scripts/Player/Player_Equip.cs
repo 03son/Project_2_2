@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Player_Equip : MonoBehaviour
+public class Player_Equip : MonoBehaviourPun
 {
+    public static Player_Equip instance;
+
     Dictionary<KeyCode, System.Action> keyCodeDic = new Dictionary<KeyCode, System.Action>();
 
     public ItemSlotUI[] invenSlot = new ItemSlotUI[6];
@@ -33,6 +35,15 @@ public class Player_Equip : MonoBehaviour
     private Animator animator;           // Animator 추가
     private CharacterController characterController;
     private bool isFlashlightOn = false; // 손전등 상태를 저장할 변수
+
+    [Header("3인칭 아이템 위치")]
+    public Transform thirdPersonHand; // 3인칭 아이템 위치
+    public GameObject itemForOthers; // 3인칭 캐릭터가 들고 있는 아이템을 저장하는 변수 추가
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -154,6 +165,18 @@ public class Player_Equip : MonoBehaviour
         Item.transform.SetParent(equipItem.transform);
         Item.transform.localPosition = Vector3.zero;
         Item.transform.localRotation = Quaternion.identity;
+        // 3인칭 모델링에 장착 (다른 플레이어가 보는 것)
+        if (PhotonNetwork.IsConnected)
+        {
+            if (itemForOthers != null)
+            {
+                PhotonNetwork.Destroy(itemForOthers);
+            }
+            else
+            {
+                Debug.LogWarning("thirdPersonHand가 null입니다. 3인칭 아이템을 장착할 위치를 찾을 수 없습니다.");
+            }
+        }
 
         // 유리컵을 장착한 경우 던질 수 있도록 설정
         if (item == "GlassCup")
@@ -460,6 +483,7 @@ public class Player_Equip : MonoBehaviour
         }
         return false;
     }
+    [PunRPC]
     public void RemoveEquippedItem(string itemName)
     {
         Debug.Log($"RemoveEquippedItem 호출됨. 제거하려는 아이템: {itemName}");
@@ -476,7 +500,8 @@ public class Player_Equip : MonoBehaviour
             {
                 Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
                 Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
-
+                // 인벤토리에서 제거
+                Inventory.instance.RemoveItem(itemName);
                 // 장착된 아이템 제거
                 Destroy(itemObject.gameObject);
             }
@@ -487,6 +512,14 @@ public class Player_Equip : MonoBehaviour
         {
             Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
         }
+
+        // 3인칭 손에서도 아이템 제거
+        if (itemForOthers != null)
+        {
+            PhotonNetwork.Destroy(itemForOthers);
+            itemForOthers = null;
+        }
+
     }
 
 

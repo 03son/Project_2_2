@@ -81,6 +81,8 @@ MonoBehaviour:
   - PlayAlertSounds
   - TriggerJumpScare_RPC
   - SyncDieState
+  - SyncState
+  - SyncStateToSurvival
   - ThirdPersonHandItem
   - ToggleDoor
   - RequestToggleDoor
@@ -92,6 +94,10 @@ MonoBehaviour:
   - RPC_Escape_Basement
   - RPC_Escape_Helicopter
   - Rpc_SubmarineStart
+  - RPC_CloseDoor
+  - RPC_OpenDoor
+  - RPC_UnlockDoor
+  - RemoveEquippedItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

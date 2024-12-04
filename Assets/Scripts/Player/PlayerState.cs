@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerState : MonoBehaviour
+public class PlayerState : MonoBehaviourPun
 {
    public static PlayerState instance;
     private void Awake()
@@ -14,21 +15,17 @@ public class PlayerState : MonoBehaviour
         Survival,
         Die
     }
-    playerState state;
+
+    private playerState state;
+
     public playerState State
     {
         get => state;
-        set 
+        set
         {
-            switch (value)
+            if (photonView.IsMine) // ���� �÷��̾ ���¸� ����
             {
-                case playerState.Survival:
-                    state = playerState.Survival;
-                    break;
-
-                case playerState.Die:
-                    state = playerState.Die;
-                    break;
+                photonView.RPC(nameof(SyncState), RpcTarget.All, (int)value); // ���� ����ȭ
             }
             state = value;
         }
@@ -37,5 +34,14 @@ public class PlayerState : MonoBehaviour
     public void GetState(out playerState _state)
     {
         _state = state;
+    }
+
+    [PunRPC]
+    void SyncState(int newState)
+    {
+        state = (playerState)newState;
+
+        // ���� ���� Ȯ�ο� ����� �޽���
+        Debug.Log($"�÷��̾� ���°� {state}�� ����ȭ�Ǿ����ϴ�. (ActorNumber: {photonView.Owner.ActorNumber})");
     }
 }

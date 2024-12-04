@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class StunGunFunction : ItemFunction, IItemFunction
@@ -9,8 +10,8 @@ public class StunGunFunction : ItemFunction, IItemFunction
     public float stunDuration = 5f; // 적을 5초 동안 멈추게 함
     public LayerMask enemyLayer; // 적 레이어 설정
     public LineRenderer lineRenderer; // 라인 렌더러 컴포넌트 추가
-    public float laserDuration = 0.1f; // 레이저가 보이는 시간
-
+    public float laserDuration = 1f; // 레이저가 보이는 시간
+    private PhotonItem _PhotonItem; // Player_Equip 참조 추가
     public AudioClip fireSound; // 발사 소리
     private AudioSource audioSource; // 오디오 소스를 저장할 변수
 
@@ -20,6 +21,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     {
         playerCamera = Camera.main;
         lineRenderer = GetComponent<LineRenderer>();
+        _PhotonItem = GetComponentInParent<PhotonItem>();
 
         // 오디오 소스 초기화
         audioSource = GetComponent<AudioSource>();
@@ -45,6 +47,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
         if (audioSource != null && fireSound != null)
         {
             audioSource.PlayOneShot(fireSound);
+            Debug.Log("발사 소리 재생 시도");
         }
 
         Vector3 rayOrigin = playerCamera.transform.position;
@@ -61,6 +64,9 @@ public class StunGunFunction : ItemFunction, IItemFunction
                 stunnableEnemy.Stun(stunDuration);
             }
         }
+
+        // 아이템 제거 부분에 딜레이 추가
+        StartCoroutine(RemoveItemAfterDelay());
     }
 
     IEnumerator ShowLaser(Vector3 start, Vector3 end)
@@ -70,5 +76,19 @@ public class StunGunFunction : ItemFunction, IItemFunction
         lineRenderer.enabled = true;
         yield return new WaitForSeconds(laserDuration);
         lineRenderer.enabled = false;
+    }
+
+    IEnumerator RemoveItemAfterDelay()
+    {
+        yield return new WaitForSeconds(laserDuration); // 레이저가 사라진 후 아이템을 파괴하기 위해 딜레이 추가
+
+        if (_PhotonItem != null && _PhotonItem.photonView != null)
+        {
+            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
+            Destroy(GetComponentInParent<Player_Equip>().Item);
+            Tesettext();
+            // _PhotonItem.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
+        }
     }
 }
