@@ -10,7 +10,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     public float stunDuration = 5f; // 적을 5초 동안 멈추게 함
     public LayerMask enemyLayer; // 적 레이어 설정
     public LineRenderer lineRenderer; // 라인 렌더러 컴포넌트 추가
-    public float laserDuration = 0.5f; // 레이저가 보이는 시간
+    public float laserDuration = 0.5f; // 레이저가 보이는 시간 (값을 더 크게 설정)
     private PhotonItem _PhotonItem; // Player_Equip 참조 추가
     public AudioClip fireSound; // 발사 소리
     private AudioSource audioSource; // 오디오 소스를 저장할 변수
@@ -34,6 +34,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
         // 발사 소리 클립 설정
         audioSource.clip = fireSound;
         audioSource.playOnAwake = false; // 시작할 때 자동 재생되지 않도록 설정
+        audioSource.spatialBlend = 0.0f; // 2D 오디오로 설정 (3D 설정이 문제일 수 있으므로 테스트)
     }
 
     public void Function()
@@ -43,20 +44,15 @@ public class StunGunFunction : ItemFunction, IItemFunction
 
     void FireStunGun()
     {
-        // 열쇠 제거 동기화
-        if (_PhotonItem != null && _PhotonItem.photonView != null)
-        {
-            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
-            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
-            Destroy(GetComponentInParent<Player_Equip>().Item);
-            Tesettext();
-            // _PhotonItem.photonView.("RemoveEquippedItem", RpcTarget.All, "Key");
-        }
-
         // 클릭하자마자 발사 소리 재생
         if (audioSource != null && fireSound != null)
         {
             audioSource.PlayOneShot(fireSound);
+            Debug.Log("발사 소리 재생 시도");
+        }
+        else
+        {
+            Debug.LogWarning("오디오 소스 또는 발사 소리가 없습니다.");
         }
 
         Vector3 rayOrigin = playerCamera.transform.position;
@@ -73,6 +69,9 @@ public class StunGunFunction : ItemFunction, IItemFunction
                 stunnableEnemy.Stun(stunDuration);
             }
         }
+
+        // 아이템 제거 부분에 딜레이 추가
+        StartCoroutine(RemoveItemAfterDelay());
     }
 
     IEnumerator ShowLaser(Vector3 start, Vector3 end)
@@ -82,5 +81,19 @@ public class StunGunFunction : ItemFunction, IItemFunction
         lineRenderer.enabled = true;
         yield return new WaitForSeconds(laserDuration);
         lineRenderer.enabled = false;
+    }
+
+    IEnumerator RemoveItemAfterDelay()
+    {
+        yield return new WaitForSeconds(laserDuration); // 레이저가 사라진 후 아이템을 파괴하기 위해 딜레이 추가
+
+        if (_PhotonItem != null && _PhotonItem.photonView != null)
+        {
+            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
+            Destroy(GetComponentInParent<Player_Equip>().Item);
+            Tesettext();
+            // _PhotonItem.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
+        }
     }
 }

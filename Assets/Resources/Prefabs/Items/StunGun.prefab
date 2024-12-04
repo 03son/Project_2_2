@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Bits: 256
   lineRenderer: {fileID: 4389836030814688525}
   laserDuration: 0.5
-  fireSound: {fileID: 8300000, guid: d0152e090173d174cae908904c5becbe, type: 3}
+  fireSound: {fileID: 8300000, guid: fd8d60da452ecc348837dff427dff5f3, type: 3}
 --- !u!120 &4389836030814688525
 LineRenderer:
   serializedVersion: 2
@@ -259,7 +259,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d0152e090173d174cae908904c5becbe, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fd8d60da452ecc348837dff427dff5f3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
