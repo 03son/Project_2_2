@@ -86,6 +86,11 @@ MonoBehaviour:
   - RequestToggleDoor
   - ThirdPersonPhotonDestroyItem
   - UseFlashlight
+  - Escape_Basement_Item
+  - RPC_Escape_Basement_Item
+  - RPC_Escape_Helicopter_Item
+  - RPC_Escape_Basement
+  - RPC_Escape_Helicopter
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

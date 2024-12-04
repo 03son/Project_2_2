@@ -7,13 +7,17 @@ using HashTable = ExitGames.Client.Photon.Hashtable;
 
 public class Multi_GameManager : GameManager
 {
+   public static Multi_GameManager instance;
     //��Ƽ�÷��� ���ӸŴ���
 
     HashTable playerCP;
+    PhotonView pv;
 
     void Awake()
     {
-        if(!PhotonNetwork.IsConnected)
+        instance = this;
+
+        if (!PhotonNetwork.IsConnected)
             return;
 
         GetComponent<Multi_GameManager>().enabled = true;
@@ -54,8 +58,15 @@ public class Multi_GameManager : GameManager
             }
             idx++;
         }
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                pv = player.GetComponent<PhotonView>();
+            }
+        }
        // if (PhotonNetwork.IsMasterClient)
-         //   PhotonNetwork.InstantiateRoomObject("GlassCup (2)" , points[4].position, points[4].rotation, 0);
+       //   PhotonNetwork.InstantiateRoomObject("GlassCup (2)" , points[4].position, points[4].rotation, 0);
     }
     
     public override void CreateEnemy() //UI���� �������� �ۼ���
@@ -66,5 +77,45 @@ public class Multi_GameManager : GameManager
         //PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
          
     }
-   
+
+    public void Escape_Basement()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (pv.IsMine)
+            {
+                pv.RPC("RPC_Escape_Basement", RpcTarget.All);
+            }
+        }
+        else//싱글 잠수함 탈출 이벤트
+        {
+            Debug.Log("잠수함 탈출");
+        }
+    } //잠수함
+    [PunRPC]
+    public void RPC_Escape_Basement()//멀티 잠수함 탈출 이벤트
+    {
+        Debug.Log("잠수함 탈출");
+    }
+
+    public void Escape_Helicopter()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (pv.IsMine)
+            {
+                pv.RPC("RPC_Escape_Helicopter", RpcTarget.All);
+            }
+        }
+        else
+        {
+            Debug.Log("헬리콥터 탈출");
+        }
+    }//헬리콥터
+    [PunRPC]
+    public void RPC_Escape_Helicopter()//멀티 헬리콥터 탈출 이벤트
+    {
+        Debug.Log("잠수함 탈출");
+    }
+
 }

@@ -48,7 +48,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
     {
         Debug.Log($"{requiredItemName} ºÎÂø ¿Ï·á");
 
-        Instantiate(attachedItemPrefab, transform.position, transform.rotation, transform.parent);
+        PhotonNetwork.InstantiateRoomObject(attachedItemPrefab.name, transform.position, transform.rotation);
         isAttached = true;
 
         SubmarineController submarine = GetComponentInParent<SubmarineController>();
