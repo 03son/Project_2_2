@@ -86,7 +86,7 @@ public class Player_Equip : MonoBehaviourPun
 
         numberKey();
         mouseWheelScroll();
-        EquipFunction();
+       // EquipFunction();
 
         // 던지는 동작 처리 (유리컵 충전 던지기)
         if (isCharging)
@@ -257,18 +257,13 @@ public class Player_Equip : MonoBehaviourPun
             if (Item.name == "Flashlight")
             {
                 Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
-               if (flashlightScript != null)
+                if (flashlightScript != null)
                 {
-                    Debug.Log("손전등 획득 및 사용");
-                   flashlightScript.AcquireFlashlight();
+                    Debug.Log("손전등 사용");
 
                     // 손전등 켜기/끄기 처리
-                    isFlashlightOn = !isFlashlightOn;
-                //    flashlightScript.ToggleFlashlight(isFlashlightOn);
-
-                    // 애니메이션 파라미터 설정
-                    animator.SetBool("isFlashlightOn", isFlashlightOn);
-                } 
+                    flashlightScript.ToggleFlashlight(); // ToggleFlashlight() 메서드를 호출하여 상태 변경
+                }
             }
             // 유리컵 아이템 처리
             else if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
@@ -288,6 +283,7 @@ public class Player_Equip : MonoBehaviourPun
             }
         }
     }
+
     public void ChangeOrRemoveItem()
     {
         // 현재 장착 중인 아이템이 손전등인지 확인
