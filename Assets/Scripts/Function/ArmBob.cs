@@ -17,6 +17,14 @@ public class ArmBob : MonoBehaviour
 
     void Update()
     {
+        if (PlayerState.instance.State == PlayerState.playerState.Survival)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
         // 걷기나 달리기 상태에 따라 흔들림 효과 적용
         if (IsMoving())
         {

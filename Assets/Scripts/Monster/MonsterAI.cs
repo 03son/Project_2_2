@@ -265,7 +265,7 @@ public class MonsterAI : MonoBehaviourPun
         {
             micScript = playerObject.GetComponentInChildren<Mic>();
 
-            if (micScript != null)
+            if (micScript != null && playerObject.GetComponent<PlayerState>().State == PlayerState.playerState.Survival)
             {
                 float decibel = micScript.GetDecibelAtDistance(transform.position);
                 if (decibel > currentInvestigateDecibel && decibel >= minDecibelToDetect &&

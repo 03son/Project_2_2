@@ -95,7 +95,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         // UI 및 효과 적용
         SetUICanvas.OpenUI("");
 
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(1f);
 
         // 사망 효과 추가 (필요시)
         if (deathEffect != null)

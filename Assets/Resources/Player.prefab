@@ -82,8 +82,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.24537492, z: -0, w: -0.96942836}
   m_LocalPosition: {x: -0.0004468803, y: -0.09, z: 0.0005467966}
-  m_LocalScale: {x: 18.726498, y: 18.726498, z: 18.726498}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 14, y: 14, z: 14}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9189067814254076894}
   - {fileID: 1284038701674613650}
@@ -109,7 +109,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.1
+  m_Height: 0.17
   m_Radius: 0.03
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchHeight: 0.05
-  normalHeight: 0.1
+  normalHeight: 0.17
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
 --- !u!114 &2444431448682953168
