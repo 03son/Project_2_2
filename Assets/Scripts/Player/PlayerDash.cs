@@ -33,8 +33,8 @@ public class PlayerDash : MonoBehaviour
     private void HandleMovement()
     {
         // 플레이어 움직임 입력 받기
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
         // 이동 벡터 계산
         Vector3 direction = cameraTransform.forward * vertical + cameraTransform.right * horizontal;
