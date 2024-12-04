@@ -8646,14 +8646,6 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 7129547770309612214, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
-      propertyPath: sceneViewId
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7129547770309612214, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
-      propertyPath: OwnershipTransfer
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9336,6 +9328,7 @@ MonoBehaviour:
   player: {fileID: 4520835399152146124, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
   mainCamera: {fileID: 926791170547918208}
   playerModel: {fileID: 0}
+  headBone: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
   FollowCam: {fileID: 1586328093126080412}
   EquipCamera: {fileID: 3791820408516909211}
