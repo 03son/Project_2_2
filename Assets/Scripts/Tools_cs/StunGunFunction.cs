@@ -1,18 +1,19 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StunGunFunction : ItemFunction, IItemFunction
 {
-    public KeyCode fireKey = KeyCode.Mouse0; // ¸¶¿ì½º ÁÂÅ¬¸¯À¸·Î ¹ß»ç
-    public float range = 10f; // ½ºÅÏ°ÇÀÇ »ç°Å¸®
-    public float stunDuration = 5f; // ÀûÀ» 5ÃÊ µ¿¾È ¸ØÃß°Ô ÇÔ
-    public LayerMask enemyLayer; // Àû ·¹ÀÌ¾î ¼³Á¤
-    public LineRenderer lineRenderer; // ¶óÀÎ ·»´õ·¯ ÄÄÆ÷³ÍÆ® Ãß°¡
-    public float laserDuration = 0.1f; // ·¹ÀÌÀú°¡ º¸ÀÌ´Â ½Ã°£
+    public KeyCode fireKey = KeyCode.Mouse0; // ë§ˆìš°ìŠ¤ ì¢Œí´ë¦­ìœ¼ë¡œ ë°œì‚¬
+    public float range = 10f; // ìŠ¤í„´ê±´ì˜ ì‚¬ê±°ë¦¬
+    public float stunDuration = 5f; // ì ì„ 5ì´ˆ ë™ì•ˆ ë©ˆì¶”ê²Œ í•¨
+    public LayerMask enemyLayer; // ì  ë ˆì´ì–´ ì„¤ì •
+    public LineRenderer lineRenderer; // ë¼ì¸ ë Œë”ëŸ¬ ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
+    public float laserDuration = 0.1f; // ë ˆì´ì €ê°€ ë³´ì´ëŠ” ì‹œê°„
 
-    public AudioClip fireSound; // ¹ß»ç ¼Ò¸®
-    private AudioSource audioSource; // ¿Àµğ¿À ¼Ò½º¸¦ ÀúÀåÇÒ º¯¼ö
+    private PhotonItem _PhotonItem; // Player_Equip ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+    public AudioClip fireSound; // ë°œì‚¬ ì†Œë¦¬
+    private AudioSource audioSource; // ì˜¤ë””ì˜¤ ì†ŒìŠ¤ë¥¼ ì €ì¥í•  ë³€ìˆ˜
 
     private Camera playerCamera;
 
@@ -21,17 +22,17 @@ public class StunGunFunction : ItemFunction, IItemFunction
         playerCamera = Camera.main;
         lineRenderer = GetComponent<LineRenderer>();
 
-        // ¿Àµğ¿À ¼Ò½º ÃÊ±âÈ­
+        // ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ì´ˆê¸°í™”
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
-            // ¿Àµğ¿À ¼Ò½º°¡ ¾ø´Ù¸é Ãß°¡ÇØÁÜ
+            // ì˜¤ë””ì˜¤ ì†ŒìŠ¤ê°€ ì—†ë‹¤ë©´ ì¶”ê°€í•´ì¤Œ
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        // ¹ß»ç ¼Ò¸® Å¬¸³ ¼³Á¤
+        // ë°œì‚¬ ì†Œë¦¬ í´ë¦½ ì„¤ì •
         audioSource.clip = fireSound;
-        audioSource.playOnAwake = false; // ½ÃÀÛÇÒ ¶§ ÀÚµ¿ Àç»ıµÇÁö ¾Êµµ·Ï ¼³Á¤
+        audioSource.playOnAwake = false; // ì‹œì‘í•  ë•Œ ìë™ ì¬ìƒë˜ì§€ ì•Šë„ë¡ ì„¤ì •
     }
 
     public void Function()
@@ -41,7 +42,9 @@ public class StunGunFunction : ItemFunction, IItemFunction
 
     void FireStunGun()
     {
-        // Å¬¸¯ÇÏÀÚ¸¶ÀÚ ¹ß»ç ¼Ò¸® Àç»ı
+
+
+        // í´ë¦­í•˜ìë§ˆì ë°œì‚¬ ì†Œë¦¬ ì¬ìƒ
         if (audioSource != null && fireSound != null)
         {
             audioSource.PlayOneShot(fireSound);
