@@ -1880,7 +1880,7 @@ GameObject:
   - component: {fileID: 150562274}
   - component: {fileID: 150562273}
   - component: {fileID: 150562275}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Metal2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2744,7 +2744,7 @@ GameObject:
   - component: {fileID: 216550214}
   - component: {fileID: 216550213}
   - component: {fileID: 216550212}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6327,7 +6327,7 @@ GameObject:
   - component: {fileID: 367838930}
   - component: {fileID: 367838929}
   - component: {fileID: 367838928}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10983,7 +10983,7 @@ GameObject:
   - component: {fileID: 492802886}
   - component: {fileID: 492802885}
   - component: {fileID: 492802884}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cylinder.036
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13050,6 +13050,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.4763968, y: 1.9999999, z: 2.332274}
   m_Center: {x: -0.105078414, y: 0, z: 0.27777225}
+--- !u!1 &610124944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6080758409751018448, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+  m_PrefabInstance: {fileID: 1339297245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &610124945
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610124944}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3082495655924718569, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
 --- !u!64 &612785054
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15383,7 +15410,7 @@ GameObject:
   - component: {fileID: 741866225}
   - component: {fileID: 741866224}
   - component: {fileID: 741866223}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15671,7 +15698,7 @@ GameObject:
   - component: {fileID: 757326678}
   - component: {fileID: 757326677}
   - component: {fileID: 757326676}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16132,7 +16159,7 @@ GameObject:
   - component: {fileID: 770799237}
   - component: {fileID: 770799236}
   - component: {fileID: 770799235}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.316
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18922,7 +18949,7 @@ GameObject:
   - component: {fileID: 962893429}
   - component: {fileID: 962893428}
   - component: {fileID: 962893427}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19750,7 +19777,7 @@ GameObject:
   - component: {fileID: 1012675404}
   - component: {fileID: 1012675403}
   - component: {fileID: 1012675402}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21509,7 +21536,7 @@ GameObject:
   - component: {fileID: 1141320173}
   - component: {fileID: 1141320172}
   - component: {fileID: 1141320171}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Metal10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23747,7 +23774,7 @@ GameObject:
   - component: {fileID: 1273529547}
   - component: {fileID: 1273529546}
   - component: {fileID: 1273529545}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26724,6 +26751,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3360816879325137405, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 783424486}
+    - targetCorrespondingSourceObject: {fileID: 6080758409751018448, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 610124945}
     - targetCorrespondingSourceObject: {fileID: -7662696662377506341, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1559474091}
@@ -27273,6 +27303,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7579745331428750704, guid: bfb380fae4fd2784593b8d837e6c1d9a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1351007803}
     - targetCorrespondingSourceObject: {fileID: 4811311523096866301, guid: bfb380fae4fd2784593b8d837e6c1d9a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1351007801}
@@ -27309,6 +27342,32 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4706421940061792323, guid: bfb380fae4fd2784593b8d837e6c1d9a, type: 3}
+--- !u!1 &1351007802 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7579745331428750704, guid: bfb380fae4fd2784593b8d837e6c1d9a, type: 3}
+  m_PrefabInstance: {fileID: 1351007798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1351007803
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351007802}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.025192708, y: 0.02336767, z: 0.020000003}
+  m_Center: {x: 0.00038871967, y: -0.0007634, z: -0.00000001909211}
 --- !u!1 &1357238871
 GameObject:
   m_ObjectHideFlags: 0
@@ -27321,7 +27380,7 @@ GameObject:
   - component: {fileID: 1357238875}
   - component: {fileID: 1357238874}
   - component: {fileID: 1357238873}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Metal11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28222,7 +28281,7 @@ GameObject:
   - component: {fileID: 1384534909}
   - component: {fileID: 1384534908}
   - component: {fileID: 1384534907}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37173,7 +37232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -251241869400619796, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -212784618592274012, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -38776,6 +38835,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8209106630779541739, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1609565769}
+    - targetCorrespondingSourceObject: {fileID: 2687352107331179579, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1912752916}
     - targetCorrespondingSourceObject: {fileID: -4787372677442767806, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 345532949}
@@ -40138,7 +40200,7 @@ GameObject:
   - component: {fileID: 1871960082}
   - component: {fileID: 1871960081}
   - component: {fileID: 1871960080}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "\uC720\uB9AC.020"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40622,6 +40684,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1912752915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2687352107331179579, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1912752916
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912752915}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6398438, y: 2.0000002, z: 1.7950048}
+  m_Center: {x: -0.18941034, y: -0.0000038146977, z: -0.13840738}
 --- !u!1 &1914297694
 GameObject:
   m_ObjectHideFlags: 0
@@ -42937,7 +43025,7 @@ GameObject:
   - component: {fileID: 2040296111}
   - component: {fileID: 2040296110}
   - component: {fileID: 2040296109}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45160,7 +45248,7 @@ GameObject:
   - component: {fileID: 2121463402}
   - component: {fileID: 2121463401}
   - component: {fileID: 2121463400}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "Cylinder.058_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
