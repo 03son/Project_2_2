@@ -40,8 +40,19 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
             Debug.Log("문의 잠금을 해제했습니다.");
             openDoor = true;
 
-            // Player_Equip의 RemoveEquippedItem 호출
-            playerEquip.RemoveEquippedItem("Key");
+            playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
+
+
+            // 문 잠금 해제 상태를 모든 클라이언트에 동기화
+            photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
+
+            return;
+            isOpen = true;
+            Debug.Log("문의 잠금을 해제했습니다.");
+            openDoor = true;
+
+            playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
+
 
             // 문 잠금 해제 상태를 모든 클라이언트에 동기화
             photonView.RPC("RPC_UnlockDoor", RpcTarget.All);

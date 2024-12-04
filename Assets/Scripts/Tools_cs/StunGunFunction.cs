@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class StunGunFunction : ItemFunction, IItemFunction
@@ -10,7 +11,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     public LayerMask enemyLayer; // 적 레이어 설정
     public LineRenderer lineRenderer; // 라인 렌더러 컴포넌트 추가
     public float laserDuration = 0.1f; // 레이저가 보이는 시간
-
+    private PhotonItem _PhotonItem; // Player_Equip 참조 추가
     public AudioClip fireSound; // 발사 소리
     private AudioSource audioSource; // 오디오 소스를 저장할 변수
 
@@ -20,6 +21,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     {
         playerCamera = Camera.main;
         lineRenderer = GetComponent<LineRenderer>();
+        _PhotonItem = GetComponentInParent<PhotonItem>();
 
         // 오디오 소스 초기화
         audioSource = GetComponent<AudioSource>();
@@ -41,6 +43,16 @@ public class StunGunFunction : ItemFunction, IItemFunction
 
     void FireStunGun()
     {
+        // 열쇠 제거 동기화
+        if (_PhotonItem != null && _PhotonItem.photonView != null)
+        {
+            _PhotonItem.RemoveEquippedItem("StunGun");
+            Inventory.instance.RemoveItem("StunGun");
+            Destroy(GetComponentInParent<Player_Equip>().Item);
+            GetComponentInParent<Player_Equip>().ItemName.text = "";
+            // _PhotonItem.photonView.("RemoveEquippedItem", RpcTarget.All, "Key");
+        }
+
         // 클릭하자마자 발사 소리 재생
         if (audioSource != null && fireSound != null)
         {

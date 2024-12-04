@@ -91,6 +91,7 @@ MonoBehaviour:
   - RPC_CloseDoor
   - RPC_OpenDoor
   - RPC_UnlockDoor
+  - RemoveEquippedItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
