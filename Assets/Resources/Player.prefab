@@ -134,7 +134,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   walkSound: {fileID: 1847627266896497341}
   walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
-  walkVolume: 0.25
+  walkVolume: 0.2
 --- !u!114 &4959644083652688089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +289,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -324,7 +324,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e55c1890a3b3b498fa004d31d9e6ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDecibel: 50
+  baseDecibel: 40
   range: 20
   audioSource: {fileID: 1847627266896497341}
 --- !u!114 &1390481486682980952
