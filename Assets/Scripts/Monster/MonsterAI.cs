@@ -67,7 +67,7 @@ public class MonsterAI : MonoBehaviourPun
         animator = GetComponentInChildren<Animator>(); // Animator 초기화
 
         //순찰 지점들의 부모 오브젝트 가져오기
-        patrolParent = GameObject.Find("EnemySpawnPoint").gameObject.transform;
+        patrolParent = GameObject.Find("Points").gameObject.transform;
 
         // 순찰 지점 배열을 자식 오브젝트에서 자동으로 가져오기
         if (patrolParent != null)

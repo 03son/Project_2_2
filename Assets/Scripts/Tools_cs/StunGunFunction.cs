@@ -82,6 +82,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     {
         yield return new WaitForSeconds(laserDuration); // 레이저가 사라진 후 아이템을 파괴하기 위해 딜레이 추가
 
+        PhotonItem _PhotonItem = GetComponentInParent<PhotonItem>();
         if (_PhotonItem != null && _PhotonItem.photonView != null)
         {
             _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);

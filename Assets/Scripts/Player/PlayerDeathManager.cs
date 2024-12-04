@@ -46,12 +46,15 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
+        if (state == PlayerState.playerState.Survival)
         {
-            Debug.Log("적과 충돌하여 사망 상태로 전환.");
+            if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
+            {
+                Debug.Log("적과 충돌하여 사망 상태로 전환.");
 
-            // RPC 호출 시 ActorNumber 전달
-            photonView.RPC("SyncDieState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+                // RPC 호출 시 ActorNumber 전달
+                photonView.RPC("SyncDieState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+            }
         }
     }
 

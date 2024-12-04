@@ -98,6 +98,7 @@ MonoBehaviour:
   - RPC_OpenDoor
   - RPC_UnlockDoor
   - RemoveEquippedItem
+  - StartSubmarine
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

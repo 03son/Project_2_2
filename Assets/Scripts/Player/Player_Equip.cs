@@ -62,7 +62,7 @@ public class Player_Equip : MonoBehaviourPun
 
         inventory = GetComponent<Inventory>();
         equipItem = GameObject.Find("handitemattach").gameObject;
-        ItemName = GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        ItemName = GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>();
         ItemName.text = "";
 
         if (trajectoryLine != null)

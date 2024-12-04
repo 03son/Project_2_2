@@ -21688,6 +21688,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8266899526189942518, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_Name
+      value: ItemName_Text
+      objectReference: {fileID: 0}
     - target: {fileID: 8624389884800944217, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
