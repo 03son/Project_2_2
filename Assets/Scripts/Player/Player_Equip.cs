@@ -166,13 +166,14 @@ public class Player_Equip : MonoBehaviourPun
         Item.transform.localPosition = Vector3.zero;
         Item.transform.localRotation = Quaternion.identity;
         Item.GetComponent<Rigidbody>().isKinematic = true;
+        /*
         if (Item.GetComponentInChildren<Transform>().childCount > 0)
         {
             foreach (GameObject childrenItem in Item.GetComponentInChildren<Transform>())
             {
                 childrenItem.layer = LayerMask.NameToLayer("Equip");
             }
-        }
+        }*/
         // 3인칭 모델링에 장착 (다른 플레이어가 보는 것)
         if (PhotonNetwork.IsConnected)
         {
