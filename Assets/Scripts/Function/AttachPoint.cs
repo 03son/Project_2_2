@@ -70,7 +70,8 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
     {
         Debug.Log($"{requiredItemName} ºÎÂø ¿Ï·á");
 
-        PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{attachedItemPrefab.name}", transform.position, transform.rotation);
+        GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{attachedItemPrefab.name}", transform.position, transform.rotation);
+        item.GetComponent<Rigidbody>().isKinematic = true;
         isAttached = true;
 
         SubmarineController submarine = GetComponentInParent<SubmarineController>();

@@ -270,7 +270,8 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+            GameObject dropItem = Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+            dropItem.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
     private void Update()

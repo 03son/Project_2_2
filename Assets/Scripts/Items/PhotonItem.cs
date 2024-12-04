@@ -48,7 +48,8 @@ public class PhotonItem : MonoBehaviourPun
     [PunRPC]
     public void PhotonThrowItem_(string itemName , Vector3 pos)
     {
-        PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", pos, Quaternion.identity);
+        GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", pos, Quaternion.identity);
+        item.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     public void RemoveEquippedItem(string itemName)
@@ -109,7 +110,7 @@ public class PhotonItem : MonoBehaviourPun
             // 3ÀÎÄª ¸ðµ¨¸µ¿¡µµ ¾ÆÀÌÅÛ ÀåÂø
             if (pv.IsMine)
             {
-                pv.RPC("ThirdPersonHandItem", RpcTarget.All, item, PhotonNetwork.LocalPlayer.ActorNumber);
+                pv.RPC("ThirdPersonHandItem", RpcTarget.Others, item, PhotonNetwork.LocalPlayer.ActorNumber);
             }
         }
     }
@@ -135,7 +136,7 @@ public class PhotonItem : MonoBehaviourPun
 
                     if (pv.IsMine)
                     {
-                        itemForOthers.layer = LayerMask.NameToLayer("LocalPlayerBody");
+                        itemForOthers.layer = LayerMask.NameToLayer("PlayerBody");
                     }
                     else
                     {
@@ -147,6 +148,7 @@ public class PhotonItem : MonoBehaviourPun
                     itemForOthers.transform.SetParent(__thirdPersonHand);
                     itemForOthers.transform.localPosition = Vector3.zero;
                     itemForOthers.transform.localRotation = Quaternion.identity;
+                    itemForOthers.GetComponent<Rigidbody>().isKinematic = true;
                 }
                 else
                 {

@@ -518,7 +518,7 @@ public class MonsterAI : MonoBehaviourPun
 
     public void HandlePlayerSound(float decibel,Vector3 playerPosition)
     {
-        if (decibel > 50 )//임계값 설정
+        if (decibel > minDecibelToDetect)//임계값 설정
         { 
             GetComponent<NavMeshAgent>().SetDestination(playerPosition);
         }

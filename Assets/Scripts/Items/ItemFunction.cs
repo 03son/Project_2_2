@@ -7,7 +7,7 @@ public class ItemFunction : MonoBehaviour
 {
     protected void Tesettext()
     {
-        GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+        GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
     }
 }
 public interface IItemFunction
