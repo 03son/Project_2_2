@@ -461,6 +461,7 @@ MonoBehaviour:
   warningSound: {fileID: 3806153364288203166}
   detectionRange: 20
   fieldOfView: 120
+  cooldownTime: 20
 --- !u!82 &3806153364288203166
 AudioSource:
   m_ObjectHideFlags: 0
