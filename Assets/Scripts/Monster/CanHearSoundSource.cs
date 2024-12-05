@@ -59,7 +59,7 @@ public class CanHearSoundSource : MonoBehaviour
                 float decibel = soundSource.GetDecibelAtDistance(transform.position);
                 if (decibel >= MonsterAI.Instance.minDecibelToDetect)
                 {
-                    Debug.Log($"사운드 소스 감지: {soundSource.gameObject.name}, 데시벨: {decibel}");
+                    //Debug.Log($"사운드 소스 감지: {soundSource.gameObject.name}, 데시벨: {decibel}");
                     MonsterAI.Instance.HandleItemSound(obj.transform.position);
                 }
             }

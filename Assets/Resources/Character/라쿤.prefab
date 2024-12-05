@@ -254,6 +254,7 @@ MonoBehaviour:
   walkSound: {fileID: 1847627266896497341}
   walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
   walkVolume: 0.25
+  soundSource: {fileID: 0}
 --- !u!114 &4959644083652688089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchHeight: 0.05
-  normalHeight: 0.1
+  normalHeight: 0.17
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
 --- !u!114 &2444431448682953168
