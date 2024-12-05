@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashSpeed: 10
+  moveSpeed: 5
 --- !u!114 &3174909007707241206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +371,7 @@ MonoBehaviour:
   - {fileID: 7755055098040124067}
   - {fileID: -3523335529485268683}
   - {fileID: 4096790498413155007}
+  - {fileID: 6447745790922013024}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -445,7 +447,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -678,6 +680,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: Death
+  - Type: 9
+    SynchronizeType: 0
+    Name: Survival
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1128,6 +1133,7 @@ MonoBehaviour:
   isRecording: 0
   singleMic: 0
   Microphone_Decibel_Bar: {fileID: 0}
+  single: 0
 --- !u!114 &837250356730881852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,6 +1470,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4010722637098814229, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
   m_PrefabInstance: {fileID: 9102456621331150833}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6447745790922013024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2821666465725632145, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+  m_PrefabInstance: {fileID: 9102456621331150833}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8095400622324652812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1011849663549762813, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}

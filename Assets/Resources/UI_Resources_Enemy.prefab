@@ -446,6 +446,7 @@ MonoBehaviour:
   shakeDuration: 0.1
   shakeInterval: 0.5
   footstepSound: {fileID: 1734623120430788607}
+  mstate: {fileID: 0}
 --- !u!114 &4095838919260284907
 MonoBehaviour:
   m_ObjectHideFlags: 0

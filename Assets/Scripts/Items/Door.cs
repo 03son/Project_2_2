@@ -56,8 +56,8 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
             Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
             Destroy(GetComponentInParent<Player_Equip>().Item);
             */
-            GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().text = "";
-            Debug.Log(GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
+            GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+            Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
 
             // ?? ??? ???? ???��? ??? ????????? ?????
             photonView.RPC("RPC_UnlockDoor", RpcTarget.All);

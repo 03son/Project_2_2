@@ -56,7 +56,7 @@ public class CameraRot : MonoBehaviour
             headBone = playerModel.Find("rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:Neck/Head");
             if (headBone == null)
             {
-                headBone = playerModel.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head");
+                headBone = playerModel.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/Head");
                 if (headBone == null)
                 {
                     Debug.LogError("HeadBone object not found in PlayerModel.");

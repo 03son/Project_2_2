@@ -6,6 +6,7 @@ public class Flashlight2 : MonoBehaviour
     [SerializeField] private float followSpeed = 1.5f; // 따라가는 속도 (딜레이 조절)
     private Quaternion currentRotation; // 현재 회전값
     private Quaternion targetRotation; // 목표 회전값
+    private Light flashlightComponent;
 
     private void Start()
     {
@@ -40,5 +41,7 @@ public class Flashlight2 : MonoBehaviour
 
         // 디버깅
         Debug.Log("스팟라이트 회전 동기화 중: " + transform.rotation.eulerAngles);
+
+
     }
 }

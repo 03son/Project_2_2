@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 221756478018173505, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.33
+      value: 2.01
       objectReference: {fileID: 0}
     - target: {fileID: 221756478018173505, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52,10 +52,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flashlight1
       objectReference: {fileID: 0}
-    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
-      propertyPath: m_Cookie
-      value: 
-      objectReference: {fileID: 2800000, guid: 7df2e44ecf2632f4e968e561833f1656, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
