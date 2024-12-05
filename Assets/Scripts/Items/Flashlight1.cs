@@ -64,7 +64,7 @@ public class Flashlight1 : MonoBehaviour
     private void Update()
     {
         // 손전등을 장착하고 있지 않으면 종료
-        if (transform.parent != null && transform.parent.name != "handitemattach")
+        if (transform.parent.name != "handitemattach")
         {
             if (flashlightActive)
             {
