@@ -10,7 +10,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     public float stunDuration = 5f; // 적을 5초 동안 멈추게 함
     public LayerMask enemyLayer; // 적 레이어 설정
     public LineRenderer lineRenderer; // 라인 렌더러 컴포넌트 추가
-    public float laserDuration = 0.5f; // 레이저가 보이는 시간 (값을 더 크게 설정)
+    public float laserDuration = 1f; // 레이저가 보이는 시간 (값을 더 크게 설정)
     private PhotonItem _PhotonItem; // Player_Equip 참조 추가
     public AudioClip fireSound; // 발사 소리
     private AudioSource audioSource; // 오디오 소스를 저장할 변수
@@ -45,7 +45,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     void FireStunGun()
     {
 
-      
+
 
 
         // 클릭하자마자 발사 소리 재생
