@@ -371,6 +371,7 @@ MonoBehaviour:
   - {fileID: 7755055098040124067}
   - {fileID: -3523335529485268683}
   - {fileID: 1681116089437044621}
+  - {fileID: 5772488454383240015}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -680,7 +681,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Death
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Survival
   m_SynchronizeLayers:
   - SynchronizeType: 1
@@ -1228,6 +1229,17 @@ PrefabInstance:
 --- !u!114 &1681116089437044621 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 427744428048359503, guid: 87b91baa250c8db448f106955459033e, type: 3}
+  m_PrefabInstance: {fileID: 1349709242435575746}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5772488454383240015 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4801082179002145933, guid: 87b91baa250c8db448f106955459033e, type: 3}
   m_PrefabInstance: {fileID: 1349709242435575746}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
