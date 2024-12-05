@@ -11072,6 +11072,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.5019608}
+--- !u!1 &350573113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3179812931507352509, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+  m_PrefabInstance: {fileID: 1339297245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &350573114
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350573113}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8068606839655832539, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
 --- !u!1 &352882689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 921391927218321214, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
@@ -24755,6 +24782,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &675229709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6110197809457597231, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &675229710
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675229709}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3945776728871322418, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
 --- !u!65 &675461358
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30611,7 +30665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &882732347
 Transform:
   m_ObjectHideFlags: 0
@@ -38110,6 +38164,60 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116898469}
   m_Mesh: {fileID: -2840748171930606399, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+--- !u!1 &1127930407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1606057615522382512, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1127930408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1127930409
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127930407}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6564495154122040233, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+--- !u!64 &1127930410
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127930408}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
 --- !u!1 &1132224746
 GameObject:
   m_ObjectHideFlags: 0
@@ -39303,14 +39411,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floors:
+  - floorSpawnArea: {fileID: 1688356962}
+    itemsToSpawn:
+    - itemPrefab: {fileID: 2604997554192321588, guid: 1727917e509c7d84299abf7882b223a2, type: 3}
+      spawnCount: 3
+    - itemPrefab: {fileID: 7818993243534298237, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 2184383618051390682, guid: 707d1258161f73a4d898f8f974b09097, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 6091927064140009035, guid: 68e22fe37ab6a6f4ca6e6195c258cf2e, type: 3}
+      spawnCount: 4
+    - itemPrefab: {fileID: 1972520488429642149, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 1333144890108428148, guid: 67ef7e521fe5ccc4f8045ecbf683d04f, type: 3}
+      spawnCount: 1
+  - floorSpawnArea: {fileID: 2138591652}
+    itemsToSpawn:
+    - itemPrefab: {fileID: 2604997554192321588, guid: 1727917e509c7d84299abf7882b223a2, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 7818993243534298237, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 2184383618051390682, guid: 707d1258161f73a4d898f8f974b09097, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 1191402134849681354, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 3950096876930700298, guid: 8fd596bb20e00284db89d985f2f79d17, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 2211181333793232596, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 5518456526652017941, guid: 339b405d3f994d04c888964b5b224263, type: 3}
+      spawnCount: 1
   - floorSpawnArea: {fileID: 141888522}
     itemsToSpawn:
-    - itemPrefab: {fileID: 5544210761962123603, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
-      spawnCount: 30
-  - floorSpawnArea: {fileID: 2138591652}
-    itemsToSpawn: []
-  - floorSpawnArea: {fileID: 1688356962}
-    itemsToSpawn: []
+    - itemPrefab: {fileID: 2604997554192321588, guid: 1727917e509c7d84299abf7882b223a2, type: 3}
+      spawnCount: 4
+    - itemPrefab: {fileID: 7818993243534298237, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+      spawnCount: 3
+    - itemPrefab: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 1191402134849681354, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 8370939266880707758, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 2211181333793232596, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      spawnCount: 1
 --- !u!1 &1180668960
 GameObject:
   m_ObjectHideFlags: 0
@@ -46595,6 +46749,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1138710469013453431, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 922583576}
+    - targetCorrespondingSourceObject: {fileID: 3179812931507352509, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 350573114}
     - targetCorrespondingSourceObject: {fileID: -7637613387807306621, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1859227911}
@@ -64785,6 +64942,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7490718487048311144, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2146202767}
+    - targetCorrespondingSourceObject: {fileID: -6110197809457597231, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 675229710}
+    - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1127930410}
     - targetCorrespondingSourceObject: {fileID: -1707899444462692360, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1571395368}
@@ -64815,6 +64978,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 769409822697918629, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1614952318}
+    - targetCorrespondingSourceObject: {fileID: -1606057615522382512, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1127930409}
     - targetCorrespondingSourceObject: {fileID: 1833801774482467050, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 233977327}
@@ -75879,7 +76045,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2121463399
 Transform:
