@@ -205,7 +205,7 @@ MonoBehaviour:
   viewDistance: 20
   fieldOfView: 120
   hearingRange: 30
-  minDecibelToDetect: 30
+  minDecibelToDetect: 35
   soundSources: []
   currentState: 0
 --- !u!114 &1388522411804051230
@@ -444,6 +444,7 @@ MonoBehaviour:
   shakeDuration: 0.1
   shakeInterval: 0.5
   footstepSound: {fileID: 1734623120430788607}
+  mstate: {fileID: 0}
 --- !u!1001 &6657985665348049226
 PrefabInstance:
   m_ObjectHideFlags: 0
