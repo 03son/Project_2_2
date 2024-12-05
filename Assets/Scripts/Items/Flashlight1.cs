@@ -63,8 +63,9 @@ public class Flashlight1 : MonoBehaviour
 
     private void Update()
     {
+        /*
         // 손전등을 장착하고 있지 않으면 종료
-        if (transform.parent != null && transform.parent.name != "handitemattach")
+        if (transform.parent.name != "handitemattach")
         {
             if (flashlightActive)
             {
@@ -72,18 +73,23 @@ public class Flashlight1 : MonoBehaviour
             }
             return;
         }
-
-        // 마우스 좌클릭으로 손전등 켜기/끄기
-        if (Input.GetMouseButtonDown(0))
+        */
+        if (transform.parent)
         {
-            ToggleFlashlight();
+            // 마우스 좌클릭으로 손전등 켜기/끄기
+            if (Input.GetMouseButtonDown(0) && transform.parent.name == "handitemattach")
+            {
+                ToggleFlashlight();
+                AdjustFlashlight();
+            }
         }
-
+        /*
         // 손전등이 활성화된 상태에서 빛 조절
         if (flashlightActive)
         {
             AdjustFlashlight();
         }
+        */
     }
 
     private void LateUpdate()

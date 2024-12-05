@@ -16,6 +16,7 @@ public class InteractionManager : MonoBehaviour
     private float lastCheckTime;
     public float maxCheckDistance; // 상호작용 최대 거리
     public LayerMask layerMask; // 상호작용 가능한 레이어
+    public LayerMask layerMask2; // 상호작용 가능한 레이어
 
     private GameObject curInteractGameobject;
     private IInteractable curInteractable;
@@ -82,6 +83,18 @@ public class InteractionManager : MonoBehaviour
             if (hit.collider.gameObject != curInteractGameobject)
             {
                 curInteractGameobject = hit.collider.gameObject;
+
+                curInteractable = hit.collider.GetComponent<IInteractable>();
+                Crosshair.Interaction(); // 크로스헤어 상호작용 표시
+            }
+        }
+        else if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask2))
+        {
+            // 상호작용 가능한 객체가 바뀌었을 때만 갱신
+            if (hit.collider.gameObject != curInteractGameobject)
+            {
+                curInteractGameobject = hit.collider.gameObject;
+
                 curInteractable = hit.collider.GetComponent<IInteractable>();
                 Crosshair.Interaction(); // 크로스헤어 상호작용 표시
             }

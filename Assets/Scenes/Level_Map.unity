@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 2443258}
   - component: {fileID: 2443264}
   - component: {fileID: 2443263}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.129
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 16709722}
   - component: {fileID: 16709721}
   - component: {fileID: 16709720}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 23531167}
   - component: {fileID: 23531166}
   - component: {fileID: 23531165}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +762,7 @@ GameObject:
   - component: {fileID: 37850178}
   - component: {fileID: 37850184}
   - component: {fileID: 37850183}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1105,7 +1105,7 @@ GameObject:
   - component: {fileID: 47254440}
   - component: {fileID: 47254439}
   - component: {fileID: 47254438}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,7 +1199,7 @@ GameObject:
   - component: {fileID: 53133994}
   - component: {fileID: 53133993}
   - component: {fileID: 53133992}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1318,7 +1318,7 @@ GameObject:
   - component: {fileID: 62808743}
   - component: {fileID: 62808749}
   - component: {fileID: 62808748}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1571,7 +1571,7 @@ GameObject:
   - component: {fileID: 66435452}
   - component: {fileID: 66435451}
   - component: {fileID: 66435450}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RIghtW_DoorPivot (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1668,7 +1668,7 @@ GameObject:
   - component: {fileID: 71373703}
   - component: {fileID: 71373709}
   - component: {fileID: 71373708}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.070
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1922,7 +1922,7 @@ GameObject:
   - component: {fileID: 84531992}
   - component: {fileID: 84531991}
   - component: {fileID: 84531993}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2152,7 +2152,7 @@ GameObject:
   - component: {fileID: 91547533}
   - component: {fileID: 91547539}
   - component: {fileID: 91547538}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.166
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2405,7 +2405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 99298603}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: B1_Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2524,7 +2524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 6.4, z: -8.47}
+  m_FollowOffset: {x: 0, y: 2.45, z: -6.47}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -2655,7 +2655,7 @@ GameObject:
   - component: {fileID: 121866887}
   - component: {fileID: 121866890}
   - component: {fileID: 121866889}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3179,7 +3179,7 @@ GameObject:
   - component: {fileID: 140181281}
   - component: {fileID: 140181287}
   - component: {fileID: 140181286}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.124
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3434,7 +3434,7 @@ GameObject:
   - component: {fileID: 141763123}
   - component: {fileID: 141763122}
   - component: {fileID: 141763121}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.044
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3630,7 +3630,7 @@ GameObject:
   - component: {fileID: 145679852}
   - component: {fileID: 145679858}
   - component: {fileID: 145679857}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.187
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3884,7 +3884,7 @@ GameObject:
   - component: {fileID: 150562274}
   - component: {fileID: 150562273}
   - component: {fileID: 150562275}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4111,7 +4111,7 @@ GameObject:
   - component: {fileID: 160834789}
   - component: {fileID: 160834795}
   - component: {fileID: 160834794}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.115
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4464,6 +4464,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.5019608}
+--- !u!1 &173562257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6170694321010666003, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+  m_PrefabInstance: {fileID: 447882547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &173562258
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173562257}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8164871424258170262, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
 --- !u!1 &180862851
 GameObject:
   m_ObjectHideFlags: 0
@@ -4480,7 +4507,7 @@ GameObject:
   - component: {fileID: 180862857}
   - component: {fileID: 180862860}
   - component: {fileID: 180862859}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: R_Cube.075
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4737,7 +4764,7 @@ GameObject:
   - component: {fileID: 182132186}
   - component: {fileID: 182132192}
   - component: {fileID: 182132191}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.205
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4991,7 +5018,7 @@ GameObject:
   - component: {fileID: 185044114}
   - component: {fileID: 185044113}
   - component: {fileID: 185044112}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5129,7 +5156,7 @@ GameObject:
   - component: {fileID: 188267527}
   - component: {fileID: 188267526}
   - component: {fileID: 188267525}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.085
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5591,7 +5618,7 @@ GameObject:
   - component: {fileID: 209378310}
   - component: {fileID: 209378316}
   - component: {fileID: 209378315}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.211
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5844,7 +5871,7 @@ GameObject:
   - component: {fileID: 215168790}
   - component: {fileID: 215168789}
   - component: {fileID: 215168787}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5940,7 +5967,7 @@ GameObject:
   - component: {fileID: 216550212}
   - component: {fileID: 216550218}
   - component: {fileID: 216550217}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6193,7 +6220,7 @@ GameObject:
   - component: {fileID: 217188154}
   - component: {fileID: 217188153}
   - component: {fileID: 217188152}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6291,7 +6318,7 @@ GameObject:
   - component: {fileID: 223683069}
   - component: {fileID: 223683075}
   - component: {fileID: 223683074}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6573,7 +6600,7 @@ GameObject:
   - component: {fileID: 226969834}
   - component: {fileID: 226969833}
   - component: {fileID: 226969832}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6788,7 +6815,7 @@ GameObject:
   - component: {fileID: 237394062}
   - component: {fileID: 237394068}
   - component: {fileID: 237394067}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7041,7 +7068,7 @@ GameObject:
   - component: {fileID: 240446812}
   - component: {fileID: 240446811}
   - component: {fileID: 240446809}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7139,7 +7166,7 @@ GameObject:
   - component: {fileID: 243209709}
   - component: {fileID: 243209715}
   - component: {fileID: 243209714}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uD050\uBE0C.050"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7459,7 +7486,7 @@ GameObject:
   - component: {fileID: 248423634}
   - component: {fileID: 248423633}
   - component: {fileID: 248423632}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.039
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7569,7 +7596,7 @@ GameObject:
   - component: {fileID: 252466036}
   - component: {fileID: 252466042}
   - component: {fileID: 252466041}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.052_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7821,7 +7848,7 @@ GameObject:
   - component: {fileID: 253233586}
   - component: {fileID: 253233588}
   - component: {fileID: 253233587}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7957,7 +7984,7 @@ GameObject:
   - component: {fileID: 259456901}
   - component: {fileID: 259456907}
   - component: {fileID: 259456906}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.052_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8209,7 +8236,7 @@ GameObject:
   - component: {fileID: 262006706}
   - component: {fileID: 262006709}
   - component: {fileID: 262006708}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8703,7 +8730,7 @@ GameObject:
   - component: {fileID: 290967963}
   - component: {fileID: 290967962}
   - component: {fileID: 290967961}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8973,7 +9000,7 @@ GameObject:
   - component: {fileID: 307255173}
   - component: {fileID: 307255178}
   - component: {fileID: 307255177}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.621
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9297,7 +9324,7 @@ GameObject:
   - component: {fileID: 311331666}
   - component: {fileID: 311331672}
   - component: {fileID: 311331671}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.123
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9556,7 +9583,7 @@ GameObject:
   - component: {fileID: 312357702}
   - component: {fileID: 312357708}
   - component: {fileID: 312357707}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.123
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9886,7 +9913,7 @@ GameObject:
   - component: {fileID: 324479150}
   - component: {fileID: 324479149}
   - component: {fileID: 324479148}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.117
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9996,7 +10023,7 @@ GameObject:
   - component: {fileID: 324479683}
   - component: {fileID: 324479685}
   - component: {fileID: 324479684}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.573
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10709,7 +10736,7 @@ GameObject:
   - component: {fileID: 346326460}
   - component: {fileID: 346326466}
   - component: {fileID: 346326465}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: L_Cube.077
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10961,7 +10988,7 @@ GameObject:
   - component: {fileID: 347252387}
   - component: {fileID: 347252390}
   - component: {fileID: 347252389}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11072,6 +11099,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.5019608}
+--- !u!1 &350573113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3179812931507352509, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+  m_PrefabInstance: {fileID: 1339297245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &350573114
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350573113}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8068606839655832539, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
 --- !u!1 &352882689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 921391927218321214, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
@@ -11398,7 +11452,7 @@ GameObject:
   - component: {fileID: 365286110}
   - component: {fileID: 365286113}
   - component: {fileID: 365286112}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11479,7 +11533,7 @@ GameObject:
   - component: {fileID: 367838928}
   - component: {fileID: 367838934}
   - component: {fileID: 367838933}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11732,7 +11786,7 @@ GameObject:
   - component: {fileID: 380316301}
   - component: {fileID: 380316300}
   - component: {fileID: 380316298}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11896,7 +11950,7 @@ GameObject:
   - component: {fileID: 385345904}
   - component: {fileID: 385345910}
   - component: {fileID: 385345909}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.165
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12201,7 +12255,7 @@ GameObject:
   - component: {fileID: 392768036}
   - component: {fileID: 392768042}
   - component: {fileID: 392768041}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Drug.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12454,7 +12508,7 @@ GameObject:
   - component: {fileID: 396327222}
   - component: {fileID: 396327221}
   - component: {fileID: 396327220}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12582,7 +12636,7 @@ GameObject:
   - component: {fileID: 401006152}
   - component: {fileID: 401006158}
   - component: {fileID: 401006157}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.129
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15398,6 +15452,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1553256097086319983, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1207036512}
+    - targetCorrespondingSourceObject: {fileID: 6170694321010666003, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 173562258}
     - targetCorrespondingSourceObject: {fileID: 4539179787545074543, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 757152261}
@@ -15424,7 +15481,7 @@ PrefabInstance:
       addedObject: {fileID: 352882691}
     - targetCorrespondingSourceObject: {fileID: -2130101987629011439, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1016060296}
+      addedObject: {fileID: 447882575}
     - targetCorrespondingSourceObject: {fileID: -8142008379949392814, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 447882573}
@@ -15467,6 +15524,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8401576074945352160, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1802155958}
+    - targetCorrespondingSourceObject: {fileID: -9093448517230946311, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 604566999}
     - targetCorrespondingSourceObject: {fileID: 5838084356178755102, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1144512105}
@@ -15488,9 +15548,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1419886715644530374, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 287849801}
+    - targetCorrespondingSourceObject: {fileID: 9168698303127058727, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 754422802}
     - targetCorrespondingSourceObject: {fileID: 2148210218574364156, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 447882554}
+    - targetCorrespondingSourceObject: {fileID: -5215593567537748529, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1720284482}
     - targetCorrespondingSourceObject: {fileID: -8916894981307772778, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 878287867}
@@ -15654,6 +15720,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -2130101987629011439, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
   m_PrefabInstance: {fileID: 447882547}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &447882575
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447882574}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8716952615309824937, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
 --- !u!1 &447882582 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8153468022190502949, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
@@ -15839,7 +15927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 6.4, z: -8.47}
+  m_FollowOffset: {x: 0, y: 2.45, z: -6.47}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -15904,7 +15992,7 @@ GameObject:
   - component: {fileID: 450552896}
   - component: {fileID: 450552895}
   - component: {fileID: 450552894}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15997,7 +16085,7 @@ GameObject:
   - component: {fileID: 450902869}
   - component: {fileID: 450902868}
   - component: {fileID: 450902867}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16222,7 +16310,7 @@ GameObject:
   - component: {fileID: 453205821}
   - component: {fileID: 453205827}
   - component: {fileID: 453205826}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16598,7 +16686,7 @@ GameObject:
   - component: {fileID: 460054445}
   - component: {fileID: 460054444}
   - component: {fileID: 460054443}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16736,7 +16824,7 @@ GameObject:
   - component: {fileID: 462038776}
   - component: {fileID: 462038775}
   - component: {fileID: 462038774}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.084_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17014,7 +17102,7 @@ GameObject:
   - component: {fileID: 473273438}
   - component: {fileID: 473273441}
   - component: {fileID: 473273440}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17090,7 +17178,7 @@ GameObject:
   - component: {fileID: 474084337}
   - component: {fileID: 474084340}
   - component: {fileID: 474084339}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17171,7 +17259,7 @@ GameObject:
   - component: {fileID: 479761246}
   - component: {fileID: 479761252}
   - component: {fileID: 479761251}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.081
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17445,7 +17533,7 @@ GameObject:
   - component: {fileID: 488705217}
   - component: {fileID: 488705220}
   - component: {fileID: 488705219}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17523,7 +17611,7 @@ GameObject:
   - component: {fileID: 492802886}
   - component: {fileID: 492802885}
   - component: {fileID: 492802884}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.036
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17777,7 +17865,7 @@ GameObject:
   - component: {fileID: 509967253}
   - component: {fileID: 509967259}
   - component: {fileID: 509967258}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.211
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18102,7 +18190,7 @@ GameObject:
   - component: {fileID: 511584488}
   - component: {fileID: 511584487}
   - component: {fileID: 511584486}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18291,6 +18379,67 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1613298094143388507, guid: d7f0bd88bbce1454b8877cb6f5d1ee95, type: 3}
+--- !u!1001 &513766903
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -75.46003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -20.76928
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -26.443586
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211181333793232596, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_Name
+      value: Battery
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035890947518025028, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: sceneViewId
+      value: 175
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
 --- !u!1 &513946081
 GameObject:
   m_ObjectHideFlags: 0
@@ -18303,7 +18452,7 @@ GameObject:
   - component: {fileID: 513946085}
   - component: {fileID: 513946084}
   - component: {fileID: 513946083}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18401,7 +18550,7 @@ GameObject:
   - component: {fileID: 516812641}
   - component: {fileID: 516812647}
   - component: {fileID: 516812646}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Drug.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18820,7 +18969,7 @@ GameObject:
   - component: {fileID: 523200154}
   - component: {fileID: 523200153}
   - component: {fileID: 523200152}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Glass.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19001,7 +19150,7 @@ GameObject:
   - component: {fileID: 528613782}
   - component: {fileID: 528613788}
   - component: {fileID: 528613787}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.231
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19343,7 +19492,7 @@ GameObject:
   - component: {fileID: 536928571}
   - component: {fileID: 536928573}
   - component: {fileID: 536928572}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.003 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19600,7 +19749,7 @@ GameObject:
   - component: {fileID: 537671355}
   - component: {fileID: 537671361}
   - component: {fileID: 537671360}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.081
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19899,7 +20048,7 @@ GameObject:
   - component: {fileID: 538382435}
   - component: {fileID: 538382434}
   - component: {fileID: 538382433}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20103,7 +20252,7 @@ GameObject:
   - component: {fileID: 544955504}
   - component: {fileID: 544955503}
   - component: {fileID: 544955502}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Cabinet_Glass.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20555,7 +20704,7 @@ GameObject:
   - component: {fileID: 568096891}
   - component: {fileID: 568096897}
   - component: {fileID: 568096896}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.052_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20838,7 +20987,7 @@ GameObject:
   - component: {fileID: 577739983}
   - component: {fileID: 577739985}
   - component: {fileID: 577739984}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21088,7 +21237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 577851298}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: B2_Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21228,7 +21377,7 @@ GameObject:
   - component: {fileID: 578847300}
   - component: {fileID: 578847299}
   - component: {fileID: 578847297}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21322,7 +21471,7 @@ GameObject:
   - component: {fileID: 580499588}
   - component: {fileID: 580499587}
   - component: {fileID: 580499586}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21464,7 +21613,7 @@ GameObject:
   - component: {fileID: 584961796}
   - component: {fileID: 584961802}
   - component: {fileID: 584961801}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.1019 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21766,7 +21915,7 @@ GameObject:
   - component: {fileID: 592178497}
   - component: {fileID: 592178503}
   - component: {fileID: 592178502}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.115
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22018,7 +22167,7 @@ GameObject:
   - component: {fileID: 603360489}
   - component: {fileID: 603360492}
   - component: {fileID: 603360491}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22083,6 +22232,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &604566995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -9093448517230946311, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+  m_PrefabInstance: {fileID: 447882547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &604566999
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604566995}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.019999998, z: 0.019999994}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &605772767
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22116,7 +22291,7 @@ GameObject:
   - component: {fileID: 607958236}
   - component: {fileID: 607958235}
   - component: {fileID: 607958234}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RIghtW_DoorPivot (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22303,7 +22478,7 @@ GameObject:
   - component: {fileID: 619991024}
   - component: {fileID: 619991023}
   - component: {fileID: 619991021}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22397,7 +22572,7 @@ GameObject:
   - component: {fileID: 624480270}
   - component: {fileID: 624480269}
   - component: {fileID: 624480268}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22609,7 +22784,7 @@ GameObject:
   - component: {fileID: 625752911}
   - component: {fileID: 625752910}
   - component: {fileID: 625752909}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22832,7 +23007,7 @@ GameObject:
   - component: {fileID: 631966679}
   - component: {fileID: 631966685}
   - component: {fileID: 631966684}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.197
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23086,7 +23261,7 @@ GameObject:
   - component: {fileID: 632221749}
   - component: {fileID: 632221748}
   - component: {fileID: 632221747}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23179,7 +23354,7 @@ GameObject:
   - component: {fileID: 632506613}
   - component: {fileID: 632506612}
   - component: {fileID: 632506611}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23597,7 +23772,7 @@ GameObject:
   - component: {fileID: 642042868}
   - component: {fileID: 642042867}
   - component: {fileID: 642042866}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24229,7 +24404,7 @@ GameObject:
   - component: {fileID: 656878035}
   - component: {fileID: 656878034}
   - component: {fileID: 656878032}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24326,7 +24501,7 @@ GameObject:
   - component: {fileID: 657709471}
   - component: {fileID: 657709477}
   - component: {fileID: 657709476}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.242
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24581,7 +24756,7 @@ GameObject:
   - component: {fileID: 670974963}
   - component: {fileID: 670974962}
   - component: {fileID: 670974961}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24674,7 +24849,7 @@ GameObject:
   - component: {fileID: 674090923}
   - component: {fileID: 674090922}
   - component: {fileID: 674090921}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24755,6 +24930,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &675229709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6110197809457597231, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &675229710
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675229709}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3945776728871322418, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
 --- !u!65 &675461358
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24915,7 +25117,7 @@ GameObject:
   - component: {fileID: 688789792}
   - component: {fileID: 688789791}
   - component: {fileID: 688789790}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25242,7 +25444,7 @@ GameObject:
   - component: {fileID: 697946227}
   - component: {fileID: 697946233}
   - component: {fileID: 697946232}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25496,7 +25698,7 @@ GameObject:
   - component: {fileID: 704102378}
   - component: {fileID: 704102381}
   - component: {fileID: 704102380}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25622,7 +25824,7 @@ GameObject:
   - component: {fileID: 708436279}
   - component: {fileID: 708436285}
   - component: {fileID: 708436284}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.207
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25896,7 +26098,7 @@ GameObject:
   - component: {fileID: 718166969}
   - component: {fileID: 718166968}
   - component: {fileID: 718166967}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25989,7 +26191,7 @@ GameObject:
   - component: {fileID: 720687644}
   - component: {fileID: 720687643}
   - component: {fileID: 720687641}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26087,7 +26289,7 @@ GameObject:
   - component: {fileID: 721071867}
   - component: {fileID: 721071873}
   - component: {fileID: 721071872}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.115
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26428,7 +26630,7 @@ GameObject:
   - component: {fileID: 731027288}
   - component: {fileID: 731027290}
   - component: {fileID: 731027289}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.073
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26538,7 +26740,7 @@ GameObject:
   - component: {fileID: 741866223}
   - component: {fileID: 741866229}
   - component: {fileID: 741866228}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26779,6 +26981,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &754422798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9168698303127058727, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+  m_PrefabInstance: {fileID: 447882547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &754422802
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754422798}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.019999998, z: 0.019999996}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &757152251 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3514220960872266841, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
@@ -26939,7 +27167,7 @@ GameObject:
   - component: {fileID: 757326676}
   - component: {fileID: 757326682}
   - component: {fileID: 757326681}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27196,7 +27424,7 @@ GameObject:
   - component: {fileID: 757380226}
   - component: {fileID: 757380232}
   - component: {fileID: 757380231}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.207
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27482,6 +27710,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.5019608}
+--- !u!1 &758219878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1692762757647746152, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &758219882
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758219878}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.9142876, y: 7.6822658, z: 0.5610051}
+  m_Center: {x: 0.0005054473, y: -5.7136774, z: -0.00014787911}
 --- !u!1 &762104662
 GameObject:
   m_ObjectHideFlags: 0
@@ -27494,7 +27748,7 @@ GameObject:
   - component: {fileID: 762104666}
   - component: {fileID: 762104665}
   - component: {fileID: 762104664}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.034"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27690,7 +27944,7 @@ GameObject:
   - component: {fileID: 766295018}
   - component: {fileID: 766295017}
   - component: {fileID: 766295016}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27782,7 +28036,7 @@ GameObject:
   - component: {fileID: 769080052}
   - component: {fileID: 769080055}
   - component: {fileID: 769080054}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27863,7 +28117,7 @@ GameObject:
   - component: {fileID: 770799235}
   - component: {fileID: 770799241}
   - component: {fileID: 770799240}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.316
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28119,7 +28373,7 @@ GameObject:
   - component: {fileID: 776065930}
   - component: {fileID: 776065929}
   - component: {fileID: 776065928}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28216,7 +28470,7 @@ GameObject:
   - component: {fileID: 779757244}
   - component: {fileID: 779757250}
   - component: {fileID: 779757249}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.081
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28519,7 +28773,7 @@ GameObject:
   - component: {fileID: 782755699}
   - component: {fileID: 782755705}
   - component: {fileID: 782755704}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28799,7 +29053,7 @@ GameObject:
   - component: {fileID: 784293453}
   - component: {fileID: 784293452}
   - component: {fileID: 784293450}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28892,7 +29146,7 @@ GameObject:
   - component: {fileID: 785349117}
   - component: {fileID: 785349116}
   - component: {fileID: 785349114}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29008,7 +29262,7 @@ GameObject:
   - component: {fileID: 804109458}
   - component: {fileID: 804109459}
   - component: {fileID: 804109462}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29101,7 +29355,7 @@ GameObject:
   - component: {fileID: 804228255}
   - component: {fileID: 804228254}
   - component: {fileID: 804228253}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29224,7 +29478,7 @@ GameObject:
   - component: {fileID: 808137574}
   - component: {fileID: 808137580}
   - component: {fileID: 808137579}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.256
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29477,7 +29731,7 @@ GameObject:
   - component: {fileID: 812198964}
   - component: {fileID: 812198963}
   - component: {fileID: 812198962}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29570,7 +29824,7 @@ GameObject:
   - component: {fileID: 812373256}
   - component: {fileID: 812373255}
   - component: {fileID: 812373254}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29887,7 +30141,7 @@ GameObject:
   - component: {fileID: 862148019}
   - component: {fileID: 862148025}
   - component: {fileID: 862148024}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.242
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30231,7 +30485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 867900214}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: B2_WardrobeDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30331,7 +30585,7 @@ GameObject:
   - component: {fileID: 876309136}
   - component: {fileID: 876309142}
   - component: {fileID: 876309141}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30611,7 +30865,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &882732347
 Transform:
   m_ObjectHideFlags: 0
@@ -30747,7 +31001,7 @@ GameObject:
   - component: {fileID: 901626104}
   - component: {fileID: 901626110}
   - component: {fileID: 901626109}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Drug.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31004,7 +31258,7 @@ GameObject:
   - component: {fileID: 901781981}
   - component: {fileID: 901781987}
   - component: {fileID: 901781986}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.124
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31585,7 +31839,7 @@ GameObject:
   - component: {fileID: 923846733}
   - component: {fileID: 923846732}
   - component: {fileID: 923846731}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31867,7 +32121,7 @@ GameObject:
   - component: {fileID: 927582192}
   - component: {fileID: 927582198}
   - component: {fileID: 927582197}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.205
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32270,7 +32524,7 @@ GameObject:
   - component: {fileID: 937754082}
   - component: {fileID: 937754085}
   - component: {fileID: 937754084}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32347,7 +32601,7 @@ GameObject:
   - component: {fileID: 941565168}
   - component: {fileID: 941565167}
   - component: {fileID: 941565166}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32605,7 +32859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 6.4, z: -8.47}
+  m_FollowOffset: {x: 0, y: 2.45, z: -6.47}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -32670,7 +32924,7 @@ GameObject:
   - component: {fileID: 946024335}
   - component: {fileID: 946024334}
   - component: {fileID: 946024333}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32767,7 +33021,7 @@ GameObject:
   - component: {fileID: 950506447}
   - component: {fileID: 950506449}
   - component: {fileID: 950506448}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.1168 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33009,6 +33263,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &957241130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1925863992982914852, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &957241134
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957241130}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.231228, y: 4.3455386, z: 2.0152829}
+  m_Center: {x: 0.1120739, y: 0, z: 0.0000004172325}
 --- !u!1 &962893425
 GameObject:
   m_ObjectHideFlags: 0
@@ -33025,7 +33305,7 @@ GameObject:
   - component: {fileID: 962893427}
   - component: {fileID: 962893433}
   - component: {fileID: 962893432}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33327,7 +33607,7 @@ GameObject:
   - component: {fileID: 971789308}
   - component: {fileID: 971789314}
   - component: {fileID: 971789313}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.187
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33585,7 +33865,7 @@ GameObject:
   - component: {fileID: 973331766}
   - component: {fileID: 973331772}
   - component: {fileID: 973331771}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.479
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33924,7 +34204,7 @@ GameObject:
   - component: {fileID: 988922313}
   - component: {fileID: 988922312}
   - component: {fileID: 988922311}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34227,7 +34507,7 @@ GameObject:
   - component: {fileID: 1010069729}
   - component: {fileID: 1010069728}
   - component: {fileID: 1010069727}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.015"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34337,7 +34617,7 @@ GameObject:
   - component: {fileID: 1011749620}
   - component: {fileID: 1011749626}
   - component: {fileID: 1011749625}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.081
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34595,7 +34875,7 @@ GameObject:
   - component: {fileID: 1012675402}
   - component: {fileID: 1012675408}
   - component: {fileID: 1012675407}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34836,27 +35116,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &1016060296
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 447882574}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.019668488, y: 0.04813972, z: 0.0010163989}
-  m_Center: {x: -0.00021413763, y: 0.01406986, z: -0.00050819945}
 --- !u!65 &1016075842
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34890,7 +35149,7 @@ GameObject:
   - component: {fileID: 1017392422}
   - component: {fileID: 1017392421}
   - component: {fileID: 1017392420}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RIghtW_DoorPivot (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34983,7 +35242,7 @@ GameObject:
   - component: {fileID: 1021507591}
   - component: {fileID: 1021507590}
   - component: {fileID: 1021507589}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35089,7 +35348,7 @@ GameObject:
   - component: {fileID: 1028929217}
   - component: {fileID: 1028929216}
   - component: {fileID: 1028929215}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.103_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35195,7 +35454,7 @@ GameObject:
   - component: {fileID: 1031463013}
   - component: {fileID: 1031463012}
   - component: {fileID: 1031463011}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35292,7 +35551,7 @@ GameObject:
   - component: {fileID: 1034650770}
   - component: {fileID: 1034650772}
   - component: {fileID: 1034650771}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.616
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35567,7 +35826,7 @@ GameObject:
   - component: {fileID: 1035768783}
   - component: {fileID: 1035768782}
   - component: {fileID: 1035768780}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35661,7 +35920,7 @@ GameObject:
   - component: {fileID: 1040344582}
   - component: {fileID: 1040344581}
   - component: {fileID: 1040344579}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35901,7 +36160,7 @@ GameObject:
   - component: {fileID: 1061814237}
   - component: {fileID: 1061814243}
   - component: {fileID: 1061814242}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36259,7 +36518,7 @@ GameObject:
   - component: {fileID: 1068320209}
   - component: {fileID: 1068320208}
   - component: {fileID: 1068320207}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36446,7 +36705,7 @@ GameObject:
   - component: {fileID: 1071852756}
   - component: {fileID: 1071852762}
   - component: {fileID: 1071852761}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.206
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36728,7 +36987,7 @@ GameObject:
   - component: {fileID: 1076683377}
   - component: {fileID: 1076683376}
   - component: {fileID: 1076683375}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36821,7 +37080,7 @@ GameObject:
   - component: {fileID: 1095402282}
   - component: {fileID: 1095402281}
   - component: {fileID: 1095402280}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36937,7 +37196,7 @@ GameObject:
   - component: {fileID: 1100579460}
   - component: {fileID: 1100579459}
   - component: {fileID: 1100579458}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.016"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37092,7 +37351,7 @@ GameObject:
   - component: {fileID: 1101318879}
   - component: {fileID: 1101318885}
   - component: {fileID: 1101318884}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.206
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37392,7 +37651,7 @@ GameObject:
   - component: {fileID: 1108031577}
   - component: {fileID: 1108031576}
   - component: {fileID: 1108031575}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Cabinet_Glass.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37502,7 +37761,7 @@ GameObject:
   - component: {fileID: 1108675170}
   - component: {fileID: 1108675176}
   - component: {fileID: 1108675175}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.463
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37762,7 +38021,7 @@ GameObject:
   - component: {fileID: 1112567912}
   - component: {fileID: 1112567918}
   - component: {fileID: 1112567917}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.700 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38016,7 +38275,7 @@ GameObject:
   - component: {fileID: 1116898473}
   - component: {fileID: 1116898472}
   - component: {fileID: 1116898471}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.035"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38110,6 +38369,60 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116898469}
   m_Mesh: {fileID: -2840748171930606399, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+--- !u!1 &1127930407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1606057615522382512, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1127930408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1127930409
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127930407}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6564495154122040233, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+--- !u!64 &1127930410
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127930408}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
 --- !u!1 &1132224746
 GameObject:
   m_ObjectHideFlags: 0
@@ -38167,7 +38480,7 @@ GameObject:
   - component: {fileID: 1140765637}
   - component: {fileID: 1140765636}
   - component: {fileID: 1140765635}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38260,7 +38573,7 @@ GameObject:
   - component: {fileID: 1141320173}
   - component: {fileID: 1141320172}
   - component: {fileID: 1141320171}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38366,7 +38679,7 @@ GameObject:
   - component: {fileID: 1143793179}
   - component: {fileID: 1143793178}
   - component: {fileID: 1143793177}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38481,7 +38794,7 @@ GameObject:
   - component: {fileID: 1145005591}
   - component: {fileID: 1145005590}
   - component: {fileID: 1145005589}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.039
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39041,7 +39354,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3221228927
+    m_Bits: 3221237119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -39303,14 +39616,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floors:
+  - floorSpawnArea: {fileID: 1688356962}
+    itemsToSpawn:
+    - itemPrefab: {fileID: 2604997554192321588, guid: 1727917e509c7d84299abf7882b223a2, type: 3}
+      spawnCount: 3
+    - itemPrefab: {fileID: 7818993243534298237, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 2184383618051390682, guid: 707d1258161f73a4d898f8f974b09097, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 6091927064140009035, guid: 68e22fe37ab6a6f4ca6e6195c258cf2e, type: 3}
+      spawnCount: 4
+    - itemPrefab: {fileID: 1972520488429642149, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 1333144890108428148, guid: 67ef7e521fe5ccc4f8045ecbf683d04f, type: 3}
+      spawnCount: 1
+  - floorSpawnArea: {fileID: 2138591652}
+    itemsToSpawn:
+    - itemPrefab: {fileID: 2604997554192321588, guid: 1727917e509c7d84299abf7882b223a2, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 7818993243534298237, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 2184383618051390682, guid: 707d1258161f73a4d898f8f974b09097, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 1191402134849681354, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 3950096876930700298, guid: 8fd596bb20e00284db89d985f2f79d17, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 2211181333793232596, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 5518456526652017941, guid: 339b405d3f994d04c888964b5b224263, type: 3}
+      spawnCount: 1
   - floorSpawnArea: {fileID: 141888522}
     itemsToSpawn:
-    - itemPrefab: {fileID: 5544210761962123603, guid: eed5b670284555549b31926e4c3e4c99, type: 3}
-      spawnCount: 30
-  - floorSpawnArea: {fileID: 2138591652}
-    itemsToSpawn: []
-  - floorSpawnArea: {fileID: 1688356962}
-    itemsToSpawn: []
+    - itemPrefab: {fileID: 2604997554192321588, guid: 1727917e509c7d84299abf7882b223a2, type: 3}
+      spawnCount: 4
+    - itemPrefab: {fileID: 7818993243534298237, guid: a8906a103edf4704392c84e0d75dcb62, type: 3}
+      spawnCount: 3
+    - itemPrefab: {fileID: 3682569839948213715, guid: 9c70f20d24d2a244eb8d177b9b81f64e, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 3668187310491177768, guid: d1e119a83fd4f5d4fb0af862a34e3309, type: 3}
+      spawnCount: 2
+    - itemPrefab: {fileID: 1191402134849681354, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 8370939266880707758, guid: 206f2d94cf0b43346bb99d1fed0e563e, type: 3}
+      spawnCount: 1
+    - itemPrefab: {fileID: 2211181333793232596, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      spawnCount: 1
 --- !u!1 &1180668960
 GameObject:
   m_ObjectHideFlags: 0
@@ -39327,7 +39686,7 @@ GameObject:
   - component: {fileID: 1180668962}
   - component: {fileID: 1180668968}
   - component: {fileID: 1180668967}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39586,7 +39945,7 @@ GameObject:
   - component: {fileID: 1182817233}
   - component: {fileID: 1182817239}
   - component: {fileID: 1182817238}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Drug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39884,7 +40243,7 @@ GameObject:
   - component: {fileID: 1190755960}
   - component: {fileID: 1190755959}
   - component: {fileID: 1190755958}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40112,7 +40471,7 @@ GameObject:
   - component: {fileID: 1197406229}
   - component: {fileID: 1197406228}
   - component: {fileID: 1197406226}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40254,7 +40613,7 @@ GameObject:
   - component: {fileID: 1204884485}
   - component: {fileID: 1204884484}
   - component: {fileID: 1204884483}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40374,7 +40733,7 @@ GameObject:
   - component: {fileID: 1208369524}
   - component: {fileID: 1208369523}
   - component: {fileID: 1208369522}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.042
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40480,7 +40839,7 @@ GameObject:
   - component: {fileID: 1209974677}
   - component: {fileID: 1209974676}
   - component: {fileID: 1209974675}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40594,7 +40953,7 @@ GameObject:
   - component: {fileID: 1217879940}
   - component: {fileID: 1217879939}
   - component: {fileID: 1217879937}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40777,7 +41136,7 @@ GameObject:
   - component: {fileID: 1221802047}
   - component: {fileID: 1221802046}
   - component: {fileID: 1221802045}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40870,7 +41229,7 @@ GameObject:
   - component: {fileID: 1223487332}
   - component: {fileID: 1223487331}
   - component: {fileID: 1223487330}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41197,7 +41556,7 @@ GameObject:
   - component: {fileID: 1229278990}
   - component: {fileID: 1229278989}
   - component: {fileID: 1229278988}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41294,7 +41653,7 @@ GameObject:
   - component: {fileID: 1233938790}
   - component: {fileID: 1233938796}
   - component: {fileID: 1233938795}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.197
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41618,7 +41977,7 @@ GameObject:
   - component: {fileID: 1245052773}
   - component: {fileID: 1245052777}
   - component: {fileID: 1245052776}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: L_Cube.077
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41897,7 +42256,7 @@ GameObject:
   - component: {fileID: 1251264588}
   - component: {fileID: 1251264594}
   - component: {fileID: 1251264593}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.030
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42221,7 +42580,7 @@ GameObject:
   - component: {fileID: 1257219741}
   - component: {fileID: 1257219747}
   - component: {fileID: 1257219746}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: R_Cube.075
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42518,7 +42877,7 @@ GameObject:
   - component: {fileID: 1266501709}
   - component: {fileID: 1266501712}
   - component: {fileID: 1266501711}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42666,7 +43025,7 @@ GameObject:
   - component: {fileID: 1273529545}
   - component: {fileID: 1273529551}
   - component: {fileID: 1273529550}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42918,7 +43277,7 @@ GameObject:
   - component: {fileID: 1282078692}
   - component: {fileID: 1282078695}
   - component: {fileID: 1282078694}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43040,7 +43399,7 @@ GameObject:
   - component: {fileID: 1282879670}
   - component: {fileID: 1282879673}
   - component: {fileID: 1282879672}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43139,7 +43498,7 @@ GameObject:
   - component: {fileID: 1288158853}
   - component: {fileID: 1288158852}
   - component: {fileID: 1288158851}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43232,7 +43591,7 @@ GameObject:
   - component: {fileID: 1293024902}
   - component: {fileID: 1293024901}
   - component: {fileID: 1293024900}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43603,7 +43962,7 @@ GameObject:
   - component: {fileID: 1303071235}
   - component: {fileID: 1303071234}
   - component: {fileID: 1303071233}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43696,7 +44055,7 @@ GameObject:
   - component: {fileID: 1303132291}
   - component: {fileID: 1303132290}
   - component: {fileID: 1303132289}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43838,7 +44197,7 @@ GameObject:
   - component: {fileID: 1306029320}
   - component: {fileID: 1306029326}
   - component: {fileID: 1306029325}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44093,7 +44452,7 @@ GameObject:
   - component: {fileID: 1307374922}
   - component: {fileID: 1307374921}
   - component: {fileID: 1307374920}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44231,7 +44590,7 @@ GameObject:
   - component: {fileID: 1311051589}
   - component: {fileID: 1311051588}
   - component: {fileID: 1311051587}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44359,7 +44718,7 @@ GameObject:
   - component: {fileID: 1321065243}
   - component: {fileID: 1321065242}
   - component: {fileID: 1321065241}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44502,7 +44861,7 @@ GameObject:
   - component: {fileID: 1329086160}
   - component: {fileID: 1329086166}
   - component: {fileID: 1329086165}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46595,6 +46954,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1138710469013453431, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 922583576}
+    - targetCorrespondingSourceObject: {fileID: 3179812931507352509, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 350573114}
     - targetCorrespondingSourceObject: {fileID: -7637613387807306621, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1859227911}
@@ -46745,7 +47107,7 @@ GameObject:
   - component: {fileID: 1344140354}
   - component: {fileID: 1344140353}
   - component: {fileID: 1344140352}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46880,7 +47242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349889364}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: B3_Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47347,7 +47709,7 @@ GameObject:
   - component: {fileID: 1357238875}
   - component: {fileID: 1357238874}
   - component: {fileID: 1357238873}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Metal11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47543,7 +47905,7 @@ GameObject:
   - component: {fileID: 1363011079}
   - component: {fileID: 1363011078}
   - component: {fileID: 1363011077}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48188,7 +48550,7 @@ GameObject:
   - component: {fileID: 1383588067}
   - component: {fileID: 1383588066}
   - component: {fileID: 1383588065}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.101_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48343,7 +48705,7 @@ GameObject:
   - component: {fileID: 1384534907}
   - component: {fileID: 1384534913}
   - component: {fileID: 1384534912}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.419
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48641,7 +49003,7 @@ GameObject:
   - component: {fileID: 1394192778}
   - component: {fileID: 1394192777}
   - component: {fileID: 1394192776}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.019"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48751,7 +49113,7 @@ GameObject:
   - component: {fileID: 1394370851}
   - component: {fileID: 1394370857}
   - component: {fileID: 1394370856}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.124
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49005,7 +49367,7 @@ GameObject:
   - component: {fileID: 1398465730}
   - component: {fileID: 1398465732}
   - component: {fileID: 1398465731}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC190\uC7A1\uC774 2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49253,7 +49615,7 @@ GameObject:
   - component: {fileID: 1400620456}
   - component: {fileID: 1400620460}
   - component: {fileID: 1400620459}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49953,7 +50315,7 @@ GameObject:
   - component: {fileID: 1441538329}
   - component: {fileID: 1441538331}
   - component: {fileID: 1441538330}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.935 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50251,7 +50613,7 @@ GameObject:
   - component: {fileID: 1443497715}
   - component: {fileID: 1443497718}
   - component: {fileID: 1443497717}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50634,7 +50996,7 @@ GameObject:
   - component: {fileID: 1456731148}
   - component: {fileID: 1456731147}
   - component: {fileID: 1456731146}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50814,7 +51176,7 @@ GameObject:
   - component: {fileID: 1460006839}
   - component: {fileID: 1460006845}
   - component: {fileID: 1460006844}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.205
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51094,7 +51456,7 @@ GameObject:
   - component: {fileID: 1462839369}
   - component: {fileID: 1462839375}
   - component: {fileID: 1462839374}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.205
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51397,7 +51759,7 @@ GameObject:
   - component: {fileID: 1482291416}
   - component: {fileID: 1482291422}
   - component: {fileID: 1482291421}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.114
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51651,7 +52013,7 @@ GameObject:
   - component: {fileID: 1483473781}
   - component: {fileID: 1483473783}
   - component: {fileID: 1483473782}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51773,7 +52135,7 @@ GameObject:
   - component: {fileID: 1491030209}
   - component: {fileID: 1491030208}
   - component: {fileID: 1491030207}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51993,7 +52355,7 @@ GameObject:
   - component: {fileID: 1496166164}
   - component: {fileID: 1496166163}
   - component: {fileID: 1496166162}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.100_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52283,7 +52645,7 @@ GameObject:
   - component: {fileID: 1501517935}
   - component: {fileID: 1501517941}
   - component: {fileID: 1501517940}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.256
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52585,7 +52947,7 @@ GameObject:
   - component: {fileID: 1505277352}
   - component: {fileID: 1505277354}
   - component: {fileID: 1505277353}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC624\uB978\uCABD.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53002,7 +53364,7 @@ GameObject:
   - component: {fileID: 1510117159}
   - component: {fileID: 1510117158}
   - component: {fileID: 1510117157}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53422,7 +53784,7 @@ GameObject:
   - component: {fileID: 1516754102}
   - component: {fileID: 1516754108}
   - component: {fileID: 1516754107}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.115
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53786,7 +54148,7 @@ GameObject:
   - component: {fileID: 1524984966}
   - component: {fileID: 1524984969}
   - component: {fileID: 1524984968}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53957,7 +54319,7 @@ GameObject:
   - component: {fileID: 1539478530}
   - component: {fileID: 1539478536}
   - component: {fileID: 1539478535}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.187
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54215,7 +54577,7 @@ GameObject:
   - component: {fileID: 1547472160}
   - component: {fileID: 1547472166}
   - component: {fileID: 1547472165}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.197
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54565,7 +54927,7 @@ GameObject:
   - component: {fileID: 1564924964}
   - component: {fileID: 1564924963}
   - component: {fileID: 1564924961}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54662,7 +55024,7 @@ GameObject:
   - component: {fileID: 1567756151}
   - component: {fileID: 1567756157}
   - component: {fileID: 1567756156}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.206
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54960,7 +55322,7 @@ GameObject:
   - component: {fileID: 1575018411}
   - component: {fileID: 1575018410}
   - component: {fileID: 1575018409}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55120,7 +55482,7 @@ GameObject:
   - component: {fileID: 1595114879}
   - component: {fileID: 1595114878}
   - component: {fileID: 1595114877}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.083
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55248,7 +55610,7 @@ GameObject:
   - component: {fileID: 1597089131}
   - component: {fileID: 1597089130}
   - component: {fileID: 1597089129}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55591,7 +55953,7 @@ GameObject:
   - component: {fileID: 1625801801}
   - component: {fileID: 1625801800}
   - component: {fileID: 1625801799}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55819,7 +56181,7 @@ GameObject:
   - component: {fileID: 1635847871}
   - component: {fileID: 1635847870}
   - component: {fileID: 1635847869}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC190\uC7A1\uC774 1.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55914,6 +56276,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635847867}
   m_Mesh: {fileID: 8712928764756656577, guid: d7f0bd88bbce1454b8877cb6f5d1ee95, type: 3}
+--- !u!1 &1638559499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5079296455909489508, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1638559503
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638559499}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4516757559518193442, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
 --- !u!1 &1639729866
 GameObject:
   m_ObjectHideFlags: 0
@@ -55975,7 +56364,7 @@ GameObject:
   - component: {fileID: 1651170293}
   - component: {fileID: 1651170299}
   - component: {fileID: 1651170298}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.161
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56257,7 +56646,7 @@ GameObject:
   - component: {fileID: 1656622007}
   - component: {fileID: 1656622006}
   - component: {fileID: 1656622005}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC190\uC7A1\uC774 2.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56393,7 +56782,7 @@ GameObject:
   - component: {fileID: 1657917247}
   - component: {fileID: 1657917253}
   - component: {fileID: 1657917252}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Circle.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56647,7 +57036,7 @@ GameObject:
   - component: {fileID: 1660548015}
   - component: {fileID: 1660548014}
   - component: {fileID: 1660548013}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56830,7 +57219,7 @@ GameObject:
   - component: {fileID: 1665513252}
   - component: {fileID: 1665513254}
   - component: {fileID: 1665513253}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57304,7 +57693,7 @@ GameObject:
   - component: {fileID: 1677979068}
   - component: {fileID: 1677979067}
   - component: {fileID: 1677979066}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57581,7 +57970,7 @@ GameObject:
   - component: {fileID: 1688970333}
   - component: {fileID: 1688970339}
   - component: {fileID: 1688970338}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uACC4\uB2E8\uBB38"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57925,7 +58314,7 @@ GameObject:
   - component: {fileID: 1711177002}
   - component: {fileID: 1711177008}
   - component: {fileID: 1711177007}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.231
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58180,7 +58569,7 @@ GameObject:
   - component: {fileID: 1712689752}
   - component: {fileID: 1712689751}
   - component: {fileID: 1712689750}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58377,7 +58766,7 @@ GameObject:
   - component: {fileID: 1715898314}
   - component: {fileID: 1715898317}
   - component: {fileID: 1715898316}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58509,6 +58898,32 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8823595, y: 208.6921, z: 2.1163304}
   m_Center: {x: 0.09192255, y: 62.71856, z: 0.011088489}
+--- !u!1 &1720284478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5215593567537748529, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+  m_PrefabInstance: {fileID: 447882547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1720284482
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720284478}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.022005916, y: 0.019999996, z: 0.019999996}
+  m_Center: {x: -0.0010029585, y: 0, z: 0}
 --- !u!1 &1722671366
 GameObject:
   m_ObjectHideFlags: 0
@@ -58525,7 +58940,7 @@ GameObject:
   - component: {fileID: 1722671372}
   - component: {fileID: 1722671374}
   - component: {fileID: 1722671373}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.603
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59046,7 +59461,7 @@ GameObject:
   - component: {fileID: 1739488997}
   - component: {fileID: 1739489000}
   - component: {fileID: 1739488999}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59127,7 +59542,7 @@ GameObject:
   - component: {fileID: 1747848029}
   - component: {fileID: 1747848035}
   - component: {fileID: 1747848034}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.123
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59382,7 +59797,7 @@ GameObject:
   - component: {fileID: 1752233932}
   - component: {fileID: 1752233931}
   - component: {fileID: 1752233930}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59611,7 +60026,7 @@ GameObject:
   - component: {fileID: 1768208793}
   - component: {fileID: 1768208792}
   - component: {fileID: 1768208791}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59704,7 +60119,7 @@ GameObject:
   - component: {fileID: 1769372803}
   - component: {fileID: 1769372802}
   - component: {fileID: 1769372801}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59797,7 +60212,7 @@ GameObject:
   - component: {fileID: 1769601068}
   - component: {fileID: 1769601067}
   - component: {fileID: 1769601066}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59894,7 +60309,7 @@ GameObject:
   - component: {fileID: 1771776660}
   - component: {fileID: 1771776666}
   - component: {fileID: 1771776665}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Circle.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60238,7 +60653,7 @@ GameObject:
   - component: {fileID: 1775388845}
   - component: {fileID: 1775388844}
   - component: {fileID: 1775388846}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Circle.002 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60348,7 +60763,7 @@ GameObject:
   - component: {fileID: 1775758417}
   - component: {fileID: 1775758423}
   - component: {fileID: 1775758422}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.197
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60855,7 +61270,7 @@ GameObject:
   - component: {fileID: 1796598176}
   - component: {fileID: 1796598175}
   - component: {fileID: 1796598174}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61087,7 +61502,7 @@ GameObject:
   - component: {fileID: 1807821026}
   - component: {fileID: 1807821025}
   - component: {fileID: 1807821024}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.016"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61197,7 +61612,7 @@ GameObject:
   - component: {fileID: 1814208521}
   - component: {fileID: 1814208527}
   - component: {fileID: 1814208526}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.123
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61562,7 +61977,7 @@ GameObject:
   - component: {fileID: 1819045932}
   - component: {fileID: 1819045934}
   - component: {fileID: 1819045933}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.609
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64785,6 +65200,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7490718487048311144, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2146202767}
+    - targetCorrespondingSourceObject: {fileID: -6110197809457597231, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 675229710}
+    - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1127930410}
     - targetCorrespondingSourceObject: {fileID: -1707899444462692360, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1571395368}
@@ -64815,12 +65236,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 769409822697918629, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1614952318}
+    - targetCorrespondingSourceObject: {fileID: -1606057615522382512, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1127930409}
     - targetCorrespondingSourceObject: {fileID: 1833801774482467050, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 233977327}
     - targetCorrespondingSourceObject: {fileID: 6077213379871510026, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 60079015}
+    - targetCorrespondingSourceObject: {fileID: -5079296455909489508, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1638559503}
     - targetCorrespondingSourceObject: {fileID: -8283599219390182592, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2138134007}
@@ -64917,6 +65344,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1176777826139987221, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 730242403}
+    - targetCorrespondingSourceObject: {fileID: -1759213945524355063, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1938414312}
+    - targetCorrespondingSourceObject: {fileID: 1692762757647746152, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 758219882}
     - targetCorrespondingSourceObject: {fileID: 2841148952208171216, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2016179322}
@@ -64953,6 +65386,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -185056920243860804, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1556693188}
+    - targetCorrespondingSourceObject: {fileID: 1925863992982914852, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 957241134}
     - targetCorrespondingSourceObject: {fileID: 8904288171382728877, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 605772767}
@@ -65273,7 +65709,7 @@ GameObject:
   - component: {fileID: 1828394161}
   - component: {fileID: 1828394160}
   - component: {fileID: 1828394158}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65504,7 +65940,7 @@ GameObject:
   - component: {fileID: 1839919399}
   - component: {fileID: 1839919405}
   - component: {fileID: 1839919404}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.187
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66020,7 +66456,7 @@ GameObject:
   - component: {fileID: 1844627621}
   - component: {fileID: 1844627620}
   - component: {fileID: 1844627619}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66248,7 +66684,7 @@ GameObject:
   - component: {fileID: 1853164660}
   - component: {fileID: 1853164659}
   - component: {fileID: 1853164658}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Circle.087
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66645,7 +67081,7 @@ GameObject:
   - component: {fileID: 1858439566}
   - component: {fileID: 1858439572}
   - component: {fileID: 1858439571}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.052_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67050,7 +67486,7 @@ GameObject:
   - component: {fileID: 1871960082}
   - component: {fileID: 1871960081}
   - component: {fileID: 1871960080}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.020"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67156,7 +67592,7 @@ GameObject:
   - component: {fileID: 1872874973}
   - component: {fileID: 1872874972}
   - component: {fileID: 1872874971}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67249,7 +67685,7 @@ GameObject:
   - component: {fileID: 1873077840}
   - component: {fileID: 1873077839}
   - component: {fileID: 1873077838}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67373,7 +67809,7 @@ GameObject:
   - component: {fileID: 1878958040}
   - component: {fileID: 1878958046}
   - component: {fileID: 1878958045}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Drug.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67630,7 +68066,7 @@ GameObject:
   - component: {fileID: 1880817668}
   - component: {fileID: 1880817674}
   - component: {fileID: 1880817673}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.114
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67885,7 +68321,7 @@ GameObject:
   - component: {fileID: 1885476523}
   - component: {fileID: 1885476522}
   - component: {fileID: 1885476521}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.105_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68036,7 +68472,7 @@ GameObject:
   - component: {fileID: 1895008128}
   - component: {fileID: 1895008127}
   - component: {fileID: 1895008126}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68164,6 +68600,67 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.019999998, y: 0.021203343, z: 0.019999998}
   m_Center: {x: 0, y: 0.0006016743, z: 0}
+--- !u!1001 &1899065830
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1972520488429642149, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_Name
+      value: Propeller
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -73.39865
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -20.642792
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -24.59786
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975834058076447118, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102037006356783195, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
+      propertyPath: sceneViewId
+      value: 177
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
 --- !u!1 &1900038279 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2318993342875886194, guid: d7f0bd88bbce1454b8877cb6f5d1ee95, type: 3}
@@ -68252,7 +68749,7 @@ GameObject:
   - component: {fileID: 1908175704}
   - component: {fileID: 1908175710}
   - component: {fileID: 1908175709}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.129
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68505,7 +69002,7 @@ GameObject:
   - component: {fileID: 1909091381}
   - component: {fileID: 1909091380}
   - component: {fileID: 1909091379}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68674,7 +69171,7 @@ GameObject:
   - component: {fileID: 1914297701}
   - component: {fileID: 1914297703}
   - component: {fileID: 1914297702}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Circle.060 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69038,6 +69535,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916961763}
   m_Mesh: {fileID: -5053925668127403250, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+--- !u!1001 &1919797202
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -76.26447
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -20.769281
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -26.426346
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577492532509019246, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211181333793232596, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: m_Name
+      value: Battery (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035890947518025028, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
+      propertyPath: sceneViewId
+      value: 176
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
 --- !u!1 &1920130995 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1558721567721526513, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
@@ -69122,7 +69680,7 @@ GameObject:
   - component: {fileID: 1929119363}
   - component: {fileID: 1929119362}
   - component: {fileID: 1929119360}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69216,7 +69774,7 @@ GameObject:
   - component: {fileID: 1934107755}
   - component: {fileID: 1934107754}
   - component: {fileID: 1934107753}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69309,7 +69867,7 @@ GameObject:
   - component: {fileID: 1936134611}
   - component: {fileID: 1936134610}
   - component: {fileID: 1936134609}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69401,7 +69959,7 @@ GameObject:
   - component: {fileID: 1936749228}
   - component: {fileID: 1936749231}
   - component: {fileID: 1936749230}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69512,6 +70070,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.5019608}
+--- !u!1 &1938414308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1759213945524355063, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1938414312
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938414308}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.7363214, y: 7.682266, z: 2.3916476}
+  m_Center: {x: 0.12003744, y: -10.216585, z: 0.050102256}
 --- !u!1 &1939274000
 GameObject:
   m_ObjectHideFlags: 0
@@ -69524,7 +70108,7 @@ GameObject:
   - component: {fileID: 1939274004}
   - component: {fileID: 1939274003}
   - component: {fileID: 1939274002}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Cabinet_Glass.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69630,7 +70214,7 @@ GameObject:
   - component: {fileID: 1940046851}
   - component: {fileID: 1940046850}
   - component: {fileID: 1940046849}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.100_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69867,7 +70451,7 @@ GameObject:
   - component: {fileID: 1953071221}
   - component: {fileID: 1953071220}
   - component: {fileID: 1953071219}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.118_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69973,7 +70557,7 @@ GameObject:
   - component: {fileID: 1954858665}
   - component: {fileID: 1954858664}
   - component: {fileID: 1954858663}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70070,7 +70654,7 @@ GameObject:
   - component: {fileID: 1955935340}
   - component: {fileID: 1955935346}
   - component: {fileID: 1955935345}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Drug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70323,7 +70907,7 @@ GameObject:
   - component: {fileID: 1956294652}
   - component: {fileID: 1956294651}
   - component: {fileID: 1956294650}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RightW_DoorPivot (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70420,7 +71004,7 @@ GameObject:
   - component: {fileID: 1957711512}
   - component: {fileID: 1957711518}
   - component: {fileID: 1957711517}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.044
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70797,7 +71381,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
-    m_InvertInput: 1
+    m_InvertInput: 0
     m_MinValue: 0
     m_MaxValue: 1
     m_Wrap: 0
@@ -70844,12 +71428,12 @@ MonoBehaviour:
   m_BindingMode: 0
   m_SplineCurvature: 0
   m_Orbits:
-  - m_Height: 3.7
-    m_Radius: 8.6
-  - m_Height: 3.23
-    m_Radius: 8.53
-  - m_Height: 6.4
-    m_Radius: 8.47
+  - m_Height: 2.9
+    m_Radius: 6.6
+  - m_Height: 2.61
+    m_Radius: 6.53
+  - m_Height: 2.45
+    m_Radius: 6.47
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
   - {fileID: 1383304180}
@@ -70885,7 +71469,7 @@ GameObject:
   - component: {fileID: 1976748157}
   - component: {fileID: 1976748156}
   - component: {fileID: 1976748155}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: RIghtW_DoorPivot (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71020,7 +71604,7 @@ GameObject:
   - component: {fileID: 1994234246}
   - component: {fileID: 1994234245}
   - component: {fileID: 1994234244}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.074
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71130,7 +71714,7 @@ GameObject:
   - component: {fileID: 1995581968}
   - component: {fileID: 1995581974}
   - component: {fileID: 1995581973}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71466,7 +72050,7 @@ GameObject:
   - component: {fileID: 2004016868}
   - component: {fileID: 2004016867}
   - component: {fileID: 2004016865}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71609,7 +72193,7 @@ GameObject:
   - component: {fileID: 2009588605}
   - component: {fileID: 2009588611}
   - component: {fileID: 2009588610}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.652 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71888,7 +72472,7 @@ GameObject:
   - component: {fileID: 2021157060}
   - component: {fileID: 2021157062}
   - component: {fileID: 2021157061}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC624\uB978\uCABD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72314,7 +72898,7 @@ GameObject:
   - component: {fileID: 2036125315}
   - component: {fileID: 2036125314}
   - component: {fileID: 2036125313}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC190\uC7A1\uC774 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72425,7 +73009,7 @@ GameObject:
   - component: {fileID: 2040296109}
   - component: {fileID: 2040296115}
   - component: {fileID: 2040296114}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.049_\uBA54\uD0C82"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72682,7 +73266,7 @@ GameObject:
   - component: {fileID: 2044349040}
   - component: {fileID: 2044349042}
   - component: {fileID: 2044349041}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC67C\uCABD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72956,7 +73540,7 @@ GameObject:
   - component: {fileID: 2045996475}
   - component: {fileID: 2045996474}
   - component: {fileID: 2045996473}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.018"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73062,7 +73646,7 @@ GameObject:
   - component: {fileID: 2052419918}
   - component: {fileID: 2052419917}
   - component: {fileID: 2052419916}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73332,7 +73916,7 @@ GameObject:
   - component: {fileID: 2063165790}
   - component: {fileID: 2063165789}
   - component: {fileID: 2063165788}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.104_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73438,7 +74022,7 @@ GameObject:
   - component: {fileID: 2067218392}
   - component: {fileID: 2067218391}
   - component: {fileID: 2067218390}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cabinet_Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73810,7 +74394,7 @@ GameObject:
   - component: {fileID: 2077763593}
   - component: {fileID: 2077763592}
   - component: {fileID: 2077763591}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uC720\uB9AC.014"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73943,7 +74527,7 @@ GameObject:
   - component: {fileID: 2078642052}
   - component: {fileID: 2078642051}
   - component: {fileID: 2078642050}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: LeftW_DoorPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74040,7 +74624,7 @@ GameObject:
   - component: {fileID: 2087011621}
   - component: {fileID: 2087011627}
   - component: {fileID: 2087011626}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Door2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74318,7 +74902,7 @@ GameObject:
   - component: {fileID: 2091025243}
   - component: {fileID: 2091025249}
   - component: {fileID: 2091025248}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.129
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74575,7 +75159,7 @@ GameObject:
   - component: {fileID: 2091043922}
   - component: {fileID: 2091043924}
   - component: {fileID: 2091043923}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.584
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74829,7 +75413,7 @@ GameObject:
   - component: {fileID: 2091196578}
   - component: {fileID: 2091196577}
   - component: {fileID: 2091196576}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74926,7 +75510,7 @@ GameObject:
   - component: {fileID: 2093640876}
   - component: {fileID: 2093640882}
   - component: {fileID: 2093640881}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.165
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75227,7 +75811,7 @@ GameObject:
   - component: {fileID: 2105579033}
   - component: {fileID: 2105579032}
   - component: {fileID: 2105579030}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: DoorPivot (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75324,7 +75908,7 @@ GameObject:
   - component: {fileID: 2106110227}
   - component: {fileID: 2106110229}
   - component: {fileID: 2106110228}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "\uCCA0\uC81C\uBB38 \uC67C\uCABD.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75701,7 +76285,7 @@ GameObject:
   - component: {fileID: 2118524822}
   - component: {fileID: 2118524821}
   - component: {fileID: 2118524820}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cylinder.043
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75874,12 +76458,12 @@ GameObject:
   - component: {fileID: 2121463402}
   - component: {fileID: 2121463401}
   - component: {fileID: 2121463400}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: "Cylinder.058_\uBA54\uD0C8"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2121463399
 Transform:
@@ -75984,7 +76568,7 @@ GameObject:
   - component: {fileID: 2122012824}
   - component: {fileID: 2122012830}
   - component: {fileID: 2122012829}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.124
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76392,7 +76976,7 @@ GameObject:
   - component: {fileID: 2129653119}
   - component: {fileID: 2129653125}
   - component: {fileID: 2129653124}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Cube.207
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77105,3 +77689,6 @@ SceneRoots:
   - {fileID: 1452304202}
   - {fileID: 557335189}
   - {fileID: 1841156461}
+  - {fileID: 513766903}
+  - {fileID: 1919797202}
+  - {fileID: 1899065830}

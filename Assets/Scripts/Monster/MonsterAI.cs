@@ -96,7 +96,7 @@ public class MonsterAI : MonoBehaviourPun
             enabled = false;
             return;
         }
-
+        InvokeRepeating("UpdateDetectedPlayers", 0f, 0.5f); // 0.5초마다 업데이트
         // 초기 상태 설정
         currentState = State.Idle;
         animator.SetTrigger("Idle"); // Idle 상태 애니메이션 트리거
@@ -148,7 +148,7 @@ public class MonsterAI : MonoBehaviourPun
         }
 
         // 플레이어 감지 상태 업데이트
-        UpdateDetectedPlayers();
+        //UpdateDetectedPlayers();
     }
 
     private void Idle()

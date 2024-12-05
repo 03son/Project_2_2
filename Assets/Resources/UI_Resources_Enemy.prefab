@@ -201,7 +201,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   moveSpeed: 3.5
-  chaseSpeed: 14
+  chaseSpeed: 7
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
   viewDistance: 30

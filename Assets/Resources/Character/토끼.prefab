@@ -254,6 +254,8 @@ MonoBehaviour:
   walkSound: {fileID: 1847627266896497341}
   walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
   walkVolume: 0.25
+  playerCrouch: {fileID: 0}
+  soundSource: {fileID: 0}
 --- !u!114 &4959644083652688089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +273,9 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
+  layerMask2:
+    serializedVersion: 2
+    m_Bits: 8192
   Crosshair: {fileID: 0}
 --- !u!114 &1018443850324410913
 MonoBehaviour:
@@ -561,6 +566,7 @@ MonoBehaviour:
   normalHeight: 0.1
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
+  isCrouching: 0
 --- !u!114 &2444431448682953168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1224,6 +1230,18 @@ PrefabInstance:
     - target: {fileID: 1011849663549762813, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011849663549762813, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6494481
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011849663549762813, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.76040596
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011849663549762813, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 1011849663549762813, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_ConstrainProportionsScale

@@ -142,12 +142,12 @@ public class PhotonItem : MonoBehaviourPun
                     {
                         itemForOthers.layer = LayerMask.NameToLayer("Default");
                     }
-                    itemForOthers.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                    itemForOthers.transform.localScale = new Vector3(0.04f, 0.04f, 0.04f);
 
                     // 3ÀÎÄª ¸ðµ¨¸µÀÇ ¿Þ¼Õ À§Ä¡¿¡ ÀåÂø
                     itemForOthers.transform.SetParent(__thirdPersonHand);
-                    itemForOthers.transform.localPosition = Vector3.zero;
-                    itemForOthers.transform.localRotation = Quaternion.identity;
+                    itemForOthers.transform.localPosition = new Vector3(-0.0045f,-0.0052f, -0.0127f );
+                    itemForOthers.transform.localRotation = new Quaternion(-200f,20,0,0);
                     itemForOthers.GetComponent<Rigidbody>().isKinematic = true;
                 }
                 else

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8688020833430985457}
   - component: {fileID: -4564196343743081543}
   m_Layer: 3
-  m_Name: Submarine Key
+  m_Name: BasementKey
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
