@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     [SerializeField] AudioSource walkSound;
     [SerializeField] AudioClip walkingClip;
-    [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
+    [SerializeField] [Range(0f, 1f)] float walkVolume = 0.5f;
 
 
     private Player_Equip playerEquip;
@@ -20,6 +20,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private Vector3 velocity;
     private float gravity = -9.81f;
     private float mouseX;
+    public PlayerCrouch playerCrouch;
+    public SoundSource soundSource;
 
     private Animator animator; // Animator �߰�
     private bool isWalking;
@@ -29,8 +31,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Start()
     {
-
+        playerCrouch = GetComponent<PlayerCrouch>();
         playerEquip = GetComponent<Player_Equip>();
+        soundSource = GetComponent<SoundSource>();
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             return;
@@ -60,15 +63,15 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        
+
         // Photon View Ȯ��
         playerState.GetState(out state);
 
         // Height �� ���� ����
-      /*  if (controller.height != 0.1f)
-        {
-            controller.height = 0.1f;
-        } */
+        /*  if (controller.height != 0.1f)
+          {
+              controller.height = 0.1f;
+          } */
         // Photon View Ȯ��
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
@@ -81,7 +84,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         // esc â�� �������� ���� ���� ������ ó��
         if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
-          //  HandleMouseLook();
+            //  HandleMouseLook();
             HandleMovement();
             UpdateWalkingAnimation();
         }
@@ -99,7 +102,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 2.5f))
         {
             float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
-       
+
 
             if (slopeAngle > 10) // 10도 이상이면 계단으로 판단
             {
@@ -126,13 +129,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
 
 
-  /*  private void HandleMouseLook()
-    {
-        if (cameraTransform == null) return;
+    /*  private void HandleMouseLook()
+      {
+          if (cameraTransform == null) return;
 
-        mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
-        transform.localRotation = Quaternion.Euler(0, mouseX, 0);
-    } */
+          mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
+          transform.localRotation = Quaternion.Euler(0, mouseX, 0);
+      } */
 
     private void HandleMovement()
     {
@@ -216,7 +219,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
     }
 
-    
+
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
@@ -233,9 +236,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         controller.Move((mov + velocity) * Time.deltaTime);
 
         playerState.GetState(out state);
-            // ���� �Ҹ� ó��
+        // ���� �Ҹ� ó��
         if ((moveX != 0 || moveZ != 0) && controller.isGrounded && state == PlayerState.playerState.Survival)
         {
+            
             if (!walkSound.isPlaying)
             {
                 walkSound.Play();
@@ -274,7 +278,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (animator != null)
         {
             animator.SetBool("isWalking", isWalking);
-           // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
+            // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
     }
 
