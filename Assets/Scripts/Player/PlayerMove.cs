@@ -66,7 +66,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         // Photon View Ȯ��
         playerState.GetState(out state);
       
-        Debug.Log("Current Player State: " + state);
+        //Debug.Log("Current Player State: " + state);
 
 
         // Height �� ���� ����
@@ -96,8 +96,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             {
                 PlayerVelocity(Vector3.zero, 0f, 0f);
                 velocity = Vector3.zero; // 중력 및 이동 초기화
-
-               
             }
 
         }

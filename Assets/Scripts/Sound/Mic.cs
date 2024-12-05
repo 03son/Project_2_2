@@ -158,8 +158,8 @@ public class Mic : MonoBehaviour
             float rms = recorder.LevelMeter.CurrentAvgAmp;
             currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6f�� �α� ����
 
-            Debug.Log(rms);
-            Debug.Log("Current Decibel Level: " + currentDb);
+            //Debug.Log(rms);
+            //Debug.Log("Current Decibel Level: " + currentDb);
 
             if (!PhotonNetwork.IsMasterClient)
             {

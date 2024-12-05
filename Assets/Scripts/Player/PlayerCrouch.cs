@@ -12,7 +12,6 @@ public class PlayerCrouch : MonoBehaviour
 
     private Vector3 normalCenter;        // �⺻ center �� ����
     private Vector3 crouchCenter;        // �ɾ��� �� center ��
-    public bool isCrouching;
     private float cameraYOffset;         // ī�޶��� �ʱ� Y ��ġ
 
     PlayerState playerState;

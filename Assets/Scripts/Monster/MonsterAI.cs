@@ -378,7 +378,7 @@ public class MonsterAI : MonoBehaviourPun
             Transform playerTransform = playerObject.transform;
             
             // 플레이어 감지 로직
-            if (CanSeePlayer(playerTransform) || CanHearVoiceSource(playerTransform))
+            if (CanSeePlayer(playerTransform)) //|| CanHearVoiceSource(playerTransform))
             {
                 if (!detectedPlayers.Contains(playerTransform))
                 {
@@ -390,10 +390,10 @@ public class MonsterAI : MonoBehaviourPun
         }
 
         // 오브젝트 사운드 감지 추가
-        if (CanHearSoundSource())
+        /*if (CanHearSoundSource())
         {
             currentState = State.Investigate;
-        }
+        }*/
 
         // 감지되지 않은 플레이어를 리스트에서 제거
         for (int i = detectedPlayers.Count - 1; i >= 0; i--)
@@ -434,7 +434,7 @@ public class MonsterAI : MonoBehaviourPun
         }
         return false;  // 시야 내에 없으면 false 반환
     }
-    private bool CanHearSoundSource()
+    /*private bool CanHearSoundSource()
     {
         // 모든 SoundSource 오브젝트를 검색 (태그나 관리 시스템을 활용 가능)
         soundSources = FindObjectsOfType<SoundSource>();
@@ -500,7 +500,7 @@ public class MonsterAI : MonoBehaviourPun
         }
         // 어느 플레이어의 소리도 감지되지 않으면 false 반환
         return false;
-    }
+    }*/
 
     bool CanSeePlayeState(Transform player)//플레이어 상태 체크
     {
@@ -518,18 +518,24 @@ public class MonsterAI : MonoBehaviourPun
 
     public void HandlePlayerSound(float decibel,Vector3 playerPosition)
     {
-        if (decibel > minDecibelToDetect)//임계값 설정
+        Debug.Log($"목소리 감지 - 데시벨: {decibel}, 위치: {playerPosition}");
+        SetInvestigatePoint(playerPosition); // 조사 지점 설정
+        currentState = State.Investigate;   // 조사 상태로 전환
+        /*if (decibel > minDecibelToDetect)//임계값 설정
         {
             CanHearVoiceSource(transform);
            // GetComponent<NavMeshAgent>().SetDestination(playerPosition);
-        }
+        }*/
     }
     public void HandleItemSound( Vector3 v_playerpos)
     {
-        if (HandleCanHearSoundSource(v_playerpos))
+        Debug.Log($"아이템 소리 감지 - 위치: {v_playerpos}");
+        SetInvestigatePoint(v_playerpos); // 조사 지점 설정
+        currentState = State.Investigate;   // 조사 상태로 전환
+        /*if (HandleCanHearSoundSource(v_playerpos))
         {
             GetComponent<NavMeshAgent>().SetDestination(v_playerpos);
-        }
+        }*/
     }
     bool HandleCanHearSoundSource(Vector3 v_soundpos)
     {

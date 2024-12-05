@@ -56,8 +56,8 @@ public class PlayerJump : MonoBehaviour
         bool grounded = IsGrounded();
 
         // 바닥 감지 상태 출력
-        Debug.Log("IsGrounded 상태: " + grounded);
-        Debug.Log("Velocity Y 상태: " + velocity.y);
+        //Debug.Log("IsGrounded 상태: " + grounded);
+        //Debug.Log("Velocity Y 상태: " + velocity.y);
 
         if (grounded)
         {
