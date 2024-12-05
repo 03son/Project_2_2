@@ -33,9 +33,6 @@ public class MonsterAI : MonoBehaviourPun
     private Mic micScript;                        // Mic 스크립트 참조
     public SoundSource[] soundSources;
     private Animator animator;                    // Animator 컴포넌트
-    private bool isUpdatingPlayers = false;
-    public GameObject[] playerList;
-    public SoundSource[] soundList;
 
     PlayerState playerState;                      //PlayerState
     PlayerState.playerState state;
@@ -51,15 +48,7 @@ public class MonsterAI : MonoBehaviourPun
     {
         MonsterStart();
     }
-    private void RefreshDetectedEntities()
-    {
-        if (isUpdatingPlayers) return; // 이미 갱신 중이라면 중복 실행 방지
-        isUpdatingPlayers = true;
-        playerList = GameObject.FindGameObjectsWithTag("Player");
-        soundList = FindObjectsOfType<SoundSource>();
 
-        isUpdatingPlayers = false;
-    }
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
@@ -73,7 +62,6 @@ public class MonsterAI : MonoBehaviourPun
     }
     public void MonsterStart()
     {
-        InvokeRepeating("RefreshDetectedEntities", 0f, 5f);
         // NavMeshAgent 초기화
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>(); // Animator 초기화
@@ -462,7 +450,7 @@ public class MonsterAI : MonoBehaviourPun
             {
                 // 데시벨 계산
                 float decibel = soundSource.GetDecibelAtDistance(transform.position);
-                // Debug.Log(decibel);
+              //  Debug.Log(decibel);
                 // 데시벨이 최소 감지 값 이상인지 확인
                 if (decibel >= minDecibelToDetect)
                 {
@@ -473,38 +461,44 @@ public class MonsterAI : MonoBehaviourPun
                 }
             }
         }
+
         return false; // 감지된 소리가 없음
     }
     private bool CanHearVoiceSource(Transform monster)
     {
         // 모든 플레이어 객체를 가져오기
-        GameObject[] playerObjects = playerList;//GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
         monster = this.gameObject.transform;
 
         // 각 플레이어에 대해 확인
         foreach (GameObject playerObject in playerObjects)
         {
-            float distance = Vector3.Distance(transform.position, playerObject.transform.position);
-
-            // 청각 범위 밖이면 계산 생략
-            if (distance > hearingRange)
-                continue;
-
+            //해당 플레이어가 생존 상태일 때
             playerObject.GetComponent<PlayerState>().GetState(out state);
             if (state == PlayerState.playerState.Survival)
             {
+                // 플레이어의 Mic 컴포넌트 찾기
                 micScript = playerObject.GetComponentInChildren<Mic>();
+
+                // Mic가 없으면 감지할 수 없음
                 if (micScript == null)
-                    continue;
-
-                float decibel = micScript.GetDecibelAtDistance(transform.position);
-
-                if (decibel >= minDecibelToDetect)
                 {
-                    return true;
+                    continue;
+                }
+
+                // Mic에서 실시간으로 계산된 데시벨 값 가져오기
+                float decibel = micScript.GetDecibelAtDistance(transform.position);
+                //Debug.Log("몬스터가 듣는 데시벨" + decibel);
+
+                // 데시벨이 일정 범위 이상이고, 청각 범위 내에 있으면 소리 감지
+                if (decibel >= minDecibelToDetect && Vector3.Distance(transform.position, playerObject.transform.position) <= hearingRange)
+                {
+                    Debug.Log("목소리 청취");
+                    return true;  // 소리가 감지됨
                 }
             }
         }
+        // 어느 플레이어의 소리도 감지되지 않으면 false 반환
         return false;
     }
 
@@ -524,7 +518,7 @@ public class MonsterAI : MonoBehaviourPun
 
     public void HandlePlayerSound(float decibel,Vector3 playerPosition)
     {
-        if (decibel > minDecibelToDetect)//임계값 설정
+        if (decibel > 50 )//임계값 설정
         { 
             GetComponent<NavMeshAgent>().SetDestination(playerPosition);
         }
@@ -539,22 +533,23 @@ public class MonsterAI : MonoBehaviourPun
     bool HandleCanHearSoundSource(Vector3 v_soundpos)
     {
         // 모든 SoundSource 오브젝트를 검색 (태그나 관리 시스템을 활용 가능)
-        soundSources = soundList;
+        soundSources = FindObjectsOfType<SoundSource>();
 
         foreach (SoundSource soundSource in soundSources)
         {
             // SoundSource 오브젝트의 위치
-            Vector3 sourcePosition = soundSource.transform.position;
+            Vector3 sourcePosition = v_soundpos;
 
             // 해당 SoundSource가 청각 범위 내에 있는지 확인
             float distance = Vector3.Distance(transform.position, sourcePosition);
+            Debug.Log("22222222222"+distance);
             if (distance <= hearingRange)
             {
                 // 데시벨 계산
-                float decibel = soundSource.GetDecibelAtDistance(transform.position);
-                // Debug.Log(decibel);
+                float decibel = soundSource.GetDecibelAtDistance(sourcePosition);
+                Debug.Log(decibel);
                 // 데시벨이 최소 감지 값 이상인지 확인
-                if (decibel >= minDecibelToDetect)
+                if (decibel >= 0)
                 {
                     Debug.Log($"사운드 소스 감지: {soundSource.gameObject.name}, 데시벨: {decibel}, 소리 범위: {soundSource.range}, 기본 데시벨: {soundSource.baseDecibel}");
                     SetInvestigatePoint(sourcePosition);
@@ -563,6 +558,7 @@ public class MonsterAI : MonoBehaviourPun
                 }
             }
         }
+
         return false; // 감지된 소리가 없음
     }
     private void OnDrawGizmosSelected()
