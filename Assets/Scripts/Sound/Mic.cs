@@ -198,7 +198,8 @@ public class Mic : MonoBehaviour
     //����ũ ���ú��� �����̴� UI�� ����
     public void SetMicDecibel_UI()
     {
-        if(recorder.TransmitEnabled) 
+        Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
+        if (recorder.TransmitEnabled) 
         {
             //currentDb�� ���� UI�� Value ������ �°� ���� �� ����
             Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
