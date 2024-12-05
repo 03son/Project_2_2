@@ -46,7 +46,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.9752359, g: 1, b: 0.759434, a: 1}
-  m_Intensity: 1000
+  m_Intensity: 15
   m_Range: 100
   m_SpotAngle: 50
   m_InnerSpotAngle: 50
@@ -132,4 +132,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
-  followSpeed: 1.5
+  followSpeed: 1
