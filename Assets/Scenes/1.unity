@@ -2531,6 +2531,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: -2521024512920920732, guid: 71e34ac832d9e154f8259b3b72bb8744, type: 3}
+      propertyPath: sceneViewId
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 2147448548842381719, guid: 71e34ac832d9e154f8259b3b72bb8744, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.85
@@ -5350,8 +5354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   submarineController: {fileID: 1632324313}
-  videoPlayer: {fileID: 1250406284}
-  escapeVideoClip: {fileID: 32900000, guid: e0dd5530a382bfa42ba74405b33d1bf0, type: 3}
+  playableDirector: {fileID: 0}
 --- !u!1 &1655188321
 GameObject:
   m_ObjectHideFlags: 0
@@ -7248,8 +7251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   submarineController: {fileID: 1632324313}
-  videoPlayer: {fileID: 1250406284}
-  escapeVideoClip: {fileID: 32900000, guid: f70ebaff5d38b4942b026129ef3bc239, type: 3}
+  playableDirector: {fileID: 0}
 --- !u!65 &2109100791
 BoxCollider:
   m_ObjectHideFlags: 0
