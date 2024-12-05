@@ -3296,10 +3296,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StunGun (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8862343439432692409, guid: fce0d0cf72ae9714daf9609f1e5836a0, type: 3}
-      propertyPath: sceneViewId
-      value: 26
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
