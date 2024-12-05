@@ -43,10 +43,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
             Debug.Log("잠수함 탈출 시퀀스 시작!");
             if (PhotonNetwork.IsConnected)
             {
-                if (pv.IsMine)
-                {
-                    pv.RPC("Rpc_SubmarineStart", RpcTarget.All);
-                }
+                pv.RPC("Rpc_SubmarineStart", RpcTarget.All);
             }
             else
             {

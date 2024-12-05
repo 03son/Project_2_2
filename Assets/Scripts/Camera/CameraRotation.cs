@@ -128,9 +128,7 @@ public class CameraRot : MonoBehaviour
 
     void Update()
     {
-
-        playerState.GetState(out state);
-        if (popup_escMenu || state == PlayerState.playerState.Die) // esc 메뉴 활성화 또는 죽었을 때
+        if (popup_escMenu || playerState.State == PlayerState.playerState.Die) // esc 메뉴 활성화 또는 죽었을 때
             return;
 
         if (isControlledExternally)
