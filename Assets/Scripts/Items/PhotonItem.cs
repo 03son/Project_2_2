@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static PlayerState;
 
-public class PhotonItem : MonoBehaviour
+public class PhotonItem : MonoBehaviourPun
 {
     Transform dropPos;
     Vector3 v_dropPos;
@@ -46,7 +46,7 @@ public class PhotonItem : MonoBehaviour
         }
     }
     [PunRPC]
-    public void PhotonThrowItem_(string itemName , Vector3 pos)
+    public void PhotonThrowItem_(string itemName, Vector3 pos)
     {
         GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", pos, Quaternion.identity);
         item.GetComponent<Rigidbody>().isKinematic = false;
@@ -91,7 +91,7 @@ public class PhotonItem : MonoBehaviour
         }
     }
     [PunRPC]
-    public void ThirdPersonPhotonDestroyItem(string itemName,int actorNumber)
+    public void ThirdPersonPhotonDestroyItem(string itemName, int actorNumber)
     {
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {

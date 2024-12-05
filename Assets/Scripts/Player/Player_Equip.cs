@@ -23,22 +23,22 @@ public class Player_Equip : MonoBehaviourPun
     PlayerState.playerState state;
 
     [Header("Throw Settings")]
-    public KeyCode throwKey = KeyCode.Mouse0;  // ´øÁö±â Å°
-    public float throwForce = 10f;  // ±âº» ´øÁö´Â Èû
-    public float maxForce = 20f;  // ÃÖ´ë ´øÁö´Â Èû
-    public LineRenderer trajectoryLine;  // ±ËÀû Ç¥½Ã LineRenderer
+    public KeyCode throwKey = KeyCode.Mouse0;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å°
+    public float throwForce = 10f;  // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public float maxForce = 20f;  // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public LineRenderer trajectoryLine;  // ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ LineRenderer
 
     private bool isCharging = false;
     private float chargeTime = 0f;
     private bool hasGlassCup = false;
     private GameObject currentGlassCup;
-    private Animator animator;           // Animator Ãß°¡
+    private Animator animator;           // Animator ï¿½ß°ï¿½
     private CharacterController characterController;
-    private bool isFlashlightOn = false; // ¼ÕÀüµî »óÅÂ¸¦ ÀúÀåÇÒ º¯¼ö
+    private bool isFlashlightOn = false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    [Header("3ÀÎÄª ¾ÆÀÌÅÛ À§Ä¡")]
-    public Transform thirdPersonHand; // 3ÀÎÄª ¾ÆÀÌÅÛ À§Ä¡
-    public GameObject itemForOthers; // 3ÀÎÄª Ä³¸¯ÅÍ°¡ µé°í ÀÖ´Â ¾ÆÀÌÅÛÀ» ÀúÀåÇÏ´Â º¯¼ö Ãß°¡
+    [Header("3ï¿½ï¿½Äª ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡")]
+    public Transform thirdPersonHand; // 3ï¿½ï¿½Äª ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    public GameObject itemForOthers; // 3ï¿½ï¿½Äª Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class Player_Equip : MonoBehaviourPun
     {
         pv = GetComponent<PhotonView>();
 
-        // PhotonView°¡ nullÀÎÁö Ã¼Å©
+        // PhotonViewï¿½ï¿½ nullï¿½ï¿½ï¿½ï¿½ Ã¼Å©
         if (pv == null)
         {
             Debug.LogError("PhotonView component not found.");
@@ -67,15 +67,15 @@ public class Player_Equip : MonoBehaviourPun
 
         if (trajectoryLine != null)
         {
-            trajectoryLine.enabled = false;  // ±ËÀû Ç¥½Ã ÃÊ±âÈ­
+            trajectoryLine.enabled = false;  // ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½Ê±ï¿½È­
         }
 
-        // Animator ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         animator = GetComponent<Animator>();
 
         if (animator == null)
         {
-            Debug.LogError("Animator ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¿¡ Animator°¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù.");
+            Debug.LogError("Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Animatorï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.");
         }
     }
 
@@ -88,22 +88,22 @@ public class Player_Equip : MonoBehaviourPun
         mouseWheelScroll();
         EquipFunction();
 
-        // ´øÁö´Â µ¿ÀÛ Ã³¸® (À¯¸®ÄÅ ÃæÀü ´øÁö±â)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
         if (isCharging)
         {
             ChargeThrow();
         }
 
-        // ´øÁö±â Á¾·á Ã³¸®
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
         if (Input.GetMouseButtonUp(0) && isCharging)
         {
             ReleaseThrow();
         }
-        if (isCharging && Input.GetMouseButtonDown(1)) // ¸¶¿ì½º ¿ìÅ¬¸¯ ½Ã
+        if (isCharging && Input.GetMouseButtonDown(1)) // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½ï¿½
         {
             CancelThrow();
         }
-        // ¾ÆÀÌÅÛ ÀåÂø »óÅÂ¿¡ µû¶ó ¾Ö´Ï¸ÞÀÌ¼Ç ÆÄ¶ó¹ÌÅÍ ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         bool isHoldingAnyItem = HasAnyEquippedItem();
         animator.SetBool("isHoldingItem", isHoldingAnyItem);
     }
@@ -121,7 +121,7 @@ public class Player_Equip : MonoBehaviourPun
             }
             else
             {
-                Debug.LogError($"'{slotName}'À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù. °èÃþ ±¸Á¶¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.");
+                Debug.LogError($"'{slotName}'ï¿½ï¿½(ï¿½ï¿½) Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½.");
             }
         }
     }
@@ -159,7 +159,7 @@ public class Player_Equip : MonoBehaviourPun
         if (Item != null)
             Destroy(Item);
 
-        // 1ÀÎÄª ¼Õ ¸ðµ¨¸µ¿¡ ÀåÂø (º»ÀÎÀÌ º¸´Â °Í)
+        // 1ï¿½ï¿½Äª ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
         Item = resoure.Instantiate($"Items/{item}");
         Item.layer = LayerMask.NameToLayer("Equip");
         Item.transform.SetParent(equipItem.transform);
@@ -167,7 +167,7 @@ public class Player_Equip : MonoBehaviourPun
         Item.transform.localRotation = Quaternion.identity;
         Item.GetComponent<Rigidbody>().isKinematic = true;
         SetLayerRecursively(Item, 7);
-        // 3ÀÎÄª ¸ðµ¨¸µ¿¡ ÀåÂø (´Ù¸¥ ÇÃ·¹ÀÌ¾î°¡ º¸´Â °Í)
+        // 3ï¿½ï¿½Äª ï¿½ðµ¨¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ù¸ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
         if (PhotonNetwork.IsConnected)
         {
             if (itemForOthers != null)
@@ -177,17 +177,17 @@ public class Player_Equip : MonoBehaviourPun
             }
             else
             {
-                Debug.LogWarning("thirdPersonHand°¡ nullÀÔ´Ï´Ù. 3ÀÎÄª ¾ÆÀÌÅÛÀ» ÀåÂøÇÒ À§Ä¡¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogWarning("thirdPersonHandï¿½ï¿½ nullï¿½Ô´Ï´ï¿½. 3ï¿½ï¿½Äª ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             }
         }
 
-        // À¯¸®ÄÅÀ» ÀåÂøÇÑ °æ¿ì ´øÁú ¼ö ÀÖµµ·Ï ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (item == "GlassCup")
         {
             hasGlassCup = true;
             currentGlassCup = Item;
         }
-    } 
+    }
     void numberKey()
     {
         foreach (KeyValuePair<KeyCode, System.Action> entry in keyCodeDic)
@@ -234,9 +234,9 @@ public class Player_Equip : MonoBehaviourPun
                 {
                     GetComponent<PhotonItem>().setPhotonEquipItem(inventory.slots[index - 1].item.name);
                 }
-                inventory.EquipItem(Item); // ÀåÂøµÈ ¾ÆÀÌÅÛÀ» Inventory¿¡µµ ¹Ý¿µ
+                inventory.EquipItem(Item); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Inventoryï¿½ï¿½ï¿½ï¿½ ï¿½Ý¿ï¿½
 
-                //¾ÆÀÌÅÛ ÀÌ¸§ Ãâ·Â
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½
                 ItemName.text = inventory.slots[index - 1].item.ItemName;
             }
             else if (Item != null)
@@ -253,39 +253,39 @@ public class Player_Equip : MonoBehaviourPun
 
     void EquipFunction()
     {
-        // ¸¶¿ì½º ÁÂÅ¬¸¯À¸·Î ¸ðµç ¾ÆÀÌÅÛ ÀÛµ¿
+        // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½
         if (Input.GetMouseButtonDown(0) && Item != null)
         {
-            // ¼ÕÀüµî ¾ÆÀÌÅÛ Ã³¸®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
             if (Item.name == "Flashlight")
             {
                 Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
-               if (flashlightScript != null)
+                if (flashlightScript != null)
                 {
-                    Debug.Log("¼ÕÀüµî È¹µæ ¹× »ç¿ë");
-                   flashlightScript.AcquireFlashlight();
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½");
+                    flashlightScript.AcquireFlashlight();
 
-                    // ¼ÕÀüµî ÄÑ±â/²ô±â Ã³¸®
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½/ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                     isFlashlightOn = !isFlashlightOn;
-                //    flashlightScript.ToggleFlashlight(isFlashlightOn);
+                    //    flashlightScript.ToggleFlashlight(isFlashlightOn);
 
-                    // ¾Ö´Ï¸ÞÀÌ¼Ç ÆÄ¶ó¹ÌÅÍ ¼³Á¤
+                    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     animator.SetBool("isFlashlightOn", isFlashlightOn);
-                } 
+                }
             }
-            // À¯¸®ÄÅ ¾ÆÀÌÅÛ Ã³¸®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
             else if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
             {
                 StartThrowing();
             }
-            // ´Ù¸¥ ¾ÆÀÌÅÛ Ã³¸®
+            // ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
             else
             {
-                // IItemFunction ÀÎÅÍÆäÀÌ½º¸¦ °¡Áø ¾ÆÀÌÅÛ Ã³¸®
+                // IItemFunction ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 IItemFunction itemFunction = Item.GetComponent<IItemFunction>();
                 if (itemFunction != null)
                 {
-                    Debug.Log($"{Item.name} ¾ÆÀÌÅÛ ±â´É ½ÇÇà");
+                    Debug.Log($"{Item.name} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                     itemFunction.Function();
                 }
             }
@@ -293,10 +293,10 @@ public class Player_Equip : MonoBehaviourPun
     }
     public void ChangeOrRemoveItem()
     {
-        // ÇöÀç ÀåÂø ÁßÀÎ ¾ÆÀÌÅÛÀÌ ¼ÕÀüµîÀÎÁö È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (Item != null && Item.name == "Flashlight")
         {
-            // ¼ÕÀüµîÀÌ ÄÑÁ® ÀÖ´Â »óÅÂ¿¡¼­ ¾ÆÀÌÅÛÀ» º¯°æÇÏ°Å³ª ¹ö¸®´Â °æ¿ì, ¾Ö´Ï¸ÞÀÌ¼Ç ÆÄ¶ó¹ÌÅÍ ÃÊ±âÈ­
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
             if (isFlashlightOn)
             {
                 isFlashlightOn = false;
@@ -304,15 +304,15 @@ public class Player_Equip : MonoBehaviourPun
             }
         }
 
-        // ±âÁ¸ ¾ÆÀÌÅÛÀ» Á¦°ÅÇÏ±â Àü¿¡ Ç×»ó ¾Ö´Ï¸ÞÀÌ¼Ç »óÅÂ¸¦ ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ê±ï¿½È­
         if (animator != null)
         {
-            // ¼ÕÀüµîÀÌ ÄÑÁ® ÀÖ´Â ¾Ö´Ï¸ÞÀÌ¼ÇÀ» Æ÷ÇÔÇÏ¿© ¸ðµç ¾ÆÀÌÅÛ °ü·Ã »óÅÂ¸¦ ÃÊ±âÈ­
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ê±ï¿½È­
             animator.SetBool("isFlashlightOn", false);
             animator.SetBool("isHoldingItem", false);
         }
 
-        // ±âÁ¸ ¾ÆÀÌÅÛÀ» Á¦°Å
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (Item != null)
         {
             Destroy(Item);
@@ -329,7 +329,7 @@ public class Player_Equip : MonoBehaviourPun
 
         if (trajectoryLine != null)
         {
-            trajectoryLine.enabled = true;  // ±ËÀû Ç¥½Ã È°¼ºÈ­
+            trajectoryLine.enabled = true;  // ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ È°ï¿½ï¿½È­
         }
     }
 
@@ -339,10 +339,10 @@ public class Player_Equip : MonoBehaviourPun
         chargeTime += Time.deltaTime;
         float currentForce = Mathf.Min(chargeTime * throwForce, maxForce);
 
-        // ¾Ö´Ï¸ÞÀÌÅÍ ÆÄ¶ó¹ÌÅÍ ¼³Á¤: ÃæÀü ÁßÀÎ »óÅÂ
+        // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         animator.SetBool("isChargingThrow", true);
 
-        // ±ËÀû ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         Vector3 throwDirection = Camera.main.transform.forward;
         Vector3 grenadeVelocity = throwDirection * currentForce;
         ShowTrajectory(Camera.main.transform.position + Camera.main.transform.forward, grenadeVelocity);
@@ -352,41 +352,41 @@ public class Player_Equip : MonoBehaviourPun
     {
         if (currentGlassCup != null)
         {
-            // ºÎ¸ð-ÀÚ½Ä °ü°è ÇØÁ¦
+            // ï¿½Î¸ï¿½-ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             currentGlassCup.transform.parent = null;
 
             float finalForce = Mathf.Min(chargeTime * throwForce, maxForce);
             Rigidbody rb = currentGlassCup.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.isKinematic = false;   // ´øÁú ¶§ ¹°¸®ÀûÀ¸·Î ¿òÁ÷ÀÌµµ·Ï ¼³Á¤
-                rb.useGravity = true;   // Áß·Â È°¼ºÈ­
+                rb.isKinematic = false;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                rb.useGravity = true;   // ï¿½ß·ï¿½ È°ï¿½ï¿½È­
                 Vector3 throwDirection = Camera.main.transform.forward;
                 rb.AddForce(throwDirection * finalForce, ForceMode.VelocityChange);
             }
 
-            // ÇöÀç À¯¸®ÄÅÀÇ itemData °¡Á®¿À±â
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ itemData ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             itemData cupItemData = currentGlassCup.GetComponent<ItemObject>().item;
 
-            // ÀÎº¥Åä¸®¿¡¼­ ¾ÆÀÌÅÛ Á¦°Å
+            // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
             }
 
-            hasGlassCup = false;  // ´øÁø ÈÄ À¯¸®ÄÅ ¼ÒÁö »óÅÂ ÇØÁ¦
-            currentGlassCup = null;  // À¯¸®ÄÅ ÂüÁ¶ ÇØÁ¦
+            hasGlassCup = false;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            currentGlassCup = null;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             if (trajectoryLine != null)
             {
-                trajectoryLine.enabled = false;  // ±ËÀû Ç¥½Ã ºñÈ°¼ºÈ­
+                trajectoryLine.enabled = false;  // ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
             }
         }
 
-        // ÃæÀü Áß »óÅÂ ÇØÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         animator.SetBool("isChargingThrow", false);
 
-        // ´øÁö±â ¾Ö´Ï¸ÞÀÌ¼Ç Æ®¸®°Å ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         animator.SetTrigger("isThrowing");
 
         isCharging = false;
@@ -398,15 +398,15 @@ public class Player_Equip : MonoBehaviourPun
         isCharging = false;
         chargeTime = 0f;
 
-        // ÃæÀü »óÅÂ ÇØÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         animator.SetBool("isChargingThrow", false);
 
         if (trajectoryLine != null)
         {
-            trajectoryLine.enabled = false;  // ±ËÀû Ç¥½Ã ºñÈ°¼ºÈ­
+            trajectoryLine.enabled = false;  // ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         }
 
-        Debug.Log("´øÁö±â Ãë¼ÒµÊ");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Òµï¿½");
     }
 
 
@@ -459,7 +459,7 @@ public class Player_Equip : MonoBehaviourPun
 
     public bool HasEquippedCrowBar()
     {
-        // CrowBar ¾ÆÀÌÅÛÀÌ ÀåÂøµÇ¾î ÀÖ´ÂÁö È®ÀÎ
+        // CrowBar ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         Transform crowBarObject = equipItem.transform.Find("CrowBar");
         if (crowBarObject != null)
         {
@@ -489,20 +489,20 @@ public class Player_Equip : MonoBehaviourPun
 
     public bool HasEquippedCardKey()
     {
-        // equipItem ÇÏÀ§¿¡ "CardKey"¶ó´Â ÀÌ¸§ÀÇ ¾ÆÀÌÅÛÀ» Ã£À½
+        // equipItem ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "CardKey"ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
         Transform cardKeyObject = equipItem.transform.Find("CardKey");
         if (cardKeyObject != null)
         {
             ItemObject equippedItem = cardKeyObject.GetComponent<ItemObject>();
             if (equippedItem != null)
             {
-                return true; // CardKey°¡ ÀåÂøµÇ¾î ÀÖÀ¸¸é true ¹ÝÈ¯
+                return true; // CardKeyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ true ï¿½ï¿½È¯
             }
         }
-        return false; // CardKey°¡ ¾øÀ¸¸é false ¹ÝÈ¯
+        return false; // CardKeyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false ï¿½ï¿½È¯
     }
 
-    // Player_Equip¿¡¼­ Æ¯Á¤ ¾ÆÀÌÅÛÀÌ ÀåÂøµÇ¾ú´ÂÁö È®ÀÎÇÏ´Â ¸Þ¼­µå Ãß°¡
+    // Player_Equipï¿½ï¿½ï¿½ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     public bool HasEquippedItem(string itemName)
     {
         if (equipItem != null)
@@ -510,26 +510,26 @@ public class Player_Equip : MonoBehaviourPun
             ItemObject itemObject = equipItem.GetComponentInChildren<ItemObject>();
             if (itemObject != null && itemObject.item.ItemName == itemName)
             {
-                return true; // ÀåÂøµÈ ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é true ¹ÝÈ¯
+                return true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ true ï¿½ï¿½È¯
             }
         }
-        return false; // ÀåÂøµÈ ¾ÆÀÌÅÛÀÌ ¾øÀ¸¸é false ¹ÝÈ¯
+        return false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false ï¿½ï¿½È¯
     }
 
     public bool HasAnyEquippedItem()
     {
-        // equipItemÀÇ ¸ðµç ÀÚ½Ä¿¡¼­ ItemObject ÄÄÆ÷³ÍÆ®¸¦ °Ë»öÇÏ¿© ¾ÆÀÌÅÛÀÌ ÀåÂøµÇ¾î ÀÖ´ÂÁö È®ÀÎ
+        // equipItemï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ú½Ä¿ï¿½ï¿½ï¿½ ItemObject ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         ItemObject[] equippedItems = equipItem.GetComponentsInChildren<ItemObject>();
-        return equippedItems.Length > 0; // ÇÏ³ª¶óµµ ÀåÂøµÇ¾î ÀÖÀ¸¸é true ¹ÝÈ¯
+        return equippedItems.Length > 0; // ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ true ï¿½ï¿½È¯
     }
 
-    // ¿ÀºêÁ§Æ®¿Í ¸ðµç ÀÚ½Ä ¿ÀºêÁ§Æ®ÀÇ ·¹ÀÌ¾î¸¦ º¯°æ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½
     void SetLayerRecursively(GameObject obj, int layer)
     {
-        // ÇöÀç ¿ÀºêÁ§Æ®ÀÇ ·¹ÀÌ¾î º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
         obj.layer = layer;
 
-        // ÀÚ½Ä ¿ÀºêÁ§Æ® ¼øÈ¸ÇÏ¸ç ·¹ÀÌ¾î º¯°æ
+        // ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¸ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (Transform child in obj.transform)
         {
             SetLayerRecursively(child.gameObject, layer);

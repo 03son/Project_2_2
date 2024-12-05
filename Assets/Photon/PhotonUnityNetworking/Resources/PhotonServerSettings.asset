@@ -92,6 +92,11 @@ MonoBehaviour:
   - RPC_Escape_Basement
   - RPC_Escape_Helicopter
   - Rpc_SubmarineStart
+  - RemoveEquippedItem
+  - RPC_CloseDoor
+  - RPC_OpenDoor
+  - RPC_UnlockDoor
+  - SyncState
   - SyncStateToSurvival
   DisableAutoOpenWizard: 1
   ShowSettings: 1
