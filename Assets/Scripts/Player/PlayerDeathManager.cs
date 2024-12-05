@@ -47,11 +47,12 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     private void OnTriggerEnter(Collider other)
     {
         // 플레이어 상태가 이미 사망 상태라면 이벤트 무시
-        if (playerState.State == PlayerState.playerState.Die)
-        {
-            Debug.Log("플레이어는 이미 사망 상태입니다. 충돌 이벤트 무시.");
-            return;
-        }
+        /*    if (playerState.State == PlayerState.playerState.Die)
+            {
+                Debug.Log("플레이어는 이미 사망 상태입니다. 충돌 이벤트 무시.");
+                return;
+        
+    }*/
 
         // 적과 충돌 감지
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
