@@ -40,7 +40,8 @@ public class Door : MonoBehaviour, IInteractable
             openDoor = true;
 
             // Player_Equip¿« RemoveEquippedItem »£√‚
-            playerEquip.RemoveEquippedItem("Key");
+            Inventory.instance.RemoveItem("Key");
+            playerEquip.setEquipItem("Key");
 
             return;
         }

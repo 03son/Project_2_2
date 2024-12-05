@@ -50,7 +50,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             //photonItem.RemoveEquippedItem(requiredItemName);
 
             //플레이어 손에 있는 거 제거
-            if (photonItem != null && photonItem.photonView != null)
+            if (photonItem != null && photonItem.gameObject.GetComponent<PhotonView>() != null)
             {
                 photonItem.RemoveEquippedItem(requiredItemName);
                 Inventory.instance.RemoveItem(requiredItemName);

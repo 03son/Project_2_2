@@ -38702,6 +38702,7 @@ MonoBehaviour:
   player: {fileID: 4520835399152146124, guid: 03bc55628d2349344ba8d3e52ba69fd3, type: 3}
   mainCamera: {fileID: 1174983274}
   playerModel: {fileID: 0}
+  headBone: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
   FollowCam: {fileID: 1511766297}
   EquipCamera: {fileID: 2140443607}

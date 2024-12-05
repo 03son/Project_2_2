@@ -150,7 +150,7 @@ public class RevivePlayer : MonoBehaviourPun
             if (targetPlayer.photonView.IsMine)
             {
                 Debug.Log("로컬 플레이어가 부활 처리 중...");
-                targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
+                targetPlayer.GetComponent<PlayerState>().State = PlayerState.playerState.Survival;// PlayerDeathManager의 Survival 메서드 호출
             }
         }
         else
@@ -178,10 +178,11 @@ public class RevivePlayer : MonoBehaviourPun
                     Debug.Log("로컬 플레이어가 부활 처리 중...");
 
                     // PlayerDeathManager 인스턴스를 가져와서 Survival 메서드 호출
-                    PlayerDeathManager playerDeathManager = GetComponent<PlayerDeathManager>();
-                    if (playerDeathManager != null)
+                    //PlayerDeathManager playerDeathManager = GetComponent<PlayerDeathManager>();
+                    PlayerState ps = GetComponent<PlayerState>();
+                    if (ps != null)
                     {
-                        playerDeathManager.Survival(); // Survival 메서드 호출
+                        ps.State = PlayerState.playerState.Survival;
                     }
                     else
                     {

@@ -92,6 +92,7 @@ MonoBehaviour:
   - RPC_Escape_Basement
   - RPC_Escape_Helicopter
   - Rpc_SubmarineStart
+  - SyncStateToSurvival
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

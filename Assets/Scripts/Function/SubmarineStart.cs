@@ -23,7 +23,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
             videoPlayer = gameObject.AddComponent<VideoPlayer>(); // VideoPlayer가 없으면 추가
         }
 
-        pv = PlayerState.instance.gameObject.GetComponent<PhotonView>();
+        pv = GetComponent<PhotonView>();
 
         videoPlayer.playOnAwake = false; // 자동 재생 비활성화
         videoPlayer.loopPointReached += OnVideoEnd; // 비디오 종료 시 이벤트 연결
