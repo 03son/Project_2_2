@@ -14,6 +14,7 @@ public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponentInParent<Animator>();
         photonView = GetComponentInParent<PhotonView>(); // PhotonView 컴포넌트 가져오기
     }

@@ -282,8 +282,8 @@ public class MonsterAI : MonoBehaviourPun
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentInvestigateDecibel = 0f; // 조사 데시벨 초기화
-            currentState = State.Patrol;   // 순찰 상태로 전환
-            animator.SetFloat("Speed", 3.5f); // 순찰 애니메이션
+            currentState = State.Idle;   // 순찰 상태로 전환
+            animator.SetFloat("Speed", 0f); // 순찰 애니메이션
             Debug.Log("조사 완료. 데시벨 초기화.");
         }
 

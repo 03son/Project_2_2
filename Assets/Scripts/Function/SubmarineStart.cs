@@ -22,17 +22,11 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
         {
             videoPlayer = gameObject.AddComponent<VideoPlayer>(); // VideoPlayer가 없으면 추가
         }
-        if (PhotonNetwork.IsConnected)
-        {
 
-        }
-        else
-        {
-            Debug.Log("싱글");
-        }
+        pv = PlayerState.instance.gameObject.GetComponent<PhotonView>();
+
         videoPlayer.playOnAwake = false; // 자동 재생 비활성화
         videoPlayer.loopPointReached += OnVideoEnd; // 비디오 종료 시 이벤트 연결
-        pv = GetComponent<PhotonView>();
     }
 
     public string GetInteractPrompt()
@@ -44,16 +38,18 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
     {
         if (submarineController != null && submarineController.CanStart())
         {
-
+            submarineController.StartSubmarine();
+            
             Debug.Log("잠수함 탈출 시퀀스 시작!");
             if (PhotonNetwork.IsConnected)
             {
-                submarineController.Submarine();
-                pv.RPC("Rpc_SubmarineStart", RpcTarget.All);
+                if (pv.IsMine)
+                {
+                    pv.RPC("Rpc_SubmarineStart", RpcTarget.All);
+                }
             }
             else
             {
-                submarineController.StartSubmarine();
                 // 3초 후 비디오 재생
                 Invoke("PlayEscapeVideo", 3.0f);
             }

@@ -8,6 +8,7 @@ public class EnemyJumpScare : MonoBehaviourPun
     public float zoomInDuration = 0.5f; // ���� �ð�
     public AudioClip jumpScareSound;    // �������ɾ� ����
     public float soundVolume = 1f;      // ���� ���� (0~1)
+    //public PlayerState pstate;
 
     private Camera mainCamera;          // ���� �÷��̾��� ī�޶�
     private AudioSource audioSource;    // AudioSource ������Ʈ
@@ -37,7 +38,7 @@ public class EnemyJumpScare : MonoBehaviourPun
         if (other.CompareTag("Player"))
         {
             PhotonView playerPhotonView = other.GetComponent<PhotonView>();
-
+            //pstate = GetComponent<PlayerState>();
             if (playerPhotonView != null && playerPhotonView.IsMine)
             {
                 // ���� �÷��̾�Ը� �������ɾ� Ʈ����

@@ -12,14 +12,12 @@ public class SubmarineController : MonoBehaviourPun
     public AudioSource audioSource; // 잠수함 소리
     public AudioClip startSound; // 시동 소리
 
-    PhotonView pv;
     private void Start()
     {
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
-        pv = GetComponent<PhotonView>();
     }
 
     public void AttachItem(string itemName)
@@ -41,11 +39,6 @@ public class SubmarineController : MonoBehaviourPun
         return isPropellerAttached && attachedBatteries >= requiredBatteries;
     }
 
-    public void Submarine()
-    {
-        pv.RPC("StartSubmarine", RpcTarget.All);
-    }
-    [PunRPC]
     public void StartSubmarine()
     {
         if (isStarted)

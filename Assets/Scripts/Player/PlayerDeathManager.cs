@@ -46,15 +46,12 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
-        if (state == PlayerState.playerState.Survival)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
-            {
-                Debug.Log("적과 충돌하여 사망 상태로 전환.");
+            Debug.Log("적과 충돌하여 사망 상태로 전환.");
 
-                // RPC 호출 시 ActorNumber 전달
-                photonView.RPC("SyncDieState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
-            }
+            // RPC 호출 시 ActorNumber 전달
+            photonView.RPC("SyncDieState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
         }
     }
 
@@ -112,19 +109,4 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         // 관찰자 UI 띄우기
         SetUICanvas.OpenUI("Observer");
     }
-
-    public void Survival()
-    {
-        if (animator != null)
-        {
-            animator.SetTrigger("Survival"); // Survival 애니메이션 트리거 발동
-            Debug.Log("Survival 애니메이션 발동");
-        }
-
-        // UI 복구
-        CameraInfo.UseMainCam(); // 메인 카메라 활성화
-        SetUICanvas.OpenUI("HUD"); // HUD UI 활성화
-    }
-
-    
 }
