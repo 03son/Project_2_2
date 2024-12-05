@@ -445,7 +445,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -678,9 +678,6 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: Death
-  - Type: 9
-    SynchronizeType: 1
-    Name: Survival
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1131,6 +1128,7 @@ MonoBehaviour:
   isRecording: 0
   singleMic: 0
   Microphone_Decibel_Bar: {fileID: 0}
+  single: 0
 --- !u!114 &837250356730881852
 MonoBehaviour:
   m_ObjectHideFlags: 0
