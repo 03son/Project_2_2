@@ -40,6 +40,19 @@ public class MonsterDetection : MonoBehaviour
 
     void DetectPlayer()
     {
+
+        if (player == null) return;
+
+        // PlayerState 컴포넌트를 가져옴
+        PlayerState playerState = player.GetComponent<PlayerState>();
+
+        // 플레이어가 사망 상태라면 감지 로직 중단
+        if (playerState != null && playerState.State == PlayerState.playerState.Die)
+        {
+            Debug.Log("플레이어가 사망 상태입니다. 감지 중단.");
+            return;
+        }
+
         // 플레이어와의 거리 계산
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 

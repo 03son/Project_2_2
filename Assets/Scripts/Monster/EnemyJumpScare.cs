@@ -38,14 +38,24 @@ public class EnemyJumpScare : MonoBehaviourPun
         if (other.CompareTag("Player"))
         {
             PhotonView playerPhotonView = other.GetComponent<PhotonView>();
-            //pstate = GetComponent<PlayerState>();
+            PlayerState playerState = other.GetComponent<PlayerState>(); // PlayerState 컴포넌트 가져오기
+
+            // 플레이어 상태 확인
+            if (playerState != null && playerState.State == PlayerState.playerState.Die)
+            {
+                Debug.Log("플레이어는 이미 사망 상태입니다. 점프 스케어 무시.");
+                return;
+            }
+
+            // 점프 스케어 트리거
             if (playerPhotonView != null && playerPhotonView.IsMine)
             {
-                // ���� �÷��̾�Ը� �������ɾ� Ʈ����
+                Debug.Log("점프 스케어 트리거 발동.");
                 TriggerJumpScare();
             }
         }
     }
+
 
     void TriggerJumpScare()
     {
