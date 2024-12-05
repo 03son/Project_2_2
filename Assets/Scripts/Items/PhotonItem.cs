@@ -17,8 +17,8 @@ public class PhotonItem : MonoBehaviourPun
 
     public GameObject equipItem;
 
-    [Header("3??? ?????? ???")]
-    public Transform thirdPersonHand; //3??? ?????? ???
+    [Header("3인칭 아이템 위치")]
+    public Transform thirdPersonHand; //3인칭 아이템 위치
     Transform __thirdPersonHand;
     public GameObject itemForOthers;
     void Awake()
@@ -56,20 +56,20 @@ public class PhotonItem : MonoBehaviourPun
 
     public void RemoveEquippedItem(string itemName)
     {
-        Debug.Log($"RemoveEquippedItem ????. ????????? ??????: {itemName}");
+        Debug.Log($"RemoveEquippedItem 호출됨. 제거하려는 아이템: {itemName}");
 
         if (equipItem != null)
         {
-            Debug.Log("equipItem?? null?? ?????. ??? ??Ŀ??? ???????? ???????.");
+            Debug.Log("equipItem이 null이 아닙니다. 모든 자식에서 아이템을 검색합니다.");
 
-            // equipItem ???? ??? ??Ŀ??? ItemObject?? ???
+            // equipItem 하위 모든 자식에서 ItemObject를 검색
             ItemObject[] itemObjects = equipItem.GetComponentsInChildren<ItemObject>();
-            Debug.Log($"????? ItemObject ????: {itemObjects.Length}");
+            Debug.Log($"검색된 ItemObject 개수: {itemObjects.Length}");
 
             foreach (ItemObject itemObject in itemObjects)
             {
-                Debug.Log($"????? ??????: {itemObject.item.ItemName}");
-                Debug.Log($"?? ??: {itemObject.item.ItemName} == {itemName}");
+                Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
+                Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
 
                 if (PhotonNetwork.IsConnected)
                 {
@@ -80,16 +80,16 @@ public class PhotonItem : MonoBehaviourPun
                 }
                 else
                 {
-                    // ?????? ?????? ????
+                    // 장착된 아이템 제거
                     Destroy(itemObject.gameObject);
                 }
             }
 
-            Debug.LogWarning($"equipItem?? ??? ??Ŀ??? {itemName} ????? ???? ???????? ??? ?? ???????.");
+            Debug.LogWarning($"equipItem의 모든 자식에서 {itemName} 이름을 가진 아이템을 찾을 수 없습니다.");
         }
         else
         {
-            Debug.LogWarning("equipItem?? null????. ?????? ???????? ???????.");
+            Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
         }
     }
     [PunRPC]
@@ -108,7 +108,7 @@ public class PhotonItem : MonoBehaviourPun
     {
         if (PhotonNetwork.IsConnected)
         {
-            // 3??? ???????? ?????? ????
+            // 3인칭 모델링에도 아이템 장착
             if (pv.IsMine)
             {
                 if (PhotonNetwork.IsMasterClient || pv.IsMine)
@@ -145,7 +145,7 @@ public class PhotonItem : MonoBehaviourPun
                     }
                     itemForOthers.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 
-                    // 3??? ?????? ??? ????? ????
+                    // 3인칭 모델링의 왼손 위치에 장착
                     itemForOthers.transform.SetParent(__thirdPersonHand);
                     itemForOthers.transform.localPosition = Vector3.zero;
                     itemForOthers.transform.localRotation = Quaternion.identity;
