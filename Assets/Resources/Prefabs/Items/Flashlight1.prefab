@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 221756478018173505}
   - component: {fileID: 6887484906773862094}
   - component: {fileID: 2099268913392582691}
-  - component: {fileID: 4301368589579951855}
   - component: {fileID: -4152498196759353843}
   - component: {fileID: 4539480228460933166}
   m_Layer: 3
@@ -121,26 +120,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &4301368589579951855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4340401175393712766}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 707b4b3beece5154bacba2ad97a90e72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashlightLight: {fileID: 4340401175393712766}
-  intensity: 15
-  range: 100
-  minSpotAngle: 30
-  maxSpotAngle: 80
-  minIntensity: 100
-  maxIntensity: 101
-  maxDistance: 30
 --- !u!54 &-4152498196759353843
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -181,4 +160,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
-  followSpeed: 30
+  followSpeed: 20
+  shakeAmount: 100

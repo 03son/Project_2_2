@@ -13,6 +13,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     [SerializeField] AudioSource walkSound;
     [SerializeField] AudioClip walkingClip;
     [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
+    private PlayerCrouch playerCrouch; // PlayerCrouch 타입의 변수 선언
 
 
     private Player_Equip playerEquip;
@@ -29,6 +30,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        playerCrouch = GetComponent<PlayerCrouch>();
 
         playerEquip = GetComponent<Player_Equip>();
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
@@ -63,12 +65,15 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         
         // Photon View Ȯ��
         playerState.GetState(out state);
+      
+        Debug.Log("Current Player State: " + state);
+
 
         // Height �� ���� ����
-      /*  if (controller.height != 0.1f)
-        {
-            controller.height = 0.1f;
-        } */
+        /*  if (controller.height != 0.1f)
+          {
+              controller.height = 0.1f;
+          } */
         // Photon View Ȯ��
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
@@ -89,9 +94,12 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             if (state == PlayerState.playerState.Die)
             {
-                // esc â�� �������� ���� �̵� ����
                 PlayerVelocity(Vector3.zero, 0f, 0f);
+                velocity = Vector3.zero; // 중력 및 이동 초기화
+
+               
             }
+
         }
 
         RaycastHit hit;
@@ -121,6 +129,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             }
         }
 
+        
+
     }
 
 
@@ -140,6 +150,30 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         // ���� �̵� �ӵ� ����: ���� �������� ���ο� ���� ����
         float currentSpeed = Input.GetKey(KeyManager.SitDown_Key) ? crouchSpeed : normalSpeed;
+
+
+
+        // 앉기 상태에 따른 행동
+        if (Input.GetKey(KeyManager.SitDown_Key))
+        {
+            // 앉기 상태로 전환
+            if (!playerCrouch.isCrouching)
+            {
+                playerCrouch.ToggleCrouch(true); // 앉기 상태 활성화
+                walkSound.Stop(); // 걷는 소리 중지
+                Debug.Log("Crouching activated.");
+            }
+        }
+        else
+        {
+            // 앉기 상태 해제
+            if (playerCrouch.isCrouching)
+            {
+                playerCrouch.ToggleCrouch(false); // 앉기 상태 비활성화
+                Debug.Log("Crouching deactivated.");
+            }
+        }
+
 
         float moveX = 0;
         float moveZ = 0;
@@ -233,32 +267,25 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         controller.Move((mov + velocity) * Time.deltaTime);
 
         playerState.GetState(out state);
-            // ���� �Ҹ� ó��
-        if ((moveX != 0 || moveZ != 0) && controller.isGrounded && state == PlayerState.playerState.Survival)
+        // ���� �Ҹ� ó��
+        if (state == PlayerState.playerState.Survival && (moveX != 0 || moveZ != 0) && controller.isGrounded)
         {
-            if (!walkSound.isPlaying)
+            if (!playerCrouch.isCrouching) // 앉기 상태가 아닐 때만 걷는 소리
             {
-                walkSound.Play();
+                if (!walkSound.isPlaying)
+                {
+                    walkSound.Play();
+                }
+                walkSound.volume = walkVolume;
             }
-            walkSound.volume = walkVolume;
-            isWalking = true;
-            if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
+            else
             {
-                if (MonsterAI.Instance != null)
-                {
-                    photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
-                }
-                else
-                {
-                    Debug.Log("몬스터 없음2");
-                }
+                walkSound.Stop();
             }
         }
-        else
-        {
-            walkSound.Stop();
-            isWalking = false;
-        }
+
+        if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected) { if (MonsterAI.Instance != null) { photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position); } else { Debug.Log("몬스터 없음2"); } }
+
     }
     [PunRPC]
     public void SendDecibelToMaster(float decibel, Vector3 playerPosition)

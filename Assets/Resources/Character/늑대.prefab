@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b627cbef64cd89849938657aae8e75fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 5
-  crouchSpeed: 2
+  normalSpeed: 1
+  crouchSpeed: -7
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
   walkSound: {fileID: 1847627266896497341}
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchHeight: 0.05
-  normalHeight: 0.17
+  normalHeight: 0.1
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
 --- !u!114 &2444431448682953168
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6540de9aed95d9548afb71a285d02d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
+  jumpForce: 3
   gravity: -9.81
 --- !u!114 &9097295955767114178
 MonoBehaviour:

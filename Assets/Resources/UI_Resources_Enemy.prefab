@@ -204,7 +204,7 @@ MonoBehaviour:
   chaseSpeed: 14
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
-  viewDistance: 20
+  viewDistance: 30
   fieldOfView: 120
   hearingRange: 30
   minDecibelToDetect: 35
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 25
-  maxShakeMagnitude: 0.4
+  maxShakeMagnitude: 1
   shakeDuration: 0.1
   shakeInterval: 0.5
   footstepSound: {fileID: 1734623120430788607}

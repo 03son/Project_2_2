@@ -85,8 +85,8 @@ public class PlayerJump : MonoBehaviour
 
     private bool IsGrounded()
     {
-        float groundCheckDistance = 0.2f; // 바닥 체크 거리 (기존보다 살짝 늘림)
-        Vector3 origin = transform.position + Vector3.down * (controller.height / 2 + controller.skinWidth);
+        float groundCheckDistance = 1f; // 바닥 체크 거리 (기존보다 살짝 늘림)
+        Vector3 origin = transform.position + Vector3.up * 1f;
 
         // Raycast 디버그 선 추가
         Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);

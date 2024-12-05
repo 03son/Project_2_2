@@ -17,9 +17,11 @@ public class PlayerCrouch : MonoBehaviour
 
     PlayerState playerState;
     PlayerState.playerState state;
+    public bool isCrouching { get; private set; } = false; // 앉기 상태 변수
 
     void Start()
     {
+        
         playerState = GetComponent<PlayerState>();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>(); // Animator ������Ʈ ��������
@@ -77,5 +79,19 @@ public class PlayerCrouch : MonoBehaviour
         Vector3 cameraPosition = cameraTransform.localPosition;
         cameraPosition.y = Mathf.Lerp(cameraTransform.localPosition.y, targetCameraY, crouchSpeed);
         cameraTransform.localPosition = cameraPosition;
+    }
+
+    public void ToggleCrouch(bool crouching)
+    {
+        isCrouching = crouching;
+
+        if (crouching)
+        {
+            Debug.Log("Player is now crouching.");
+        }
+        else
+        {
+            Debug.Log("Player is no longer crouching.");
+        }
     }
 }
