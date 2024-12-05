@@ -61,32 +61,37 @@ public class PlayerJump : MonoBehaviour
 
         if (grounded)
         {
+            // 바닥에 있을 때 중력 초기화
             velocity.y = -2f;
             animator.SetBool("isJumping", false);
 
             if (jumpRequested)
             {
+                // 점프 처리
                 velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
                 animator.SetBool("isJumping", true);
                 jumpRequested = false;
 
-                // 점프 로그
                 Debug.Log("점프 발생! Velocity Y: " + velocity.y);
             }
         }
         else
         {
+            // 공중에 있을 때 중력 적용
             velocity.y += gravity * Time.deltaTime;
         }
 
-        controller.Move(velocity * Time.deltaTime);
+        // 이동 처리
+        Vector3 move = new Vector3(0, velocity.y, 0);
+        controller.Move(move * Time.deltaTime);
     }
+
 
 
     private bool IsGrounded()
     {
-        float groundCheckDistance = 0.2f; // 바닥 체크 거리 (기존보다 살짝 늘림)
-        Vector3 origin = transform.position + Vector3.down * (controller.height / 2 + controller.skinWidth);
+        float groundCheckDistance = 1f; // 바닥 체크 거리 (기존보다 살짝 늘림)
+        Vector3 origin = transform.position + Vector3.up * 1f;
 
         // Raycast 디버그 선 추가
         Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);

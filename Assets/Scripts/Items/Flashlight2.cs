@@ -3,10 +3,12 @@ using UnityEngine;
 public class Flashlight2 : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform; // 메인 카메라의 Transform
-    [SerializeField] private float followSpeed = 1.5f; // 따라가는 속도 (딜레이 조절)
+    [SerializeField] private float followSpeed = 20f; // 따라가는 속도 (딜레이 조절)
     private Quaternion currentRotation; // 현재 회전값
     private Quaternion targetRotation; // 목표 회전값
-    private Light flashlightComponent;
+
+    [SerializeField] private float shakeAmount = 30f; // 흔들림 정도 (강도 증가)
+    private CharacterController characterController; // 플레이어 이동 상태 확인용
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class Flashlight2 : MonoBehaviour
         }
 
         currentRotation = transform.rotation; // 초기 회전값
+        characterController = GetComponentInParent<CharacterController>(); // 플레이어 이동 상태 확인
     }
 
     private void LateUpdate()
@@ -39,9 +42,24 @@ public class Flashlight2 : MonoBehaviour
         // 실제 회전값 적용
         transform.rotation = currentRotation;
 
-        // 디버깅
-        Debug.Log("스팟라이트 회전 동기화 중: " + transform.rotation.eulerAngles);
+        // 이동 상태 확인
+        if (IsPlayerMoving())
+        {
+            // 흔들림 효과 적용
+            float noiseX = Mathf.PerlinNoise(Time.time * 5f, 0.0f) - 0.5f; // 속도 조정
+            float noiseY = Mathf.PerlinNoise(0.0f, Time.time * 5f) - 0.5f; // 속도 조정
+            transform.rotation *= Quaternion.Euler(noiseX * shakeAmount, noiseY * shakeAmount, 0);
 
+            Debug.Log("흔들림 적용 중!");
+        }
+    }
 
+    private bool IsPlayerMoving()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        // 이동 입력값이 있는 경우 이동 중으로 간주
+        return Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f;
     }
 }

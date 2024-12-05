@@ -98,7 +98,7 @@ public class Flashlight1 : MonoBehaviour
         // 디버깅 조건 확인
         if (!isAcquired)
         {
-            Debug.Log("손전등이 아직 획득되지 않았습니다.");
+          //  Debug.Log("손전등이 아직 획득되지 않았습니다.");
             return;
         }
 
@@ -138,8 +138,8 @@ public class Flashlight1 : MonoBehaviour
             Debug.Log("손전등 위치와 회전 동기화 중: " + flashlightLight.transform.position);
             Debug.Log("목표 위치: " + targetPosition + ", 현재 위치: " + flashlightLight.transform.position);
 
-          /*  // 손전등 흔들림 효과 적용
-            float shakeAmount = 2f; // 흔들림 정도
+          /* // 손전등 흔들림 효과 적용
+            float shakeAmount = 1f; // 흔들림 정도
             float noiseX = Mathf.PerlinNoise(Time.time, 0.0f) - 0.5f; // -0.5 ~ 0.5
             float noiseY = Mathf.PerlinNoise(0.0f, Time.time) - 0.5f; // -0.5 ~ 0.5
             flashlightLight.transform.rotation *= Quaternion.Euler(noiseX * shakeAmount, noiseY * shakeAmount, 0); */

@@ -12,7 +12,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     [SerializeField] AudioSource walkSound;
     [SerializeField] AudioClip walkingClip;
-    [SerializeField] [Range(0f, 1f)] float walkVolume = 0.5f;
+    [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
+    private PlayerCrouch playerCrouch; // PlayerCrouch 타입의 변수 선언
 
 
     private Player_Equip playerEquip;
@@ -20,8 +21,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private Vector3 velocity;
     private float gravity = -9.81f;
     private float mouseX;
-    public PlayerCrouch playerCrouch;
-    public SoundSource soundSource;
 
     private Animator animator; // Animator �߰�
     private bool isWalking;
@@ -32,8 +31,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void Start()
     {
         playerCrouch = GetComponent<PlayerCrouch>();
+
         playerEquip = GetComponent<Player_Equip>();
-        soundSource = GetComponent<SoundSource>();
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             return;
@@ -63,9 +62,12 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Update()
     {
-
+        
         // Photon View Ȯ��
         playerState.GetState(out state);
+      
+        Debug.Log("Current Player State: " + state);
+
 
         // Height �� ���� ����
         /*  if (controller.height != 0.1f)
@@ -84,7 +86,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         // esc â�� �������� ���� ���� ������ ó��
         if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
-            //  HandleMouseLook();
+          //  HandleMouseLook();
             HandleMovement();
             UpdateWalkingAnimation();
         }
@@ -92,9 +94,12 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         {
             if (state == PlayerState.playerState.Die)
             {
-                // esc â�� �������� ���� �̵� ����
                 PlayerVelocity(Vector3.zero, 0f, 0f);
+                velocity = Vector3.zero; // 중력 및 이동 초기화
+
+               
             }
+
         }
 
         RaycastHit hit;
@@ -102,7 +107,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 2.5f))
         {
             float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
-
+       
 
             if (slopeAngle > 10) // 10도 이상이면 계단으로 판단
             {
@@ -124,18 +129,20 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             }
         }
 
+        
+
     }
 
 
 
 
-    /*  private void HandleMouseLook()
-      {
-          if (cameraTransform == null) return;
+  /*  private void HandleMouseLook()
+    {
+        if (cameraTransform == null) return;
 
-          mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
-          transform.localRotation = Quaternion.Euler(0, mouseX, 0);
-      } */
+        mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
+        transform.localRotation = Quaternion.Euler(0, mouseX, 0);
+    } */
 
     private void HandleMovement()
     {
@@ -143,6 +150,30 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         // ���� �̵� �ӵ� ����: ���� �������� ���ο� ���� ����
         float currentSpeed = Input.GetKey(KeyManager.SitDown_Key) ? crouchSpeed : normalSpeed;
+
+
+
+        // 앉기 상태에 따른 행동
+        if (Input.GetKey(KeyManager.SitDown_Key))
+        {
+            // 앉기 상태로 전환
+            if (!playerCrouch.isCrouching)
+            {
+                playerCrouch.ToggleCrouch(true); // 앉기 상태 활성화
+                walkSound.Stop(); // 걷는 소리 중지
+                Debug.Log("Crouching activated.");
+            }
+        }
+        else
+        {
+            // 앉기 상태 해제
+            if (playerCrouch.isCrouching)
+            {
+                playerCrouch.ToggleCrouch(false); // 앉기 상태 비활성화
+                Debug.Log("Crouching deactivated.");
+            }
+        }
+
 
         float moveX = 0;
         float moveZ = 0;
@@ -219,7 +250,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         }
     }
 
-
+    
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
@@ -236,33 +267,62 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         controller.Move((mov + velocity) * Time.deltaTime);
 
         playerState.GetState(out state);
-        // ���� �Ҹ� ó��
-        if ((moveX != 0 || moveZ != 0) && controller.isGrounded && state == PlayerState.playerState.Survival)
+
+        // 움직임 감지
+        bool isMoving = (moveX != 0 || moveZ != 0);
+
+        if (state == PlayerState.playerState.Survival && controller.isGrounded)
         {
-            
-            if (!walkSound.isPlaying)
+            if (isMoving)
             {
-                walkSound.Play();
-            }
-            walkSound.volume = walkVolume;
-            isWalking = true;
-            if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
-            {
-                if (MonsterAI.Instance != null)
+                // 걷는 소리 재생
+                if (!walkSound.isPlaying)
                 {
-                    photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
+                    walkSound.Play();
                 }
-                else
+                walkSound.volume = walkVolume;
+            }
+            else
+            {
+                // 멈췄을 때 걷는 소리 중지
+                if (walkSound.isPlaying)
                 {
-                    Debug.Log("몬스터 없음2");
+                    walkSound.Stop();
                 }
             }
         }
         else
         {
-            walkSound.Stop();
-            isWalking = false;
+            // 생존 상태가 아니거나 움직임이 없으면 걷는 소리 중지
+            if (walkSound.isPlaying)
+            {
+                walkSound.Stop();
+            }
         }
+
+
+        controller.Move((mov + velocity) * Time.deltaTime);
+
+        playerState.GetState(out state);
+        // ���� �Ҹ� ó��
+        if (state == PlayerState.playerState.Survival && (moveX != 0 || moveZ != 0) && controller.isGrounded)
+        {
+            if (!playerCrouch.isCrouching) // 앉기 상태가 아닐 때만 걷는 소리
+            {
+                if (!walkSound.isPlaying)
+                {
+                    walkSound.Play();
+                }
+                walkSound.volume = walkVolume;
+            }
+            else
+            {
+                walkSound.Stop();
+            }
+        }
+
+        if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected) { if (MonsterAI.Instance != null) { photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position); } else { Debug.Log("몬스터 없음2"); } }
+
     }
     [PunRPC]
     public void SendDecibelToMaster(float decibel, Vector3 playerPosition)
@@ -278,7 +338,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (animator != null)
         {
             animator.SetBool("isWalking", isWalking);
-            // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
+           // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
     }
 
