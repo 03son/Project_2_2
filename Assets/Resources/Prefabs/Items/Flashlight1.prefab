@@ -126,10 +126,10 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4340401175393712766}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 235843e766273a243b6e4cbebebbdce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
-  followSpeed: 1
+  followSpeed: 30
