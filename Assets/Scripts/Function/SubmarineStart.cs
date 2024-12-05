@@ -1,12 +1,11 @@
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.Video; // VideoPlayer 사용
+using UnityEngine.Playables; // PlayableDirector 사용
 
 public class SubmarineStart : MonoBehaviourPun, IInteractable
 {
     public SubmarineController submarineController; // SubmarineController 참조
-    public VideoPlayer videoPlayer; // 비디오 플레이어
-    public VideoClip escapeVideoClip; // 탈출 비디오 클립
+    public PlayableDirector playableDirector; // PlayableDirector 참조
 
     PhotonView pv;
     private bool playerInRange = false;
@@ -18,15 +17,12 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
             Debug.LogError("SubmarineController가 할당되지 않았습니다. Inspector에서 연결하세요.");
         }
 
-        if (videoPlayer == null)
+        if (playableDirector == null)
         {
-            videoPlayer = gameObject.AddComponent<VideoPlayer>(); // VideoPlayer가 없으면 추가
+            playableDirector = GetComponent<PlayableDirector>(); // PlayableDirector 가져오기
         }
 
         pv = GetComponent<PhotonView>();
-
-        videoPlayer.playOnAwake = false; // 자동 재생 비활성화
-        videoPlayer.loopPointReached += OnVideoEnd; // 비디오 종료 시 이벤트 연결
     }
 
     public string GetInteractPrompt()
@@ -39,7 +35,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
         if (submarineController != null && submarineController.CanStart())
         {
             submarineController.StartSubmarine();
-            
+
             Debug.Log("잠수함 탈출 시퀀스 시작!");
             if (PhotonNetwork.IsConnected)
             {
@@ -47,8 +43,8 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
             }
             else
             {
-                // 3초 후 비디오 재생
-                Invoke("PlayEscapeVideo", 3.0f);
+                // 3초 후 타임라인 재생
+                Invoke("PlayEscapeTimeline", 3.0f);
             }
         }
         else
@@ -56,23 +52,24 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
             Debug.Log("필요한 부품이 모두 부착되지 않았습니다.");
         }
     }
+
     [PunRPC]
     public void Rpc_SubmarineStart()
     {
-        // 3초 후 비디오 재생
-        Invoke("PlayEscapeVideo", 3.0f);
+        // 3초 후 타임라인 재생
+        Invoke("PlayEscapeTimeline", 3.0f);
     }
-    private void PlayEscapeVideo()
+
+    private void PlayEscapeTimeline()
     {
-        if (escapeVideoClip != null)
+        if (playableDirector != null)
         {
-            videoPlayer.clip = escapeVideoClip;
-            videoPlayer.Play();
-            Debug.Log("탈출 비디오 재생 시작");
+            playableDirector.Play(); // Timeline 재생
+            Debug.Log("탈출 타임라인 재생 시작");
         }
         else
         {
-            Debug.LogError("탈출 비디오 클립이 없습니다.");
+            Debug.LogError("PlayableDirector가 없습니다.");
         }
     }
 
@@ -92,14 +89,5 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
             playerInRange = false;
             Debug.Log("시동 가능 지점에서 벗어남.");
         }
-    }
-
-    private void OnVideoEnd(VideoPlayer vp)
-    {
-        Debug.Log("탈출 비디오 종료. 게임 종료.");
-        Application.Quit();
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
     }
 }
