@@ -40,7 +40,18 @@ public class CanHearSoundSource : MonoBehaviour
         foreach (var obj in objectsInTrigger)
         {
             if (obj == null) continue; // 이미 삭제된 오브젝트는 무시
-
+            // Player 확인 (레이어 이름 확인)
+            string layerName = LayerMask.LayerToName(obj.gameObject.layer);
+            if (layerName == "Player")
+            {
+                PlayerState playerState = obj.GetComponent<PlayerState>();
+                //Debug.Log(playerState);
+                if (playerState != null && playerState.State == PlayerState.playerState.Die)
+                {
+                    //Debug.Log("플레이어가 사망 상태입니다. 감지 중단.");
+                    return;
+                }
+            }
             // SoundSource 처리
             SoundSource soundSource = obj.GetComponent<SoundSource>();
             if (soundSource != null)

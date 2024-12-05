@@ -518,9 +518,12 @@ public class MonsterAI : MonoBehaviourPun
 
     public void HandlePlayerSound(float decibel,Vector3 playerPosition)
     {
-        Debug.Log($"목소리 감지 - 데시벨: {decibel}, 위치: {playerPosition}");
-        SetInvestigatePoint(playerPosition); // 조사 지점 설정
-        currentState = State.Investigate;   // 조사 상태로 전환
+        if (decibel > minDecibelToDetect)//임계값 설정
+        {
+            Debug.Log($"목소리 감지 - 데시벨: {decibel}, 위치: {playerPosition}");
+            SetInvestigatePoint(playerPosition); // 조사 지점 설정
+            currentState = State.Investigate;   // 조사 상태로 전환
+        }
         /*if (decibel > minDecibelToDetect)//임계값 설정
         {
             CanHearVoiceSource(transform);

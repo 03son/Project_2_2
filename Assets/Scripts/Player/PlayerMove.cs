@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     [SerializeField] AudioClip walkingClip;
     [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
     private PlayerCrouch playerCrouch; // PlayerCrouch 타입의 변수 선언
-
+    public SoundSource soundSource;
 
     private Player_Equip playerEquip;
     private CharacterController controller;
@@ -327,7 +327,15 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
         {
-            MonsterAI.Instance.HandleItemSound(playerPosition);
+            if (playerState != null && state == PlayerState.playerState.Die)
+                return;
+            soundSource = GetComponent<SoundSource>();
+            decibel = soundSource.GetDecibelAtDistance(transform.position);
+            if (decibel >= MonsterAI.Instance.minDecibelToDetect)
+            {
+                Debug.Log($"사운드 소스 감지: {soundSource.gameObject.name}, 데시벨: {decibel}");
+                MonsterAI.Instance.HandleItemSound(playerPosition);
+            }
         }
     }
     private void UpdateWalkingAnimation()

@@ -535,6 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!114 &1134312647876554048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,7 +907,7 @@ GameObject:
   - component: {fileID: 6336469663906377411}
   - component: {fileID: 837250356730881852}
   - component: {fileID: 1486159915252124868}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: 'Voice  '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1135,6 +1136,7 @@ MonoBehaviour:
   mic: {fileID: 6930000489596407740}
   isRecording: 0
   singleMic: 0
+  playerState: {fileID: 0}
   Microphone_Decibel_Bar: {fileID: 0}
   single: 0
 --- !u!114 &837250356730881852

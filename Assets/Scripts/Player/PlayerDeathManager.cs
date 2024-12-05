@@ -13,6 +13,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     PhotonView pv;
     private Animator animator; // Animator 추가
+    public AudioSource audioSource;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
         pv = GetComponent<PhotonView>();
         animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
+        audioSource = GetComponent<AudioSource>();
 
         GameObject[] mainCameras = GameObject.FindGameObjectsWithTag("MainCamera");
         foreach (GameObject Cam in mainCameras)

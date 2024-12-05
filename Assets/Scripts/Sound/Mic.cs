@@ -20,7 +20,8 @@ public class Mic : MonoBehaviour
     private int sampleRate = 44100; 
     private int bufferSize = 1024; 
     public bool isRecording = false; 
-    public bool singleMic = false; 
+    public bool singleMic = false;
+    public PlayerState playerState;
 
 
     [SerializeField]GameObject Microphone_Decibel_Bar; //�ΰ��� ����ũ ���ú� UI
@@ -41,6 +42,7 @@ public class Mic : MonoBehaviour
 
     void Start()
     {
+        playerState = GetComponentInParent<PlayerState>();
         if (PhotonNetwork.IsConnected)
         {
             if (!photonView.IsMine) // ���� �÷��̾ �ƴϸ� ��ũ��Ʈ ��Ȱ��ȭ
@@ -160,7 +162,11 @@ public class Mic : MonoBehaviour
 
             //Debug.Log(rms);
             //Debug.Log("Current Decibel Level: " + currentDb);
-
+            // 사망 상태인 플레이어는 소리 전송하지 않음
+            if (playerState != null && playerState.State == PlayerState.playerState.Die)
+            {
+                return;
+            }
             if (!PhotonNetwork.IsMasterClient)
             {
                 photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, currentDb, transform.position);
@@ -190,6 +196,8 @@ public class Mic : MonoBehaviour
         {
             if (MonsterAI.Instance != null)
             {
+                if (playerState != null && playerState.State == PlayerState.playerState.Die)
+                    return;
                 MonsterAI.Instance.HandlePlayerSound(decibel, playerPosition);
             }
             else
