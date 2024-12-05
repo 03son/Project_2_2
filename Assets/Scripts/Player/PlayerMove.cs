@@ -267,6 +267,43 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         controller.Move((mov + velocity) * Time.deltaTime);
 
         playerState.GetState(out state);
+
+        // 움직임 감지
+        bool isMoving = (moveX != 0 || moveZ != 0);
+
+        if (state == PlayerState.playerState.Survival && controller.isGrounded)
+        {
+            if (isMoving)
+            {
+                // 걷는 소리 재생
+                if (!walkSound.isPlaying)
+                {
+                    walkSound.Play();
+                }
+                walkSound.volume = walkVolume;
+            }
+            else
+            {
+                // 멈췄을 때 걷는 소리 중지
+                if (walkSound.isPlaying)
+                {
+                    walkSound.Stop();
+                }
+            }
+        }
+        else
+        {
+            // 생존 상태가 아니거나 움직임이 없으면 걷는 소리 중지
+            if (walkSound.isPlaying)
+            {
+                walkSound.Stop();
+            }
+        }
+
+
+        controller.Move((mov + velocity) * Time.deltaTime);
+
+        playerState.GetState(out state);
         // ���� �Ҹ� ó��
         if (state == PlayerState.playerState.Survival && (moveX != 0 || moveZ != 0) && controller.isGrounded)
         {

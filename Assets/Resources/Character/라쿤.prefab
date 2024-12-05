@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b627cbef64cd89849938657aae8e75fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 1
+  normalSpeed: 10
   crouchSpeed: -7
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6540de9aed95d9548afb71a285d02d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 3
+  jumpForce: 11
   gravity: -9.81
 --- !u!114 &9097295955767114178
 MonoBehaviour:

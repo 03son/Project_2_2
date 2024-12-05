@@ -12,6 +12,8 @@ public class PlayerDash : MonoBehaviour
     private Animator animator; // Animator 추가
     private PhotonView pv;
     private Player_Equip playerEquip; // Player_Equip 스크립트 참조
+    private PlayerState playerState; // 플레이어 상태 참조
+    private PlayerState.playerState state;
 
     void Start()
     {
@@ -20,6 +22,7 @@ public class PlayerDash : MonoBehaviour
         animator = GetComponentInChildren<Animator>(); // Animator 컴포넌트 가져오기
         pv = GetComponent<PhotonView>();
         playerEquip = GetComponent<Player_Equip>(); // Player_Equip 컴포넌트 가져오기
+        playerState = GetComponent<PlayerState>(); // PlayerState 스크립트 가져오기
     }
 
     void Update()
@@ -27,7 +30,19 @@ public class PlayerDash : MonoBehaviour
         if (!pv.IsMine && PhotonNetwork.IsConnected)
             return;
 
-        HandleMovement();
+        // 플레이어 상태 가져오기
+        playerState.GetState(out state);
+
+        // 플레이어 상태가 Survival일 때만 이동 처리
+        if (state == PlayerState.playerState.Survival)
+        {
+            HandleMovement();
+        }
+        else
+        {
+            // 상태가 Die일 경우 움직임을 멈춤
+            StopMovement();
+        }
     }
 
     private void HandleMovement()
@@ -67,5 +82,15 @@ public class PlayerDash : MonoBehaviour
             animator.SetBool("isRunning", false);
             animator.SetBool("isRunningWithItem", false);
         }
+    }
+
+    private void StopMovement()
+    {
+        // 이동을 멈추기 위해 Vector3.zero를 전달
+        controller.Move(Vector3.zero);
+
+        // 이동 관련 애니메이션 초기화
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isRunningWithItem", false);
     }
 }

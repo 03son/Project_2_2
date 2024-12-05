@@ -92,7 +92,7 @@ public class Flashlight1 : MonoBehaviour
         // 디버깅 조건 확인
         if (!isAcquired)
         {
-            Debug.Log("손전등이 아직 획득되지 않았습니다.");
+          //  Debug.Log("손전등이 아직 획득되지 않았습니다.");
             return;
         }
 
