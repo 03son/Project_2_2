@@ -45,16 +45,7 @@ public class StunGunFunction : ItemFunction, IItemFunction
     void FireStunGun()
     {
 
-        // ���� ���� ����ȭ
-        if (_PhotonItem != null && _PhotonItem.photonView != null)
-        {
-            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
-            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
-            Destroy(GetComponentInParent<Player_Equip>().Item);
-            Tesettext();
-            // _PhotonItem.photonView.("RemoveEquippedItem", RpcTarget.All, "Key");
-        }
-
+      
 
 
         // 클릭하자마자 발사 소리 재생
