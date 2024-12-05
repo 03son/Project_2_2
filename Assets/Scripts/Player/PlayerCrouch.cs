@@ -16,7 +16,7 @@ public class PlayerCrouch : MonoBehaviour
 
     PlayerState playerState;
     PlayerState.playerState state;
-    public bool isCrouching { get; private set; } = false; // 앉기 상태 변수
+   // public bool isCrouching { get; private set; } = false; // 앉기 상태 변수
 
     void Start()
     {

@@ -247,14 +247,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b627cbef64cd89849938657aae8e75fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 10
-  crouchSpeed: -7
+  normalSpeed: 3
+  crouchSpeed: 1
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
   walkSound: {fileID: 1847627266896497341}
   walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
   walkVolume: 0.25
-  soundSource: {fileID: 0}
 --- !u!114 &4959644083652688089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,7 +535,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
-  audioSource: {fileID: 0}
 --- !u!114 &1134312647876554048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +564,7 @@ MonoBehaviour:
   normalHeight: 0.17
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
+  isCrouching: 0
 --- !u!114 &2444431448682953168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,7 +888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipItem: {fileID: 0}
-  thirdPersonHand: {fileID: 0}
+  thirdPersonHand: {fileID: 9188355571707016495}
   itemForOthers: {fileID: 0}
 --- !u!1 &7518041095886509107
 GameObject:
@@ -908,7 +907,7 @@ GameObject:
   - component: {fileID: 6336469663906377411}
   - component: {fileID: 837250356730881852}
   - component: {fileID: 1486159915252124868}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: 'Voice  '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1137,7 +1136,6 @@ MonoBehaviour:
   mic: {fileID: 6930000489596407740}
   isRecording: 0
   singleMic: 0
-  playerState: {fileID: 0}
   Microphone_Decibel_Bar: {fileID: 0}
   single: 0
 --- !u!114 &837250356730881852
@@ -1183,6 +1181,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8497756325959581627}
     m_Modifications:
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.4749763
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.44292244
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.55612576
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5185956
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -86
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862201594402517478, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8299425057062917005, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
       propertyPath: m_Name
       value: "\uCE90\uB9AD\uD130\uBAA8\uB378\uB9C1"
