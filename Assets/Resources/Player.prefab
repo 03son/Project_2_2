@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchHeight: 0.05
-  normalHeight: 0.17
+  normalHeight: 0.2
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
 --- !u!114 &2444431448682953168

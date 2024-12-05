@@ -15,6 +15,9 @@ public class PlayerJump : MonoBehaviour
     PlayerState playerState;
     PlayerState.playerState state;
 
+    private bool jumpRequested = false; // 점프 요청을 저장하는 변수
+
+
     PhotonView pv;
     void Start()
     {
@@ -39,20 +42,36 @@ public class PlayerJump : MonoBehaviour
         {
             HandleJump();
         }
+
+        // 점프 키 입력 감지
+        if (Input.GetKeyDown(KeyManager.Jump_Key))
+        {
+            jumpRequested = true; // 점프 요청 저장
+        }
+
     }
 
     private void HandleJump()
     {
-        // 중력 처리 및 점프
-        if (controller.isGrounded)
-        {
-            velocity.y = -2f; // 바닥에 있을 때 약간의 중력만 적용
-            animator.SetBool("isJumping", false); // 점프 상태 해제
+        bool grounded = IsGrounded();
 
-            if (Input.GetKeyDown(KeyManager.Jump_Key))
+        // 바닥 감지 상태 출력
+        Debug.Log("IsGrounded 상태: " + grounded);
+        Debug.Log("Velocity Y 상태: " + velocity.y);
+
+        if (grounded)
+        {
+            velocity.y = -2f;
+            animator.SetBool("isJumping", false);
+
+            if (jumpRequested)
             {
                 velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-                animator.SetBool("isJumping", true); // 점프 애니메이션 실행
+                animator.SetBool("isJumping", true);
+                jumpRequested = false;
+
+                // 점프 로그
+                Debug.Log("점프 발생! Velocity Y: " + velocity.y);
             }
         }
         else
@@ -60,7 +79,21 @@ public class PlayerJump : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         }
 
-        // 캐릭터 이동 처리
         controller.Move(velocity * Time.deltaTime);
     }
+
+
+    private bool IsGrounded()
+    {
+        float groundCheckDistance = 0.2f; // 바닥 체크 거리 (기존보다 살짝 늘림)
+        Vector3 origin = transform.position + Vector3.down * (controller.height / 2 + controller.skinWidth);
+
+        // Raycast 디버그 선 추가
+        Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
+
+        return Physics.Raycast(origin, Vector3.down, groundCheckDistance);
+    }
+
+
+
 }
