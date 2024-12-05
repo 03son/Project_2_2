@@ -25,13 +25,18 @@ public class Mic : MonoBehaviour
 
     [SerializeField]GameObject Microphone_Decibel_Bar; //�ΰ��� ����ũ ���ú� UI
 
-    bool single;
+    [SerializeField] bool single;
 
     void Awake()
     {
         photonView = GetComponent<PhotonView>();
 
         Instance = this;
+
+        single = PhotonNetwork.IsConnected ? false : true;
+
+        if (single)
+            mic.volume = 0;
     }
 
     void Start()
@@ -69,20 +74,15 @@ public class Mic : MonoBehaviour
 
 
         isRecording = false;
-
-        single = PhotonNetwork.IsConnected ? false : true;
-
-        if (single)
-            mic.volume = 0;
+        recorder.enabled = false;
+        recorder.enabled = true;
     }
 
     void Update()
     {
         //����ũ off�� �� UI ���� �� = 0
         // if (!recorder.TransmitEnabled || !singleMic)
-            // Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
-
-
+        // Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
         if (Global_Microphone.UseMic == null)
             return;
 
@@ -150,11 +150,16 @@ public class Mic : MonoBehaviour
     {
         if (recorder != null && recorder.IsCurrentlyTransmitting)
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                recorder.TransmitEnabled = true;
+            }
             // ���ú� ���
             float rms = recorder.LevelMeter.CurrentAvgAmp;
             currentDb = 20 * Mathf.Log10(rms + 1e-6f) + 80; // +1e-6f�� �α� ����
 
-            // Debug.Log("Current Decibel Level: " + currentDb);
+            Debug.Log(rms);
+            Debug.Log("Current Decibel Level: " + currentDb);
 
             if (!PhotonNetwork.IsMasterClient)
             {
@@ -198,7 +203,6 @@ public class Mic : MonoBehaviour
     //����ũ ���ú��� �����̴� UI�� ����
     public void SetMicDecibel_UI()
     {
-        Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
         if (recorder.TransmitEnabled) 
         {
             //currentDb�� ���� UI�� Value ������ �°� ���� �� ����

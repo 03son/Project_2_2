@@ -159,7 +159,7 @@ public class GameSettingSetValue : MonoBehaviour
         }
         else
         {
-            Global_Microphone.UseMic = null;
+         //   Global_Microphone.UseMic = null;
         }
 
         if (PlayerPrefs.HasKey("microphoneMode"))
