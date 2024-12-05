@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalSpeed: 5
-  crouchSpeed: 2
+  crouchSpeed: 1
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
   walkSound: {fileID: 1847627266896497341}
