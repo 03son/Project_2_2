@@ -268,7 +268,7 @@ public class Player_Equip : MonoBehaviourPun
                 {
                     Debug.Log("손전등 토글 호출");
                    flashlightScript.ToggleFlashlight(); // ToggleFlashlight 메서드 호출 (RPC 포함)
-                    flashlightScript.AcquireFlashlight();
+                   flashlightScript.AcquireFlashlight();
                 }
             }
             // 유리잔 처리
