@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using Photon.Pun;
 
-public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
+public class Flashlight1 : MonoBehaviour
 {
     [SerializeField] private GameObject flashlightLight; // Spot Light 오브젝트
     private bool flashlightActive = false;
@@ -30,9 +29,7 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
     private float currentIntensity; // 현재 빛의 강도
     private float smoothTime = 5f; // 부드럽게 변화하는 시간
 
-    private PhotonView photonView;
-
-
+    
 
     private void Start()
     {
@@ -42,7 +39,7 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-          flashlightComponent = flashlightLight.GetComponentInChildren<Light>();
+            flashlightComponent = flashlightLight.GetComponent<Light>();
             flashlightComponent.intensity = intensity;
             flashlightComponent.range = range;
             flashlightLight.SetActive(false); // 시작 시 꺼진 상태
@@ -51,16 +48,6 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
         }
         cameraTransform = Camera.main.transform;
         animator = GetComponent<Animator>();
-
-
-        photonView = GetComponent<PhotonView>();
-        if (photonView == null)
-        {
-            Debug.LogError("부모 오브젝트에 PhotonView가 없습니다!");
-            return;
-        }
-
-        
     }
 
     public void AcquireFlashlight()
@@ -93,16 +80,16 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
             if (Input.GetMouseButtonDown(0) && transform.parent.name == "handitemattach")
             {
                 ToggleFlashlight();
-               
+                AdjustFlashlight();
             }
         }
-        
+        /*
         // 손전등이 활성화된 상태에서 빛 조절
         if (flashlightActive)
         {
             AdjustFlashlight();
         }
-        
+        */
     }
 
     private void LateUpdate()
@@ -115,7 +102,26 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
-     
+        if (transform.parent == null)
+        {
+            Debug.Log("손전등의 부모가 없습니다.");
+            return;
+        }
+
+        if (transform.parent.name != "handitemattach")
+        {
+            Debug.Log("손전등 부모 이름이 다릅니다: " + transform.parent.name);
+            return;
+        }
+
+        if (!flashlightActive)
+        {
+            Debug.Log("손전등이 활성화되지 않았습니다.");
+            return;
+        }
+
+        // 조건이 모두 충족된 경우
+        Debug.Log("손전등 조건 충족. LateUpdate 실행 중.");
 
         // 손전등이 획득되고, 활성화 상태이며, 올바른 부모를 가질 때만 실행
         if (isAcquired && transform.parent != null && transform.parent.name == "handitemattach" && flashlightActive)
@@ -129,8 +135,14 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
            
            
 
+            Debug.Log("손전등 위치와 회전 동기화 중: " + flashlightLight.transform.position);
+            Debug.Log("목표 위치: " + targetPosition + ", 현재 위치: " + flashlightLight.transform.position);
 
-          
+          /* // 손전등 흔들림 효과 적용
+            float shakeAmount = 1f; // 흔들림 정도
+            float noiseX = Mathf.PerlinNoise(Time.time, 0.0f) - 0.5f; // -0.5 ~ 0.5
+            float noiseY = Mathf.PerlinNoise(0.0f, Time.time) - 0.5f; // -0.5 ~ 0.5
+            flashlightLight.transform.rotation *= Quaternion.Euler(noiseX * shakeAmount, noiseY * shakeAmount, 0); */
         }
     }
 
@@ -169,37 +181,9 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
             Debug.LogWarning("손전등이 제대로 활성화되지 않았습니다.");
         }
 
-        
-
-        // RPC로 손전등 상태 동기화
-        photonView.RPC("SyncFlashlightState", RpcTarget.All, flashlightActive);
-    }
-
-   
-
-
-    [PunRPC]
-    private void SyncFlashlightState(bool isActive)
-    {
-        flashlightActive = isActive;
-        flashlightLight.SetActive(isActive);
-
-        Debug.Log("손전등 상태 동기화: " + (isActive ? "켜짐" : "꺼짐"));
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
+        if (animator != null)
         {
-            // 로컬 상태를 네트워크에 전송
-            stream.SendNext(flashlightLight.GetComponentInChildren<Light>().intensity);
-            stream.SendNext(flashlightLight.GetComponentInChildren<Light>().spotAngle);
-        }
-        else
-        {
-            // 네트워크 상태를 로컬에 반영
-            flashlightLight.GetComponentInChildren<Light>().intensity = (float)stream.ReceiveNext();
-            flashlightLight.GetComponentInChildren<Light>().spotAngle = (float)stream.ReceiveNext();
+            animator.SetBool("isFlashlightOn", flashlightActive);
         }
     }
 }
