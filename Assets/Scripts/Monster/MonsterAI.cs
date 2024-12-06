@@ -36,7 +36,6 @@ public class MonsterAI : MonoBehaviourPun
 
     PlayerState playerState;                      //PlayerState
     PlayerState.playerState state;
-    MonsterDetection monsterDetection;
 
     public enum State { Idle, Patrol, Chase, Search, Investigate };  // 상태 정의 (Idle 추가)
     public State currentState;                    // 현재 상태
@@ -66,7 +65,7 @@ public class MonsterAI : MonoBehaviourPun
         // NavMeshAgent 초기화
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>(); // Animator 초기화
-        monsterDetection = GetComponent<MonsterDetection>();
+
         //순찰 지점들의 부모 오브젝트 가져오기
         patrolParent = GameObject.Find("Points").gameObject.transform;
 
@@ -428,7 +427,6 @@ public class MonsterAI : MonoBehaviourPun
                     // 플레이어와의 사이에 장애물이 없는지 확인
                     if (hit.transform == player)
                     {
-                        monsterDetection.DetectPlayer();
                         return true;  // 플레이어가 시야 내에 있음
                     }
                 }
