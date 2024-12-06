@@ -58,6 +58,7 @@ public class ObserverCamera : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
+            playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
             NickNameText = GameObject.Find("NickNameText").GetComponent<TextMeshProUGUI>();
             NickNameText.text = PhotonNetwork.LocalPlayer.NickName;
