@@ -56,8 +56,8 @@ public class PlayerJump : MonoBehaviour
         bool grounded = IsGrounded();
 
         // 바닥 감지 상태 출력
-        //Debug.Log("IsGrounded 상태: " + grounded);
-        //Debug.Log("Velocity Y 상태: " + velocity.y);
+        Debug.Log("IsGrounded 상태: " + grounded);
+    //    Debug.Log("Velocity Y 상태: " + velocity.y);
 
         if (grounded)
         {
@@ -90,7 +90,7 @@ public class PlayerJump : MonoBehaviour
 
     private bool IsGrounded()
     {
-        float groundCheckDistance = 1f; // 바닥 체크 거리 (기존보다 살짝 늘림)
+        float groundCheckDistance = 2f; // 바닥 체크 거리 (기존보다 살짝 늘림)
         Vector3 origin = transform.position + Vector3.up * 1f;
 
         // Raycast 디버그 선 추가
