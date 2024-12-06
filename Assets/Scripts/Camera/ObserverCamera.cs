@@ -58,8 +58,6 @@ public class ObserverCamera : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-            playerObjects = GameObject.FindGameObjectsWithTag("Player");
-
             NickNameText = GameObject.Find("NickNameText").GetComponent<TextMeshProUGUI>();
             NickNameText.text = PhotonNetwork.LocalPlayer.NickName;
         }
@@ -116,23 +114,25 @@ public class ObserverCamera : MonoBehaviour
     }
     void Nextplayer(int index)
     {
+        playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
         if (!FirstRun)
             return;
+
+        if (playerObjects.Length == 1)
+        {
+            return;
+        }
 
         playerState.GetState(out state);
         if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu == false && state == PlayerState.playerState.Die)
         {
-            if (playerNumber > playerObjects.Length-1)
+            if (playerNumber > playerObjects.Length -1)
                 playerNumber = 0;
             else if (playerNumber < 0)
-                playerNumber = playerObjects.Length - 1;
+                playerNumber = playerObjects.Length -1;
 
             index = playerNumber;
-
-            if (playerObjects.Length == 1)
-            {
-                return;
-            }
 
             //해당 번호의 플레이어가 없으면 return
             if (!playerObjects[index])

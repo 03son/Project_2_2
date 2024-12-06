@@ -147,8 +147,9 @@ public class RevivePlayer : MonoBehaviourPun
         {
             Debug.Log($"타겟 플레이어: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
 
+
             // 타겟 플레이어의 상태를 서바이벌로 변경 (RPC로 처리)
-            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.Others);
+            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.Others, targetPlayer.gameObject.GetComponent<PhotonView>().Owner.ActorNumber);
 
             // 로컬에서만 Survival 메서드 호출
             if (targetPlayer.photonView.IsMine)
@@ -167,10 +168,16 @@ public class RevivePlayer : MonoBehaviourPun
 
 
     [PunRPC]
-    void SyncStateToSurvival()
+    void SyncStateToSurvival(int actorsNuber)
     {
-        playerState.State = PlayerState.playerState.Survival; // 상태 변경
-        Debug.Log("모든 클라이언트에서 Survival 상태 동기화.");
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == actorsNuber)
+            {
+                player.GetComponent<PlayerState>().State = PlayerState.playerState.Survival; // 상태 변경
+                Debug.Log("모든 클라이언트에서 Survival 상태 동기화.");
+            }
+        }
 
         // 로컬 플레이어일 경우에만 Survival 메서드 호출
         if (photonView.IsMine)
