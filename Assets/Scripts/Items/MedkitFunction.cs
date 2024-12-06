@@ -9,16 +9,20 @@ public class MedkitFunction : MonoBehaviour, IItemFunction
 
     void Update()
     {
-        if (isHolding && targetPlayer != null)
+        if (targetPlayer.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
         {
-            holdCounter += Time.deltaTime;
-
-            if (holdCounter >= holdTime)
+            if (isHolding && targetPlayer != null)
             {
-                //targetPlayer.Revive(); // 플레이어 부활
-                Debug.Log("플레이어가 부활했습니다.");
-                Destroy(gameObject); // 사용 후 구급상자 제거
-                ResetHold();
+                holdCounter += Time.deltaTime;
+
+                if (holdCounter >= holdTime)
+                {
+                    targetPlayer.Revive(); // 플레이어 부활
+                    Debug.Log("플레이어가 부활했습니다.");
+                    Destroy(gameObject); // 사용 후 구급상자 제거
+                    ResetHold();
+                    return;
+                }
             }
         }
     }

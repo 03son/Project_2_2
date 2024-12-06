@@ -16,7 +16,8 @@ public class RevivePlayer : MonoBehaviourPun
     PlayerState playerState;
     PlayerState.playerState state;
 
-
+    RaycastHit hit;
+    float MaxDistance = 5f;
     void Start()
     {
         playerState = GetComponent<PlayerState>();
@@ -40,43 +41,46 @@ public class RevivePlayer : MonoBehaviourPun
     void Update()
     {
         playerState.GetState(out state);
-        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
             return;
 
         if (targetPlayer != null)
         {
-            Debug.Log("타겟 플레이어 발견: " + targetPlayer.gameObject.name);
-
-            if (Input.GetKey(KeyManager.Interaction_Key)) // 상호작용 키 확인
+            if (targetPlayer.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
             {
-                Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
-                isHolding = true;
-                holdCounter += Time.deltaTime;
+                Debug.Log("타겟 플레이어 발견: " + targetPlayer.gameObject.name);
 
-
-                // 타임바 활성화
-                if (timerBar != null && !timerBar.gameObject.activeSelf)
+                if (Input.GetKey(KeyManager.Interaction_Key)) // 상호작용 키 확인
                 {
-                    timerBar.gameObject.SetActive(true); // 타임바 활성화
-                    Debug.Log("타임바 활성화됨");
-                }
+                    Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
+                    isHolding = true;
+                    holdCounter += Time.deltaTime;
 
-                if (timerBar != null)
-                {
-                    timerBar.fillAmount = holdCounter / holdTime; // 타이머 진행 상태 업데이트
-                    Debug.Log($"타이머 진행 중: {timerBar.fillAmount * 100}% 완료");
-                }
 
-                if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
-                {
-                    Debug.Log("부활 조건 충족. 부활 시도 중...");
-                    ReviveTargetPlayer(); // 부활 호출
-                    holdCounter = 0f; // 타이머 초기화
+                    // 타임바 활성화
+                    if (timerBar != null && !timerBar.gameObject.activeSelf)
+                    {
+                        timerBar.gameObject.SetActive(true); // 타임바 활성화
+                        Debug.Log("타임바 활성화됨");
+                    }
+
+                    if (timerBar != null)
+                    {
+                        timerBar.fillAmount = holdCounter / holdTime; // 타이머 진행 상태 업데이트
+                                                                      // Debug.Log($"타이머 진행 중: {timerBar.fillAmount * 100}% 완료");
+                    }
+
+                    if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
+                    {
+                        Debug.Log("부활 조건 충족. 부활 시도 중...");
+                        ReviveTargetPlayer(); // 부활 호출
+                        holdCounter = 0f; // 타이머 초기화
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log("인터랙션 키가 눌리지 않았습니다.");
+                else
+                {
+                    Debug.Log("인터랙션 키가 눌리지 않았습니다.");
+                }
             }
         }
         else
@@ -144,7 +148,7 @@ public class RevivePlayer : MonoBehaviourPun
             Debug.Log($"타겟 플레이어: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
 
             // 타겟 플레이어의 상태를 서바이벌로 변경 (RPC로 처리)
-            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
+            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.Others);
 
             // 로컬에서만 Survival 메서드 호출
             if (targetPlayer.photonView.IsMine)
@@ -232,6 +236,9 @@ public class RevivePlayer : MonoBehaviourPun
     {
         isHolding = false;
         holdCounter = 0f;
+
+        if(timerBar != null)
+            timerBar.fillAmount = 0;
     }
 
     private Image FindTimerBar()

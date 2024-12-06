@@ -5,7 +5,7 @@ using Photon.Pun;
 public class EnemyJumpScare : MonoBehaviourPun
 {
     public Transform enemyFacePosition; // ���� �� ��ġ�� �ٶ󺸴� Transform
-    public float zoomInDuration = 0.5f; // ���� �ð�
+    public float zoomInDuration = 2f; // ���� �ð�
     public AudioClip jumpScareSound;    // �������ɾ� ����
     public float soundVolume = 1f;      // ���� ���� (0~1)
     //public PlayerState pstate;
@@ -15,6 +15,7 @@ public class EnemyJumpScare : MonoBehaviourPun
     private Vector3 originalPosition;   // ���� ��ġ ����
     private Quaternion originalRotation; // ���� ȸ�� ����
 
+    float shakeDuration; //카메라 떨림 지속시간_ EnemyProximity 여기 꺼 사용함
     void Start()
     {
         // AudioSource �ʱ�ȭ
@@ -31,6 +32,9 @@ public class EnemyJumpScare : MonoBehaviourPun
         {
             Debug.LogError("JumpScare ���尡 �������� �ʾҽ��ϴ�. Inspector���� �߰��ϼ���.");
         }
+
+        shakeDuration = GetComponent<EnemyProximity>().shakeDuration;
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -59,7 +63,7 @@ public class EnemyJumpScare : MonoBehaviourPun
 
     void TriggerJumpScare()
     {
-        mainCamera = Camera.main;
+        mainCamera = CameraInfo.MainCam;
         if (mainCamera == null)
         {
             Debug.LogError("Main Camera�� ã�� �� �����ϴ�.");

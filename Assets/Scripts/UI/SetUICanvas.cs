@@ -10,7 +10,7 @@ public class SetUICanvas
 
     public static void OpenUI(string UIName)
     {
-        Esc.SetActive(false);
+       // Esc.SetActive(false);
         Observer.SetActive(false);
         HUD.SetActive(false);
 

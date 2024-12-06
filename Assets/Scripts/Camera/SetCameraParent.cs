@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SetCameraParent : MonoBehaviour
 {
-    private Transform cameraEmptyObject;
+    public Transform cameraEmptyObject;
 
     // Start 메서드를 IEnumerator로 수정하여 코루틴으로 사용
     IEnumerator Start()
