@@ -86,7 +86,7 @@ public class Player_Equip : MonoBehaviourPun
 
         numberKey();
         mouseWheelScroll();
-        EquipFunction();
+      //  EquipFunction();
 
         // ������ ���� ó�� (������ ���� ������)
         if (isCharging)
@@ -253,39 +253,36 @@ public class Player_Equip : MonoBehaviourPun
 
     void EquipFunction()
     {
-        // ���콺 ��Ŭ������ ��� ������ �۵�
+
+
+
+
+        // 마우스 좌클릭으로 손전등 토글
         if (Input.GetMouseButtonDown(0) && Item != null)
         {
-            // ������ ������ ó��
+            // 손전등 처리
             if (Item.name == "Flashlight")
             {
                 Flashlight1 flashlightScript = Item.GetComponent<Flashlight1>();
                 if (flashlightScript != null)
                 {
-                    Debug.Log("������ ȹ�� �� ���");
+                    Debug.Log("손전등 토글 호출");
+                   flashlightScript.ToggleFlashlight(); // ToggleFlashlight 메서드 호출 (RPC 포함)
                     flashlightScript.AcquireFlashlight();
-
-                    // ������ �ѱ�/���� ó��
-                    isFlashlightOn = !isFlashlightOn;
-                    //    flashlightScript.ToggleFlashlight(isFlashlightOn);
-
-                    // �ִϸ��̼� �Ķ���� ����
-                    animator.SetBool("isFlashlightOn", isFlashlightOn);
                 }
             }
-            // ������ ������ ó��
+            // 유리잔 처리
             else if (hasGlassCup && currentGlassCup != null && currentGlassCup.name == "GlassCup")
             {
                 StartThrowing();
             }
-            // �ٸ� ������ ó��
+            // 기타 아이템 처리
             else
             {
-                // IItemFunction �������̽��� ���� ������ ó��
                 IItemFunction itemFunction = Item.GetComponent<IItemFunction>();
                 if (itemFunction != null)
                 {
-                    Debug.Log($"{Item.name} ������ ��� ����");
+                    Debug.Log($"{Item.name} 아이템 기능 실행");
                     itemFunction.Function();
                 }
             }
@@ -300,7 +297,7 @@ public class Player_Equip : MonoBehaviourPun
             if (isFlashlightOn)
             {
                 isFlashlightOn = false;
-                animator.SetBool("isFlashlightOn", false);
+              //  animator.SetBool("isFlashlightOn", false);
             }
         }
 
@@ -308,7 +305,7 @@ public class Player_Equip : MonoBehaviourPun
         if (animator != null)
         {
             // �������� ���� �ִ� �ִϸ��̼��� �����Ͽ� ��� ������ ���� ���¸� �ʱ�ȭ
-            animator.SetBool("isFlashlightOn", false);
+         //   animator.SetBool("isFlashlightOn", false);
             animator.SetBool("isHoldingItem", false);
         }
 
