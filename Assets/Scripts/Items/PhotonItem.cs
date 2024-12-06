@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +52,23 @@ public class PhotonItem : MonoBehaviourPun
         GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", pos, Quaternion.identity);
         item.GetComponent<Rigidbody>().isKinematic = false;
     }
+
+    public void DieAllThrowItem(itemData item , float Index)//죽을 때 전부 드랍
+    {
+        if (pv.IsMine)
+        {
+            string itemName = item.dropPerfab.name;
+            v_dropPos = new Vector3(dropPos.position.x, dropPos.position.y + Index, dropPos.position.z);
+            pv.RPC("DieAllPhotonThrowItem_", RpcTarget.MasterClient, itemName, v_dropPos);
+        }
+    }
+    [PunRPC]
+    public void DieAllPhotonThrowItem_(string itemName, Vector3 pos)
+    {
+        GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemName}", pos, Quaternion.identity);
+        item.GetComponent<Rigidbody>().isKinematic = false;
+    }
+
 
     public void RemoveEquippedItem(string itemName)
     {

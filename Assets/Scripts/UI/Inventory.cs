@@ -257,6 +257,31 @@ public class Inventory : MonoBehaviour
         UpdateUI();
     }
 
+    public void DieAllDropItem() //죽을 때 인벤 아이템 전부 드랍
+    {
+        for (int Index = 0; Index < slots.Length; Index++)
+        {
+            if (slots[Index].item != null)
+            {
+                if (ui_itemSlot[Index].equipped)
+                {
+
+                }
+                ThrowItem(slots[Index].item);
+                UnEquip(Index);
+                if (PhotonNetwork.IsConnected)
+                {
+                    GetComponent<PhotonItem>().DieAllThrowItem(slots[Index].item, Index * 0.001f);
+                    GetComponent<PhotonItem>().RemoveEquippedItem(slots[Index].item.name);
+                }
+                GetComponent<Player_Equip>().ItemName.text = "";
+                slots[Index].item = null;
+                ClearSelectItemWindows();
+            }
+            UpdateUI();
+        }
+    }
+
     void ClearSelectItemWindows()
     {
         selectedItem = null;

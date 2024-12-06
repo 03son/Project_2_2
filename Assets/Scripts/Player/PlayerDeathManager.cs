@@ -123,6 +123,8 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
             Debug.Log("Death 애니메이션 발동");
         }
 
+        GetComponent<Inventory>().DieAllDropItem();//인벤토리에 모든 아이템 드랍
+
         StartCoroutine(die());
     }
 
