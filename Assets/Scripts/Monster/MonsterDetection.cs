@@ -34,11 +34,11 @@ public class MonsterDetection : MonoBehaviour
     {
         if (player != null)
         {
-            DetectPlayer();
+            //DetectPlayer();
         }
     }
 
-    void DetectPlayer()
+    public void DetectPlayer()
     {
 
         if (player == null) return;
@@ -65,6 +65,7 @@ public class MonsterDetection : MonoBehaviour
             // 경고음 쿨타임 확인
             if (Time.time >= lastWarningTime + cooldownTime)
             {
+
                 warningSound.Play();
                 lastWarningTime = Time.time; // 마지막 경고음 재생 시간 갱신
                 isWarningPlayed = true;
