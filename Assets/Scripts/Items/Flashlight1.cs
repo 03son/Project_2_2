@@ -88,7 +88,7 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                Debug.LogError("PlayerFlashlight를 찾을 수 없습니다! 경로를 확인하세요.");
+             //   Debug.LogError("PlayerFlashlight를 찾을 수 없습니다! 경로를 확인하세요.");
             }
         }
 

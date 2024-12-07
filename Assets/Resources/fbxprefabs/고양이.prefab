@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headTransform: {fileID: 5182878326418413393}
-  maxDistance: 10
+  maxDistance: 30
   minSpotAngle: 30
   maxSpotAngle: 80
-  minIntensity: 10
-  maxIntensity: 30
+  minIntensity: 20
+  maxIntensity: 40
 --- !u!114 &8965213006498990036
 MonoBehaviour:
   m_ObjectHideFlags: 0
