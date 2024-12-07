@@ -319,8 +319,6 @@ GameObject:
   - component: {fileID: 6607217315788394578}
   - component: {fileID: -3523335529485268683}
   - component: {fileID: 5936536526100464170}
-  - component: {fileID: -1514342237118668189}
-  - component: {fileID: 5525560557471475141}
   m_Layer: 12
   m_Name: "\uACE0\uC591\uC774"
   m_TagString: Player
@@ -713,12 +711,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520835399152146124}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6540de9aed95d9548afb71a285d02d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 300
+  jumpForce: 30
   gravity: -9.81
   groundCheckDistance: 0.2
   jumpBufferTime: 0.2
@@ -1033,51 +1031,6 @@ MonoBehaviour:
   equipItem: {fileID: 0}
   thirdPersonHand: {fileID: 6302879353361596314}
   itemForOthers: {fileID: 0}
---- !u!54 &-1514342237118668189
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4520835399152146124}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
---- !u!114 &5525560557471475141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4520835399152146124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd327ce1d5e21c4487f0f759e104e54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 100
-  groundCheckDistance: 0.2
-  footTransform: {fileID: 2505317215208181311}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 16384
 --- !u!1 &7107109506472368663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,42 +1397,6 @@ PrefabInstance:
     - target: {fileID: 1930366639632080744, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
       propertyPath: m_Name
       value: "\uCE90\uB9AD\uD130\uBAA8\uB378\uB9C1"
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6494481
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.76040596
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 99
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288945938743010051, guid: bfc1a016276fad443ad7fb6554fd0de7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

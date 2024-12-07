@@ -82,11 +82,7 @@ public class PlayerJump : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Vector3 origin = transform.position + Vector3.down * 0.1f; // 발밑에서 체크 시작
-
-        // Raycast 디버그 시각화
-        Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
-
-        return Physics.Raycast(origin, Vector3.down, groundCheckDistance);
+        return controller.isGrounded;
     }
+
 }

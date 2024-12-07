@@ -1073,6 +1073,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 10
   groundCheckDistance: 0.2
+  footTransform: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7518041095886509107
 GameObject:
   m_ObjectHideFlags: 0

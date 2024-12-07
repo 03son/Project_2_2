@@ -4,6 +4,7 @@ using Photon.Pun;
 
 public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
 {
+    private Light playerFlashlight; // Player 오브젝트에 있는 Light 컴포넌트
     [SerializeField] private GameObject flashlightLight; // Spot Light 오브젝트
     private bool flashlightActive = false;
     private bool isAcquired = false;
@@ -34,6 +35,19 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
 
 
 
+    private void Awake()
+    {
+        // 자식에서 Light 컴포넌트 검색
+        flashlightComponent = flashlightLight.GetComponentInChildren<Light>();
+        if (flashlightComponent == null)
+        {
+            Debug.LogError("Light 컴포넌트를 찾을 수 없습니다!");
+        }
+
+       
+    }
+
+
     private void Start()
     {
         if (flashlightLight == null)
@@ -60,7 +74,31 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
-        
+        if (playerFlashlight == null)
+        {
+            // 런타임 중에 정확한 경로로 PlayerFlashlight 오브젝트 찾기
+            Transform flashlightTransform = transform.root.Find("캐릭터모델링/mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/Head/PlayerFlashlight");
+            if (flashlightTransform != null)
+            {
+                playerFlashlight = flashlightTransform.GetComponent<Light>();
+                if (playerFlashlight == null)
+                {
+                    Debug.LogError("PlayerFlashlight 오브젝트에 Light 컴포넌트가 없습니다!");
+                }
+            }
+            else
+            {
+                Debug.LogError("PlayerFlashlight를 찾을 수 없습니다! 경로를 확인하세요.");
+            }
+        }
+
+        // 초기 설정
+        flashlightLight.SetActive(false);
+        if (playerFlashlight != null)
+        {
+            playerFlashlight.enabled = false; // PlayerFlashlight 끄기
+        }
+
     }
 
     public void AcquireFlashlight()
@@ -169,7 +207,10 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
             Debug.LogWarning("손전등이 제대로 활성화되지 않았습니다.");
         }
 
-        
+        if (playerFlashlight != null)
+        {
+            playerFlashlight.GetComponent<PlayerFlashlight>().SetFlashlightState(flashlightActive);
+        }
 
         // RPC로 손전등 상태 동기화
         photonView.RPC("SyncFlashlightState", RpcTarget.All, flashlightActive);
@@ -178,11 +219,16 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
    
 
 
+
     [PunRPC]
     private void SyncFlashlightState(bool isActive)
     {
         flashlightActive = isActive;
         flashlightLight.SetActive(isActive);
+        if (playerFlashlight != null)
+        {
+            playerFlashlight.enabled = isActive;
+        }
 
         Debug.Log("손전등 상태 동기화: " + (isActive ? "켜짐" : "꺼짐"));
     }

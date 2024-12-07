@@ -42,18 +42,26 @@ public class Flashlight2 : MonoBehaviour
         // 실제 회전값 적용
         transform.rotation = currentRotation;
 
-        // 이동 상태 확인
-        if (IsPlayerMoving())
+         if (IsPlayerMoving())
+    {
+        float noiseX = Mathf.PerlinNoise(Time.time * 5f, 0.0f) - 0.5f;
+        float noiseY = Mathf.PerlinNoise(0.0f, Time.time * 5f) - 0.5f;
+
+        float adjustedShakeAmount = shakeAmount;
+
+        if (IsPlayerRunning())
         {
-            // 흔들림 효과 적용
-            float noiseX = Mathf.PerlinNoise(Time.time * 5f, 0.0f) - 0.5f; // 속도 조정
-            float noiseY = Mathf.PerlinNoise(0.0f, Time.time * 5f) - 0.5f; // 속도 조정
-            transform.rotation *= Quaternion.Euler(noiseX * shakeAmount, noiseY * shakeAmount, 0);
-
-            Debug.Log("흔들림 적용 중!");
+            adjustedShakeAmount *= 1.5f; // 달리기 시 흔들림 강도 증가
         }
-    }
 
+        transform.rotation *= Quaternion.Euler(noiseX * adjustedShakeAmount, noiseY * adjustedShakeAmount, 0);
+        Debug.Log("흔들림 적용 중!");
+    }
+    }
+    private bool IsPlayerRunning()
+    {
+        return Input.GetKey(KeyManager.Run_Key) && IsPlayerMoving();
+    }
     private bool IsPlayerMoving()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
