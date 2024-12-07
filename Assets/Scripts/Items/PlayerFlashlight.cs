@@ -103,10 +103,18 @@ public class PlayerFlashlight : MonoBehaviourPun
     {
         if (flashlightLight != null)
         {
-            flashlightLight.enabled = isActive; // 빛 활성화/비활성화
-            Debug.Log("PlayerFlashlight 상태 변경: " + (isActive ? "켜짐" : "꺼짐"));
+            if (!photonView.IsMine) // 로컬 플레이어가 아니라면만 상태를 변경
+            {
+                flashlightLight.enabled = isActive; // 빛 활성화/비활성화
+                Debug.Log("PlayerFlashlight 상태 변경: " + (isActive ? "켜짐" : "꺼짐"));
+            }
+            else
+            {
+                Debug.Log("로컬 플레이어라서 PlayerFlashlight는 변경되지 않습니다.");
+            }
         }
     }
+
 
     [PunRPC]
     private void SyncFlashlightState(bool isActive)
