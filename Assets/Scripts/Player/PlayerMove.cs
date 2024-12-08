@@ -279,6 +279,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                     walkSound.Play();
                 }
                 walkSound.volume = walkVolume;
+                Decibel_Bar.instance.Decibel_Value(walkVolume * 1.5f);
             }
             else
             {
