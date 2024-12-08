@@ -51,11 +51,11 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
             isOpen = true;
             Debug.Log("???? ????? ??????????.");
             openDoor = true;
-            /*
+            
             _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
             Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
             Destroy(GetComponentInParent<Player_Equip>().Item);
-            */
+            
             GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
             Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
 

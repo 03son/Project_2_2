@@ -1,6 +1,8 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using TMPro;
 
 public class RevivePlayer : MonoBehaviourPun
 {
@@ -16,10 +18,15 @@ public class RevivePlayer : MonoBehaviourPun
     PlayerState playerState;
     PlayerState.playerState state;
 
+    PhotonItem _PhotonItem; 
+
+    private Player_Equip playerEquip; // Player_Equip 참조
 
     void Start()
     {
         playerState = GetComponent<PlayerState>();
+        playerEquip = GetComponent<Player_Equip>(); // Player_Equip 컴포넌트 가져오기
+
 
         // TimerBar 찾기
         timerBar = FindTimerBar();
@@ -43,7 +50,7 @@ public class RevivePlayer : MonoBehaviourPun
         if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
             return;
 
-        if (targetPlayer != null)
+        if (targetPlayer != null && playerEquip.HasEquippedMedkit()) // Medkit 장착 여부 확인
         {
             Debug.Log("타겟 플레이어 발견: " + targetPlayer.gameObject.name);
 
@@ -52,7 +59,6 @@ public class RevivePlayer : MonoBehaviourPun
                 Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
                 isHolding = true;
                 holdCounter += Time.deltaTime;
-
 
                 // 타임바 활성화
                 if (timerBar != null && !timerBar.gameObject.activeSelf)
@@ -71,6 +77,12 @@ public class RevivePlayer : MonoBehaviourPun
                 {
                     Debug.Log("부활 조건 충족. 부활 시도 중...");
                     ReviveTargetPlayer(); // 부활 호출
+                    _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+                    Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
+                    Destroy(GetComponentInParent<Player_Equip>().Item);
+
+                    GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                    Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
                     holdCounter = 0f; // 타이머 초기화
                 }
             }
@@ -81,7 +93,7 @@ public class RevivePlayer : MonoBehaviourPun
         }
         else
         {
-            //    Debug.Log("타겟 플레이어가 설정되지 않았습니다.");
+            Debug.Log("타겟 플레이어나 Medkit 없음.");
         }
 
         if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
@@ -90,7 +102,6 @@ public class RevivePlayer : MonoBehaviourPun
             {
                 timerBar.fillAmount = 0f; // 타이머 초기화
             }
-            //     Debug.Log("인터랙션 키가 떼어짐 또는 상호작용 중단됨.");
             ResetHold();
         }
     }

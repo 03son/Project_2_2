@@ -470,6 +470,21 @@ public class Player_Equip : MonoBehaviourPun
     }
 
 
+    public bool HasEquippedMedkit()
+    {
+        Transform medkitObject = equipItem.transform.Find("MedkitItem");
+        if (medkitObject != null)
+        {
+            ItemObject equippedItem = medkitObject.GetComponent<ItemObject>();
+            if (equippedItem != null && equippedItem.item.ItemName == "MedkitItem")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public bool HasEquippedKey()
     {
         Transform keyObject = equipItem.transform.Find("Key");
