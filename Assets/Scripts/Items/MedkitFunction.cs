@@ -1,50 +1,37 @@
+using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public class MedkitFunction : MonoBehaviour, IItemFunction
+public class MedkitFunction : ItemFunction, IItemFunction
 {
-    public float holdTime = 5f; // 부활할 때 필요한 시간
-    private float holdCounter = 0f;
-    private bool isHolding = false;
-    private PlayerDeathManager targetPlayer;
+    private PhotonItem _PhotonItem; // PhotonItem 참조
+    public float itemRemoveDelay = 1f; // 아이템 제거 딜레이
 
-    void Update()
+    void Start()
     {
-        if (isHolding && targetPlayer != null)
+        _PhotonItem = GetComponentInParent<PhotonItem>(); // PhotonItem 컴포넌트 가져오기
+    }
+
+    public void Function()
+    {
+        Debug.Log("Medkit 사용됨");
+        StartCoroutine(RemoveItemAfterDelay());
+    }
+
+    IEnumerator RemoveItemAfterDelay()
+    {
+        yield return new WaitForSeconds(itemRemoveDelay);
+
+        if (_PhotonItem != null && _PhotonItem.photonView != null)
         {
-            holdCounter += Time.deltaTime;
-
-            if (holdCounter >= holdTime)
-            {
-                //targetPlayer.Revive(); // 플레이어 부활
-                Debug.Log("플레이어가 부활했습니다.");
-                Destroy(gameObject); // 사용 후 구급상자 제거
-                ResetHold();
-            }
+            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
+            Destroy(GetComponentInParent<Player_Equip>().Item);
+            Tesettext();
         }
-    }
-
-    public void Function() // IItemFunction 인터페이스의 메서드 구현
-    {
-        // 이 메서드는 아이템 사용 시 호출됩니다.
-        // 예를 들어, 플레이어가 이 아이템을 사용하면 해당 기능이 동작하도록 구현할 수 있습니다.
-        Debug.Log("Medkit 사용이 시작되었습니다.");
-    }
-
-    public void StartRevive(PlayerDeathManager player)
-    {
-        targetPlayer = player;
-        isHolding = true;
-    }
-
-    public void StopRevive()
-    {
-        ResetHold();
-    }
-
-    private void ResetHold()
-    {
-        isHolding = false;
-        holdCounter = 0f;
-        targetPlayer = null;
+        else
+        {
+            Debug.LogWarning("PhotonItem 또는 Inventory가 null입니다. Medkit 제거 실패");
+        }
     }
 }

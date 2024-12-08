@@ -77,10 +77,7 @@ public class RevivePlayer : MonoBehaviourPun
                 {
                     Debug.Log("부활 조건 충족. 부활 시도 중...");
                     ReviveTargetPlayer(); // 부활 호출
-                    _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
-                    Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
-                    Destroy(GetComponentInParent<Player_Equip>().Item);
-
+                  
                     GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                     Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
                     holdCounter = 0f; // 타이머 초기화
@@ -162,6 +159,17 @@ public class RevivePlayer : MonoBehaviourPun
             {
                 Debug.Log("로컬 플레이어가 부활 처리 중...");
                 targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
+            }
+
+            // MedkitFunction 호출
+            MedkitFunction medkitFunction = playerEquip.Item.GetComponent<MedkitFunction>();
+            if (medkitFunction != null)
+            {
+                medkitFunction.Function();
+            }
+            else
+            {
+                Debug.LogWarning("MedkitFunction을 찾을 수 없습니다.");
             }
         }
         else
