@@ -70,23 +70,29 @@ public class ObserverCamera : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-            freeLookCamera = GetComponent<CinemachineFreeLook>();
-            if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu)
+            if (!GameInfo.IsGameFinish)
             {
-                if (!escMenu)
+                if (Multi_GameManager.instance.diePlayerCount != PhotonNetwork.CurrentRoom.PlayerCount)
                 {
-                    escMenu = true;
-                    LockRotation();
-                    return;
-                }
-            }
-            if(CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu == false)
-            {
-                if (escMenu)
-                {
-                    escMenu = false;
-                    UnlockRotation();
-                    return;
+                    freeLookCamera = GetComponent<CinemachineFreeLook>();
+                    if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu)
+                    {
+                        if (!escMenu)
+                        {
+                            escMenu = true;
+                            LockRotation();
+                            return;
+                        }
+                    }
+                    if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu == false)
+                    {
+                        if (escMenu)
+                        {
+                            escMenu = false;
+                            UnlockRotation();
+                            return;
+                        }
+                    }
                 }
             }
         }

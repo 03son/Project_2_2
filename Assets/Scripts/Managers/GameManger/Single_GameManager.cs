@@ -46,4 +46,9 @@ public class Single_GameManager : GameManager
 
        // Instantiate(Enemy, points[1].position, points[1].rotation);
     }
+
+    public override void PlayerDie(bool die)
+    {
+        
+    }
 }

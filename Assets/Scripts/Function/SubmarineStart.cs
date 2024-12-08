@@ -57,6 +57,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
     [PunRPC]
     public void Rpc_SubmarineStart()
     {
+        GameInfo.IsGameFinish = true;
         submarineController.StartSubmarine();
         // 3초 후 타임라인 재생
         Invoke("PlayEscapeTimeline", 3.0f);
@@ -71,8 +72,9 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
         }
         else
         {
-            Debug.LogError("PlayableDirector가 없습니다.");
+            //Debug.LogError("PlayableDirector가 없습니다.");
         }
+        Multi_GameManager.instance.StartCoroutine(Multi_GameManager.instance.GoLobby());
     }
 
     private void OnTriggerEnter(Collider other)

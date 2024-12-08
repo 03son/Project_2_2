@@ -82,6 +82,8 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RPC_Revive()
     {
+        Multi_GameManager.instance.PlayerDie(false);
+
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
@@ -113,6 +115,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
                 targetPlayer.playerState.State = PlayerState.playerState.Die; // 다른 클라이언트 동기화
             }
         }
+        Multi_GameManager.instance.PlayerDie(true);
     }
 
     void Die()
@@ -161,6 +164,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         SetUICanvas.OpenUI("HUD");
 
         _arm.SetActive(true); //팔 활성화
+
     }
 
 

@@ -115,6 +115,8 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
     #region 멀티
     static IEnumerator MultiGameLoadScene(string MapName)//멀티
     {
+        loa.PlayerNotReady();
+
         loa.startGame = false;
         loa.roomCP = new HashTable() { { "startGame", loa.startGame } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(loa.roomCP);
@@ -186,11 +188,17 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
         {
             string repeatedcom = new string('.', i);
             loa.loadingText.text = $"Loading{repeatedcom}";
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSecondsRealtime(0.3f);
            
             if (i == 4)
                 i = 0;
         }
+    }
+
+    public void PlayerNotReady()//로비에서 준비 했던 거 F로 변경
+    {
+        playerCP = new HashTable() { { "isReady", false } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerCP);
     }
 
     public override void OnRoomPropertiesUpdate(HashTable propertiesThatChanged)
@@ -205,6 +213,7 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
     void OnApplicationQuit()
     {
         Debug.Log("게임 종료");
+        GameInfo.IsGameFinish = false;
         PlayerPrefs.SetString("PlayerNickName", null);
     }
 }
