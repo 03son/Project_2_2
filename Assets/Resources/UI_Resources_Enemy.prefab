@@ -365,8 +365,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  moveSpeed: 0
-  chaseSpeed: 7
+  moveSpeed: 3
+  chaseSpeed: 4.7
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
   viewDistance: 30
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 25
-  maxShakeMagnitude: 1
+  maxShakeMagnitude: 0.1
   shakeDuration: 0.1
   shakeInterval: 0.5
   footstepSound: {fileID: 1734623120430788607}

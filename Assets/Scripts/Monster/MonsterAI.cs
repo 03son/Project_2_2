@@ -33,6 +33,7 @@ public class MonsterAI : MonoBehaviourPun
     private Mic micScript;                        // Mic 스크립트 참조
     public SoundSource[] soundSources;
     private Animator animator;                    // Animator 컴포넌트
+    MonsterDetection monsterDetection;
 
     PlayerState playerState;                      //PlayerState
     PlayerState.playerState state;
@@ -65,7 +66,7 @@ public class MonsterAI : MonoBehaviourPun
         // NavMeshAgent 초기화
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>(); // Animator 초기화
-
+        monsterDetection = GetComponent<MonsterDetection>();
         //순찰 지점들의 부모 오브젝트 가져오기
         patrolParent = GameObject.Find("Points").gameObject.transform;
 
@@ -427,6 +428,7 @@ public class MonsterAI : MonoBehaviourPun
                     // 플레이어와의 사이에 장애물이 없는지 확인
                     if (hit.transform == player)
                     {
+                        monsterDetection.DetectPlayer();
                         return true;  // 플레이어가 시야 내에 있음
                     }
                 }

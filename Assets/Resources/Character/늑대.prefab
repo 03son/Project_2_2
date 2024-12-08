@@ -230,8 +230,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.17
-  m_Radius: 0.03
+  m_Height: 0.2
+  m_Radius: 0.04
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -249,8 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b627cbef64cd89849938657aae8e75fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 3
-  crouchSpeed: 1
+  normalSpeed: 1
+  crouchSpeed: 0.3
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
   walkSound: {fileID: 1847627266896497341}
@@ -352,8 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277717513102e0f41ba5b8707352c96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 10
-  moveSpeed: 5
+  dashSpeed: 5
+  moveSpeed: 1
 --- !u!114 &3174909007707241206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2cbcb1765a6864cacb5da16ad5f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchHeight: 0.05
+  crouchHeight: 0.9
   normalHeight: 0.17
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}

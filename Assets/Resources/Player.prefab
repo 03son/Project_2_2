@@ -228,8 +228,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.17
-  m_Radius: 0.03
+  m_Height: 0.2
+  m_Radius: 0.04
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -537,6 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
   audioSource: {fileID: 0}
+  _arm: {fileID: 0}
 --- !u!114 &1134312647876554048
 MonoBehaviour:
   m_ObjectHideFlags: 0
