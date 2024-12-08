@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2cbcb1765a6864cacb5da16ad5f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchHeight: 0.9
+  crouchHeight: 0.09
   normalHeight: 0.17
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
