@@ -53,7 +53,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             if (photonItem != null && photonItem.gameObject.GetComponent<PhotonView>() != null)
             {
                 photonItem.RemoveEquippedItem(requiredItemName);
-                Inventory.instance.RemoveItem(requiredItemName);
+                Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
                 Destroy(_Player.GetComponent<Player_Equip>().Item);
                 GameObject.Find("ItemName_Text").GetComponent<TextMeshProUGUI>().text = "";
             }

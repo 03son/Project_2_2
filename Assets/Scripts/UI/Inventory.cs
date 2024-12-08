@@ -171,6 +171,19 @@ public class Inventory : MonoBehaviour
     }
 
 
+    public void RemoveSselectedItem(int Index)
+    { //현재 선택 돼 있는 UI 슬롯의 아이템을 제거
+
+        if (slots[Index].item != null)
+        {
+            slots[Index].item = null;
+            slots[Index].quantity = 0;
+            ui_itemSlot[Index].Clear();
+            UpdateUI();
+            return;
+        }
+    }
+
     public void RemoveItem(string itemName)
     {
         // 슬롯에서 아이템 제거
