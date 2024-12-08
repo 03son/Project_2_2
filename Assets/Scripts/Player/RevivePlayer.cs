@@ -127,7 +127,7 @@ public class RevivePlayer : MonoBehaviourPun
         }
         else
         {
-            Debug.Log($"Player 태그가 아님: {other.gameObject.name}");
+          //  Debug.Log($"Player 태그가 아님: {other.gameObject.name}");
         }
     }
 

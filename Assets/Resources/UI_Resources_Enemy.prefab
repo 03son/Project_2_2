@@ -122,7 +122,7 @@ Transform:
   m_GameObject: {fileID: 245539513923518613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.027, y: 0.82, z: 0.668}
+  m_LocalPosition: {x: -0.027, y: 0.82, z: 0.582}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -365,7 +365,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  moveSpeed: 3.5
+  moveSpeed: 0
   chaseSpeed: 7
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
@@ -484,7 +484,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b751f396725bf264fa11cd27d3fa16ec, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

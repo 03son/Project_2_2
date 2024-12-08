@@ -52,26 +52,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flashlight1
       objectReference: {fileID: 0}
-    - target: {fileID: 4539480228460933166, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
-      propertyPath: followSpeed
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4539480228460933166, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
-      propertyPath: shakeAmount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
-      propertyPath: m_Color.b
-      value: 0.98742133
-      objectReference: {fileID: 0}
-    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
-      propertyPath: m_Color.g
-      value: 0.98742133
-      objectReference: {fileID: 0}
-    - target: {fileID: 6887484906773862094, guid: 36ebd2dcfba25e94881c7f719c8dde66, type: 3}
-      propertyPath: m_Color.r
-      value: 0.98742133
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -304,6 +284,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7467424652750777821}
+  - {fileID: 2547761046376047292}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
