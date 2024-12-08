@@ -53,13 +53,15 @@ public class GlassCupCollisionHandler : MonoBehaviour
         {
             Instantiate(brokenGlassPrefab, transform.position, transform.rotation);
         }
+        // 몬스터들이 반응하도록 이벤트를 발생시킴
+        AlertMonsters(breakPoint);
 
         // 기존 유리컵 오브젝트 비활성화
         gameObject.SetActive(false);
     }
 
 
-    /*void AlertMonsters(Vector3 breakPoint)
+    void AlertMonsters(Vector3 breakPoint)
     {
         SoundSource soundSource = GetComponent<SoundSource>();
         // 반경 내의 모든 Collider 찾기
@@ -87,7 +89,7 @@ public class GlassCupCollisionHandler : MonoBehaviour
                 }
             }
         }
-    }*/
+    }
 
 
     // 아이템을 획득했을 때 물리 설정을 변경하는 메서드

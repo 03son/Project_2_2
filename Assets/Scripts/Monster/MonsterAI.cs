@@ -608,4 +608,6 @@ public class MonsterAI : MonoBehaviourPun
         Gizmos.color = Color.blue; // 청각 범위는 파란색으로 표시
         Gizmos.DrawWireSphere(origin, hearingRange);
     }
+
+
 }

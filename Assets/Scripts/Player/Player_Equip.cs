@@ -86,7 +86,7 @@ public class Player_Equip : MonoBehaviourPun
 
         numberKey();
         mouseWheelScroll();
-      //  EquipFunction();
+       EquipFunction();
 
         // ������ ���� ó�� (������ ���� ������)
         if (isCharging)
