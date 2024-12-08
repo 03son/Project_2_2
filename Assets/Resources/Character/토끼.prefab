@@ -204,7 +204,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1049648201170139131}
-  - {fileID: 7129476262912638145}
   - {fileID: 9189067814254076894}
   - {fileID: 1284038701674613650}
   - {fileID: 5330747849241853156}
@@ -583,6 +582,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 10.82
   gravity: -9.81
+  groundCheckDistance: 0.2
+  jumpBufferTime: 0.2
 --- !u!114 &9097295955767114178
 MonoBehaviour:
   m_ObjectHideFlags: 0

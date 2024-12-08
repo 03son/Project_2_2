@@ -583,6 +583,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 10.82
   gravity: -9.81
+  groundCheckDistance: 0.2
+  jumpBufferTime: 0.2
 --- !u!114 &9097295955767114178
 MonoBehaviour:
   m_ObjectHideFlags: 0
