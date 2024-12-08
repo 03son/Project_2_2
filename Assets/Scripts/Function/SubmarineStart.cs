@@ -34,7 +34,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
     {
         if (submarineController != null && submarineController.CanStart())
         {
-            submarineController.StartSubmarine();
+            //submarineController.StartSubmarine();
 
             Debug.Log("잠수함 탈출 시퀀스 시작!");
             if (PhotonNetwork.IsConnected)
@@ -43,6 +43,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
             }
             else
             {
+                submarineController.StartSubmarine();
                 // 3초 후 타임라인 재생
                 Invoke("PlayEscapeTimeline", 3.0f);
             }
@@ -56,6 +57,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
     [PunRPC]
     public void Rpc_SubmarineStart()
     {
+        submarineController.StartSubmarine();
         // 3초 후 타임라인 재생
         Invoke("PlayEscapeTimeline", 3.0f);
     }
@@ -64,7 +66,7 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
     {
         if (playableDirector != null)
         {
-            playableDirector.Play(); // Timeline 재생
+            //playableDirector.Play(); // Timeline 재생
             Debug.Log("탈출 타임라인 재생 시작");
         }
         else
