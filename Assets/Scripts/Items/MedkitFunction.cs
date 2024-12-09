@@ -4,17 +4,21 @@ using Photon.Pun;
 
 public class MedkitFunction : ItemFunction, IItemFunction
 {
-    private PhotonItem _PhotonItem; // PhotonItem ����
-    public float itemRemoveDelay = 1f; // ������ ���� ������
+    private PhotonItem _photonItem; // PhotonItem 참조
+    public float itemRemoveDelay = 1f; // 아이템 제거 딜레이
+    public GameObject targetPlayer; // 대상 플레이어
+    public bool isHolding = false; // 홀드 상태
+    public float holdTime = 2.5f; // 부활을 위한 홀드 시간
+    private float holdCounter = 0f; // 홀드 타이머
 
     void Start()
     {
-        _PhotonItem = GetComponentInParent<PhotonItem>(); // PhotonItem ������Ʈ ��������
+        _photonItem = GetComponentInParent<PhotonItem>(); // PhotonItem 컴포넌트 가져오기
     }
 
     public void Function()
     {
-        Debug.Log("Medkit ����");
+        Debug.Log("Medkit 사용");
         StartCoroutine(RemoveItemAfterDelay());
     }
 
@@ -22,31 +26,46 @@ public class MedkitFunction : ItemFunction, IItemFunction
     {
         yield return new WaitForSeconds(itemRemoveDelay);
 
-        if (_PhotonItem != null && _PhotonItem.photonView != null)
+        if (_photonItem != null && _photonItem.photonView != null)
         {
-            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+            // Photon 아이템 제거 로직
+            _photonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
             Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
             Destroy(GetComponentInParent<Player_Equip>().Item);
-            Tesettext();
         }
         else
         {
-            Debug.LogWarning("PhotonItem �Ǵ� Inventory�� null�Դϴ�. Medkit ���� ����");
-        if (targetPlayer.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
+            Debug.LogWarning("PhotonItem 또는 Inventory가 null입니다. Medkit 제거 실패");
+        }
+    }
+
+    void Update()
+    {
+        // 플레이어 부활 로직
+        if (targetPlayer != null && targetPlayer.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
         {
-            if (isHolding && targetPlayer != null)
+            if (isHolding)
             {
                 holdCounter += Time.deltaTime;
 
                 if (holdCounter >= holdTime)
                 {
-                    targetPlayer.Revive(); // �÷��̾� ��Ȱ
-                    Debug.Log("�÷��̾ ��Ȱ�߽��ϴ�.");
-                    Destroy(gameObject); // ��� �� ���޻��� ����
+                    targetPlayer.GetComponent<PlayerState>().Revive(); // 플레이어 부활
+                    Debug.Log("플레이어가 부활했습니다.");
+                    Destroy(gameObject); // Medkit 제거
                     ResetHold();
-                    return;
                 }
             }
+            else
+            {
+                ResetHold();
+            }
         }
+    }
+
+    private void ResetHold()
+    {
+        holdCounter = 0f;
+        isHolding = false;
     }
 }
