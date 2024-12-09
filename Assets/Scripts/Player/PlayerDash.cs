@@ -61,7 +61,7 @@ public class PlayerDash : MonoBehaviour
 
         if (!GetComponent<PlayerMove>().playerCrouch.isCrouching && Input.GetKey(KeyManager.Run_Key))
         {
-            Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 2);
+            Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 2 , false);
         }
 
         // 이동 처리

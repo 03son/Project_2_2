@@ -66,7 +66,7 @@ public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
             if (audioSource != null && openSound != null)
             {
                 audioSource.PlayOneShot(openSound);
-                Decibel_Bar.instance.Decibel_Value(audioSource.volume);
+                Decibel_Bar.instance.Decibel_Value(audioSource.volume, false);
             }
         }
     }
@@ -79,7 +79,7 @@ public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
             if (audioSource != null && closeSound != null)
             {
                 audioSource.PlayOneShot(closeSound);
-                Decibel_Bar.instance.Decibel_Value(audioSource.volume);
+                Decibel_Bar.instance.Decibel_Value(audioSource.volume,false);
             }
             if (animator != null)
             {

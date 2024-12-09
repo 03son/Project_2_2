@@ -21,8 +21,18 @@ public class Decibel_Bar : MonoBehaviour
         decibelBar.value -= 0.06f;
     }
 
-    public void Decibel_Value(float decibel)
+    public void Decibel_Value(float decibel, bool micDecibel)
     {
-        decibelBar.value = decibel;
+        if (!micDecibel && decibelBar.value <= decibel)
+        {
+            decibelBar.value = decibel;
+            return;
+        }
+        else if(decibelBar.value <= decibel)
+        {
+            decibelBar.value = decibel;
+            return;
+
+        }
     }
 }
