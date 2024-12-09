@@ -23,6 +23,8 @@ public class UI_Button : UI_Popup
 
     public string PlayerNickName;
 
+   public GameObject room;
+
     public enum GameObjects
     {
         MainScreenButtons
@@ -48,8 +50,10 @@ public class UI_Button : UI_Popup
     {
         return (Buttons)Enum.Parse(typeof(Buttons), buttons);
     }
+
     void Start()
     {
+        Cursor.lockState =  CursorLockMode.None;
         Init();
     }
 
@@ -121,6 +125,9 @@ public class UI_Button : UI_Popup
         //닉네임이 지정 돼 있으면 닉네임 입력 화면은 false, 닉네임이 없으면 true
         setPlayerNickName.SetActive(PhotonManager.instance.PlayerNickName == null ? true : false);
         Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(PhotonManager.instance.PlayerNickName != null ? true : false);
+
+        if (GameInfo.IsGameFinish == true)
+            IsGameFinish();
     }
     
     //싱글, 멀티, 설정, 종료 이벤트
@@ -203,6 +210,17 @@ public class UI_Button : UI_Popup
         //로고 띄우기
         GetImage((int)Images.Logo_Image).gameObject.GetComponent<Image>().enabled = true;
     }
+
+    //멀티에서 게임이 끝났을 경우(오버 or 클리어) 로비방 화면을 보여줌
+    void IsGameFinish()
+    {
+        //메인화면 버튼 오브젝트 비활성화
+        Get<GameObject>((int)GameObjects.MainScreenButtons).SetActive(false);
+        Get<TMP_Text>((int)Texts.PlayerNickName_Text).gameObject.SetActive(false);
+
+        room.SetActive(true);
+    }
+
     //게임 종료
     void GameExit()
     {

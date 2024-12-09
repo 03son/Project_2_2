@@ -41,6 +41,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         start_testversion.gameObject.AddUIEvent(start_test);
+
+        if (GameInfo.IsGameFinish == true)
+        {
+            SetRoomName();
+            StartCoroutine(playerList());
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+        }
     }
 
     void start_test(PointerEventData button) //테스트용 시작버튼(인원 상관X)
@@ -68,7 +75,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     IEnumerator playerList()
     {
-        yield return new WaitForSecondsRealtime(0.01f);
+        yield return new WaitForSecondsRealtime(0.001f);
         UpdatePlayerList();
     }
 

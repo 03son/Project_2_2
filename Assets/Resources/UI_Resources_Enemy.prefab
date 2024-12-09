@@ -482,7 +482,7 @@ AudioSource:
   m_GameObject: {fileID: 4984942339017157801}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5422601603934255707, guid: 541f7f4af9c4fb54bb2ccf65bac3b0d0, type: 2}
   m_audioClip: {fileID: 8300000, guid: b751f396725bf264fa11cd27d3fa16ec, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -607,11 +607,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 25
-  maxShakeMagnitude: 1
+  maxShakeMagnitude: 0.1
   shakeDuration: 0.1
   shakeInterval: 0.5
   footstepSound: {fileID: 1734623120430788607}
   mstate: {fileID: 0}
+  isShaking: 0
 --- !u!114 &4095838919260284907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,7 +638,7 @@ AudioSource:
   m_GameObject: {fileID: 4984942339017157801}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5422601603934255707, guid: 541f7f4af9c4fb54bb2ccf65bac3b0d0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 09692a45bea3842409653d201ee08608, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

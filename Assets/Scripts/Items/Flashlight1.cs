@@ -213,7 +213,7 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         // RPC로 손전등 상태 동기화
-        photonView.RPC("SyncFlashlightState", RpcTarget.All, flashlightActive);
+        //photonView.RPC("SyncFlashlightState", RpcTarget.All, flashlightActive);
     }
 
    

@@ -59,6 +59,11 @@ public class PlayerDash : MonoBehaviour
         // 이동 속도 결정 (Shift 키를 누르고 있을 때만 스프린트 속도로 이동)
         float speed = (Input.GetKey(KeyManager.Run_Key) && direction.magnitude > 0) ? dashSpeed : moveSpeed;
 
+        if (!GetComponent<PlayerMove>().playerCrouch.isCrouching && Input.GetKey(KeyManager.Run_Key))
+        {
+            Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 2 , false);
+        }
+
         // 이동 처리
         controller.Move(direction * speed * Time.deltaTime);
 

@@ -34,11 +34,11 @@ public class MonsterDetection : MonoBehaviour
     {
         if (player != null)
         {
-            DetectPlayer();
+            //DetectPlayer();
         }
     }
 
-    void DetectPlayer()
+    public void DetectPlayer()
     {
 
         if (player == null) return;

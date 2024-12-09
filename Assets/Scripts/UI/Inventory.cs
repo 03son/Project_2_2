@@ -171,6 +171,19 @@ public class Inventory : MonoBehaviour
     }
 
 
+    public void RemoveSselectedItem(int Index)
+    { //현재 선택 돼 있는 UI 슬롯의 아이템을 제거
+
+        if (slots[Index].item != null)
+        {
+            slots[Index].item = null;
+            slots[Index].quantity = 0;
+            ui_itemSlot[Index].Clear();
+            UpdateUI();
+            return;
+        }
+    }
+
     public void RemoveItem(string itemName)
     {
         // 슬롯에서 아이템 제거
@@ -255,6 +268,31 @@ public class Inventory : MonoBehaviour
             ClearSelectItemWindows();
         }
         UpdateUI();
+    }
+
+    public void DieAllDropItem() //죽을 때 인벤 아이템 전부 드랍
+    {
+        for (int Index = 0; Index < slots.Length; Index++)
+        {
+            if (slots[Index].item != null)
+            {
+                if (ui_itemSlot[Index].equipped)
+                {
+
+                }
+                ThrowItem(slots[Index].item);
+                UnEquip(Index);
+                if (PhotonNetwork.IsConnected)
+                {
+                    GetComponent<PhotonItem>().DieAllThrowItem(slots[Index].item, Index * 0.001f);
+                    GetComponent<PhotonItem>().RemoveEquippedItem(slots[Index].item.name);
+                }
+                GetComponent<Player_Equip>().ItemName.text = "";
+                slots[Index].item = null;
+                ClearSelectItemWindows();
+            }
+            UpdateUI();
+        }
     }
 
     void ClearSelectItemWindows()

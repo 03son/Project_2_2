@@ -4,17 +4,17 @@ using Photon.Pun;
 
 public class MedkitFunction : ItemFunction, IItemFunction
 {
-    private PhotonItem _PhotonItem; // PhotonItem ÂüÁ¶
-    public float itemRemoveDelay = 1f; // ¾ÆÀÌÅÛ Á¦°Å µô·¹ÀÌ
+    private PhotonItem _PhotonItem; // PhotonItem ï¿½ï¿½ï¿½ï¿½
+    public float itemRemoveDelay = 1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     void Start()
     {
-        _PhotonItem = GetComponentInParent<PhotonItem>(); // PhotonItem ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        _PhotonItem = GetComponentInParent<PhotonItem>(); // PhotonItem ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
     public void Function()
     {
-        Debug.Log("Medkit »ç¿ëµÊ");
+        Debug.Log("Medkit ï¿½ï¿½ï¿½ï¿½");
         StartCoroutine(RemoveItemAfterDelay());
     }
 
@@ -31,7 +31,22 @@ public class MedkitFunction : ItemFunction, IItemFunction
         }
         else
         {
-            Debug.LogWarning("PhotonItem ¶Ç´Â Inventory°¡ nullÀÔ´Ï´Ù. Medkit Á¦°Å ½ÇÆÐ");
+            Debug.LogWarning("PhotonItem ï¿½Ç´ï¿½ Inventoryï¿½ï¿½ nullï¿½Ô´Ï´ï¿½. Medkit ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+        if (targetPlayer.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
+        {
+            if (isHolding && targetPlayer != null)
+            {
+                holdCounter += Time.deltaTime;
+
+                if (holdCounter >= holdTime)
+                {
+                    targetPlayer.Revive(); // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½È°
+                    Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½È°ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
+                    Destroy(gameObject); // ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Þ»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    ResetHold();
+                    return;
+                }
+            }
         }
     }
 }

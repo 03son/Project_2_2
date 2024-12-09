@@ -10,14 +10,18 @@ public class ArmBob : MonoBehaviour
     private Vector3 originalPosition; // 팔의 초기 위치
     private float timer = 0f;
 
+    [SerializeField] GameObject m_Player; //플레이어
     void Start()
     {
         // 팔 모델의 초기 위치 저장
         originalPosition = armsTransform.localPosition;
+
+        m_Player = GetComponentInParent<Camera>().gameObject.GetComponentInParent<Transform>().gameObject.GetComponentInParent<PlayerState>().gameObject;
     }
 
     void Update()
     {
+        /*
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
@@ -36,6 +40,20 @@ public class ArmBob : MonoBehaviour
                 }
             }
         }
+        */
+
+        if (gameObject.activeSelf == true)
+        {
+            if (m_Player.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(true);
+            }
+        }
+        
         // 걷기나 달리기 상태에 따라 흔들림 효과 적용
         if (IsMoving())
         {
@@ -55,7 +73,6 @@ public class ArmBob : MonoBehaviour
             armsTransform.localPosition = originalPosition;
         }
     }
-
     // 움직임 상태를 확인하는 함수 (단순한 예)
     private bool IsMoving()
     {

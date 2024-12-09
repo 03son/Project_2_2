@@ -15,6 +15,8 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     private Animator animator; // Animator 추가
     public AudioSource audioSource;
 
+    [SerializeField] GameObject _arm;
+
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
@@ -46,6 +48,16 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         CameraInfo.UseMainCam();
     }
 
+    IEnumerator Start()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
+        foreach (ArmBob armbob in GetComponentsInChildren<ArmBob>())
+        {
+            _arm = armbob.gameObject;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // 플레이어 상태가 이미 사망 상태라면 이벤트 무시
@@ -63,7 +75,24 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void Revive() //살아난 후 상태 동기화
+    {
+        pv.RPC("RPC_Revive", RpcTarget.All);
+    }
+    [PunRPC]
+    public void RPC_Revive()
+    {
+        Multi_GameManager.instance.PlayerDie(false);
 
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                player.GetComponent<Animator>().SetTrigger("Survival");
+                player.GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
+            }
+        }
+    }
 
     [PunRPC]
     void SyncDieState(int actorNumber)
@@ -86,6 +115,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
                 targetPlayer.playerState.State = PlayerState.playerState.Die; // 다른 클라이언트 동기화
             }
         }
+        Multi_GameManager.instance.PlayerDie(true);
     }
 
     void Die()
@@ -95,6 +125,8 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
             animator.SetTrigger("Death"); // Death 애니메이션 트리거 발동
             Debug.Log("Death 애니메이션 발동");
         }
+
+        GetComponent<Inventory>().DieAllDropItem();//인벤토리에 모든 아이템 드랍
 
         StartCoroutine(die());
     }
@@ -129,7 +161,10 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
         // UI 복구
         CameraInfo.UseMainCam(); // 메인 카메라 활성화
-        SetUICanvas.OpenUI("HUD"); // HUD UI 활성화
+        SetUICanvas.OpenUI("HUD");
+
+        _arm.SetActive(true); //팔 활성화
+
     }
 
 

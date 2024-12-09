@@ -56,6 +56,8 @@ public class Room : UI_Popup
     }
     void ExitRoom()
     {
+        GameInfo.IsGameFinish = false;
+
         //룸에서 나가기
         PhotonManager.instance.leaveRoom();
 

@@ -53,7 +53,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             if (photonItem != null && photonItem.gameObject.GetComponent<PhotonView>() != null)
             {
                 photonItem.RemoveEquippedItem(requiredItemName);
-                Inventory.instance.RemoveItem(requiredItemName);
+                Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
                 Destroy(_Player.GetComponent<Player_Equip>().Item);
                 GameObject.Find("ItemName_Text").GetComponent<TextMeshProUGUI>().text = "";
             }
@@ -77,6 +77,7 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
         // GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{attachedItemPrefab.name}", transform.position, transform.rotation);
         GameObject Item_ = Resources.Load<GameObject>($"Prefabs/Items/{attachedItemPrefab.name}");
         GameObject item = Instantiate(Item_, transform.position, transform.rotation);
+        item.layer = 0;
         item.GetComponent<Rigidbody>().isKinematic = true;
         isAttached = true;
 

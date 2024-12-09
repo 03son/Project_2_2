@@ -213,9 +213,13 @@ public class Mic : MonoBehaviour
     {
         if (recorder.TransmitEnabled) 
         {
+
+            Microphone_Decibel_Bar.GetComponent<Decibel_Bar>().Decibel_Value(Mathf.InverseLerp(30, 60, (int)currentDb) , true);
             //currentDb�� ���� UI�� Value ������ �°� ���� �� ����
-            Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
-          //  Debug.Log("UI ���ú� ��" + Mathf.InverseLerp(30, 60, (int)currentDb));
+            
+            //Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
+          
+            //  Debug.Log("UI ���ú� ��" + Mathf.InverseLerp(30, 60, (int)currentDb));
         }
     }
 }

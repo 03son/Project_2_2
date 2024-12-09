@@ -21,6 +21,7 @@ public class InGameUI : MonoBehaviour
         SetUICanvas.Observer = GameObject.Find("Observer_Canvas");
 
         SetUICanvas.OpenUI("HUD");
+        SetUICanvas.Esc.SetActive(false);
     }
 
     void Update()

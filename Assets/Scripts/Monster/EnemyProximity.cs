@@ -12,7 +12,7 @@ public class EnemyProximity : MonoBehaviour
     public MonsterAI mstate;
 
     private CameraShake cameraShake;
-    private bool isShaking = false;
+    public bool isShaking = false;
 
     void Start()
     {
@@ -27,7 +27,8 @@ public class EnemyProximity : MonoBehaviour
         if (playerObject != null)
         {
             player = playerObject.transform;
-            cameraShake = player.GetComponentInChildren<CameraShake>();
+            //cameraShake = player.GetComponentInChildren<CameraShake>();
+            cameraShake = CameraInfo.MainCam.gameObject.GetComponent<CameraShake>();
 
             if (cameraShake == null)
             {
@@ -58,7 +59,7 @@ public class EnemyProximity : MonoBehaviour
             {
                 if (!isShaking)
                 {
-                    StartCoroutine(ShakeAndPlaySoundRepeatedly());
+                   StartCoroutine(ShakeAndPlaySoundRepeatedly());
                 }
                 // 거리 비례하여 진동 강도 및 발소리 볼륨 계산
                 float proximity = 1 - (distance / detectionRange); // 가까울수록 1에 가깝고, 멀수록 0에 가까움
@@ -71,7 +72,8 @@ public class EnemyProximity : MonoBehaviour
                 }
 
                 // 진동 강도를 카메라 흔들기 함수에 전달
-                cameraShake.SetShakeMagnitude(currentShakeMagnitude);
+                CameraInfo.MainCam.gameObject.GetComponent<CameraShake>().SetShakeMagnitude(currentShakeMagnitude);
+                // cameraShake.SetShakeMagnitude(currentShakeMagnitude);
             }
             else
             {
@@ -96,7 +98,7 @@ public class EnemyProximity : MonoBehaviour
             // 진동 시작
             if (cameraShake != null)
             {
-                StartCoroutine(cameraShake.Shake(shakeDuration));
+                StartCoroutine(CameraInfo.MainCam.gameObject.GetComponent<CameraShake>().Shake(shakeDuration));
             }
 
             // 발소리 재생

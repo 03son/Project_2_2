@@ -58,7 +58,6 @@ public class ObserverCamera : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-
             NickNameText = GameObject.Find("NickNameText").GetComponent<TextMeshProUGUI>();
             NickNameText.text = PhotonNetwork.LocalPlayer.NickName;
         }
@@ -71,23 +70,29 @@ public class ObserverCamera : MonoBehaviour
     {
         if (PhotonNetwork.IsConnected)
         {
-            freeLookCamera = GetComponent<CinemachineFreeLook>();
-            if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu)
+            if (!GameInfo.IsGameFinish)
             {
-                if (!escMenu)
+                if (Multi_GameManager.instance.diePlayerCount != PhotonNetwork.CurrentRoom.PlayerCount)
                 {
-                    escMenu = true;
-                    LockRotation();
-                    return;
-                }
-            }
-            if(CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu == false)
-            {
-                if (escMenu)
-                {
-                    escMenu = false;
-                    UnlockRotation();
-                    return;
+                    freeLookCamera = GetComponent<CinemachineFreeLook>();
+                    if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu)
+                    {
+                        if (!escMenu)
+                        {
+                            escMenu = true;
+                            LockRotation();
+                            return;
+                        }
+                    }
+                    if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu == false)
+                    {
+                        if (escMenu)
+                        {
+                            escMenu = false;
+                            UnlockRotation();
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -115,23 +120,25 @@ public class ObserverCamera : MonoBehaviour
     }
     void Nextplayer(int index)
     {
+        playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
         if (!FirstRun)
             return;
+
+        if (playerObjects.Length == 1)
+        {
+            return;
+        }
 
         playerState.GetState(out state);
         if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu == false && state == PlayerState.playerState.Die)
         {
-            if (playerNumber > playerObjects.Length-1)
+            if (playerNumber > playerObjects.Length -1)
                 playerNumber = 0;
             else if (playerNumber < 0)
-                playerNumber = playerObjects.Length - 1;
+                playerNumber = playerObjects.Length -1;
 
             index = playerNumber;
-
-            if (playerObjects.Length == 1)
-            {
-                return;
-            }
 
             //해당 번호의 플레이어가 없으면 return
             if (!playerObjects[index])

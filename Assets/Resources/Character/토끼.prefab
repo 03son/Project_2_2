@@ -203,6 +203,7 @@ Transform:
   m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1049648201170139131}
   - {fileID: 9189067814254076894}
   - {fileID: 1284038701674613650}
   - {fileID: 5330747849241853156}
@@ -228,8 +229,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.17
-  m_Radius: 0.03
+  m_Height: 0.2
+  m_Radius: 0.035
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -247,14 +248,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b627cbef64cd89849938657aae8e75fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 3
-  crouchSpeed: 1
+  normalSpeed: 1
+  crouchSpeed: 0.3
   mouseSpeed: 1
   cameraTransform: {fileID: 0}
   walkSound: {fileID: 1847627266896497341}
   walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
   walkVolume: 0.25
-  soundSource: {fileID: 0}
+  playerCrouch: {fileID: 0}
+  soundSource: {fileID: 7146259560285116175}
 --- !u!114 &4959644083652688089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,8 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277717513102e0f41ba5b8707352c96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 10
-  moveSpeed: 5
+  dashSpeed: 5
+  moveSpeed: 1
 --- !u!114 &3174909007707241206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +406,7 @@ AudioSource:
   m_GameObject: {fileID: 4520835399152146124}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5422601603934255707, guid: 541f7f4af9c4fb54bb2ccf65bac3b0d0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -537,6 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
   audioSource: {fileID: 0}
+  _arm: {fileID: 0}
 --- !u!114 &1134312647876554048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2cbcb1765a6864cacb5da16ad5f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crouchHeight: 0.05
+  crouchHeight: 0.09
   normalHeight: 0.17
   crouchSpeed: 0.1
   cameraTransform: {fileID: 9189067814254076894}
@@ -1372,6 +1375,17 @@ PrefabInstance:
     - target: {fileID: 4312316779286422669, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_Layer
       value: 12
+    - target: {fileID: 4223485203231624077, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0011
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223485203231624077, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0049
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223485203231624077, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0016
       objectReference: {fileID: 0}
     - target: {fileID: 4387388195530396079, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_Name

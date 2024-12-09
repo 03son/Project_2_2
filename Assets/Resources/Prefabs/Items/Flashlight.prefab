@@ -89,15 +89,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 216057c5ffd2c3240ba915c758124f1d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.86
+      value: 1.056
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 216057c5ffd2c3240ba915c758124f1d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.437
+      value: -1.1275253
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 216057c5ffd2c3240ba915c758124f1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20.385
+      value: 2.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 216057c5ffd2c3240ba915c758124f1d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -279,12 +279,12 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 1
+  Synchronization: 3
   OwnershipTransfer: 1
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 7467424652750777821}
   - {fileID: 2547761046376047292}
+  - {fileID: 7467424652750777821}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -301,19 +301,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 5
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
+    SynchronizeEnabled: 1
+    InterpolateOption: 2
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
   m_ScaleModel:

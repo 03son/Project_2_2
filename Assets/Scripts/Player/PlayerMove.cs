@@ -10,10 +10,10 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     [SerializeField] float mouseSpeed = 8f;
     [SerializeField] Transform cameraTransform;
 
-    [SerializeField] AudioSource walkSound;
+    public AudioSource walkSound;
     [SerializeField] AudioClip walkingClip;
     [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
-    private PlayerCrouch playerCrouch; // PlayerCrouch 타입의 변수 선언
+    public PlayerCrouch playerCrouch; // PlayerCrouch 타입의 변수 선언
     public SoundSource soundSource;
 
     private Player_Equip playerEquip;
@@ -279,6 +279,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                     walkSound.Play();
                 }
                 walkSound.volume = walkVolume;
+                
+                if (!playerCrouch.isCrouching)
+                    Decibel_Bar.instance.Decibel_Value(walkVolume * 1.5f , false);
             }
             else
             {
