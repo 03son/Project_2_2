@@ -59,6 +59,7 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
             audioSource.clip = fuelAddingSound;
             audioSource.loop = true; // 반복 재생
             audioSource.Play();
+            Decibel_Bar.instance.Decibel_Value(audioSource.volume);
         }
     }
 
@@ -103,6 +104,7 @@ public class FuelInteract : MonoBehaviourPun, IInteractable
             if (fuelAddedCompleteSound != null)
             {
                 audioSource.PlayOneShot(fuelAddedCompleteSound); // 완료 사운드 재생
+                Decibel_Bar.instance.Decibel_Value(audioSource.volume);
             }
         }
 

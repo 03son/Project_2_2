@@ -29,7 +29,7 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
     {
         if (openDoor == true)
         {
-            photonView.RPC("RPC_OpenDoor", RpcTarget.All); // ?? ???? ?????
+            photonView.RPC("RPC_OpenDoor", RpcTarget.All , PhotonNetwork.LocalPlayer.ActorNumber); // ?? ???? ?????
             Debug.Log("???? ???????.");
             openDoor = false;
             return;
@@ -100,7 +100,7 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
     }
 
     [PunRPC]
-    void RPC_OpenDoor()
+    void RPC_OpenDoor(int ActorNumber)
     {
         if (animator != null)
         {
