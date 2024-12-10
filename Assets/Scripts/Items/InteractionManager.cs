@@ -91,11 +91,17 @@ public class InteractionManager : MonoBehaviour
             // 상호작용 가능한 객체가 바뀌었을 때만 갱신
             if (hit.collider.gameObject != curInteractGameobject)
             {
+                if (hit.collider.gameObject.tag == "Submarine")
+                    SystemText.text = "배터리 2개와 프로펠러가 필요해 보인다.";
+                else
+                    SystemText.text = "";
+                    
                 curInteractGameobject = hit.collider.gameObject;
 
                 curInteractable = hit.collider.GetComponent<IInteractable>();
                 Crosshair.Interaction(); // 크로스헤어 상호작용 표시
             }
+
         }
         else if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask2))
         {
@@ -106,15 +112,6 @@ public class InteractionManager : MonoBehaviour
 
                 curInteractable = hit.collider.GetComponent<IInteractable>();
                 Crosshair.Interaction(); // 크로스헤어 상호작용 표시
-            }
-        }
-        else if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask15))
-        {
-            // 상호작용 가능한 객체가 바뀌었을 때만 갱신
-            if (hit.collider.gameObject != curInteractGameobject && hit.collider.gameObject.layer == layerMask15)
-            {
-                curInteractGameobject = hit.collider.gameObject;
-                SystemText.text = "배터리 2개와 프로펠러가 필요해 보인다.";
             }
         }
         else
