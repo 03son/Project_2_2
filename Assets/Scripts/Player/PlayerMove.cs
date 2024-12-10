@@ -277,11 +277,15 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                 if (!walkSound.isPlaying)
                 {
                     walkSound.Play();
+                    soundSource.baseDecibel = 50f;
                 }
                 walkSound.volume = walkVolume;
-                
+
                 if (!playerCrouch.isCrouching)
-                    Decibel_Bar.instance.Decibel_Value(walkVolume * 1.5f , false);
+                {
+                    walkVolume = Random.Range(0.47f, 0.53f);
+                    Decibel_Bar.instance.Decibel_Value(walkVolume, false);
+                }
             }
             else
             {

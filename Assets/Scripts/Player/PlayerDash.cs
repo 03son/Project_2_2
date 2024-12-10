@@ -14,9 +14,11 @@ public class PlayerDash : MonoBehaviour
     private Player_Equip playerEquip; // Player_Equip 스크립트 참조
     private PlayerState playerState; // 플레이어 상태 참조
     private PlayerState.playerState state;
+    SoundSource soundSource;
 
     void Start()
     {
+        soundSource = GetComponent<SoundSource>();
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
         animator = GetComponentInChildren<Animator>(); // Animator 컴포넌트 가져오기
@@ -61,7 +63,8 @@ public class PlayerDash : MonoBehaviour
 
         if (!GetComponent<PlayerMove>().playerCrouch.isCrouching && Input.GetKey(KeyManager.Run_Key))
         {
-            Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 2 , false);
+            soundSource.baseDecibel = 80f;
+            Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 1.8f , false);
         }
 
         // 이동 처리
