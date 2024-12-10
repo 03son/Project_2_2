@@ -6444,7 +6444,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.179076, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &153259186
 MeshRenderer:
@@ -18112,7 +18112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6397371671507174664, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6356913587118103637, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -19916,6 +19916,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4352323365655014898, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 681271210}
+    - targetCorrespondingSourceObject: {fileID: 4352323365655014898, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 681271211}
     - targetCorrespondingSourceObject: {fileID: -6478592118100281854, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1731394418}
@@ -23267,8 +23270,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.2665232, z: 1}
+  m_Center: {x: -0.0000000030532676, y: -0.043723557, z: -1.332272e-15}
 --- !u!23 &515049950
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24593,7 +24596,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.179076, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &536177163
 MeshRenderer:
@@ -31138,8 +31141,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4352323365655014898, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
   m_PrefabInstance: {fileID: 447882547}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &681271210
-MeshCollider:
+--- !u!65 &681271210
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -31156,10 +31159,30 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8632529288174442372, guid: 10bbbdb7f3a57c44ca10a3c24adabced, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.041834563, y: 0.22716482, z: 0.12398916}
+  m_Center: {x: 0.0015428589, y: 0.07566809, z: 0.060168017}
+--- !u!65 &681271211
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681271209}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.010485695, y: 0.22402924, z: 0.11695143}
+  m_Center: {x: 0.017217292, y: 0.07534592, z: 0.18100464}
 --- !u!1 &682114919
 GameObject:
   m_ObjectHideFlags: 0
@@ -57091,6 +57114,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -8019028671651874581, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8019028671651874581, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -57307,6 +57334,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -6026004772984408981, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6026004772984408981, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -57349,6 +57380,10 @@ PrefabInstance:
     - target: {fileID: -5569082285549675881, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5569043992460113364, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5569043992460113364, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -57645,6 +57680,10 @@ PrefabInstance:
     - target: {fileID: -2040254050740271484, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -1891630423312683343, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1891630423312683343, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -58641,6 +58680,10 @@ PrefabInstance:
     - target: {fileID: 9141816029861474070, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158743094094176133, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9158743094094176133, guid: 976ac70d317d3264695ceab437590f3d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -75545,8 +75588,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.1790762, z: 1}
+  m_Center: {x: -0.000000006252552, y: -0.089538105, z: -2.6645442e-15}
 --- !u!23 &1772764804
 MeshRenderer:
   m_ObjectHideFlags: 0

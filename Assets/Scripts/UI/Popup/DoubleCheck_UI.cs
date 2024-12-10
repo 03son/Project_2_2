@@ -72,6 +72,8 @@ public class DoubleCheck_UI : UI_Popup
             {
                 if (PhotonNetwork.InRoom)
                 {
+                    GameInfo.IsGameFinish = false;
+
                     StartCoroutine(disconnect());
 
                     Debug.Log("게임 나가기");
