@@ -1,4 +1,6 @@
 using Photon.Pun;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour, IInteractable
@@ -8,6 +10,8 @@ public class ItemObject : MonoBehaviour, IInteractable
     private GlassCupThrower glassCupThrower;
 
     PhotonView PhotonView;
+
+
     void Start()
     {
         glassCupThrower = FindObjectOfType<GlassCupThrower>();
@@ -20,7 +24,6 @@ public class ItemObject : MonoBehaviour, IInteractable
             PhotonView = GetComponent<PhotonView>();
         }
     }
-
     public string GetInteractPrompt()
     {
         return string.Format("ащ╠Б {0}", item.ItemName);

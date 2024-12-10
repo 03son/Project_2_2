@@ -17,6 +17,7 @@ public class InteractionManager : MonoBehaviour
     public float maxCheckDistance; // 상호작용 최대 거리
     public LayerMask layerMask; // 상호작용 가능한 레이어
     public LayerMask layerMask2; // 상호작용 가능한 레이어
+    LayerMask layerMask15; // 상호작용 가능한 레이어
 
     private GameObject curInteractGameobject;
     private IInteractable curInteractable;
@@ -41,6 +42,8 @@ public class InteractionManager : MonoBehaviour
         playerState = GetComponent<PlayerState>();
         Crosshair = GameObject.Find("Crosshair_Image").GetComponent<Crosshair_Image>();
         camera = Camera.main;
+
+        layerMask15 = LayerMask.NameToLayer("Submarine");
 
         // Animator 컴포넌트 확인
         animator = GetComponent<Animator>();
@@ -97,6 +100,14 @@ public class InteractionManager : MonoBehaviour
 
                 curInteractable = hit.collider.GetComponent<IInteractable>();
                 Crosshair.Interaction(); // 크로스헤어 상호작용 표시
+            }
+        }
+        else if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask15))
+        {
+            if (hit.collider.name == "잠수함")
+            {
+                //텍스트
+                Debug.Log("잠수함");
             }
         }
         else
