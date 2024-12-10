@@ -365,8 +365,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  moveSpeed: 1
-  chaseSpeed: 1
+  moveSpeed: 3.5
+  chaseSpeed: 5
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
   viewDistance: 30

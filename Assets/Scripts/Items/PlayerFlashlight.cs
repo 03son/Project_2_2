@@ -7,8 +7,8 @@ public class PlayerFlashlight : MonoBehaviourPun
 
     [SerializeField] private Transform headTransform; // Head 오브젝트 참조
     [SerializeField] private float maxDistance = 10f; // 빛의 최대 거리
-    [SerializeField] private float minSpotAngle = 30f; // 최소 각도
-    [SerializeField] private float maxSpotAngle = 80f; // 최대 각도
+    [SerializeField] private float minSpotAngle = 50f; // 최소 각도
+    [SerializeField] private float maxSpotAngle = 110f; // 최대 각도
     [SerializeField] private float minIntensity = 1f; // 최소 강도
     [SerializeField] private float maxIntensity = 3f; // 최대 강도
     private float smoothTime = 0.1f; // 부드러운 변화 시간

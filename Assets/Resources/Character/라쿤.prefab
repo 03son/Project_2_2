@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: -3523335529485268683}
   - component: {fileID: 5936536526100464170}
   - component: {fileID: 2698975712252490606}
+  - component: {fileID: 6607217315788394578}
   m_Layer: 12
   m_Name: "\uB77C\uCFE4"
   m_TagString: Player
@@ -826,29 +827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc1bc991030de1a4f99315feb922acb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &6607217315788394578
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4520835399152146124}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Height: 0.2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &-3523335529485268683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,6 +896,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.05, z: 0.13}
   m_Center: {x: 0, y: 0.03, z: 0}
+--- !u!136 &6607217315788394578
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4520835399152146124}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 0.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &4916577972154980518
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,6 +1378,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8497756325959581627}
     m_Modifications:
+    - target: {fileID: 5285372639682004561, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: maxSpotAngle
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285372639682004561, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
+      propertyPath: minSpotAngle
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8299425057062917005, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
       propertyPath: m_Name
       value: "\uCE90\uB9AD\uD130\uBAA8\uB378\uB9C1"
