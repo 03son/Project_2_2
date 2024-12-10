@@ -160,5 +160,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
-  followSpeed: 25
+  followSpeed: 10
   shakeAmount: 3

@@ -86,7 +86,7 @@ public class Player_Equip : MonoBehaviourPun
 
         numberKey();
         mouseWheelScroll();
-      //  EquipFunction();
+       EquipFunction();
 
         // ������ ���� ó�� (������ ���� ������)
         if (isCharging)
@@ -462,6 +462,21 @@ public class Player_Equip : MonoBehaviourPun
         {
             ItemObject equippedItem = crowBarObject.GetComponent<ItemObject>();
             if (equippedItem != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public bool HasEquippedMedkit()
+    {
+        Transform medkitObject = equipItem.transform.Find("MedkitItem");
+        if (medkitObject != null)
+        {
+            ItemObject equippedItem = medkitObject.GetComponent<ItemObject>();
+            if (equippedItem != null && equippedItem.item.ItemName == "MedkitItem")
             {
                 return true;
             }

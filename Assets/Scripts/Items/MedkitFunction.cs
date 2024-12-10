@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MedkitFunction : MonoBehaviour, IItemFunction
 {
-    public float holdTime = 5f; // ºÎÈ°ÇÒ ¶§ ÇÊ¿äÇÑ ½Ã°£
+    public float holdTime = 5f; // ë¶€í™œí•  ë•Œ í•„ìš”í•œ ì‹œê°„
     private float holdCounter = 0f;
     private bool isHolding = false;
     private PlayerDeathManager targetPlayer;
@@ -17,9 +17,9 @@ public class MedkitFunction : MonoBehaviour, IItemFunction
 
                 if (holdCounter >= holdTime)
                 {
-                    targetPlayer.Revive(); // ÇÃ·¹ÀÌ¾î ºÎÈ°
-                    Debug.Log("ÇÃ·¹ÀÌ¾î°¡ ºÎÈ°Çß½À´Ï´Ù.");
-                    Destroy(gameObject); // »ç¿ë ÈÄ ±¸±Ş»óÀÚ Á¦°Å
+                    targetPlayer.Revive(); // í”Œë ˆì´ì–´ ë¶€í™œ
+                    Debug.Log("í”Œë ˆì´ì–´ê°€ ë¶€í™œí–ˆìŠµë‹ˆë‹¤.");
+                    Destroy(gameObject); // ì‚¬ìš© í›„ êµ¬ê¸‰ìƒì ì œê±°
                     ResetHold();
                     return;
                 }
@@ -27,11 +27,11 @@ public class MedkitFunction : MonoBehaviour, IItemFunction
         }
     }
 
-    public void Function() // IItemFunction ÀÎÅÍÆäÀÌ½ºÀÇ ¸Ş¼­µå ±¸Çö
+    public void Function() // IItemFunction ì¸í„°í˜ì´ìŠ¤ì˜ ë©”ì„œë“œ êµ¬í˜„
     {
-        // ÀÌ ¸Ş¼­µå´Â ¾ÆÀÌÅÛ »ç¿ë ½Ã È£ÃâµË´Ï´Ù.
-        // ¿¹¸¦ µé¾î, ÇÃ·¹ÀÌ¾î°¡ ÀÌ ¾ÆÀÌÅÛÀ» »ç¿ëÇÏ¸é ÇØ´ç ±â´ÉÀÌ µ¿ÀÛÇÏµµ·Ï ±¸ÇöÇÒ ¼ö ÀÖ½À´Ï´Ù.
-        Debug.Log("Medkit »ç¿ëÀÌ ½ÃÀÛµÇ¾ú½À´Ï´Ù.");
+        // ì´ ë©”ì„œë“œëŠ” ì•„ì´í…œ ì‚¬ìš© ì‹œ í˜¸ì¶œë©ë‹ˆë‹¤.
+        // ì˜ˆë¥¼ ë“¤ì–´, í”Œë ˆì´ì–´ê°€ ì´ ì•„ì´í…œì„ ì‚¬ìš©í•˜ë©´ í•´ë‹¹ ê¸°ëŠ¥ì´ ë™ì‘í•˜ë„ë¡ êµ¬í˜„í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+        Debug.Log("Medkit ì‚¬ìš©ì´ ì‹œì‘ë˜ì—ˆìŠµë‹ˆë‹¤.");
     }
 
     public void StartRevive(PlayerDeathManager player)

@@ -1,39 +1,45 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using TMPro;
 
 public class RevivePlayer : MonoBehaviourPun
 {
-    public float holdTime = 5f; // ÀÔ·ÂÀ» À¯ÁöÇØ¾ß ÇÏ´Â ½Ã°£
+    public float holdTime = 5f; // ì…ë ¥ì„ ìœ ì§€í•´ì•¼ í•˜ëŠ” ì‹œê°„
     private float holdCounter = 0f;
     private bool isHolding = false;
 
-    private PlayerDeathManager targetPlayer; // Å¸°Ù ÇÃ·¹ÀÌ¾îÀÇ PlayerDeathManager
+    private PlayerDeathManager targetPlayer; // íƒ€ê²Ÿ í”Œë ˆì´ì–´ì˜ PlayerDeathManager
 
-    private Image timerBar; // TimerBarÀÇ Image ÄÄÆ÷³ÍÆ®
-    private RectTransform timerBarTransform; // TimerBarÀÇ Transform
+    private Image timerBar; // TimerBarì˜ Image ì»´í¬ë„ŒíŠ¸
+    private RectTransform timerBarTransform; // TimerBarì˜ Transform
 
     PlayerState playerState;
     PlayerState.playerState state;
 
-    RaycastHit hit;
-    float MaxDistance = 5f;
+    PhotonItem _PhotonItem;
+
+    private Player_Equip playerEquip; // Player_Equip ì°¸ì¡°
+
     void Start()
     {
         playerState = GetComponent<PlayerState>();
+        playerEquip = GetComponent<Player_Equip>(); // Player_Equip ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
 
-        // TimerBar Ã£±â
+
+        // TimerBar ì°¾ê¸°
         timerBar = FindTimerBar();
 
         if (timerBar != null)
         {
-            Debug.Log("TimerBar¸¦ ¼º°øÀûÀ¸·Î Ã£¾Ò½À´Ï´Ù.");
-            timerBar.fillAmount = 0f; // ÃÊ±âÈ­
-                                      // ¿©±â¼­ gameObject¸¦ ºñÈ°¼ºÈ­ÇÏÁö ¾ÊÀ½.
+            Debug.Log("TimerBarë¥¼ ì„±ê³µì ìœ¼ë¡œ ì°¾ì•˜ìŠµë‹ˆë‹¤.");
+            timerBar.fillAmount = 0f; // ì´ˆê¸°í™”
+                                      // ì—¬ê¸°ì„œ gameObjectë¥¼ ë¹„í™œì„±í™”í•˜ì§€ ì•ŠìŒ.
         }
         else
         {
-            Debug.LogError("TimerBar¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. UI ¼³Á¤À» È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError("TimerBarë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. UI ì„¤ì •ì„ í™•ì¸í•˜ì„¸ìš”.");
         }
     }
 
@@ -41,60 +47,61 @@ public class RevivePlayer : MonoBehaviourPun
     void Update()
     {
         playerState.GetState(out state);
-        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
             return;
 
-        if (targetPlayer != null)
+        if (targetPlayer != null && playerEquip.HasEquippedMedkit()) // Medkit ì¥ì°© ì—¬ë¶€ í™•ì¸
         {
-            if (targetPlayer.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
+            Debug.Log("íƒ€ê²Ÿ í”Œë ˆì´ì–´ ë°œê²¬: " + targetPlayer.gameObject.name);
+
+            if (Input.GetKey(KeyManager.Interaction_Key)) // ìƒí˜¸ì‘ìš© í‚¤ í™•ì¸
             {
-                Debug.Log("Å¸°Ù ÇÃ·¹ÀÌ¾î ¹ß°ß: " + targetPlayer.gameObject.name);
+                Debug.Log("ì¸í„°ë™ì…˜ í‚¤ ëˆŒë¦¼. í™€ë“œ ì§„í–‰ ì¤‘...");
+                isHolding = true;
+                holdCounter += Time.deltaTime;
 
-                if (Input.GetKey(KeyManager.Interaction_Key)) // »óÈ£ÀÛ¿ë Å° È®ÀÎ
+                // íƒ€ì„ë°” í™œì„±í™”
+                if (timerBar != null && !timerBar.gameObject.activeSelf)
                 {
-                    Debug.Log("ÀÎÅÍ·¢¼Ç Å° ´­¸². È¦µå ÁøÇà Áß...");
-                    isHolding = true;
-                    holdCounter += Time.deltaTime;
-
-
-                    // Å¸ÀÓ¹Ù È°¼ºÈ­
-                    if (timerBar != null && !timerBar.gameObject.activeSelf)
-                    {
-                        timerBar.gameObject.SetActive(true); // Å¸ÀÓ¹Ù È°¼ºÈ­
-                        Debug.Log("Å¸ÀÓ¹Ù È°¼ºÈ­µÊ");
-                    }
-
-                    if (timerBar != null)
-                    {
-                        timerBar.fillAmount = holdCounter / holdTime; // Å¸ÀÌ¸Ó ÁøÇà »óÅÂ ¾÷µ¥ÀÌÆ®
-                                                                      // Debug.Log($"Å¸ÀÌ¸Ó ÁøÇà Áß: {timerBar.fillAmount * 100}% ¿Ï·á");
-                    }
-
-                    if (holdCounter >= holdTime) // ÁöÁ¤µÈ ½Ã°£ÀÌ Áö³ª¸é ºÎÈ°
-                    {
-                        Debug.Log("ºÎÈ° Á¶°Ç ÃæÁ·. ºÎÈ° ½Ãµµ Áß...");
-                        ReviveTargetPlayer(); // ºÎÈ° È£Ãâ
-                        holdCounter = 0f; // Å¸ÀÌ¸Ó ÃÊ±âÈ­
-                    }
+                    timerBar.gameObject.SetActive(true); // íƒ€ì„ë°” í™œì„±í™”
+                    Debug.Log("íƒ€ì„ë°” í™œì„±í™”ë¨");
                 }
-                else
+
+                if (timerBar != null)
                 {
-                    Debug.Log("ÀÎÅÍ·¢¼Ç Å°°¡ ´­¸®Áö ¾Ê¾Ò½À´Ï´Ù.");
+                    timerBar.fillAmount = holdCounter / holdTime; // íƒ€ì´ë¨¸ ì§„í–‰ ìƒíƒœ ì—…ë°ì´íŠ¸
+                    Debug.Log($"íƒ€ì´ë¨¸ ì§„í–‰ ì¤‘: {timerBar.fillAmount * 100}% ì™„ë£Œ");
                 }
+
+                if (holdCounter >= holdTime) // ì§€ì •ëœ ì‹œê°„ì´ ì§€ë‚˜ë©´ ë¶€í™œ
+                {
+                    Debug.Log("ë¶€í™œ ì¡°ê±´ ì¶©ì¡±. ë¶€í™œ ì‹œë„ ì¤‘...");
+                    ReviveTargetPlayer(); // ë¶€í™œ í˜¸ì¶œ
+                    _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+                    Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
+                    Destroy(GetComponentInParent<Player_Equip>().Item);
+
+                    GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                    Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
+                    holdCounter = 0f; // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
+                }
+            }
+            else
+            {
+                Debug.Log("ì¸í„°ë™ì…˜ í‚¤ê°€ ëˆŒë¦¬ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
         }
         else
         {
-            //    Debug.Log("Å¸°Ù ÇÃ·¹ÀÌ¾î°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.Log("íƒ€ê²Ÿ í”Œë ˆì´ì–´ë‚˜ Medkit ì—†ìŒ.");
         }
 
-        if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // Å°¸¦ ¶¼°Å³ª »óÈ£ÀÛ¿ë Áß´Ü
+        if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // í‚¤ë¥¼ ë–¼ê±°ë‚˜ ìƒí˜¸ì‘ìš© ì¤‘ë‹¨
         {
             if (timerBar != null)
             {
-                timerBar.fillAmount = 0f; // Å¸ÀÌ¸Ó ÃÊ±âÈ­
+                timerBar.fillAmount = 0f; // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
             }
-            //     Debug.Log("ÀÎÅÍ·¢¼Ç Å°°¡ ¶¼¾îÁü ¶Ç´Â »óÈ£ÀÛ¿ë Áß´ÜµÊ.");
             ResetHold();
         }
     }
@@ -108,26 +115,26 @@ public class RevivePlayer : MonoBehaviourPun
             PlayerState otherPlayerState = other.GetComponent<PlayerState>();
             if (otherPlayerState != null)
             {
-                Debug.Log($"PlayerState ¹ß°ß: {other.gameObject.name}");
+                Debug.Log($"PlayerState ë°œê²¬: {other.gameObject.name}");
 
                 if (otherPlayerState.State == PlayerState.playerState.Die)
                 {
                     targetPlayer = other.GetComponent<PlayerDeathManager>();
-                    Debug.Log($"Á×Àº ÇÃ·¹ÀÌ¾î ¹ß°ß: {targetPlayer.gameObject.name}. »óÈ£ÀÛ¿ë °¡´É.");
+                    Debug.Log($"ì£½ì€ í”Œë ˆì´ì–´ ë°œê²¬: {targetPlayer.gameObject.name}. ìƒí˜¸ì‘ìš© ê°€ëŠ¥.");
                 }
                 else
                 {
-                    Debug.Log("ÇØ´ç ÇÃ·¹ÀÌ¾î´Â Á×Àº »óÅÂ°¡ ¾Æ´Ô.");
+                    Debug.Log("í•´ë‹¹ í”Œë ˆì´ì–´ëŠ” ì£½ì€ ìƒíƒœê°€ ì•„ë‹˜.");
                 }
             }
             else
             {
-                Debug.Log("PlayerState°¡ ¾ø½À´Ï´Ù.");
+                Debug.Log("PlayerStateê°€ ì—†ìŠµë‹ˆë‹¤.");
             }
         }
         else
         {
-          //  Debug.Log($"Player ÅÂ±×°¡ ¾Æ´Ô: {other.gameObject.name}");
+            //  Debug.Log($"Player íƒœê·¸ê°€ ì•„ë‹˜: {other.gameObject.name}");
         }
     }
 
@@ -145,22 +152,21 @@ public class RevivePlayer : MonoBehaviourPun
     {
         if (targetPlayer != null)
         {
-            Debug.Log($"Å¸°Ù ÇÃ·¹ÀÌ¾î: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
+            Debug.Log($"íƒ€ê²Ÿ í”Œë ˆì´ì–´: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
 
+            // íƒ€ê²Ÿ í”Œë ˆì´ì–´ì˜ ìƒíƒœë¥¼ ì„œë°”ì´ë²Œë¡œ ë³€ê²½ (RPCë¡œ ì²˜ë¦¬)
+            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
 
-            // Å¸°Ù ÇÃ·¹ÀÌ¾îÀÇ »óÅÂ¸¦ ¼­¹ÙÀÌ¹ú·Î º¯°æ (RPC·Î Ã³¸®)
-            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.Others, targetPlayer.gameObject.GetComponent<PhotonView>().Owner.ActorNumber);
-
-            // ·ÎÄÃ¿¡¼­¸¸ Survival ¸Ş¼­µå È£Ãâ
+            // ë¡œì»¬ì—ì„œë§Œ Survival ë©”ì„œë“œ í˜¸ì¶œ
             if (targetPlayer.photonView.IsMine)
             {
-                Debug.Log("·ÎÄÃ ÇÃ·¹ÀÌ¾î°¡ ºÎÈ° Ã³¸® Áß...");
-                targetPlayer.Survival(); // PlayerDeathManagerÀÇ Survival ¸Ş¼­µå È£Ãâ
+                Debug.Log("ë¡œì»¬ í”Œë ˆì´ì–´ê°€ ë¶€í™œ ì²˜ë¦¬ ì¤‘...");
+                targetPlayer.Survival(); // PlayerDeathManagerì˜ Survival ë©”ì„œë“œ í˜¸ì¶œ
             }
         }
         else
         {
-            Debug.LogError("Å¸°Ù ÇÃ·¹ÀÌ¾î°¡ nullÀÔ´Ï´Ù. ºÎÈ° Ã³¸® ½ÇÆĞ.");
+            Debug.LogError("íƒ€ê²Ÿ í”Œë ˆì´ì–´ê°€ nullì…ë‹ˆë‹¤. ë¶€í™œ ì²˜ë¦¬ ì‹¤íŒ¨.");
         }
     }
 
@@ -168,31 +174,25 @@ public class RevivePlayer : MonoBehaviourPun
 
 
     [PunRPC]
-    void SyncStateToSurvival(int actorsNuber)
+    void SyncStateToSurvival()
     {
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            if (player.GetComponent<PhotonView>().Owner.ActorNumber == actorsNuber)
-            {
-                player.GetComponent<PlayerState>().State = PlayerState.playerState.Survival; // »óÅÂ º¯°æ
-                Debug.Log("¸ğµç Å¬¶óÀÌ¾ğÆ®¿¡¼­ Survival »óÅÂ µ¿±âÈ­.");
-            }
-        }
+        playerState.State = PlayerState.playerState.Survival; // ìƒíƒœ ë³€ê²½
+        Debug.Log("ëª¨ë“  í´ë¼ì´ì–¸íŠ¸ì—ì„œ Survival ìƒíƒœ ë™ê¸°í™”.");
 
-        // ·ÎÄÃ ÇÃ·¹ÀÌ¾îÀÏ °æ¿ì¿¡¸¸ Survival ¸Ş¼­µå È£Ãâ
+        // ë¡œì»¬ í”Œë ˆì´ì–´ì¼ ê²½ìš°ì—ë§Œ Survival ë©”ì„œë“œ í˜¸ì¶œ
         if (photonView.IsMine)
         {
-            Debug.Log("·ÎÄÃ ÇÃ·¹ÀÌ¾î°¡ ºÎÈ° Ã³¸® Áß...");
+            Debug.Log("ë¡œì»¬ í”Œë ˆì´ì–´ê°€ ë¶€í™œ ì²˜ë¦¬ ì¤‘...");
 
-            // PlayerDeathManager ÀÎ½ºÅÏ½º¸¦ °¡Á®¿Í¼­ Survival ¸Ş¼­µå È£Ãâ
+            // PlayerDeathManager ì¸ìŠ¤í„´ìŠ¤ë¥¼ ê°€ì ¸ì™€ì„œ Survival ë©”ì„œë“œ í˜¸ì¶œ
             PlayerDeathManager playerDeathManager = GetComponent<PlayerDeathManager>();
             if (playerDeathManager != null)
             {
-                playerDeathManager.Survival(); // Survival ¸Ş¼­µå È£Ãâ
+                playerDeathManager.Survival(); // Survival ë©”ì„œë“œ í˜¸ì¶œ
             }
             else
             {
-                Debug.LogError("PlayerDeathManager¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogError("PlayerDeathManagerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             }
         }
     }
@@ -206,33 +206,33 @@ public class RevivePlayer : MonoBehaviourPun
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 5f)) // 5f´Â ·¹ÀÌ ±æÀÌ
+        if (Physics.Raycast(ray, out hit, 5f)) // 5fëŠ” ë ˆì´ ê¸¸ì´
         {
-            Debug.Log($"·¹ÀÌ Ãæµ¹: {hit.collider.gameObject.name}"); // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§ Ãâ·Â
+            Debug.Log($"ë ˆì´ ì¶©ëŒ: {hit.collider.gameObject.name}"); // ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ ì¶œë ¥
 
             PlayerState otherPlayerState = hit.collider.GetComponent<PlayerState>();
             if (otherPlayerState != null)
             {
-                Debug.Log("PlayerState ÄÄÆ÷³ÍÆ® ¹ß°ß."); // PlayerState°¡ ÀÖ´Â °æ¿ì Ãâ·Â
+                Debug.Log("PlayerState ì»´í¬ë„ŒíŠ¸ ë°œê²¬."); // PlayerStateê°€ ìˆëŠ” ê²½ìš° ì¶œë ¥
 
                 if (otherPlayerState.State == PlayerState.playerState.Die)
                 {
                     targetPlayer = hit.collider.GetComponent<PlayerDeathManager>();
-                    Debug.Log($"Á×Àº ÇÃ·¹ÀÌ¾î ¹ß°ß: {targetPlayer.gameObject.name}. »óÈ£ÀÛ¿ë °¡´É.");
+                    Debug.Log($"ì£½ì€ í”Œë ˆì´ì–´ ë°œê²¬: {targetPlayer.gameObject.name}. ìƒí˜¸ì‘ìš© ê°€ëŠ¥.");
                 }
                 else
                 {
-                    Debug.Log("ÇØ´ç ÇÃ·¹ÀÌ¾î´Â Á×Àº »óÅÂ°¡ ¾Æ´Ô.");
+                    Debug.Log("í•´ë‹¹ í”Œë ˆì´ì–´ëŠ” ì£½ì€ ìƒíƒœê°€ ì•„ë‹˜.");
                 }
             }
             else
             {
-                Debug.Log("PlayerState ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù.");
+                Debug.Log("PlayerState ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
             }
         }
         else
         {
-            Debug.Log("·¹ÀÌÄ³½ºÆ®°¡ ¾Æ¹«°Íµµ °¨ÁöÇÏÁö ¸øÇß½À´Ï´Ù.");
+            Debug.Log("ë ˆì´ìºìŠ¤íŠ¸ê°€ ì•„ë¬´ê²ƒë„ ê°ì§€í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
         }
     }
 
@@ -243,14 +243,11 @@ public class RevivePlayer : MonoBehaviourPun
     {
         isHolding = false;
         holdCounter = 0f;
-
-        if(timerBar != null)
-            timerBar.fillAmount = 0;
     }
 
     private Image FindTimerBar()
     {
-        // µ¿ÀûÀ¸·Î TimerBar °Ë»ö
+        // ë™ì ìœ¼ë¡œ TimerBar ê²€ìƒ‰
         GameObject hudCanvas = GameObject.Find("HUD_Canvas");
         if (hudCanvas != null)
         {

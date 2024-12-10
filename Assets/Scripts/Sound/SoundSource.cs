@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundSource : MonoBehaviour
 {
-    public float baseDecibel = 50f;  // 기본 데시벨 값
-    public float range = 20f;        // 소리의 최대 범위
+    public float baseDecibel = 100f;  // 기본 데시벨 값
+    public float range = 50f;        // 소리의 최대 범위
     public AudioSource audioSource; // 오디오 소스
 
     private void Start()
