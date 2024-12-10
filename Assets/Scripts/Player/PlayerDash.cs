@@ -5,6 +5,7 @@ public class PlayerDash : MonoBehaviour
 {
     [SerializeField] float dashSpeed = 10f;
     [SerializeField] float moveSpeed = 5f; // 기본 이동 속도 추가
+    float speed;
 
     private CharacterController controller;
     private Transform cameraTransform;
@@ -67,13 +68,26 @@ public class PlayerDash : MonoBehaviour
         direction.Normalize(); // 방향 벡터 정규화
 
         // 이동 속도 결정 (Shift 키를 누르고 있을 때만 스프린트 속도로 이동)
-        float speed = (Input.GetKey(KeyManager.Run_Key) && direction.magnitude > 0) ? dashSpeed : moveSpeed;
+        //= (Input.GetKey(KeyManager.Run_Key) && direction.magnitude > 0) ? dashSpeed : moveSpeed;
 
-        if (!GetComponent<PlayerMove>().playerCrouch.isCrouching && Input.GetKey(KeyManager.Run_Key))
+        if (!GetComponent<PlayerMove>().playerCrouch.isCrouching)
+        {
+            if (Input.GetKey(KeyManager.Run_Key) && direction.magnitude > 0)
+            {
+                speed = dashSpeed;
+                soundSource.baseDecibel = 80f;
+                Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 1.8f, false);
+            }
+        }
+        else 
+        {
+            speed = moveSpeed;
+        }
+        /*if (!GetComponent<PlayerMove>().playerCrouch.isCrouching && Input.GetKey(KeyManager.Run_Key))
         {
             soundSource.baseDecibel = 80f;
             Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 1.8f , false);
-        }
+        }*/
 
         // 이동 처리
         controller.Move(direction * speed * Time.deltaTime);
