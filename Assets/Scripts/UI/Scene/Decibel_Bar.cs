@@ -8,9 +8,7 @@ public class Decibel_Bar : MonoBehaviour
     public static Decibel_Bar instance;
 
     Slider decibelBar;
-    public float targetValue = 0f;  // 목표 값
-    public float smoothTime = 0.3f;  // 부드러워지는 시간
-    private float velocity = 0f;  // 현재 속도 (SmoothDamp에서 필요)
+
     bool inputDecibel = false;
     void Awake()
     {
@@ -21,8 +19,7 @@ public class Decibel_Bar : MonoBehaviour
     }
     void Update()
     {
-        //decibelBar.value -= 0.06f;
-        decibelBar.value = Mathf.SmoothDamp(decibelBar.value, targetValue, ref velocity, smoothTime);
+        decibelBar.value -= 0.06f;
     }
 
     public void Decibel_Value(float decibel, bool micDecibel)
@@ -39,6 +36,7 @@ public class Decibel_Bar : MonoBehaviour
             decibelBar.value = decibel;
             inputDecibel = false;
             return;
+
         }
     }
 
