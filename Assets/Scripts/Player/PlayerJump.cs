@@ -52,7 +52,7 @@ public class PlayerJump : MonoBehaviour
     {
         bool grounded = IsGrounded();
 
-        Debug.Log("IsGrounded 상태: " + grounded);
+        //Debug.Log("IsGrounded 상태: " + grounded);
 
         if (grounded)
         {

@@ -93,7 +93,7 @@ public class RevivePlayer : MonoBehaviourPun
         }
         else
         {
-            Debug.Log("타겟 플레이어나 Medkit 없음.");
+            //Debug.Log("타겟 플레이어나 Medkit 없음.");
         }
 
         if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
