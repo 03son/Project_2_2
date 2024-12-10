@@ -257,7 +257,7 @@ MonoBehaviour:
   walkingClip: {fileID: 8300000, guid: 3ecabf4dd7755cd49a423327947f7519, type: 3}
   walkVolume: 0.25
   playerCrouch: {fileID: 0}
-  soundSource: {fileID: 0}
+  soundSource: {fileID: 7146259560285116175}
 --- !u!114 &4959644083652688089
 MonoBehaviour:
   m_ObjectHideFlags: 0
