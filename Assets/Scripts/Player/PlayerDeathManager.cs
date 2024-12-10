@@ -77,12 +77,13 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     public void Revive() //살아난 후 상태 동기화
     {
-        pv.RPC("RPC_Revive", RpcTarget.All);
+        photonView.RPC("RPC_Revive", RpcTarget.All);
     }
     [PunRPC]
     public void RPC_Revive()
     {
         Multi_GameManager.instance.PlayerDie(false);
+        Debug.Log("멀티게임ㅁㄴㅇ");
 
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -153,6 +154,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     public void Survival()
     {
+        Revive();
         if (animator != null)
         {
             animator.SetTrigger("Survival"); // Survival 애니메이션 트리거 발동

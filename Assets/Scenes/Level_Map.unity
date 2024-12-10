@@ -47244,6 +47244,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68e22fe37ab6a6f4ca6e6195c258cf2e, type: 3}
+--- !u!1 &1137917246 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -934524236152909460, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+  m_PrefabInstance: {fileID: 1823807584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1137917247
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137917246}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2118867425003597445, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
 --- !u!1 &1140765633
 GameObject:
   m_ObjectHideFlags: 0
@@ -59232,6 +59259,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2142110634577759238, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_Name
+      value: SystemText
+      objectReference: {fileID: 0}
     - target: {fileID: 3553393526287853328, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -59255,6 +59286,10 @@ PrefabInstance:
     - target: {fileID: 3553393526287853328, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955636822620977296, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6699182393506712558, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
       propertyPath: m_Name
@@ -79529,6 +79564,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2912366781977761469, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1736923507}
+    - targetCorrespondingSourceObject: {fileID: -934524236152909460, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1137917247}
     - targetCorrespondingSourceObject: {fileID: 2809848952078490941, guid: 9315e90b3d96a8c47b0d39a7d3dcf9e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2031484516}

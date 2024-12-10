@@ -129,9 +129,10 @@ public class Multi_GameManager : GameManager
                 GameInfo.IsGameFinish = true;
             }
         }
-        else // 부활 했을 때
+        if(!die) // 부활 했을 때
         {
             diePlayerCount -= 1;
+            Debug.Log("부활");
         }
     }
 

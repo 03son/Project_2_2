@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun; // Photon 네임스페이스
 using UnityEngine.UI;
+using TMPro;
 
 public interface IInteractable
 {
@@ -22,6 +23,7 @@ public class InteractionManager : MonoBehaviour
     private GameObject curInteractGameobject;
     private IInteractable curInteractable;
     public Crosshair_Image Crosshair;
+    TextMeshProUGUI SystemText;
 
     private Camera camera;
     private PhotonView pv;
@@ -30,6 +32,10 @@ public class InteractionManager : MonoBehaviour
     private PlayerState.playerState state;
     private PlayerState playerState;
 
+    void Awake()
+    {
+        GameObject.Find("SystemText").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+    }
     void Start()
     {
         // Photon 연결 확인
@@ -38,7 +44,7 @@ public class InteractionManager : MonoBehaviour
             pv = GetComponent<PhotonView>();
             if (!pv.IsMine) return; // 자신의 객체가 아니면 실행하지 않음
         }
-
+        SystemText = GameObject.Find("SystemText").gameObject.GetComponent<TextMeshProUGUI>();
         playerState = GetComponent<PlayerState>();
         Crosshair = GameObject.Find("Crosshair_Image").GetComponent<Crosshair_Image>();
         camera = Camera.main;
@@ -104,10 +110,11 @@ public class InteractionManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask15))
         {
-            if (hit.collider.name == "잠수함")
+            // 상호작용 가능한 객체가 바뀌었을 때만 갱신
+            if (hit.collider.gameObject != curInteractGameobject && hit.collider.gameObject.layer == layerMask15)
             {
-                //텍스트
-                Debug.Log("잠수함");
+                curInteractGameobject = hit.collider.gameObject;
+                SystemText.text = "배터리 2개와 프로펠러가 필요해 보인다.";
             }
         }
         else
@@ -116,6 +123,7 @@ public class InteractionManager : MonoBehaviour
             curInteractGameobject = null;
             curInteractable = null;
             Crosshair.Not_Interaction();
+            SystemText.text = "";
         }
     }
 
