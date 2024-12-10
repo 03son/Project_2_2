@@ -15,7 +15,6 @@ public class Decibel_Bar : MonoBehaviour
         instance = this;
         decibelBar = GetComponent<Slider>();
         decibelBar.value = 0;
-        StartCoroutine(ResetDecibe());
     }
     void Update()
     {
@@ -24,33 +23,16 @@ public class Decibel_Bar : MonoBehaviour
 
     public void Decibel_Value(float decibel, bool micDecibel)
     {
-        inputDecibel = true;
         if (!micDecibel && decibelBar.value <= decibel)
         {
             decibelBar.value = decibel;
-            inputDecibel = false;
             return;
         }
         else if(decibelBar.value <= decibel)
         {
             decibelBar.value = decibel;
-            inputDecibel = false;
             return;
 
         }
-    }
-
-    IEnumerator ResetDecibe()
-    {
-        while (inputDecibel)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        while (!inputDecibel)
-        {
-            yield return new WaitForSecondsRealtime(1f);
-            decibelBar.value -= 0.05f;
-        }
-        StartCoroutine(ResetDecibe());
     }
 }
