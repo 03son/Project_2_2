@@ -203,7 +203,6 @@ Transform:
   m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1049648201170139131}
   - {fileID: 9189067814254076894}
   - {fileID: 1284038701674613650}
   - {fileID: 5330747849241853156}
@@ -693,6 +692,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: Survival
+  - Type: 4
+    SynchronizeType: 0
+    Name: isEquipped
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1372,9 +1374,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 4312316779286422669, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
-      propertyPath: m_Layer
-      value: 12
     - target: {fileID: 4223485203231624077, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0011
@@ -1386,6 +1385,10 @@ PrefabInstance:
     - target: {fileID: 4223485203231624077, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.0016
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312316779286422669, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4387388195530396079, guid: 0ce9ba11da0f3ea40b543d670a2b07e2, type: 3}
       propertyPath: m_Name
