@@ -32,6 +32,14 @@ public class DoubleCheck_UI : UI_Popup
         sceneName = SceneManager.GetActiveScene();
         DoubleCheck();
     }
+    private void Update()
+    {
+        if (gameObject.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+    }
     void DoubleCheck()
     {
         if (sceneName.name == "Main_Screen")//메인화면일 경우

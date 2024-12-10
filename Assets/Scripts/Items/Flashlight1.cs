@@ -124,7 +124,7 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
             }
             return;
         }
-        */
+        
         if (transform.parent)
         {
             // 마우스 좌클릭으로 손전등 켜기/끄기
@@ -133,7 +133,7 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
                 ToggleFlashlight();
                
             }
-        }
+        } */
         
         // 손전등이 활성화된 상태에서 빛 조절
         if (flashlightActive)
