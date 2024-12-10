@@ -32,6 +32,14 @@ public class PlayerDash : MonoBehaviour
         if (!pv.IsMine && PhotonNetwork.IsConnected)
             return;
 
+
+        // esc 메뉴가 켜져 있으면 작동 중단
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu)
+        {
+            StopMovement();
+            return;
+        }
+
         // 플레이어 상태 가져오기
         playerState.GetState(out state);
 
