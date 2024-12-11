@@ -89,35 +89,5 @@ public class SimpleDoor : MonoBehaviour, IInteractable //IPunObservable
             }
         }
     }
-    /*
-    // 상태 동기화를 위한 메서드
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            // 로컬 상태를 네트워크로 전송
-            stream.SendNext(isOpen);
-        }
-        else
-        {
-            // 네트워크 상태를 로컬에 반영
-            bool networkIsOpen = (bool)stream.ReceiveNext();
-
-            // 상태 값이 변경될 때만 처리
-            if (networkIsOpen != isOpen)
-            {
-                isOpen = networkIsOpen;
-                // 상태에 맞는 동작 실행
-                if (isOpen)
-                {
-                    OpenDoor();
-                }
-                else
-                {
-                    CloseDoor();
-                }
-            }
-        }
-    }
-    */
+  
 }
