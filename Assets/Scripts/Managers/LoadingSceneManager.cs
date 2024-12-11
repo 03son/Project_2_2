@@ -68,11 +68,6 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
     #region ½Ì±Û
     static IEnumerator acc_LoadScene(string MapName)
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            loa.roomCP = PhotonNetwork.CurrentRoom.CustomProperties;
-        }
-
         if (!loa.loadingBarObj.activeSelf)
         {
             loa.loadingBarObj.SetActive(true);
