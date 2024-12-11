@@ -20,7 +20,7 @@ public class PlayerCrouch : MonoBehaviour
 
     void Start()
     {
-        
+
         playerState = GetComponent<PlayerState>();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>(); // Animator ������Ʈ ��������
@@ -53,10 +53,6 @@ public class PlayerCrouch : MonoBehaviour
         bool isCrouching = Input.GetKey(KeyManager.SitDown_Key);
         float moveSpeed = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).sqrMagnitude;
 
-        bool isEquipped = Player_Equip.instance.HasAnyEquippedItem(); // Player_Equip 싱글톤에서 상태 확인
-        animator.SetBool("isEquipped", isEquipped);
-        animator.SetBool("isCrouching", isCrouching && isEquipped); // 앉기 키 + 장착 여부 동시 확인
-
         // ���� ���¿��� �̵��� �ִ��� Ȯ��
         bool isMovingWhileCrouched = isCrouching && moveSpeed > 0.01f;
 
@@ -64,7 +60,6 @@ public class PlayerCrouch : MonoBehaviour
         animator.SetBool("isCrouching", isCrouching);
         animator.SetFloat("crouchMoveSpeed", moveSpeed);
         animator.SetBool("isMovingWhileCrouched", isMovingWhileCrouched);
-       
 
         // ���̿� center ����
         float targetHeight = isCrouching ? crouchHeight : normalHeight;
@@ -85,17 +80,6 @@ public class PlayerCrouch : MonoBehaviour
         cameraTransform.localPosition = cameraPosition;
     }
 
-    // 아이템 이큅 상태 확인 메서드 (Player_Equip의 equipItem 참조)
-    bool HasAnyEquippedItem()
-    {
-        if (Player_Equip.instance == null || Player_Equip.instance.equipItem == null)
-        {
-            return false; // equipItem이 없으면 false 반환
-        }
-
-        ItemObject[] equippedItems = Player_Equip.instance.equipItem.GetComponentsInChildren<ItemObject>();
-        return equippedItems.Length > 0; // 한 개라도 장착되어 있으면 true 반환
-    }
     public void ToggleCrouch(bool crouching)
     {
         isCrouching = crouching;
