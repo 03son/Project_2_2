@@ -15,6 +15,9 @@ public class StunGunFunction : ItemFunction, IItemFunction
     public AudioClip fireSound; // 발사 소리
     private AudioSource audioSource; // 오디오 소스를 저장할 변수
 
+    public GameObject bulletEffectPrefab; // 총알 이펙트 프리팹
+    public Transform firePoint; // 발사 위치
+
     private Camera playerCamera;
 
     void Start()
@@ -60,7 +63,8 @@ public class StunGunFunction : ItemFunction, IItemFunction
         }
 
         Vector3 rayOrigin = playerCamera.transform.position;
-        Ray ray = new Ray(rayOrigin, playerCamera.transform.forward);
+        Ray ray = new Ray(firePoint.position, firePoint.forward);
+
         RaycastHit hit;
 
         StartCoroutine(ShowLaser(ray.origin, ray.direction * range));
@@ -74,14 +78,21 @@ public class StunGunFunction : ItemFunction, IItemFunction
             }
         }
 
+        if (bulletEffectPrefab != null && firePoint != null)
+        {
+            // 총알 이펙트를 발사 위치에서 생성
+            GameObject bulletEffect = Instantiate(bulletEffectPrefab, firePoint.position, firePoint.rotation);
+            Destroy(bulletEffect, 2f); // 이펙트를 2초 후 삭제
+        }
+
         // 아이템 제거 부분에 딜레이 추가
         StartCoroutine(RemoveItemAfterDelay());
     }
 
     IEnumerator ShowLaser(Vector3 start, Vector3 end)
     {
-        lineRenderer.SetPosition(0, start);
-        lineRenderer.SetPosition(1, start + end);
+        lineRenderer.SetPosition(0, firePoint.position); // firePoint를 시작점으로 설정
+        lineRenderer.SetPosition(1, firePoint.position + firePoint.forward * range); // firePoint 방향으로 레이저
         lineRenderer.enabled = true;
         yield return new WaitForSeconds(laserDuration);
         lineRenderer.enabled = false;
