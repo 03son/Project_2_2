@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayerCrouch : MonoBehaviour
+public class PlayerCrouch : MonoBehaviourPun
 {
     public float crouchHeight = 0.125f;    // �ɾ��� �� ����
     public float normalHeight = 0.25f;    // �� ���� �� ����
@@ -25,15 +26,16 @@ public class PlayerCrouch : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>(); // Animator ������Ʈ ��������
 
-        if (characterController == null)
+        if (!photonView.IsMine)
         {
-            Debug.LogError("CharacterController�� �÷��̾ �Ҵ�Ǿ� ���� �ʽ��ϴ�.");
+            // 로컬 플레이어가 아니면 입력 처리를 하지 않음
+            enabled = false;
             return;
         }
 
-        if (cameraTransform == null)
+        if (characterController == null)
         {
-            Debug.LogError("ī�޶� �Ҵ�Ǿ� ���� �ʽ��ϴ�.");
+            Debug.LogError("CharacterController가 할당되지 않았습니다.");
             return;
         }
 
@@ -47,13 +49,13 @@ public class PlayerCrouch : MonoBehaviour
 
     void Update()
     {
-        if (characterController == null || animator == null || cameraTransform == null) return;
+        if (!photonView.IsMine) return; // 로컬 플레이어만 입력 처리
 
         // Control Ű �Է� ���� Ȯ��
         bool isCrouching = Input.GetKey(KeyManager.SitDown_Key);
         float moveSpeed = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).sqrMagnitude;
 
-        bool isEquipped = Player_Equip.instance.HasAnyEquippedItem(); // Player_Equip 싱글톤에서 상태 확인
+        bool isEquipped = HasAnyEquippedItem(); // 싱글톤 대신 로컬 상태 확인 // Player_Equip 싱글톤에서 상태 확인
         animator.SetBool("isEquipped", isEquipped);
         animator.SetBool("isCrouching", isCrouching && isEquipped); // 앉기 키 + 장착 여부 동시 확인
 
@@ -88,14 +90,18 @@ public class PlayerCrouch : MonoBehaviour
     // 아이템 이큅 상태 확인 메서드 (Player_Equip의 equipItem 참조)
     bool HasAnyEquippedItem()
     {
-        if (Player_Equip.instance == null || Player_Equip.instance.equipItem == null)
-        {
-            return false; // equipItem이 없으면 false 반환
-        }
+        if (!photonView.IsMine) return false; // 로컬 플레이어만 확인
 
-        ItemObject[] equippedItems = Player_Equip.instance.equipItem.GetComponentsInChildren<ItemObject>();
-        return equippedItems.Length > 0; // 한 개라도 장착되어 있으면 true 반환
+        // 현재 객체에서 아이템 장착 상태를 확인
+        ItemObject[] equippedItems = equipItem.GetComponentsInChildren<ItemObject>();
+        bool isEquipped = equippedItems.Length > 0;
+
+        // 로컬 상태를 네트워크에 동기화
+        photonView.RPC("SyncHasEquippedItem", RpcTarget.All, isEquipped);
+
+        return isEquipped;
     }
+
     public void ToggleCrouch(bool crouching)
     {
         isCrouching = crouching;

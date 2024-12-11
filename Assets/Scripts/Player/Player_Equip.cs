@@ -40,6 +40,8 @@ public class Player_Equip : MonoBehaviourPun
     public Transform thirdPersonHand; // 3��Ī ������ ��ġ
     public GameObject itemForOthers; // 3��Ī ĳ���Ͱ� ��� �ִ� �������� �����ϴ� ���� �߰�
 
+    private bool hasEquippedItem = false; // 아이템 장착 상태 동기화 변수
+
     private void Awake()
     {
         instance = this;
@@ -92,6 +94,18 @@ public class Player_Equip : MonoBehaviourPun
         if (isCharging)
         {
             ChargeThrow();
+        }
+
+
+        // RPC로 아이템 장착 상태를 동기화
+        if (photonView.IsMine)
+        {
+            bool isCurrentlyEquipped = HasAnyEquippedItem();
+            if (hasEquippedItem != isCurrentlyEquipped)
+            {
+                hasEquippedItem = isCurrentlyEquipped;
+                photonView.RPC("SyncHasEquippedItem", RpcTarget.All, hasEquippedItem);
+            }
         }
 
         // ������ ���� ó��
@@ -546,6 +560,11 @@ public class Player_Equip : MonoBehaviourPun
         {
             SetLayerRecursively(child.gameObject, layer);
         }
+    }
+    [PunRPC]
+     public void SyncHasEquippedItem(bool isEquipped)
+    {
+        hasEquippedItem = isEquipped;
     }
 }
 
