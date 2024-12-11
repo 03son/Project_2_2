@@ -378,12 +378,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashlightLight: {fileID: 8973783116699708415}
-  intensity: 70
+  intensity: 40
   range: 30
   minSpotAngle: 60
   maxSpotAngle: 80
-  minIntensity: 50
-  maxIntensity: 70
+  minIntensity: 40
+  maxIntensity: 60
   maxDistance: 30
 --- !u!95 &2489838833394926056
 Animator:
