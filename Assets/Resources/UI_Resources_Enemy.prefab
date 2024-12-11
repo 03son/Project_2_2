@@ -53,7 +53,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.2
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7623234836781556907
 MonoBehaviour:
@@ -211,7 +211,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.2
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8422652356231289688
 MonoBehaviour:
@@ -366,12 +366,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   moveSpeed: 3.5
-  chaseSpeed: 8
+  chaseSpeed: 7
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
-  viewDistance: 40
+  viewDistance: 33
   fieldOfView: 120
-  hearingRange: 40
+  hearingRange: 33
   minDecibelToDetect: 35
   soundSources: []
   currentState: 0
@@ -494,7 +494,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 125
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -522,13 +522,13 @@ AudioSource:
       inWeight: 0.08985304
       outWeight: 0.41346946
     - serializedVersion: 3
-      time: 0.9847641
-      value: 0.02720642
-      inSlope: -3.0742743
-      outSlope: -3.0742743
+      time: 1
+      value: 0.16470337
+      inSlope: -0.59018457
+      outSlope: -0.59018457
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.15998617
+      inWeight: 0.47953063
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

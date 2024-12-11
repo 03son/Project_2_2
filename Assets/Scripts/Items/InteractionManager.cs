@@ -86,8 +86,20 @@ public class InteractionManager : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
         RaycastHit hit;
 
+        // 첫 번째 Raycast: 충돌 검사
+        if (Physics.Raycast(ray, out hit, maxCheckDistance))
+        {
+            // 충돌한 오브젝트의 레이어 확인
+            if (((1 << hit.collider.gameObject.layer) & layerMask) == 0 && ((1 << hit.collider.gameObject.layer) & layerMask2) == 0)
+            {
+                // 레이어가 layerMask 또는 layerMask2에 포함되지 않으면 초기화
+                ResetInteraction();
+                return;
+            }
+        }
         if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
         {
+            
             // 상호작용 가능한 객체가 바뀌었을 때만 갱신
             if (hit.collider.gameObject != curInteractGameobject)
             {
@@ -101,7 +113,6 @@ public class InteractionManager : MonoBehaviour
                 curInteractable = hit.collider.GetComponent<IInteractable>();
                 Crosshair.Interaction(); // 크로스헤어 상호작용 표시
             }
-
         }
         else if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask2))
         {
@@ -117,10 +128,11 @@ public class InteractionManager : MonoBehaviour
         else
         {
             // 상호작용 가능한 객체가 없을 때 초기화
-            curInteractGameobject = null;
-            curInteractable = null;
-            Crosshair.Not_Interaction();
-            SystemText.text = "";
+            ResetInteraction();
+            //curInteractGameobject = null;
+            //curInteractable = null;
+            //Crosshair.Not_Interaction();
+            //SystemText.text = "";
         }
     }
 
@@ -140,6 +152,14 @@ public class InteractionManager : MonoBehaviour
             curInteractable = null;
             Crosshair.Not_Interaction();
         }
+    }
+    // 상호작용 초기화 메서드
+    private void ResetInteraction()
+    {
+        curInteractGameobject = null;
+        curInteractable = null;
+        Crosshair.Not_Interaction();
+        SystemText.text = "";
     }
 
 }
