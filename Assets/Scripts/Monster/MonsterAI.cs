@@ -239,6 +239,10 @@ public class MonsterAI : MonoBehaviourPun
 
     private void Search() // 수색 모드
     {
+        if (agent.speed == moveSpeed)
+        {
+            agent.speed = chaseSpeed;
+        }
         // 마지막으로 본 위치로 이동하여 수색
         agent.SetDestination(lastKnownPosition);
 
@@ -246,7 +250,7 @@ public class MonsterAI : MonoBehaviourPun
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentState = State.Patrol;
-            animator.SetFloat("Speed", 3.5f); // 순찰 애니메이션
+            animator.SetFloat("Speed", 4.5f); // 순찰 애니메이션
         }
 
         // 다시 플레이어를 발견하면 추적 상태로 전환
@@ -258,6 +262,10 @@ public class MonsterAI : MonoBehaviourPun
     }
     private void Investigate() // 조사 상태
     {
+        if (agent.speed == moveSpeed)
+        {
+            agent.speed = chaseSpeed;
+        }
         agent.SetDestination(investigatePoint);
 
         // 조사 중 더 큰 데시벨이 감지되면 위치 업데이트
@@ -313,7 +321,7 @@ public class MonsterAI : MonoBehaviourPun
         // 2. Investigate 상태: 특정 조사 지점이 설정된 경우
         if (currentState == State.Investigate)
         {
-            animator.SetFloat("Speed", 3.5f);
+            animator.SetFloat("Speed", 4.5f);
             return; // 조사 중이면 상태 유지
         }
 

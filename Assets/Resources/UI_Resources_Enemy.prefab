@@ -53,7 +53,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 1.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7623234836781556907
 MonoBehaviour:
@@ -211,7 +211,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 1.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8422652356231289688
 MonoBehaviour:
@@ -366,12 +366,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   moveSpeed: 3.5
-  chaseSpeed: 5
+  chaseSpeed: 8
   waitTimeBeforePatrol: 2
   idleTimeBeforePatrol: 5
-  viewDistance: 30
+  viewDistance: 40
   fieldOfView: 120
-  hearingRange: 38.3
+  hearingRange: 40
   minDecibelToDetect: 35
   soundSources: []
   currentState: 0

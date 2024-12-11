@@ -78,6 +78,10 @@ public class PlayerDash : MonoBehaviour
                 soundSource.baseDecibel = 80f;
                 Decibel_Bar.instance.Decibel_Value(GetComponent<PlayerMove>().walkSound.volume * 1.8f, false);
             }
+            else
+            {
+                speed = moveSpeed;
+            }
         }
         else 
         {
