@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e9e0bdf3e8493419bc35bf84f42516, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakSound: {fileID: 8300000, guid: c9e1052cf6bf77441beab76d794a8237, type: 3}
+  breakSound: {fileID: 0}
 --- !u!114 &-936665545925554989
 MonoBehaviour:
   m_ObjectHideFlags: 0
