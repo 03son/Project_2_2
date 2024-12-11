@@ -16,6 +16,6 @@ MonoBehaviour:
   Description: "\uBC30\uD130\uB9AC\uC774\uB2E4"
   spawnCount: 0
   type: 0
-  icon: {fileID: 21300000, guid: 18965e7bb1302d94e982c912f35c8b29, type: 3}
+  icon: {fileID: 21300000, guid: c970899cdf299a14c9316f6c217f8801, type: 3}
   dropPerfab: {fileID: 2211181333793232596, guid: b7aef89c7f9160f42919a0ab69b33ca8, type: 3}
   itemID: 

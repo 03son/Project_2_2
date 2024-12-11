@@ -16,6 +16,6 @@ MonoBehaviour:
   Description: "\uC7A0\uC218\uD568\uC758 \uD504\uB85C\uD3A0\uB7EC\uC774\uB2E4"
   spawnCount: 0
   type: 0
-  icon: {fileID: 21300000, guid: e22113863bea5744b897d1aa9567acee, type: 3}
+  icon: {fileID: 21300000, guid: 2b8a093088ab6724d81939042dcae00c, type: 3}
   dropPerfab: {fileID: 1972520488429642149, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
   itemID: 

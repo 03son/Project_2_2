@@ -61905,6 +61905,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: SystemText
       objectReference: {fileID: 0}
+    - target: {fileID: 3368998299661923709, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368998299661923709, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_Color.b
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368998299661923709, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_Color.g
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368998299661923709, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_Color.r
+      value: 0.34901962
+      objectReference: {fileID: 0}
     - target: {fileID: 3553393526287853328, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -61933,9 +61949,17 @@ PrefabInstance:
       propertyPath: m_text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6689067064547367090, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6699182393506712558, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
       propertyPath: m_Name
       value: 'InGame_UI '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6759276473434950855, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7551532099360845781, guid: 0478add033d7e114b9d57a27e53574ed, type: 3}
       propertyPath: m_AnchorMax.y
