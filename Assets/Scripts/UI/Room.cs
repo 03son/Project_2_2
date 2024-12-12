@@ -21,6 +21,7 @@ public class Room : UI_Popup
 
     RoomManager roomSetting;
 
+    public Button startButton;
     enum Buttons
     { 
         ExitButton
@@ -40,6 +41,15 @@ public class Room : UI_Popup
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
 
         Init();
+
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            startButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            startButton.gameObject.SetActive(false);
+        }
     }
 
     void Update()

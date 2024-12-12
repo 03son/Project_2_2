@@ -54,12 +54,17 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
-            PhotonNetwork.CurrentRoom.IsOpen = false;
+            if (player_RoomInfo[0].GetComponent<Player_RoomInfo>().isReady &&
+            player_RoomInfo[1].GetComponent<Player_RoomInfo>().isReady &&
+            player_RoomInfo[2].GetComponent<Player_RoomInfo>().isReady)
+            {
+                // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
+                PhotonNetwork.CurrentRoom.IsOpen = false;
 
-            PhotonView photonView = GetComponent<PhotonView>();//테스트
+                PhotonView photonView = GetComponent<PhotonView>();//테스트
 
-            photonView.RPC("LoadGame", RpcTarget.All);
+                photonView.RPC("LoadGame", RpcTarget.All);
+            }
         }
     }
     void SetRoomName()
