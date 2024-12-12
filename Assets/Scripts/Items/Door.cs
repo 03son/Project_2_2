@@ -1,12 +1,12 @@
 using UnityEngine;
 using Photon.Pun;
-
-public class Door : MonoBehaviour, IInteractable
+using TMPro;
+public class Door : MonoBehaviourPunCallbacks, IInteractable
 {
     private Animator animator;
     private bool isOpen = false; // 문이 열려있는 상태
     private bool isUnlocked = false; // 문이 열쇠로 잠겨 있는 상태
-
+    private PhotonItem _PhotonItem; 
     [SerializeField] private AudioSource audioSource; // AudioSource 컴포넌트
     [SerializeField] private AudioClip openSound; // 열리는 소리 클립
     [SerializeField] private AudioClip closeSound; // 닫히는 소리 클립
@@ -21,27 +21,38 @@ public class Door : MonoBehaviour, IInteractable
         animator = GetComponentInParent<Animator>();
         photonView = GetComponentInParent<PhotonView>();
         playerEquip = FindObjectOfType<Player_Equip>();
+       
     }
 
     public void OnInteract()
     {
-        if (!isUnlocked) // 문이 잠겨 있는 상태
+        if (!isUnlocked) // 문이 잠긴 상태
         {
             if (playerEquip != null && playerEquip.HasEquippedKey())
             {
-                photonView.RPC("UnlockDoor", RpcTarget.All); // 모든 클라이언트에서 잠금 해제
-                                                             //   playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key"); // 열쇠 제거
+                // 문 잠금 해제
+                photonView.RPC("UnlockDoor", RpcTarget.All);
+
+                // 플레이어 장비에서 키 제거
+                playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
+
+                // UI 갱신
+                GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+
+                Debug.Log("문의 잠금을 해제했습니다.");
             }
             else
             {
-                Debug.Log("문이 잠겨 있습니다. 열쇠가 필요합니다.");
+                // 잠긴 문 알림 및 사운드 재생
+                Debug.Log("잠긴 문입니다. 열쇠가 필요합니다.");
                 if (audioSource != null && lockedSound != null)
                 {
-                    audioSource.PlayOneShot(lockedSound); // 잠긴 소리 재생
+                    audioSource.PlayOneShot(lockedSound);
                 }
                 return;
             }
         }
+
 
         // 문이 잠겨 있지 않다면 열거나 닫기
         if (PhotonNetwork.IsConnected)

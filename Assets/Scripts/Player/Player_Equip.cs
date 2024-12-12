@@ -547,6 +547,45 @@ public class Player_Equip : MonoBehaviourPun
             SetLayerRecursively(child.gameObject, layer);
         }
     }
+
+    [PunRPC]
+    public void RemoveEquippedItem(string itemName)
+    {
+        Debug.Log($"RemoveEquippedItem 호출됨. 제거하려는 아이템: {itemName}");
+
+        if (equipItem != null)
+        {
+            Debug.Log("equipItem이 null이 아닙니다. 모든 자식에서 아이템을 검색합니다.");
+
+            // equipItem 하위 모든 자식에서 ItemObject를 검색
+            ItemObject[] itemObjects = equipItem.GetComponentsInChildren<ItemObject>();
+            Debug.Log($"검색된 ItemObject 개수: {itemObjects.Length}");
+
+            foreach (ItemObject itemObject in itemObjects)
+            {
+                Debug.Log($"탐색된 아이템: {itemObject.item.ItemName}");
+                Debug.Log($"비교 중: {itemObject.item.ItemName} == {itemName}");
+                // 인벤토리에서 제거
+                Inventory.instance.RemoveItem(itemName);
+                // 장착된 아이템 제거
+                Destroy(itemObject.gameObject);
+            }
+
+            Debug.LogWarning($"equipItem의 모든 자식에서 {itemName} 이름을 가진 아이템을 찾을 수 없습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("equipItem이 null입니다. 장착된 아이템이 없습니다.");
+        }
+
+        // 3인칭 손에서도 아이템 제거
+        if (itemForOthers != null)
+        {
+            PhotonNetwork.Destroy(itemForOthers);
+            itemForOthers = null;
+        }
+
+    }
 }
 
 
