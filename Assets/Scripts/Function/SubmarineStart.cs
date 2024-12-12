@@ -74,7 +74,16 @@ public class SubmarineStart : MonoBehaviourPun, IInteractable
         {
             //Debug.LogError("PlayableDirector가 없습니다.");
         }
-        Multi_GameManager.instance.StartCoroutine(Multi_GameManager.instance.GoLobby());
+
+        if (Multi_GameManager.instance.diePlayerCount == 0)
+        {
+            GameInfo.endingNumber = 0; //전원 탈출
+        }
+        else if (Multi_GameManager.instance.diePlayerCount < PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            GameInfo.endingNumber = 1; //일부 생존
+        }
+        Multi_GameManager.instance.StartCoroutine(Multi_GameManager.instance.GoEndingVideo());
     }
 
     private void OnTriggerEnter(Collider other)

@@ -37,7 +37,7 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
                 playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
 
                 // UI 갱신
-                GameObject.Find("ItemName_Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
 
                 Debug.Log("문의 잠금을 해제했습니다.");
             }

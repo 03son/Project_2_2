@@ -11,11 +11,12 @@ using static UnityEngine.Rendering.DebugUI;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 using Photon.Voice.Unity;
+using UnityEngine.SceneManagement;
 
 public class Multi_GameManager : GameManager
 {
    public static Multi_GameManager instance;
-    public int diePlayerCount = 0;
+   public int diePlayerCount = 0;
 
     //��Ƽ�÷��� ���ӸŴ���
     private VoiceConnection voiceConnection;
@@ -110,7 +111,7 @@ public class Multi_GameManager : GameManager
         if (diePlayerCount >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
             if (PhotonNetwork.IsMasterClient)
-                StartCoroutine(GoLobby());
+                StartCoroutine(GoEndingVideo());
 
             GameInfo.IsGameFinish = true;
         }
@@ -124,7 +125,8 @@ public class Multi_GameManager : GameManager
 
             if (diePlayerCount == PhotonNetwork.CurrentRoom.PlayerCount)
             {
-                StartCoroutine(GoLobby());
+                GameInfo.endingNumber = 2; //전원 사망
+                StartCoroutine(GoEndingVideo());
 
                 GameInfo.IsGameFinish = true;
             }
@@ -136,13 +138,14 @@ public class Multi_GameManager : GameManager
         }
     }
 
-    public IEnumerator GoLobby()//게임오버 or 클리어 이벤트 후 원래 로비로 돌아감
+    public IEnumerator GoEndingVideo()//엔딩 이벤트로 이동
     {
         yield return new WaitForSecondsRealtime(3);
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.DestroyAll();
 
         yield return new WaitForSecondsRealtime(0.01f);
-        LoadingSceneManager.InGameLoading("Main_Screen",1);
+        SceneManager.LoadScene("EndingEventVideo_Screen");
+        //LoadingSceneManager.InGameLoading("Main_Screen",1);
     }
 }

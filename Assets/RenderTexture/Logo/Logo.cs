@@ -14,6 +14,7 @@ public class Logo : MonoBehaviour
         videoPlayer = GetComponent<VideoPlayer>();
         videoPlayer.loopPointReached += OnVideoEnd;
     }
+
     void OnVideoEnd(VideoPlayer vp)
     {
         SceneManager.LoadScene(NextScene);
