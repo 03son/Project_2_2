@@ -9,6 +9,7 @@ TagManager:
   - Enemy\
   - Enemy
   - Submarine
+  - Head
   layers:
   - Default
   - TransparentFX

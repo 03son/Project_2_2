@@ -33,11 +33,11 @@ public class PlayerFlashlight : MonoBehaviourPun
 
         if (headTransform == null)
         {
-            // Head 오브젝트를 찾아 초기화
-            Transform head = transform.root.Find("캐릭터모델링/mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/Head");
-            if (head != null)
+            // 태그 기반으로 탐색
+            GameObject headObject = GameObject.FindWithTag("Head");
+            if (headObject != null)
             {
-                headTransform = head;
+                headTransform = headObject.transform;
             }
             else
             {

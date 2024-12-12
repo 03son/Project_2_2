@@ -134,8 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headTransform: {fileID: 5182878326418413393}
   maxDistance: 30
-  minSpotAngle: 30
-  maxSpotAngle: 80
+  minSpotAngle: 50
+  maxSpotAngle: 110
   minIntensity: 20
   maxIntensity: 40
 --- !u!114 &8965213006498990036
@@ -342,6 +342,10 @@ PrefabInstance:
     - target: {fileID: -1781356600409242780, guid: 78ae42f3b0329da4388a42bb20e051d1, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -1781356600409242780, guid: 78ae42f3b0329da4388a42bb20e051d1, type: 3}
+      propertyPath: m_TagString
+      value: Head
       objectReference: {fileID: 0}
     - target: {fileID: -1703473491307067327, guid: 78ae42f3b0329da4388a42bb20e051d1, type: 3}
       propertyPath: m_Layer

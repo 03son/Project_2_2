@@ -1357,14 +1357,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8497756325959581627}
     m_Modifications:
-    - target: {fileID: 5285372639682004561, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
-      propertyPath: maxSpotAngle
-      value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 5285372639682004561, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
-      propertyPath: minSpotAngle
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 8299425057062917005, guid: 8a7b0d07d2632f64cad8f92c59269864, type: 3}
       propertyPath: m_Name
       value: "\uCE90\uB9AD\uD130\uBAA8\uB378\uB9C1"
