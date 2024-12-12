@@ -88,6 +88,7 @@ public class RevivePlayer : MonoBehaviourPun
                         GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                         Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
                         holdCounter = 0f; // 타이머 초기화
+                        return;
                     }
                 }
                 else
@@ -160,14 +161,11 @@ public class RevivePlayer : MonoBehaviourPun
             Debug.Log($"타겟 플레이어: {targetPlayer.gameObject.name}, PhotonView: {targetPlayer.photonView.ViewID}");
 
             // 타겟 플레이어의 상태를 서바이벌로 변경 (RPC로 처리)
-            targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
+            //targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
 
             // 로컬에서만 Survival 메서드 호출
-            if (targetPlayer.photonView.IsMine)
-            {
-                Debug.Log("로컬 플레이어가 부활 처리 중...");
-                targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
-            }
+            Debug.Log("로컬 플레이어가 부활 처리 중...");
+            targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
         }
         else
         {
@@ -177,7 +175,7 @@ public class RevivePlayer : MonoBehaviourPun
 
 
 
-
+    /*
     [PunRPC]
     void SyncStateToSurvival()
     {
@@ -201,7 +199,7 @@ public class RevivePlayer : MonoBehaviourPun
             }
         }
     }
-
+    */
 
 
 
