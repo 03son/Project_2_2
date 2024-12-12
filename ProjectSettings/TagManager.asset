@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Submarine
   - Head
+  - Door
   layers:
   - Default
   - TransparentFX

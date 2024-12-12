@@ -107,7 +107,6 @@ public class InteractionManager : MonoBehaviour
                     SystemText.text = "배터리 2개와 프로펠러가 필요해 보인다.";
                 else
                     SystemText.text = "";
-                    
                 curInteractGameobject = hit.collider.gameObject;
 
                 curInteractable = hit.collider.GetComponent<IInteractable>();
@@ -119,6 +118,8 @@ public class InteractionManager : MonoBehaviour
             // 상호작용 가능한 객체가 바뀌었을 때만 갱신
             if (hit.collider.gameObject != curInteractGameobject)
             {
+                if (hit.collider.gameObject.tag == "Door")
+                    SystemText.text = "열쇠가 필요해 보인다";
                 curInteractGameobject = hit.collider.gameObject;
 
                 curInteractable = hit.collider.GetComponent<IInteractable>();
