@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Loading_Screen.unity
     guid: 6603da21b8310844cac17f09aecaea16
   - enabled: 1
-    path: Assets/Scenes/Level_Map.unity
-    guid: f917fd559d451dc4884d08ed178250a3
-  - enabled: 1
     path: Assets/Scenes/Ver_0.1.unity
     guid: c3bc287d83e96524484f4bbc4182ed94
   - enabled: 1

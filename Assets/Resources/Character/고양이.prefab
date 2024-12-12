@@ -1319,6 +1319,7 @@ MonoBehaviour:
   isRecording: 0
   singleMic: 0
   playerState: {fileID: 0}
+  MicToggle: 0
   Microphone_Decibel_Bar: {fileID: 0}
   single: 0
 --- !u!114 &837250356730881852
