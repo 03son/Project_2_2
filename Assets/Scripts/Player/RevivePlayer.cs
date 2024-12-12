@@ -23,11 +23,12 @@ public class RevivePlayer : MonoBehaviourPun
 
     private Player_Equip playerEquip; // Player_Equip 참조
 
+    bool isReviveTargetPlayer = false;
     void Start()
     {
         playerState = GetComponent<PlayerState>();
         playerEquip = GetComponent<Player_Equip>(); // Player_Equip 컴포넌트 가져오기
-
+        _PhotonItem = GetComponent<PhotonItem>();
 
         // TimerBar 찾기
         timerBar = FindTimerBar();
@@ -78,11 +79,13 @@ public class RevivePlayer : MonoBehaviourPun
 
                     if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
                     {
-                        if (targetPlayer.gameObject.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
+                        if (!isReviveTargetPlayer && targetPlayer.gameObject.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
                         {
+                            isReviveTargetPlayer = true;
                             Debug.Log("부활 조건 충족. 부활 시도 중...");
                             ReviveTargetPlayer(); // 부활 호출
                             holdCounter = 0f; // 타이머 초기화
+                            StartCoroutine(isReviveTargetPlayerSetFFFFFFFFF());
                             return;
                         }
                     }
@@ -108,7 +111,11 @@ public class RevivePlayer : MonoBehaviourPun
         }
     }
 
-
+    IEnumerator isReviveTargetPlayerSetFFFFFFFFF()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        isReviveTargetPlayer = false;
+    }
 
     void OnTriggerEnter(Collider other)
     {
