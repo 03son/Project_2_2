@@ -78,17 +78,13 @@ public class RevivePlayer : MonoBehaviourPun
 
                     if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
                     {
-                        Debug.Log("부활 조건 충족. 부활 시도 중...");
-                        ReviveTargetPlayer(); // 부활 호출
-
-                        _PhotonItem.RemoveEquippedItem(GetComponent<Player_Equip>().Item.name);
-                        Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
-                        Destroy(GetComponent<Player_Equip>().Item);
-
-                        GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
-                        Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
-                        holdCounter = 0f; // 타이머 초기화
-                        return;
+                        if (targetPlayer.gameObject.GetComponent<PlayerState>().State == PlayerState.playerState.Die)
+                        {
+                            Debug.Log("부활 조건 충족. 부활 시도 중...");
+                            ReviveTargetPlayer(); // 부활 호출
+                            holdCounter = 0f; // 타이머 초기화
+                            return;
+                        }
                     }
                 }
                 else
@@ -171,6 +167,13 @@ public class RevivePlayer : MonoBehaviourPun
         {
             Debug.LogError("타겟 플레이어가 null입니다. 부활 처리 실패.");
         }
+        GameObject _Item = GetComponent<Player_Equip>().Item;
+        _PhotonItem.RemoveEquippedItem(_Item.GetComponent<ItemObject>().item.ItemName);
+        Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
+        Destroy(GetComponent<Player_Equip>().Item);
+
+        GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+        Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
     }
 
 
