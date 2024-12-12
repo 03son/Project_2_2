@@ -21,6 +21,10 @@ public class ItemSpawnManager : MonoBehaviourPunCallbacks
         {
             SpawnItemsPerFloor(); // MasterClient만 스폰 수행
         }
+        else if (!PhotonNetwork.IsConnected)
+        {
+            SpawnItemsPerFloor();
+        }
     }
 
     void SpawnItemsPerFloor()
@@ -66,8 +70,17 @@ public class ItemSpawnManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = spawnPoints[randomIndex].position;
 
             // PhotonNetwork를 사용해 동기화된 생성 수행
-           // PhotonNetwork.Instantiate($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
-            PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
+            // PhotonNetwork.Instantiate($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
+
+            if (PhotonNetwork.IsConnected) //멀티일 떄
+            {
+                PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{itemData.itemPrefab.name}", spawnPosition, Quaternion.identity);
+            }
+            else // 싱글 일 때
+            {
+                GameObject item = Resources.Load<GameObject>($"Prefabs/Items/{itemData.itemPrefab.name}");
+                Instantiate(item , spawnPosition, Quaternion.identity);
+            }
         }
     }
 }

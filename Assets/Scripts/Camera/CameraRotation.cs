@@ -36,14 +36,24 @@ public class CameraRot : MonoBehaviour
     {
         if (this.transform.parent != null)
         {
-            foreach (GameObject Player_ in GameObject.FindGameObjectsWithTag("Player"))
+            if (PhotonNetwork.IsConnected) //멀티
             {
-                if (Player_.GetComponent<PhotonView>().IsMine)
+                foreach (GameObject Player_ in GameObject.FindGameObjectsWithTag("Player"))
                 {
-                    player = this.transform.parent.gameObject;
-                    playerTransform = Player_.transform;
+                    if (Player_.GetComponent<PhotonView>().IsMine)
+                    {
+                        player = this.transform.parent.gameObject;
+                        playerTransform = Player_.transform;
+                    }
                 }
             }
+            else //싱글
+            {
+                GameObject Player_ = GameObject.FindGameObjectWithTag("Player");
+                player = this.transform.parent.gameObject;
+                playerTransform = Player_.transform;
+            }
+
             // PlayerModel 찾기
             playerModel = playerTransform.Find("캐릭터모델링");
             if (playerModel == null)

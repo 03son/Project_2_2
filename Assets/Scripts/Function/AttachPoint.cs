@@ -33,7 +33,16 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
 
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            if (PhotonNetwork.IsConnected)
+            {
+                if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+                {
+                    playerEquip = player.GetComponent<Player_Equip>();
+                    photonItem = player.GetComponent<PhotonItem>();
+                    _Player = player;
+                }
+            }
+            else
             {
                 playerEquip = player.GetComponent<Player_Equip>();
                 photonItem = player.GetComponent<PhotonItem>();
@@ -58,9 +67,16 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
                 GameObject.Find("ItemName_Text").GetComponent<TextMeshProUGUI>().text = "";
             }
 
-            // 부착 상태 동기화 (RPC 호출)
-            pv.RPC("RPC_AttachItem", RpcTarget.All);
-            Debug.Log("RPC_AttachItem 호출됨"); // 호출 확인용 로그
+            if (PhotonNetwork.IsConnected)
+            {
+                // 부착 상태 동기화 (RPC 호출)
+                pv.RPC("RPC_AttachItem", RpcTarget.All);
+                Debug.Log("RPC_AttachItem 호출됨"); // 호출 확인용 로그
+            }
+            else
+            {
+                RPC_AttachItem();
+            }
         }
         else
         {

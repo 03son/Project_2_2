@@ -27,10 +27,10 @@ public class Multi_GameManager : GameManager
 
     void Awake()
     {
-        instance = this;
-
         if (!PhotonNetwork.IsConnected)
             return;
+
+        instance = this;
 
         GetComponent<Multi_GameManager>().enabled = true;
         GetComponent<Single_GameManager>().enabled = false;

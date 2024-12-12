@@ -67,11 +67,14 @@ public class Flashlight1 : MonoBehaviourPunCallbacks, IPunObservable
         animator = GetComponent<Animator>();
 
 
-        photonView = GetComponent<PhotonView>();
-        if (photonView == null)
+        if (PhotonNetwork.IsConnected)
         {
-            Debug.LogError("부모 오브젝트에 PhotonView가 없습니다!");
-            return;
+            photonView = GetComponent<PhotonView>();
+            if (photonView == null)
+            {
+                Debug.LogError("부모 오브젝트에 PhotonView가 없습니다!");
+                return;
+            }
         }
 
         if (playerFlashlight == null)

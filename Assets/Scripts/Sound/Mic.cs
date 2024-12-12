@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Profiling;
 using Recorder = Photon.Voice.Unity.Recorder;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using Photon.Voice.PUN;
 
 public class Mic : MonoBehaviour
 {
@@ -22,6 +26,7 @@ public class Mic : MonoBehaviour
     public bool isRecording = false; 
     public bool singleMic = false;
     public PlayerState playerState;
+    public bool MicToggle = false;
 
 
     [SerializeField]GameObject Microphone_Decibel_Bar; //�ΰ��� ����ũ ���ú� UI
@@ -30,7 +35,19 @@ public class Mic : MonoBehaviour
 
     void Awake()
     {
-        photonView = GetComponent<PhotonView>();
+        if (PhotonNetwork.IsConnected)
+        {
+            photonView = GetComponent<PhotonView>();
+            recorder.enabled = true;
+            GetComponent<Speaker>().enabled = true;
+            GetComponent<PhotonVoiceView>().enabled = true;
+        }
+        else
+        {
+            recorder.enabled=false;
+            GetComponent<Speaker>().enabled = false;
+            GetComponent<PhotonVoiceView>().enabled = false;
+        }
 
         Instance = this;
 
@@ -55,31 +72,37 @@ public class Mic : MonoBehaviour
         Microphone_Decibel_Bar = GameObject.Find("Microphone_Decibel_Bar");
         Microphone_Decibel_Bar.GetComponent<Slider>().value = 0;
 
-        if (recorder == null)
+        if (PhotonNetwork.IsConnected)
         {
-            Debug.LogError("Recorder is not assigned!");
-            enabled = false;
-            return;
-        }
+            if (recorder == null)
+            {
+                Debug.LogError("Recorder is not assigned!");
+                enabled = false;
+                return;
+            }
 
-        if (Global_Microphone.UseMic != null)
-        {
-            //��Ƽ�� ����� ����ũ ����
-            recorder.MicrophoneType = Recorder.MicType.Unity;
-            recorder.MicrophoneDevice = new Photon.Voice.DeviceInfo(0, Global_Microphone.UseMic);
-            recorder.RestartRecording();
+            if (Global_Microphone.UseMic != null)
+            {
+                //��Ƽ�� ����� ����ũ ����
+                recorder.MicrophoneType = Recorder.MicType.Unity;
+                recorder.MicrophoneDevice = new Photon.Voice.DeviceInfo(0, Global_Microphone.UseMic);
+                recorder.RestartRecording();
+            }
+            else
+            {
+                this.gameObject.SetActive(false);
+            }
+            recorder.enabled = false;
+            recorder.enabled = true;
         }
-        else
-        {
-            this.gameObject.SetActive(false);
-        }
-
-
         isRecording = false;
-        recorder.enabled = false;
-        recorder.enabled = true;
+        StartCoroutine(MicStart());
     }
-
+    IEnumerator MicStart()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        isRecording = false;
+    }
     void Update()
     {
         //����ũ off�� �� UI ���� �� = 0
@@ -88,13 +111,16 @@ public class Mic : MonoBehaviour
         if (Global_Microphone.UseMic == null)
             return;
 
-        if (single) //�̱��� ��
+        if (MicToggle)
         {
-            Single_DecibelLevel();
-        }
-        else //��Ƽ�� ��
-        {
-            Multi_DecibelLevel();
+            if (single) //�̱��� ��
+            {
+                Single_DecibelLevel();
+            }
+            else //��Ƽ�� ��
+            {
+                Multi_DecibelLevel();
+            }
         }
     }
     #region �̱��� �� ����ũ
@@ -116,17 +142,15 @@ public class Mic : MonoBehaviour
         }
         if (isRecording)
         {
-
             //int micPosition = Microphone.GetPosition(Microphone.devices[0]);
             int micPosition = Microphone.GetPosition(Global_Microphone.UseMic);
             if (micPosition >= bufferSize)
             {
- 
                 float[] micData = new float[bufferSize];
                 micClip.GetData(micData, micPosition - bufferSize);
 
                 float rms = CalculateRMS(micData);
-                currentDb = 20 * Mathf.Log10(rms) + 80; 
+                currentDb = 20 * Mathf.Log10(rms) + 80;
 
                 Debug.Log("Current Decibel Level: " + currentDb);
                 SetMicDecibel_UI();
@@ -146,7 +170,7 @@ public class Mic : MonoBehaviour
     }
     #endregion
 
-    #region ��Ƽ�� �� ����ũ
+    #region 멀티 마이크
 
     void Multi_DecibelLevel() //��Ƽ �� �� ���ú� ���
     {
@@ -211,15 +235,22 @@ public class Mic : MonoBehaviour
     //����ũ ���ú��� �����̴� UI�� ����
     public void SetMicDecibel_UI()
     {
-        if (recorder.TransmitEnabled) 
+        if (PhotonNetwork.IsConnected)
         {
+            if (recorder.TransmitEnabled)
+            {
 
-            Microphone_Decibel_Bar.GetComponent<Decibel_Bar>().Decibel_Value(Mathf.InverseLerp(30, 60, (int)currentDb) , true);
-            //currentDb�� ���� UI�� Value ������ �°� ���� �� ����
-            
-            //Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
-          
-            //  Debug.Log("UI ���ú� ��" + Mathf.InverseLerp(30, 60, (int)currentDb));
+                Microphone_Decibel_Bar.GetComponent<Decibel_Bar>().Decibel_Value(Mathf.InverseLerp(30, 60, (int)currentDb), true);
+                //currentDb�� ���� UI�� Value ������ �°� ���� �� ����
+
+                //Microphone_Decibel_Bar.GetComponent<Slider>().value = Mathf.InverseLerp(30, 60, (int)currentDb);
+
+                //  Debug.Log("UI ���ú� ��" + Mathf.InverseLerp(30, 60, (int)currentDb));
+            }
+        }
+        else
+        {
+            Microphone_Decibel_Bar.GetComponent<Decibel_Bar>().Decibel_Value(Mathf.InverseLerp(30, 60, (int)currentDb), true);
         }
     }
 }

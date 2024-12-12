@@ -19,19 +19,19 @@ public class PlayerMicSetting : MonoBehaviour
             if (Input.GetKey(KeyManager.Mic_Key))
             {
                 recorder.TransmitEnabled = true; // 마이크 활성화
-                GetComponent<Mic>().singleMic = true;
+                GetComponent<Mic>().MicToggle = true;
             }
             else
             {
                 recorder.TransmitEnabled = false; // 마이크 비활성화
-                GetComponent<Mic>().singleMic = false;
+                GetComponent<Mic>().MicToggle = false;
             }
             return;
         }
         else if(Global_Microphone.MicMode)//항상 말하기 모드
         {
             recorder.TransmitEnabled = true; // 마이크 활성화
-            GetComponent<Mic>().singleMic = true;
+            GetComponent<Mic>().MicToggle = true;
             return;
         }
     }

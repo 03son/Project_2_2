@@ -17,7 +17,7 @@ public class MonsterDetection : MonoBehaviour
         // 로컬 플레이어 찾기
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
         {
-            if (obj.GetComponent<PhotonView>()?.IsMine == true) // 로컬 플레이어인지 확인
+            if (obj.GetComponent<PhotonView>()?.IsMine == true || !PhotonNetwork.IsConnected) // 로컬 플레이어인지 확인
             {
                 player = obj.transform;
                 break;

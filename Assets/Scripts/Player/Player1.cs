@@ -22,10 +22,13 @@ public class Player1 : MonoBehaviour
             FindCam();
             return;
         }
+        if (PhotonNetwork.IsConnected)
+        {
+            playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
+            pv = GetComponent<PhotonView>();
+        }
 
-        playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
-        pv = GetComponent<PhotonView>();
-        if (pv.IsMine) //��Ƽ �÷���
+        if (PhotonNetwork.IsConnected && pv.IsMine) //��Ƽ �÷���
         {
             FindCam();
 

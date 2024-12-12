@@ -26,7 +26,7 @@ public class PhotonItem : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsConnected)
         {
-            Destroy(this.gameObject);
+            GetComponent<PhotonItem>().enabled = false;
         }
         pv = GetComponent<PhotonView>();
         playerState = GetComponent<PlayerState>();

@@ -67,11 +67,23 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        // 적과 충돌 감지
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
+        if (PhotonNetwork.IsConnected)
         {
-            Debug.Log("적과 충돌하여 사망 상태로 전환.");
-            photonView.RPC("SyncDieState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+            // 적과 충돌 감지
+            if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && pv.IsMine)
+            {
+                Debug.Log("적과 충돌하여 사망 상태로 전환.");
+                photonView.RPC("SyncDieState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+            }
+        }
+        else
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                playerState.State = PlayerState.playerState.Die; // 로컬 플레이어 상태 변경
+                Die(); // 로컬에서 Die 메서드 호출
+                Single_GameManager.instance.PlayerDie(true);
+            }
         }
     }
 
@@ -129,7 +141,10 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
         GetComponent<Inventory>().DieAllDropItem();//인벤토리에 모든 아이템 드랍
 
-        StartCoroutine(die());
+        if (PhotonNetwork.IsConnected)
+        {
+            StartCoroutine(die());
+        }
     }
 
     IEnumerator die()

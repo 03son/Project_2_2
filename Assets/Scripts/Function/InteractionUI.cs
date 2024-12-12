@@ -9,10 +9,20 @@ public class InteractionUI : MonoBehaviourPun
 
     void Update()
     {
-        // 로컬 플레이어만 UI를 제어할 수 있음
-        if (localPlayerView != null && localPlayerView.IsMine && isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+        if (PhotonNetwork.IsConnected)
         {
-            uiImage.SetActive(!uiImage.activeSelf); // UI 상태를 토글
+            // 로컬 플레이어만 UI를 제어할 수 있음
+            if (localPlayerView != null && localPlayerView.IsMine && isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+            {
+                uiImage.SetActive(!uiImage.activeSelf); // UI 상태를 토글
+            }
+        }
+        else
+        {
+            if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+            {
+                uiImage.SetActive(!uiImage.activeSelf); // UI 상태를 토글
+            }
         }
     }
 
@@ -21,10 +31,18 @@ public class InteractionUI : MonoBehaviourPun
     {
         if (other.CompareTag("Player"))
         {
-            PhotonView playerView = other.GetComponent<PhotonView>();
-            if (playerView != null && playerView.IsMine) // 로컬 플레이어인지 확인
+            if (PhotonNetwork.IsConnected)
             {
-                localPlayerView = playerView; // 로컬 플레이어의 PhotonView 저장
+                PhotonView playerView = other.GetComponent<PhotonView>();
+                if (playerView != null && playerView.IsMine) // 로컬 플레이어인지 확인
+                {
+                    localPlayerView = playerView; // 로컬 플레이어의 PhotonView 저장
+                    isPlayerInRange = true; // 상호작용 가능 상태로 설정
+                    uiImage.SetActive(true); // UI 자동 활성화
+                }
+            }
+            else
+            {
                 isPlayerInRange = true; // 상호작용 가능 상태로 설정
                 uiImage.SetActive(true); // UI 자동 활성화
             }
@@ -36,10 +54,18 @@ public class InteractionUI : MonoBehaviourPun
     {
         if (other.CompareTag("Player"))
         {
-            PhotonView playerView = other.GetComponent<PhotonView>();
-            if (playerView != null && playerView.IsMine) // 로컬 플레이어인지 확인
+            if (PhotonNetwork.IsConnected)
             {
-                localPlayerView = null; // 로컬 플레이어와의 연결 해제
+                PhotonView playerView = other.GetComponent<PhotonView>();
+                if (playerView != null && playerView.IsMine) // 로컬 플레이어인지 확인
+                {
+                    localPlayerView = null; // 로컬 플레이어와의 연결 해제
+                    isPlayerInRange = false; // 상호작용 불가능 상태로 설정
+                    uiImage.SetActive(false); // UI 비활성화
+                }
+            }
+            else
+            {
                 isPlayerInRange = false; // 상호작용 불가능 상태로 설정
                 uiImage.SetActive(false); // UI 비활성화
             }

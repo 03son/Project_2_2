@@ -46,63 +46,66 @@ public class RevivePlayer : MonoBehaviourPun
 
     void Update()
     {
-        playerState.GetState(out state);
-        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
-            return;
-
-        if (targetPlayer != null && playerEquip.HasEquippedMedkit()) // Medkit 장착 여부 확인
+        if (PhotonNetwork.IsConnected)
         {
-            Debug.Log("타겟 플레이어 발견: " + targetPlayer.gameObject.name);
+            playerState.GetState(out state);
+            if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
+                return;
 
-            if (Input.GetKey(KeyManager.Interaction_Key)) // 상호작용 키 확인
+            if (targetPlayer != null && playerEquip.HasEquippedMedkit()) // Medkit 장착 여부 확인
             {
-                Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
-                isHolding = true;
-                holdCounter += Time.deltaTime;
+                Debug.Log("타겟 플레이어 발견: " + targetPlayer.gameObject.name);
 
-                // 타임바 활성화
-                if (timerBar != null && !timerBar.gameObject.activeSelf)
+                if (Input.GetKey(KeyManager.Interaction_Key)) // 상호작용 키 확인
                 {
-                    timerBar.gameObject.SetActive(true); // 타임바 활성화
-                    Debug.Log("타임바 활성화됨");
+                    Debug.Log("인터랙션 키 눌림. 홀드 진행 중...");
+                    isHolding = true;
+                    holdCounter += Time.deltaTime;
+
+                    // 타임바 활성화
+                    if (timerBar != null && !timerBar.gameObject.activeSelf)
+                    {
+                        timerBar.gameObject.SetActive(true); // 타임바 활성화
+                        Debug.Log("타임바 활성화됨");
+                    }
+
+                    if (timerBar != null)
+                    {
+                        timerBar.fillAmount = holdCounter / holdTime; // 타이머 진행 상태 업데이트
+                        Debug.Log($"타이머 진행 중: {timerBar.fillAmount * 100}% 완료");
+                    }
+
+                    if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
+                    {
+                        Debug.Log("부활 조건 충족. 부활 시도 중...");
+                        ReviveTargetPlayer(); // 부활 호출
+                        _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+                        Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
+                        Destroy(GetComponentInParent<Player_Equip>().Item);
+
+                        GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                        Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
+                        holdCounter = 0f; // 타이머 초기화
+                    }
                 }
-
-                if (timerBar != null)
+                else
                 {
-                    timerBar.fillAmount = holdCounter / holdTime; // 타이머 진행 상태 업데이트
-                    Debug.Log($"타이머 진행 중: {timerBar.fillAmount * 100}% 완료");
-                }
-
-                if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
-                {
-                    Debug.Log("부활 조건 충족. 부활 시도 중...");
-                    ReviveTargetPlayer(); // 부활 호출
-                    _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
-                    Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
-                    Destroy(GetComponentInParent<Player_Equip>().Item);
-
-                    GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
-                    Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
-                    holdCounter = 0f; // 타이머 초기화
+                    Debug.Log("인터랙션 키가 눌리지 않았습니다.");
                 }
             }
             else
             {
-                Debug.Log("인터랙션 키가 눌리지 않았습니다.");
+                Debug.Log("타겟 플레이어나 Medkit 없음.");
             }
-        }
-        else
-        {
-            Debug.Log("타겟 플레이어나 Medkit 없음.");
-        }
 
-        if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
-        {
-            if (timerBar != null)
+            if (Input.GetKeyUp(KeyManager.Interaction_Key) || !isHolding) // 키를 떼거나 상호작용 중단
             {
-                timerBar.fillAmount = 0f; // 타이머 초기화
+                if (timerBar != null)
+                {
+                    timerBar.fillAmount = 0f; // 타이머 초기화
+                }
+                ResetHold();
             }
-            ResetHold();
         }
     }
 

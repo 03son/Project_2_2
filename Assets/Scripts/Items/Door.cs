@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.InputSystem;
 public class Door : MonoBehaviourPunCallbacks, IInteractable
 {
     private Animator animator;
@@ -30,12 +31,20 @@ public class Door : MonoBehaviourPunCallbacks, IInteractable
         {
             if (playerEquip != null && playerEquip.HasEquippedKey())
             {
-                // 문 잠금 해제
-                photonView.RPC("UnlockDoor", RpcTarget.All);
+                if (PhotonNetwork.IsConnected)
+                {
 
-                // 플레이어 장비에서 키 제거
-                playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
+                    // 문 잠금 해제
+                    photonView.RPC("UnlockDoor", RpcTarget.All);
 
+                    // 플레이어 장비에서 키 제거
+                    playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
+                }
+                else
+                {
+                    UnlockDoor();
+                    playerEquip.RemoveEquippedItem("Key");
+                }
                 // UI 갱신
                 GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
 
