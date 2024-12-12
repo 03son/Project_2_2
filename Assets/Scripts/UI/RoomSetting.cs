@@ -40,7 +40,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        start_testversion.gameObject.AddUIEvent(start_test);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            start_testversion.gameObject.SetActive(true);
+            start_testversion.gameObject.AddUIEvent(start_test);
+        }
+        else
+        {
+            start_testversion.gameObject.SetActive(false);
+        }
 
         if (GameInfo.IsGameFinish == true)
         {
@@ -49,7 +57,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = true;
         }
     }
-    //[SerializeField] int ReadyPlayer = 0;
     void start_test(PointerEventData button) //테스트용 시작버튼(인원 상관X)
     {
         if (PhotonNetwork.IsMasterClient)
