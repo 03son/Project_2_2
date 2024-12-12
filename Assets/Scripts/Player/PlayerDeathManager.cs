@@ -47,7 +47,6 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         // 메인 카메라 활성화
         CameraInfo.UseMainCam();
     }
-
     IEnumerator Start()
     {
         yield return new WaitForSecondsRealtime(1f);
@@ -89,10 +88,6 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     public void Revive() //살아난 후 상태 동기화
     {
         photonView.RPC("RPC_Revive", RpcTarget.All);
-        if (pv.IsMine)
-        {
-            Survival();
-        }
     }
     [PunRPC]
     public void RPC_Revive()
@@ -106,6 +101,10 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
             {
                 player.GetComponent<Animator>().SetTrigger("Survival");
                 player.GetComponent<PlayerState>().State = PlayerState.playerState.Survival;
+                if (pv.IsMine)
+                {
+                    Survival();
+                }
             }
         }
     }
