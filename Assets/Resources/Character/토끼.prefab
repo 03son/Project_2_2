@@ -460,8 +460,8 @@ MonoBehaviour:
   Item: {fileID: 0}
   ItemName: {fileID: 0}
   throwKey: 323
-  throwForce: 12
-  maxForce: 15
+  throwForce: 30
+  maxForce: 35
   trajectoryLine: {fileID: 8610983168518011250}
   thirdPersonHand: {fileID: 8095400622324652812}
   itemForOthers: {fileID: 0}
