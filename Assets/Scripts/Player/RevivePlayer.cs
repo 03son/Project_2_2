@@ -79,9 +79,9 @@ public class RevivePlayer : MonoBehaviourPun
                     if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
                     {
                         Debug.Log("부활 조건 충족. 부활 시도 중...");
-                        //ReviveTargetPlayer(); // 부활 호출
+                        ReviveTargetPlayer(); // 부활 호출
 
-                        _PhotonItem.RemoveEquippedItem(GetComponent<Player_Equip>().Item.name);
+                       // _PhotonItem.RemoveEquippedItem(GetComponent<Player_Equip>().Item.name);
                         Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
                         Destroy(GetComponent<Player_Equip>().Item);
 
