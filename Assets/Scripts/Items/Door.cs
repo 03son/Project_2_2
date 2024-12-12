@@ -1,139 +1,118 @@
-using Photon.Pun;
 using UnityEngine;
-using TMPro;
+using Photon.Pun;
 
-public class Door : MonoBehaviourPunCallbacks, IInteractable
+public class Door : MonoBehaviour, IInteractable
 {
     private Animator animator;
-    private bool isOpen = false;
-    private bool openDoor = false;
-    private Player_Equip playerEquip; // Player_Equip ?????? ????
-    private PhotonItem _PhotonItem; // Player_Equip ?????? ????
+    private bool isOpen = false; // 문이 열려있는 상태
+    private bool isUnlocked = false; // 문이 열쇠로 잠겨 있는 상태
 
-    [SerializeField] private AudioSource audioSource; // AudioSource ???????
-    [SerializeField] private AudioClip lockedSound; // ?????? ??? ???
-    [SerializeField] private AudioClip openSound; // ?????? ??? ???
+    [SerializeField] private AudioSource audioSource; // AudioSource 컴포넌트
+    [SerializeField] private AudioClip openSound; // 열리는 소리 클립
+    [SerializeField] private AudioClip closeSound; // 닫히는 소리 클립
+    [SerializeField] private AudioClip lockedSound; // 잠긴 소리 클립
+
+    private PhotonView photonView;
+    private Player_Equip playerEquip; // 플레이어의 장비 스크립트 참조
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-        playerEquip = FindObjectOfType<Player_Equip>(); // Player_Equip ????????? ???? ??????? ???
-
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>(); // AudioSource ????????? ?????? ???
-        }
+        audioSource = GetComponent<AudioSource>();
+        animator = GetComponentInParent<Animator>();
+        photonView = GetComponentInParent<PhotonView>();
+        playerEquip = FindObjectOfType<Player_Equip>();
     }
 
     public void OnInteract()
     {
-        if (openDoor == true)
+        if (!isUnlocked) // 문이 잠겨 있는 상태
         {
-            photonView.RPC("RPC_OpenDoor", RpcTarget.All , PhotonNetwork.LocalPlayer.ActorNumber); // ?? ???? ?????
-            Debug.Log("???? ???????.");
-            openDoor = false;
-            return;
-        }
-
-        // ???? ???????? ???, Player_Equip???? ???? ?????? ???????? ???
-        if (!isOpen && playerEquip != null && playerEquip.HasEquippedKey())
-        {
-            isOpen = true;
-            Debug.Log("???? ????? ??????????.");
-            openDoor = true;
-
-            playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key");
-
-
-            // ?? ??? ???? ???��? ??? ????????? ?????
-            photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
-
-            isOpen = true;
-            Debug.Log("???? ????? ??????????.");
-            openDoor = true;
-            
-            _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
-            Inventory.instance.RemoveItem(GetComponent<ItemObject>().item.ItemName);
-            Destroy(GetComponentInParent<Player_Equip>().Item);
-            
-            GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
-            Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
-
-            // ?? ??? ???? ???��? ??? ????????? ?????
-            photonView.RPC("RPC_UnlockDoor", RpcTarget.All);
-
-            return;
-        }
-        else if (!isOpen)
-        {
-            Debug.Log("??? ??????. ???? ???????.");
-            if (audioSource != null && lockedSound != null)
+            if (playerEquip != null && playerEquip.HasEquippedKey())
             {
-                audioSource.PlayOneShot(lockedSound); // ?????? ??? ???
+                photonView.RPC("UnlockDoor", RpcTarget.All); // 모든 클라이언트에서 잠금 해제
+                                                             //   playerEquip.photonView.RPC("RemoveEquippedItem", RpcTarget.All, "Key"); // 열쇠 제거
+            }
+            else
+            {
+                Debug.Log("문이 잠겨 있습니다. 열쇠가 필요합니다.");
+                if (audioSource != null && lockedSound != null)
+                {
+                    audioSource.PlayOneShot(lockedSound); // 잠긴 소리 재생
+                }
+                return;
             }
         }
 
-        if (isOpen && openDoor == false)
+        // 문이 잠겨 있지 않다면 열거나 닫기
+        if (PhotonNetwork.IsConnected)
         {
-            photonView.RPC("RPC_CloseDoor", RpcTarget.All); // ?? ??? ?????
-            Debug.Log("???? ???????.");
-            openDoor = true;
-            return;
+            photonView.RPC("ToggleDoor", RpcTarget.All, !isOpen);
+        }
+        else
+        {
+            ToggleDoor(!isOpen);
         }
     }
 
     public string GetInteractPrompt()
     {
-        if (isOpen == false)
+        if (!isUnlocked)
         {
-            return "?? ???????";
+            return "문 열기 (잠김)";
         }
-        else if (openDoor == false)
-        {
-            return "?? ???";
-        }
-        else if (openDoor == true)
-        {
-            return "?? ????";
-        }
-        return "???"; // ?? ????? ???
+        return isOpen ? "문 닫기" : "문 열기";
     }
 
     [PunRPC]
-    void RPC_OpenDoor(int ActorNumber)
+    public void ToggleDoor(bool open)
     {
-        if (animator != null)
+        if (open)
         {
-            animator.SetBool("Open", true); // ?? ???? ??????? ????
+            OpenDoor();
         }
         else
         {
-            transform.position += -transform.forward * 1.5f; // ???? ?????????? ?? ???
+            CloseDoor();
         }
-
-        // ?????? ??? ???
-        if (audioSource != null && openSound != null)
-        {
-            audioSource.PlayOneShot(openSound);
-        }
+        isOpen = open;
     }
 
     [PunRPC]
-    void RPC_CloseDoor()
+    public void UnlockDoor()
     {
-        if (animator != null)
+        isUnlocked = true; // 잠금 상태 해제
+        Debug.Log("문이 열쇠로 잠금 해제되었습니다.");
+    }
+
+    void OpenDoor()
+    {
+        if (!isOpen)
         {
-            animator.SetBool("Open", false); // ?? ??? ??????? ????
-        }
-        else
-        {
-            transform.position -= -transform.forward * 1.5f; // ???? ???????? ?? ???
+            if (animator != null)
+            {
+                animator.SetBool("Open", true);
+            }
+
+            if (audioSource != null && openSound != null)
+            {
+                audioSource.PlayOneShot(openSound);
+            }
         }
     }
 
-    [PunRPC]
-    void RPC_UnlockDoor()
+    void CloseDoor()
     {
-        isOpen = true;
+        if (isOpen)
+        {
+            if (animator != null)
+            {
+                animator.SetBool("Open", false);
+            }
+
+            if (audioSource != null && closeSound != null)
+            {
+                audioSource.PlayOneShot(closeSound);
+            }
+        }
     }
 }
