@@ -162,10 +162,10 @@ public class RevivePlayer : MonoBehaviourPun
 
             // 타겟 플레이어의 상태를 서바이벌로 변경 (RPC로 처리)
             //targetPlayer.photonView.RPC("SyncStateToSurvival", RpcTarget.All);
-
+            targetPlayer.Revive();
             // 로컬에서만 Survival 메서드 호출
             Debug.Log("로컬 플레이어가 부활 처리 중...");
-            targetPlayer.Survival(); // PlayerDeathManager의 Survival 메서드 호출
+           // targetPlayer.
         }
         else
         {

@@ -57,7 +57,6 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
             _arm = armbob.gameObject;
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
         // 플레이어 상태가 이미 사망 상태라면 이벤트 무시
@@ -90,6 +89,10 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
     public void Revive() //살아난 후 상태 동기화
     {
         photonView.RPC("RPC_Revive", RpcTarget.All);
+        if (pv.IsMine)
+        {
+            Survival();
+        }
     }
     [PunRPC]
     public void RPC_Revive()
@@ -169,7 +172,7 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
 
     public void Survival()
     {
-        Revive();
+        //Revive();
         if (animator != null)
         {
             animator.SetTrigger("Survival"); // Survival 애니메이션 트리거 발동
@@ -181,7 +184,6 @@ public class PlayerDeathManager : MonoBehaviourPunCallbacks
         SetUICanvas.OpenUI("HUD");
 
         _arm.SetActive(true); //팔 활성화
-
     }
 
 
