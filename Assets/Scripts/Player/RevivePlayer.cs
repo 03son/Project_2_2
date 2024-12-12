@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using Photon.Pun.UtilityScripts;
 
 public class RevivePlayer : MonoBehaviourPun
 {
@@ -79,9 +80,10 @@ public class RevivePlayer : MonoBehaviourPun
                     {
                         Debug.Log("부활 조건 충족. 부활 시도 중...");
                         ReviveTargetPlayer(); // 부활 호출
-                        _PhotonItem.RemoveEquippedItem(GetComponent<ItemObject>().item.ItemName);
+                        _PhotonItem.RemoveEquippedItem("MedkitItem");
                         Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
-                        Destroy(GetComponentInParent<Player_Equip>().Item);
+                        Destroy(GetComponent<Player_Equip>().Item);
+                        GameObject.Find("ItemName_Text").GetComponent<TextMeshProUGUI>().text = "";
 
                         GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                         Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
