@@ -79,11 +79,11 @@ public class RevivePlayer : MonoBehaviourPun
                     if (holdCounter >= holdTime) // 지정된 시간이 지나면 부활
                     {
                         Debug.Log("부활 조건 충족. 부활 시도 중...");
-                        ReviveTargetPlayer(); // 부활 호출
+                        //ReviveTargetPlayer(); // 부활 호출
+
                         _PhotonItem.RemoveEquippedItem("MedkitItem");
                         Inventory.instance.RemoveSselectedItem(Inventory.instance.selectedItemIndex);
                         Destroy(GetComponent<Player_Equip>().Item);
-                        GameObject.Find("ItemName_Text").GetComponent<TextMeshProUGUI>().text = "";
 
                         GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                         Debug.Log(GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().gameObject.name);
