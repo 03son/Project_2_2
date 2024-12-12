@@ -369,6 +369,7 @@ public class Player_Equip : MonoBehaviourPun
             if (cupItemData != null)
             {
                 Inventory.instance.RemoveItem(cupItemData.ItemName);
+                GameObject.Find("ItemName_Text").gameObject.GetComponent<TextMeshProUGUI>().text = "";
             }
 
             hasGlassCup = false;  // ���� �� ������ ���� ���� ����
