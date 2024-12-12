@@ -49,22 +49,20 @@ public class RoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = true;
         }
     }
-
+    [SerializeField] int ReadyPlayer = 0;
     void start_test(PointerEventData button) //테스트용 시작버튼(인원 상관X)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            if (player_RoomInfo[0].GetComponent<Player_RoomInfo>().isReady &&
-            player_RoomInfo[1].GetComponent<Player_RoomInfo>().isReady &&
-            player_RoomInfo[2].GetComponent<Player_RoomInfo>().isReady)
-            {
+           if (ReadyPlayer == PhotonNetwork.CurrentRoom.PlayerCount)
+           {
                 // 방을 잠가 새로운 플레이어가 들어오지 못하게 함
                 PhotonNetwork.CurrentRoom.IsOpen = false;
 
                 PhotonView photonView = GetComponent<PhotonView>();//테스트
 
                 photonView.RPC("LoadGame", RpcTarget.All);
-            }
+           }
         }
     }
     void SetRoomName()
@@ -202,11 +200,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     {
                         player_RoomInfo[index].GetComponent<Player_RoomInfo>().isReady = _isReady;
                         player_RoomInfo[index].GetComponent<Player_RoomInfo>().UpdateReadyUI();
+                        if (_isReady)
+                        {
+                            ReadyPlayer += 1;
+                        }
+                        else
+                        {
+                            ReadyPlayer -= 1;
+                        }
                         break;
                     }
                 }
             }
-           GameStart();
+           //GameStart();
             return;
         }
     }
