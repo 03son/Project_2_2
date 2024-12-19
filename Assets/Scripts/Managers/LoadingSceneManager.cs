@@ -83,7 +83,7 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
         {
             yield return null;
 
-            if (op.progress < 0.1f)
+            if (op.progress < 0.9f)
             {
                 loa.LoadingBar.value = (op.progress) * 1 / 100;
             }
@@ -96,7 +96,7 @@ public class LoadingSceneManager : MonoBehaviourPunCallbacks
                     op.allowSceneActivation = true;
 
                     yield return null;
-                    if (loa.loadingBarObj.activeSelf)
+                    if (loa.loadingBarObj.activeSelf && op.allowSceneActivation)
                     {
                         loa.loadingBarObj.SetActive(false);
                     }
