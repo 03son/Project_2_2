@@ -19,7 +19,7 @@ public class MouseSensitivity : MonoBehaviour
     void SetMouseSensitivity(float volume)
     {
         GameInfo.MouseSensitivity = (int)(volume * 10);
-        Debug.Log($"마우스 감도 : {(int)(volume *10)}");
+       // Debug.Log($"마우스 감도 : {(int)(volume *10)}");
         PlayerPrefs.SetFloat("MouseSensitivity" ,volume);
     }
 }

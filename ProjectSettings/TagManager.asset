@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - EquipItem
+  - Camera
+  - Enemy\
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,6 +18,10 @@ TagManager:
   - Item
   - Equip
   - Enemy
+  - PlayerBody
+  - LocalPlayerBody
+  - RemotePlayerBody
+  - Player
   - 
   - 
   - 
@@ -32,13 +39,12 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - URP Camera
   - PostProcess
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: RunUI
+    uniqueID: 1091622559
     locked: 0

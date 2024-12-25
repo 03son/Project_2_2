@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using static Player_RoomInfo;
 using HashTable = ExitGames.Client.Photon.Hashtable;
@@ -41,18 +42,12 @@ public class Player1 : MonoBehaviour
                 }
                 Debug.Log((string)_animalName);
             }
-
         }
-    }
-    void Start()
-    {
         if (PhotonNetwork.IsConnected)//��Ƽ�� ����
         {
             notMine();
         }
-
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -105,6 +100,30 @@ public class Player1 : MonoBehaviour
             GetComponent<InteractionManager>().enabled = false;
             GetComponent<Player_Equip>().enabled = false;
             GetComponent<PlayerMove>().enabled = false;
+            GetComponent<PlayerCrouch>().enabled = false;
+            GetComponent<RevivePlayer>().enabled = false;
+
+            // 생성된 오브젝트와 하위 오브젝트들의 레이어 변경
+            SetLayerRecursively(gameObject, 0);
+        }
+    }
+    // 오브젝트와 모든 자식 오브젝트의 레이어를 변경
+    void SetLayerRecursively(GameObject obj, int layer)
+    {
+        // 현재 오브젝트의 레이어 변경
+        if (obj.name != "Light")
+        {
+            obj.layer = layer;
+        }
+        else
+        {
+            obj.SetActive(false);
+        }
+
+        // 자식 오브젝트 순회하며 레이어 변경
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
         }
     }
 }

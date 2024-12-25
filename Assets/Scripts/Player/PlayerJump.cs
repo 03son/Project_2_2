@@ -12,12 +12,17 @@ public class PlayerJump : MonoBehaviour
     private Vector3 velocity;
     private Animator animator; // Animator 추가
 
+    PlayerState playerState;
+    PlayerState.playerState state;
+
     PhotonView pv;
     void Start()
     {
         controller = GetComponent<CharacterController>();
         pv = GetComponent<PhotonView>();
         animator = GetComponentInChildren<Animator>(); // Animator 컴포넌트 가져오기
+
+        playerState = GetComponent<PlayerState>();
     }
 
     void Update()
@@ -28,8 +33,9 @@ public class PlayerJump : MonoBehaviour
                 return;
         }
 
-        // esc 창이 닫혀있을 때만 점프
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        // esc 창이 닫혀있을 때 && 살았을 때 동작
+        playerState.GetState(out state);
+        if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
             HandleJump();
         }

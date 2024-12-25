@@ -19,6 +19,7 @@ public class GlassCupCollisionHandler : MonoBehaviour
         if (collision.relativeVelocity.magnitude > 2f)
         {
             BreakGlass(collision.contacts[0].point);
+
         }
     }
 
@@ -26,27 +27,41 @@ public class GlassCupCollisionHandler : MonoBehaviour
     {
         hasBroken = true;
 
-        // 깨지는 소리 재생
-        if (breakSound != null)
+        // 깨지는 소리 재생을 위한 AudioSource 수동 생성
+        GameObject audioObject = new GameObject("GlassBreakAudio");
+        audioObject.transform.position = breakPoint;
+
+        AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+        audioSource.clip = breakSound;
+        audioSource.Play();
+
+        // 필요한 컴포넌트 추가
+        SoundSource exampleComponent = audioObject.AddComponent<SoundSource>();  // 원하는 컴포넌트 추가
+
+        // 오디오 재생이 완료된 후 오브젝트 삭제
+        Destroy(audioObject, breakSound.length);
+
+        // SoundSource를 통한 소리 처리
+        SoundSource soundSource = GetComponent<SoundSource>();
+        if (soundSource != null)
         {
-            AudioSource.PlayClipAtPoint(breakSound, breakPoint);
+            soundSource.PlaySound();  // SoundSource가 알아서 소리를 방출하도록 호출
         }
 
         // 깨진 유리 프리팹 생성
         if (brokenGlassPrefab != null)
         {
-           // Instantiate(brokenGlassPrefab, transform.position, transform.rotation);
+            Instantiate(brokenGlassPrefab, transform.position, transform.rotation);
         }
-
-        // 몬스터들에게 깨진 위치 알림
-        AlertMonsters(breakPoint);
 
         // 기존 유리컵 오브젝트 비활성화
         gameObject.SetActive(false);
     }
 
-    void AlertMonsters(Vector3 breakPoint)
+
+    /*void AlertMonsters(Vector3 breakPoint)
     {
+        SoundSource soundSource = GetComponent<SoundSource>();
         // 반경 내의 모든 Collider 찾기
         Collider[] colliders = Physics.OverlapSphere(breakPoint, 50f); // 청각 범위(50미터)
 
@@ -57,14 +72,23 @@ public class GlassCupCollisionHandler : MonoBehaviour
             {
                 float distanceToMonster = Vector3.Distance(breakPoint, monsterAI.transform.position);
 
-                // 몬스터의 청각 범위 내에 있는 경우에만 반응
-                if (distanceToMonster <= monsterAI.hearingRange)
+                // 데시벨 계산 (거리 기반)
+                float decibel = soundSource.baseDecibel - 20f * Mathf.Log10(distanceToMonster);
+
+                // 몬스터의 청각 범위와 데시벨 임계값 확인
+                if (distanceToMonster <= monsterAI.hearingRange && decibel >= monsterAI.minDecibelToDetect)
                 {
+                    Debug.Log($"Monster at {monsterAI.transform.position} detected sound with {decibel} dB");
                     monsterAI.SetInvestigatePoint(breakPoint);  // 몬스터의 조사 지점을 깨진 곳으로 설정
+                }
+                else
+                {
+                    Debug.Log($"Monster at {monsterAI.transform.position} could not detect the sound (Decibel: {decibel})");
                 }
             }
         }
-    }
+    }*/
+
 
     // 아이템을 획득했을 때 물리 설정을 변경하는 메서드
     public void SetPhysicsForPickedUp()

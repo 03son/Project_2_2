@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerMove : MonoBehaviourPunCallbacks
 {
-    [SerializeField] float speed = 5f;
+    [SerializeField] float normalSpeed = 5f;
+    [SerializeField] float crouchSpeed = 2f;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
     [SerializeField] float mouseSpeed = 8f;
     [SerializeField] Transform cameraTransform;
 
@@ -12,24 +14,32 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     [SerializeField] AudioClip walkingClip;
     [SerializeField][Range(0f, 1f)] float walkVolume = 0.5f;
 
+
+    private Player_Equip playerEquip;
     private CharacterController controller;
     private Vector3 velocity;
     private float gravity = -9.81f;
     private float mouseX;
 
-    private Animator animator; // Animator Ãß°¡
+    private Animator animator; // Animator ï¿½ß°ï¿½
     private bool isWalking;
+
+    PlayerState playerState;
+    PlayerState.playerState state;
 
     void Start()
     {
+
+        playerEquip = GetComponent<Player_Equip>();
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             return;
         }
 
+        playerState = GetComponent<PlayerState>();
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>(); // Animator ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
-        
+        animator = GetComponent<Animator>(); // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
         if (animator == null)
         {
             Debug.LogError("Animator component not found!");
@@ -50,40 +60,48 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        
+        // Photon View È®ï¿½ï¿½
+        playerState.GetState(out state);
 
-        // Height °ª °­Á¦ °íÁ¤
-        if (controller.height != 0.1f)
+        // Height ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+      /*  if (controller.height != 0.1f)
         {
             controller.height = 0.1f;
-        }
-        // Photon View È®ÀÎ
+        } */
+        // Photon View È®ï¿½ï¿½
         if (PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             Debug.Log("Not my PhotonView, skipping Update.");
             return;
         }
 
-        mouseSpeed = GameInfo.MouseSensitivity; //°¨µµ µ¿±âÈ­
+        mouseSpeed = GameInfo.MouseSensitivity; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
 
-        // esc Ã¢ÀÌ ¿­·ÁÀÖÁö ¾ÊÀ» ¶§¸¸ ¿òÁ÷ÀÓ Ã³¸®
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        // esc Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+        if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
-            HandleMouseLook();
+          //  HandleMouseLook();
             HandleMovement();
-            UpdateWalkingAnimation(); // ¿öÅ· »óÅÂ ¾÷µ¥ÀÌÆ®
+            UpdateWalkingAnimation();
         }
         else
         {
-            // esc Ã¢ÀÌ ¿­·ÁÀÖÀ» ¶§´Â ÀÌµ¿ Á¤Áö
-            PlayerVelocity(Vector3.zero, 0f, 0f);
+            if (state == PlayerState.playerState.Die)
+            {
+                // esc Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+                PlayerVelocity(Vector3.zero, 0f, 0f);
+            }
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f))
+        Vector3 rayOrigin = transform.position + Vector3.up * 1f; // ìºë¦­í„° ì¤‘ì‹¬ì—ì„œ ì•½ê°„ ìœ„ë¡œ ì‹œìž‘
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 2.5f))
         {
             float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+       
 
-            if (slopeAngle > 20) // 20µµ ÀÌ»óÀÌ¸é °è´ÜÀ¸·Î ÆÇ´Ü
+            if (slopeAngle > 10) // 10ë„ ì´ìƒì´ë©´ ê³„ë‹¨ìœ¼ë¡œ íŒë‹¨
             {
                 if (Input.GetAxis("Vertical") > 0)
                 {
@@ -102,43 +120,107 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                 animator.SetBool("isClimbingDownStairs", false);
             }
         }
+
     }
 
-    private void HandleMouseLook()
+
+
+
+  /*  private void HandleMouseLook()
     {
         if (cameraTransform == null) return;
 
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
         transform.localRotation = Quaternion.Euler(0, mouseX, 0);
-    }
+    } */
 
     private void HandleMovement()
     {
         if (controller == null || cameraTransform == null) return;
 
-        float moveX = 0; // Input.GetAxisRaw("Horizontal");
-        float moveZ = 0; //Input.GetAxisRaw("Vertical");
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float currentSpeed = Input.GetKey(KeyManager.SitDown_Key) ? crouchSpeed : normalSpeed;
 
-        if (Input.GetKey(KeyManager.Front_Key)) moveZ = 1; //¾Õ
-        if (Input.GetKey(KeyManager.Back_Key)) moveZ = -1; //µÚ
-        if (Input.GetKey(KeyManager.Left_Key)) moveX = -1; //ÁÂ
-        if (Input.GetKey(KeyManager.Right_Key)) moveX = 1; //¿ì
+        float moveX = 0;
+        float moveZ = 0;
+
+        if (Input.GetKey(KeyManager.Front_Key)) moveZ = 1; // ï¿½ï¿½ (W Å°)
+        if (Input.GetKey(KeyManager.Back_Key)) moveZ = -1; // ï¿½ï¿½ (S Å°)
+        if (Input.GetKey(KeyManager.Left_Key)) moveX = -1; // ï¿½ï¿½ (A Å°)
+        if (Input.GetKey(KeyManager.Right_Key)) moveX = 1; // ï¿½ï¿½ (D Å°)
 
         Vector3 direction = cameraTransform.forward * moveZ + cameraTransform.right * moveX;
         direction.y = 0f;
         direction.Normalize();
 
-        Vector3 mov = direction * speed;
+        Vector3 mov = direction * currentSpeed;
 
         PlayerVelocity(mov, moveX, moveZ);
 
-        // ¾Ö´Ï¸ÞÀÌÅÍ¿¡ ÆÄ¶ó¹ÌÅÍ ¼³Á¤
+        // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         isWalking = (moveX != 0 || moveZ != 0);
+
+        bool isHoldingItem = playerEquip != null && playerEquip.HasAnyEquippedItem();
+
+        // ï¿½È´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½
+        if (isWalking)
+        {
+            if (moveZ > 0) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (W Å°)
+            {
+                if (isHoldingItem)
+                {
+                    animator.SetBool("isWalkingWithItem", true);
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isMovingBackward", true);
+                }
+                else
+                {
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isMovingBackward", false);
+                }
+            }
+            else if (moveZ < 0) // ï¿½Ú·ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (S Å°)
+            {
+                if (isHoldingItem)
+                {
+                    animator.SetBool("isWalkingWithItem", true);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isMovingBackward", true);
+                }
+                else
+                {
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalkingWithItem", false);
+                    animator.SetBool("isMovingBackward", true);
+                }
+            }
+        }
+        else
+        {
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isWalkingWithItem", false);
+            animator.SetBool("isMovingBackward", false);
+
+            if (isHoldingItem)
+            {
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
+                animator.SetBool("isItemIdle", true);
+            }
+            else
+            {
+                animator.SetBool("isItemIdle", false);
+            }
+        }
     }
+
+    
 
     private void PlayerVelocity(Vector3 mov, float moveX, float moveZ)
     {
-        // Áß·Â Ã³¸®
+        // ï¿½ß·ï¿½ Ã³ï¿½ï¿½
         if (controller.isGrounded)
         {
             velocity.y = -2f;
@@ -150,8 +232,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         controller.Move((mov + velocity) * Time.deltaTime);
 
-        // °ÉÀ½ ¼Ò¸® Ã³¸®
-        if ((moveX != 0 || moveZ != 0) && controller.isGrounded)
+        playerState.GetState(out state);
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ Ã³ï¿½ï¿½
+        if ((moveX != 0 || moveZ != 0) && controller.isGrounded && state == PlayerState.playerState.Survival)
         {
             if (!walkSound.isPlaying)
             {
@@ -159,21 +242,46 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             }
             walkSound.volume = walkVolume;
             isWalking = true;
+            if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
+            {
+                if (MonsterAI.Instance != null)
+                {
+                    photonView.RPC("SendDecibelToMaster", RpcTarget.MasterClient, walkSound.volume, transform.position);
+                }
+                else
+                {
+                    Debug.Log("ëª¬ìŠ¤í„° ì—†ìŒ2");
+                }
+            }
         }
-        else if (isWalking)
+        else
         {
             walkSound.Stop();
             isWalking = false;
         }
     }
-
+    [PunRPC]
+    public void SendDecibelToMaster(float decibel, Vector3 playerPosition)
+    {
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
+        {
+            MonsterAI.Instance.HandleItemSound(playerPosition);
+        }
+    }
     private void UpdateWalkingAnimation()
     {
-        // Animator¿¡ °ª ¼³Á¤
+        // Animatorï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (animator != null)
         {
             animator.SetBool("isWalking", isWalking);
-            Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
+           // Debug.Log($"isWalking: {isWalking}, Animator Parameter: {animator.GetBool("isWalking")}");
         }
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        Debug.Log("ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + newMasterClient.NickName);
+    }
+
+
 }

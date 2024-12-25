@@ -1,86 +1,108 @@
 using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public class Flashlight1 : MonoBehaviour
+public class Flashlight1 : Item
 {
-    [SerializeField] private GameObject flashlightLight; // Spot Light ¿ÀºêÁ§Æ®
+    [SerializeField] private GameObject flashlightLight; // Spot Light ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     private bool flashlightActive = false;
     private bool isAcquired = false;
     private Transform cameraTransform;
     private Light flashlightComponent;
+    private Animator animator; // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
 
-    [SerializeField] private float intensity = 15f; // ±âº» ÀÎÅÙ½ÃÆ¼ °ª
-    [SerializeField] private float range = 10f; // ±âº» ·»Áö °ª
+    [SerializeField] private float intensity = 15f; // ï¿½âº» ï¿½ï¿½ï¿½Ù½ï¿½Æ¼ ï¿½ï¿½
+    [SerializeField] private float range = 10f; // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    [SerializeField] private float minSpotAngle = 30f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float maxSpotAngle = 80f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float minIntensity = 1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float maxIntensity = 3f; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float maxDistance = 10f; // ï¿½Ö´ï¿½ ï¿½Å¸ï¿½
 
-    void Start()
+    private float currentSpotAngle; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float currentIntensity; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float smoothTime = 0.1f; // ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½È­ï¿½Ï´ï¿½ ï¿½Ã°ï¿½
+
+    private void Start()
     {
         if (flashlightLight == null)
         {
-            Debug.LogWarning("Spot Light°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogWarning("Spot Lightï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
         }
         else
         {
             flashlightComponent = flashlightLight.GetComponent<Light>();
             flashlightComponent.intensity = intensity;
             flashlightComponent.range = range;
-            flashlightLight.SetActive(false); // ½ÃÀÛ ½Ã ²¨Áø »óÅÂ
+            flashlightLight.SetActive(false);; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            currentSpotAngle = maxSpotAngle; // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            currentIntensity = maxIntensity; // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         cameraTransform = Camera.main.transform;
+        animator = GetComponent<Animator>(); // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Animatorï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.");
+        }
     }
 
     public void AcquireFlashlight()
     {
         isAcquired = true;
-        Debug.Log("¼ÕÀüµî È¹µæ ¿Ï·á");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ ï¿½Ï·ï¿½");
+    }
+
+    public bool IsFlashlightActive()
+    {
+        return flashlightActive;
     }
 
     void Update()
     {
-        if (isAcquired)
+        if (transform.parent != null && transform.parent.name != "handitemattach")
         {
-            Debug.Log("¼ÕÀüµîÀÌ È¹µæµÈ »óÅÂÀÔ´Ï´Ù.");
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            if (flashlightActive)
+            {
+                flashlightActive = false;
+                flashlightLight.SetActive(false);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+
+                // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+                if (animator != null)
+                {
+                    animator.SetBool("isFlashlightOn", false);
+                }
+            }
+            return; // ï¿½ï¿½ ï¿½Ì»ï¿½ Updateï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½
         }
 
-        Transform equipCameraTransform = cameraTransform.parent.Find("EquipCamera");
-        Transform equipItemTransform = equipCameraTransform != null ? equipCameraTransform.Find("EquipItem") : null;
-
-        if (equipItemTransform != null)
+        // ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½
+        if (isAcquired && transform.parent != null && transform.parent.name == "handitemattach")
         {
-            Debug.Log("Ä«¸Þ¶ó ºÎ¸ðÀÇ EquipCamera/EquipItem: " + equipItemTransform.name);
-        }
-        else
-        {
-            Debug.LogWarning("EquipCamera/EquipItem °æ·Î¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
-        }
-
-        if (transform.parent != null && transform.parent.name == "EquipItem")
-        {
-            Debug.Log("¼ÕÀüµîÀÌ ¿Ã¹Ù¸¥ °èÃþ ±¸Á¶¿¡ ÀÖ½À´Ï´Ù.");
-        }
-        else
-        {
-            Debug.Log("¼ÕÀüµîÀÌ ¿Ã¹Ù¸¥ °èÃþ ±¸Á¶¿¡ ÀÖÁö ¾Ê½À´Ï´Ù.");
-        }
-
-        Debug.Log($"isAcquired »óÅÂ: {isAcquired}");
-
-        if (isAcquired && transform.parent != null && transform.parent.name == "EquipItem")
-        {
-            Debug.Log("¼ÕÀüµî Update ·ÎÁ÷ ½ÇÇà Áß");
-
-            // `Main Camera`ÀÇ À§Ä¡¿Í È¸ÀüÀ» ÇÃ·¡½Ã¶óÀÌÆ®¿¡ µ¿±âÈ­
+            // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½È­
             flashlightLight.transform.position = cameraTransform.position;
             flashlightLight.transform.rotation = cameraTransform.rotation;
 
-            // ¸¶¿ì½º ÁÂÅ¬¸¯À¸·Î ¼ÕÀüµî ÄÑ±â/²ô±â
+            // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½/ï¿½ï¿½ï¿½ï¿½
             if (Input.GetMouseButtonDown(0))
             {
                 flashlightActive = !flashlightActive;
-                flashlightLight.SetActive(flashlightActive);
-                Debug.Log("¼ÕÀüµî " + (flashlightActive ? "ÄÑÁü" : "²¨Áü"));
+                UseFashlight(flashlightActive);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ " + (flashlightActive ? "ï¿½ï¿½ï¿½ï¿½" : "ï¿½ï¿½ï¿½ï¿½"));
+
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+                if (animator != null)
+                {
+                    animator.SetBool("isFlashlightOn", flashlightActive);
+                }
             }
         }
     }
 
-
+   public void UseFashlight(bool flashlightActive)
+    {
+        flashlightLight.SetActive(flashlightActive);
+    }
 }

@@ -56,6 +56,43 @@ MonoBehaviour:
   - RemoveChain
   - RPC_RemoveChain
   - RPC_AddFuel
+  - SyncMonsterPosition
+  - ssss
+  - test
+  - LoadGame
+  - SyncMonsterState
+  - SyncMonster
+  - PlayerVoicePos
+  - CanHearSoundSource
+  - CanHearVoiceSource
+  - CanSeePlayer
+  - MonsterUpdate
+  - MonsterStart
+  - SendDecibelToMaster
+  - SyncItemState
+  - RPC_HandleItemPickup
+  - RPC_SetEquipItemForOthers
+  - OnInteract
+  - PhotonDestroyItem
+  - PhotonThrowItem
+  - PhotonThrowItem_
+  - AdjustFlashlight
+  - UseFashlight
+  - PlayAlertSounds
+  - TriggerJumpScare_RPC
+  - SyncDieState
+  - ThirdPersonHandItem
+  - ToggleDoor
+  - RequestToggleDoor
+  - ThirdPersonPhotonDestroyItem
+  - UseFlashlight
+  - Escape_Basement_Item
+  - RPC_Escape_Basement_Item
+  - RPC_Escape_Helicopter_Item
+  - RPC_Escape_Basement
+  - RPC_Escape_Helicopter
+  - Rpc_SubmarineStart
+  - SyncStateToSurvival
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

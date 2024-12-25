@@ -2,24 +2,80 @@ using UnityEngine;
 
 public class PlayerCrouch : MonoBehaviour
 {
-    public float crouchHeight = 1.0f;    // ¾É¾ÒÀ» ¶§ ³ôÀÌ
-    public float normalHeight = 2.0f;    // ¼­ ÀÖÀ» ¶§ ³ôÀÌ
-    public float crouchSpeed = 0.1f;     // ¾É±â¿Í ¼­±â ÀüÈ¯ ¼Óµµ
+    public float crouchHeight = 0.125f;    // ï¿½É¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float normalHeight = 0.25f;    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float crouchSpeed = 0.1f;     // ï¿½É±ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Óµï¿½
     private CharacterController characterController;
+    private Animator animator;           // Animator ï¿½ß°ï¿½
+
+    public Transform cameraTransform;    // FPS Ä«ï¿½Þ¶ï¿½ Transform ï¿½ß°ï¿½
+
+    private Vector3 normalCenter;        // ï¿½âº» center ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private Vector3 crouchCenter;        // ï¿½É¾ï¿½ï¿½ï¿½ ï¿½ï¿½ center ï¿½ï¿½
+
+    private float cameraYOffset;         // Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ Y ï¿½ï¿½Ä¡
+
+    PlayerState playerState;
+    PlayerState.playerState state;
 
     void Start()
     {
+        playerState = GetComponent<PlayerState>();
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>(); // Animator ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
         if (characterController == null)
         {
-            Debug.LogError("CharacterController°¡ ÇÃ·¹ÀÌ¾î¿¡ ÇÒ´çµÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
+            Debug.LogError("CharacterControllerï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ ï¿½Ò´ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
+            return;
         }
+
+        if (cameraTransform == null)
+        {
+            Debug.LogError("Ä«ï¿½Þ¶ï¿½ ï¿½Ò´ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
+            return;
+        }
+
+        // ï¿½âº» ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½É¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½Â´ï¿½ center ï¿½ï¿½ ï¿½ï¿½ï¿½
+        normalCenter = characterController.center;
+        crouchCenter = new Vector3(normalCenter.x, normalCenter.y - (normalHeight - crouchHeight) / 2, normalCenter.z);
+
+        // Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ Y ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        cameraYOffset = cameraTransform.localPosition.y;
     }
 
     void Update()
     {
-        // Control Å°¸¦ ´©¸£°í ÀÖ´Â µ¿¾È crouchHeight·Î ÀüÈ¯, ¶¼¸é normalHeight·Î µ¹¾Æ°¨
-        float targetHeight = Input.GetKey(KeyCode.LeftControl) ? crouchHeight : normalHeight;
+        if (characterController == null || animator == null || cameraTransform == null) return;
+
+        // Control Å° ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        bool isCrouching = Input.GetKey(KeyManager.SitDown_Key);
+        float moveSpeed = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).sqrMagnitude;
+
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        bool isMovingWhileCrouched = isCrouching && moveSpeed > 0.01f;
+
+        // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (isCrouchingï¿½ï¿½ boolï¿½ï¿½ ï¿½ï¿½ï¿½)
+        animator.SetBool("isCrouching", isCrouching);
+        animator.SetFloat("crouchMoveSpeed", moveSpeed);
+        animator.SetBool("isMovingWhileCrouched", isMovingWhileCrouched);
+
+        // ï¿½ï¿½ï¿½Ì¿ï¿½ center ï¿½ï¿½ï¿½ï¿½
+        float targetHeight = isCrouching ? crouchHeight : normalHeight;
+        Vector3 targetCenter = isCrouching ? crouchCenter : normalCenter;
+
+        playerState.GetState(out state);
+        if (CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Die)
+            return;
+
+        // Control Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ crouchHeightï¿½ï¿½ ï¿½ï¿½È¯, ï¿½ï¿½ï¿½ï¿½ normalHeightï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
         characterController.height = Mathf.Lerp(characterController.height, targetHeight, crouchSpeed);
+        characterController.center = Vector3.Lerp(characterController.center, targetCenter, crouchSpeed);
+
+        // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        float targetCameraY = isCrouching ? cameraYOffset - (normalHeight - crouchHeight) : cameraYOffset;
+        Vector3 cameraPosition = cameraTransform.localPosition;
+        cameraPosition.y = Mathf.Lerp(cameraTransform.localPosition.y, targetCameraY, crouchSpeed);
+        cameraTransform.localPosition = cameraPosition;
     }
 }

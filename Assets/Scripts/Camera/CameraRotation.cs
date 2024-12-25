@@ -2,39 +2,91 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class CameraRot : MonoBehaviour
 {
-    [SerializeField] private float mouseSpeed = 8f; // È¸Àü ¼Óµµ
-    [SerializeField] private Transform playerTransform; // ÇÃ·¹ÀÌ¾îÀÇ Transform
+    [SerializeField] private float mouseSpeed = 8f; // íšŒì „ ì†ë„
+    [SerializeField] private Transform playerTransform; // í”Œë ˆì´ì–´ Transform
+    [SerializeField] private Transform cameraObject; // ì¹´ë©”ë¼ ì˜¤ë¸Œì íŠ¸ Transform
+    [SerializeField] GameObject player; // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸
 
-    [SerializeField] GameObject player;//ÇÃ·¹ÀÌ¾î
+    public Transform mainCamera; // ë©”ì¸ ì¹´ë©”ë¼ Transform
+    public Transform playerModel; // í”Œë ˆì´ì–´ ëª¨ë¸ë§ Transform
+    public Transform headBone; // ë¨¸ë¦¬ ë³¸ (Head Bone)
 
-    private float mouseX = 0f; // ÁÂ¿ì È¸Àü °ª
-    private float mouseY = 0f; // À§¾Æ·¡ È¸Àü °ª
-    [SerializeField] private Vector3 offset; // Ä«¸Ş¶ó¿Í ÇÃ·¹ÀÌ¾î »çÀÌÀÇ °£°İ
+    private float mouseX = 0f; // ì¢Œìš° íšŒì „ ê°’
+    private float mouseY = 0f; // ìœ„ì•„ë˜ íšŒì „ ê°’
+    [SerializeField] private Vector3 offset; // ì¹´ë©”ë¼ì™€ í”Œë ˆì´ì–´ ì‚¬ì´ ê±°ë¦¬
 
     PhotonView pv;
 
     public GameObject FollowCam;
     public GameObject EquipCamera;
 
-    public bool popup_escMenu = false; //esc T/F¿©ºÎ
-    void Awake()
-    {
-       
-    }
+    PlayerState playerState;
+    PlayerState.playerState state;
+
+    public bool popup_escMenu = false; // esc ë©”ë‰´ í™œì„±í™” ì—¬ë¶€
+
+    public bool isControlledExternally = false;  // ì™¸ë¶€ì—ì„œ ì¹´ë©”ë¼ë¥¼ ì œì–´í•˜ëŠ” ë™ì•ˆ trueë¡œ ì„¤ì •
+
     void Start()
     {
-        player = this.gameObject.GetComponent<Transform>().parent.gameObject;
-        playerTransform = player.transform;
+        if (this.transform.parent != null)
+        {
+            foreach (GameObject Player_ in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (Player_.GetComponent<PhotonView>().IsMine)
+                {
+                    player = this.transform.parent.gameObject;
+                    playerTransform = Player_.transform;
+                }
+            }
+            // PlayerModel ì°¾ê¸°
+            playerModel = playerTransform.Find("ìºë¦­í„°ëª¨ë¸ë§");
+            if (playerModel == null)
+            {
+                Debug.LogError("PlayerModel object not found under the player prefab.");
+                return;
+            }
 
+            // HeadBone ì°¾ê¸°
+            headBone = playerModel.Find("rabbit:Hips/rabbit:Spine/rabbit:Spine1/rabbit:Spine2/rabbit:Neck/Head");
+            if (headBone == null)
+            {
+                headBone = playerModel.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head");
+                if (headBone == null)
+                {
+                    Debug.LogError("HeadBone object not found in PlayerModel.");
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("Player's parent object not found. Make sure the prefab is instantiated correctly.");
+            return;
+        }
+        // Ä«ï¿½Ş¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
+        if (cameraObject == null)
+        {
+            cameraObject = playerTransform.Find("Camera"); // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ "Camera"ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½
+            if (cameraObject == null)
+            {
+                Debug.LogError("Camera object not found under player. Ensure that there is a child named 'Camera'.");
+                return;
+            }
+        }
+
+       // player = this.gameObject.GetComponent<Transform>().parent.gameObject;
+        playerTransform = player.transform;
+        playerState = player.gameObject.GetComponent<PlayerState>();
         if (PhotonNetwork.IsConnected)
         {
             pv = player.GetComponent<PhotonView>();
-
-            if (pv.IsMine)
+            if (pv != null && pv.IsMine)
             {
                 GetComponent<AudioListener>().enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -53,14 +105,36 @@ public class CameraRot : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        // ë™ì ìœ¼ë¡œ ìƒì„±ëœ í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ ì°¾ê¸°
+        if (this.transform.parent != null)
+        {
+            player = this.transform.parent.gameObject;
+            playerTransform = player.transform;
+
+            // Player Modeling ì°¾ê¸°
+            playerModel = playerTransform.Find("ìºë¦­í„°ëª¨ë¸ë§"); // "PlayerModel"ì€ ëª¨ë¸ë§ì˜ ì´ë¦„
+            if (playerModel == null)
+            {
+                Debug.LogError("PlayerModel object not found under the player prefab.");
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogError("Player's parent object not found. Make sure the prefab is instantiated correctly.");
+            return;
+        }
     }
 
     void Update()
     {
-        if (popup_escMenu) //esc Ã¢ÀÌ ¿­·ÁÀÖÀ¸¸é Ä«¸Ş¶ó È¸ÀüX
+        if (popup_escMenu || playerState.State == PlayerState.playerState.Die) // esc ë©”ë‰´ í™œì„±í™” ë˜ëŠ” ì£½ì—ˆì„ ë•Œ
             return;
 
-        mouseSpeed = GameInfo.MouseSensitivity; //°¨µµ µ¿±âÈ­
+        if (isControlledExternally)
+            return;
+
+        mouseSpeed = GameInfo.MouseSensitivity;
 
         if (PhotonNetwork.IsConnected)
         {
@@ -73,21 +147,29 @@ public class CameraRot : MonoBehaviour
         {
             cameraPos();
         }
+
+        if (mainCamera != null && playerModel != null)
+        {
+            // ì¹´ë©”ë¼ì˜ Yì¶• íšŒì „ì„ ëª¨ë¸ë§ì— ë™ê¸°í™”
+            Vector3 cameraRotation = mainCamera.rotation.eulerAngles;
+            playerModel.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
+
+            // ì¹´ë©”ë¼ì˜ Xì¶• íšŒì „ì„ ë¨¸ë¦¬ ë³¸ì— ì ìš©
+            if (headBone != null)
+            {
+                float headRotationX = Mathf.Clamp(mouseY, -30f, 30f); // ë¨¸ë¦¬ ê°ë„ ì œí•œ (ì˜ˆ: -30ë„ ~ 30ë„)
+                headBone.localRotation = Quaternion.Euler(headRotationX, 0, 0);
+            }
+        }
     }
 
     void cameraPos()
     {
-        // ¸¶¿ì½º ÀÔ·ÂÀ» ¹Ş¾Æ Ä«¸Ş¶ó È¸Àü Ã³¸®
         mouseX += Input.GetAxis("Mouse X") * mouseSpeed;
         mouseY -= Input.GetAxis("Mouse Y") * mouseSpeed;
+        mouseY = Mathf.Clamp(mouseY, -90f, 90f);
 
-        // À§¾Æ·¡ È¸Àü °¢µµ Á¦ÇÑ
-        mouseY = Mathf.Clamp(mouseY, -50f, 30f);
-
-        // Ä«¸Ş¶óÀÇ È¸Àü Àû¿ë (ÇÃ·¹ÀÌ¾îÀÇ È¸ÀüÀ» µû¶ó°¨)
         this.transform.localEulerAngles = new Vector3(mouseY, mouseX, 0);
-
-        // Ä«¸Ş¶ó À§Ä¡¸¦ ÇÃ·¹ÀÌ¾î À§Ä¡¿¡ °íÁ¤
-        this.transform.position = playerTransform.position + offset;
+        this.transform.position = cameraObject.position;
     }
 }

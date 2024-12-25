@@ -1,18 +1,24 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
+using Photon.Pun.UtilityScripts;
 
 public class ChainInteract : MonoBehaviourPun, IInteractable
 {
-    public string requiredItem = "Cutter"; // 필요한 아이템 이름
+    public string requiredItem = "절단기"; // 필요한 아이템 이름
     public float holdTime = 10f;           // 홀드 시간
     private bool isChainRemoved = false;   // 사슬 제거 여부
     private float holdProgress = 0f;       // 홀드 진행 시간
     private bool isHolding = false;        // 홀드 중인지 여부
 
+    [Header("UI Settings")]
+    public Image holdTimeBar;              // UI 타임바 이미지 추가 (동그랗게 표시되는 타임바)
+
     [Header("Audio Settings")]
     public AudioSource audioSource;        // AudioSource 컴포넌트
     public AudioClip cuttingSound;         // 사슬 절단 중 사운드
     public AudioClip cutCompleteSound;     // 절단 완료 사운드
+
     public string GetInteractPrompt()
     {
         if (isChainRemoved)
@@ -24,15 +30,23 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
     {
         if (isChainRemoved) return;
 
-        Inventory inventory = Inventory.instance;
-        if (!inventory.HasItem(requiredItem))
+        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
+        if (playerEquip == null || !playerEquip.HasEquippedItem(requiredItem))
         {
             Debug.Log($"{requiredItem}이(가) 필요합니다.");
             return;
         }
 
         isHolding = true; // 홀드 시작
-                          // 절단 중 사운드 시작
+
+        // 타임바 초기화 및 활성화
+        if (holdTimeBar != null)
+        {
+            holdTimeBar.fillAmount = 0f; // 타임바를 초기 상태로 설정
+            holdTimeBar.gameObject.SetActive(true); // 타임바 활성화
+        }
+
+        // 절단 중 사운드 시작
         if (cuttingSound != null && audioSource != null)
         {
             audioSource.clip = cuttingSound;
@@ -48,6 +62,13 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
             if (Input.GetKey(KeyCode.F)) // F 키를 꾹 누르는 중
             {
                 holdProgress += Time.deltaTime;
+
+                // 타임바 업데이트
+                if (holdTimeBar != null)
+                {
+                    holdTimeBar.fillAmount = holdProgress / holdTime; // 진행 시간에 따른 타임바 채우기
+                }
+
                 if (holdProgress >= holdTime)
                 {
                     CompleteInteract(); // 작업 완료
@@ -57,9 +78,6 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
             {
                 CancelInteract(); // 키를 뗐을 경우 진행 취소
             }
-
-            // 프롬프트 업데이트를 InteractionManager가 실시간으로 호출하도록 강제
-          //  InteractionManager.UpdatePrompt(this);
         }
     }
 
@@ -67,6 +85,12 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
     {
         isHolding = false;
         holdProgress = 0f;
+
+        // 타임바 비활성화
+        if (holdTimeBar != null)
+        {
+            holdTimeBar.gameObject.SetActive(false);
+        }
 
         // 절단 완료 사운드
         if (audioSource != null)
@@ -78,14 +102,17 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
             }
         }
 
-        Inventory inventory = Inventory.instance;
-
-        // 인벤토리에서 커터 제거
-        Player_Equip playerEquip = FindObjectOfType<Player_Equip>();
-        if (playerEquip != null)
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            playerEquip.RemoveEquippedItem(requiredItem);
-            Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                PhotonItem photonItem = player.GetComponent<PhotonItem>();
+                if (photonItem != null)
+                {
+                    photonItem.RemoveEquippedItem(requiredItem);
+                    Debug.Log($"{requiredItem} 아이템이 제거되었습니다.");
+                }
+            }
         }
 
         if (PhotonNetwork.IsConnected)
@@ -98,11 +125,16 @@ public class ChainInteract : MonoBehaviourPun, IInteractable
         }
     }
 
-
     private void CancelInteract()
     {
         isHolding = false;
         holdProgress = 0f;
+
+        // 타임바 비활성화
+        if (holdTimeBar != null)
+        {
+            holdTimeBar.gameObject.SetActive(false);
+        }
 
         if (audioSource != null && audioSource.isPlaying)
         {

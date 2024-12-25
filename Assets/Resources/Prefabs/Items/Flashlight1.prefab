@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6887484906773862094}
   - component: {fileID: 2099268913392582691}
   - component: {fileID: 4301368589579951855}
+  - component: {fileID: -4152498196759353843}
   m_Layer: 3
   m_Name: Flashlight1
   m_TagString: Untagged
@@ -126,7 +127,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4340401175393712766}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 707b4b3beece5154bacba2ad97a90e72, type: 3}
   m_Name: 
@@ -134,3 +135,35 @@ MonoBehaviour:
   flashlightLight: {fileID: 4340401175393712766}
   intensity: 15
   range: 100
+  minSpotAngle: 30
+  maxSpotAngle: 80
+  minIntensity: 100
+  maxIntensity: 101
+  maxDistance: 30
+--- !u!54 &-4152498196759353843
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340401175393712766}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

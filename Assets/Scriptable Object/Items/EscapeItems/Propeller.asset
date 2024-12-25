@@ -17,5 +17,5 @@ MonoBehaviour:
   spawnCount: 0
   type: 0
   icon: {fileID: 21300000, guid: e22113863bea5744b897d1aa9567acee, type: 3}
-  dropPerfab: {fileID: 6960481127933375914, guid: a5031acd652ceed42b203a9c851da17f, type: 3}
+  dropPerfab: {fileID: 1972520488429642149, guid: 7c99cfe7bf85a9549b75b6405ce9a817, type: 3}
   itemID: 

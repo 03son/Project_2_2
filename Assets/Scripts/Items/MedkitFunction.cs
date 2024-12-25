@@ -15,7 +15,7 @@ public class MedkitFunction : MonoBehaviour, IItemFunction
 
             if (holdCounter >= holdTime)
             {
-                targetPlayer.Revive(); // 플레이어 부활
+                //targetPlayer.Revive(); // 플레이어 부활
                 Debug.Log("플레이어가 부활했습니다.");
                 Destroy(gameObject); // 사용 후 구급상자 제거
                 ResetHold();

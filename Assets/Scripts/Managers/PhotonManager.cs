@@ -127,7 +127,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 i = 0;
 
             string repeatedcom = new string('.', i);
-            LoadingText.text = $"연결중{repeatedcom}";
+            LoadingText.text = $"서버연결중{repeatedcom}";
             yield return new WaitForSecondsRealtime(0.1f);
         }
     }

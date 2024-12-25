@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using static PlayerState;
 
 public class ItemSlot
 {
@@ -32,9 +33,11 @@ public class Inventory : MonoBehaviour
 
     private GameObject equippedItemObject; // ���� ������ �������� GameObject�� �����ϴ� ����
 
-   
+    PlayerState playerState;
+    PlayerState.playerState state;
     private void Awake()
     {
+        pv = GetComponent<PhotonView>();
         if (instance == null)
         {
             instance = this;
@@ -43,10 +46,6 @@ public class Inventory : MonoBehaviour
         {
             Destroy(this);
         }
-
-        pv = GetComponent<PhotonView>();
-
-        ConnectUi_itemSlot();
 
         // Player_Equip 초기화
         playerEquip = FindObjectOfType<Player_Equip>();
@@ -59,6 +58,26 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (pv.IsMine)
+            {
+                SetInven();
+            }
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+        }
+        else
+        {
+            SetInven();
+        }
+    }
+    void SetInven()
+    {
+        ConnectUi_itemSlot();
+
         slots = new ItemSlot[ui_itemSlot.Length];
 
         for (int i = 0; i < slots.Length; i++)
@@ -69,9 +88,10 @@ public class Inventory : MonoBehaviour
 
         dropPos = GameObject.Find("ItemDropPos").GetComponent<Transform>();
 
+        playerState = GetComponent<PlayerState>();
+
         ClearSelectItemWindows();
     }
-
     void ConnectUi_itemSlot()
     {
         ui_itemSlot[0] = GameObject.Find("ItemSlot").GetComponent<ItemSlotUI>();
@@ -94,20 +114,6 @@ public class Inventory : MonoBehaviour
 
             // �������� ȹ���ϰ� ���� Player_Equip�� invenUtil�� ȣ���� ������
             GetComponent<Player_Equip>().invenUtil(addItemIndex + 1);
-
-            // ������ �������� �߰��� �� Flashlight1�� AcquireFlashlight �޼��带 ȣ��
-            if (item.ItemName == "Flashlight")
-            {
-                GameObject flashlightObject = GameObject.Find("Flashlight");
-                if (flashlightObject != null)
-                {
-                    Flashlight1 flashlightScript = flashlightObject.GetComponent<Flashlight1>();
-                    if (flashlightScript != null)
-                    {
-                        flashlightScript.AcquireFlashlight();
-                    }
-                }
-            }
 
             return;
         }
@@ -222,8 +228,14 @@ public class Inventory : MonoBehaviour
     void UnEquip(int index)
     {
         if (GetComponent<Player_Equip>().Item != null)
+        {
             Destroy(GetComponent<Player_Equip>().Item);
+            GetComponent<Player_Equip>().Item = null;
+
+            // 자동으로 다른 슬롯을 선택하지 않음
+        }
     }
+
 
     void RemoveSelectedItem()
     {
@@ -233,6 +245,11 @@ public class Inventory : MonoBehaviour
             {
                 UnEquip(selectedItemIndex);
                 ThrowItem(slots[selectedItemIndex].item);
+                if (PhotonNetwork.IsConnected)
+                {
+                  GetComponent<PhotonItem>().ThrowItem(slots[selectedItemIndex].item);
+                  GetComponent<PhotonItem>().RemoveEquippedItem(slots[selectedItemIndex].item.name);
+                }
             }
             GetComponent<Player_Equip>().ItemName.text = "";
             slots[selectedItemIndex].item = null;
@@ -248,14 +265,25 @@ public class Inventory : MonoBehaviour
 
     void ThrowItem(itemData item)
     {
-        Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-    }
+        if (PhotonNetwork.IsConnected)
+        {
 
+        }
+        else
+        {
+            GameObject dropItem = Instantiate(item.dropPerfab, dropPos.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+            dropItem.GetComponent<Rigidbody>().isKinematic = false;
+        }
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyManager.Drop_Key))
+        playerState.GetState(out state);
+        if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
-            RemoveSelectedItem();
+            if (Input.GetKeyDown(KeyManager.Drop_Key))
+            {
+                RemoveSelectedItem();
+            }
         }
     }
 
@@ -264,6 +292,4 @@ public class Inventory : MonoBehaviour
         // EquipItem �޼���� ������ �������� ����
         equippedItemObject = itemObject;
     }
-
-
 }

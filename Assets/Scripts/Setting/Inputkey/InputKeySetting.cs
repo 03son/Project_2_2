@@ -17,6 +17,8 @@ public class InputKeySetting : MonoBehaviour , IResetKey
     protected static bool isClickChangeButton = false; //변경할 키는 1개씩만 가능
 
     protected GameSettingSetValue key;
+
+    public UI_KeySetting_Image UI_KeySetting_Image;
     void Awake()
     {
         keyText = currentKeyButton.gameObject.transform.GetComponentInChildren<TextMeshProUGUI>();
@@ -36,6 +38,7 @@ public class InputKeySetting : MonoBehaviour , IResetKey
         isClickChangeButton = true;
         keyText.text = "변경하려는 키를 입력하세요.";
         keyText.fontSize = 15;
+        UI_KeySetting_Image.clickButtonImage(); //버튼 이미지 변경
 
         while (true)
         {
@@ -99,6 +102,8 @@ public class InputKeySetting : MonoBehaviour , IResetKey
     {
         keyText.fontSize = 24;
         isClickChangeButton = false;
+        UI_KeySetting_Image.resetButtonImage();
+
         //키 저장
     }
     KeyCode StringToKeyCode(string keyString)

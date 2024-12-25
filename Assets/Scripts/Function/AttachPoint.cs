@@ -1,6 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
-
+using TMPro;
 public class AttachPoint : MonoBehaviourPun, IInteractable
 {
     public string requiredItemName; // 필요한 아이템 이름 (예: "Propeller")
@@ -15,7 +15,14 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
         else
             return $"{requiredItemName} 부착하기"; // 아직 부착되지 않았으면 프롬프트 표시
     }
-
+    void Start()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+    PhotonView pv;
+    Player_Equip playerEquip;
+    PhotonItem photonItem;
+    GameObject _Player;
     public void OnInteract()
     {
         if (isAttached)
@@ -24,17 +31,35 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
             return;
         }
 
-        Inventory inventory = Inventory.instance;
-
-        if (inventory.HasItem(requiredItemName))
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            Debug.Log($"{requiredItemName} 아이템이 인벤토리에 있음. 부착 시작");
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                playerEquip = player.GetComponent<Player_Equip>();
+                photonItem = player.GetComponent<PhotonItem>();
+                _Player = player;
+            }
+                    
+         }
+
+         if (playerEquip != null && playerEquip.HasEquippedItem(requiredItemName))
+        {
+            Debug.Log($"{requiredItemName} 아이템이 장착되어 있음. 부착 시작");
 
             // 아이템 제거
-            inventory.RemoveItem(requiredItemName);
+            //photonItem.RemoveEquippedItem(requiredItemName);
+
+            //플레이어 손에 있는 거 제거
+            if (photonItem != null && photonItem.gameObject.GetComponent<PhotonView>() != null)
+            {
+                photonItem.RemoveEquippedItem(requiredItemName);
+                Inventory.instance.RemoveItem(requiredItemName);
+                Destroy(_Player.GetComponent<Player_Equip>().Item);
+                GameObject.Find("ItemName_Text").GetComponent<TextMeshProUGUI>().text = "";
+            }
 
             // 부착 상태 동기화 (RPC 호출)
-            photonView.RPC("RPC_AttachItem", RpcTarget.All);
+            pv.RPC("RPC_AttachItem", RpcTarget.All);
             Debug.Log("RPC_AttachItem 호출됨"); // 호출 확인용 로그
         }
         else
@@ -43,12 +68,16 @@ public class AttachPoint : MonoBehaviourPun, IInteractable
         }
     }
 
+
     [PunRPC]
     void RPC_AttachItem()
     {
         Debug.Log($"{requiredItemName} 부착 완료");
 
-        Instantiate(attachedItemPrefab, transform.position, transform.rotation, transform.parent);
+        // GameObject item = PhotonNetwork.InstantiateRoomObject($"Prefabs/Items/{attachedItemPrefab.name}", transform.position, transform.rotation);
+        GameObject Item_ = Resources.Load<GameObject>($"Prefabs/Items/{attachedItemPrefab.name}");
+        GameObject item = Instantiate(Item_, transform.position, transform.rotation);
+        item.GetComponent<Rigidbody>().isKinematic = true;
         isAttached = true;
 
         SubmarineController submarine = GetComponentInParent<SubmarineController>();

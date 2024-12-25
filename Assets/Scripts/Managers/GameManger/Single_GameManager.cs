@@ -7,10 +7,15 @@ public class Single_GameManager : GameManager
 {
     //ΩÃ±€«√∑π¿Ã ∞‘¿”∏≈¥œ¿˙
 
+    public static Single_GameManager instance;
+
     GameObject player;
+    GameObject Enemy;
     GameObject ≈‰≥¢;
     void Awake()
     {
+        instance = this;
+
         if (PhotonNetwork.IsConnected)
             return;
 
@@ -18,8 +23,11 @@ public class Single_GameManager : GameManager
         GetComponent<Multi_GameManager>().enabled = false;
 
         player = Resources.Load<GameObject>("Player");
+        Enemy = Resources.Load<GameObject>("UI_Resources_Enemy");
+        ≈‰≥¢ = Resources.Load<GameObject>("≈‰≥¢");
 
         CreatePlayer();
+        CreateEnemy();
     }
 
     public override void CreatePlayer()
@@ -28,7 +36,14 @@ public class Single_GameManager : GameManager
         Transform[] points =
         GameObject.Find("PlayerSpawnPointGroup").gameObject.GetComponentsInChildren<Transform>();
 
+      //  GameObject.Instantiate(player, points[1].position, points[1].rotation);
         GameObject.Instantiate(player, points[1].position, points[1].rotation);
-        //GameObject.Instantiate(≈‰≥¢ , points[1].position, points[1].rotation);
+    }
+    public override void CreateEnemy() //UIæ¿¿ª ±‚¡ÿ¿∏∑Œ ¿€º∫«‘
+    {
+        Transform[] points =
+         GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
+
+       // Instantiate(Enemy, points[1].position, points[1].rotation);
     }
 }

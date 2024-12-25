@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerDashJump : MonoBehaviour
+public class PlayerDashJump : MonoBehaviourPunCallbacks
 {
     [SerializeField] float dashSpeed = 5;
     [SerializeField] float jumpForce = 5f;
@@ -11,9 +11,13 @@ public class PlayerDashJump : MonoBehaviour
     private Transform cameraTransform;
     private Animator animator;
     private PhotonView pv;
+    private Player_Equip playerEquip;
 
     private Vector3 velocity;
     private bool isDashing = false;
+
+    PlayerState playerState;
+    PlayerState.playerState state;
 
     void Start()
     {
@@ -21,6 +25,9 @@ public class PlayerDashJump : MonoBehaviour
         cameraTransform = Camera.main.transform;
         animator = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
+        playerEquip = GetComponent<Player_Equip>(); // Player_Equip ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+        playerState = GetComponent<PlayerState>();
     }
 
     void Update()
@@ -28,8 +35,9 @@ public class PlayerDashJump : MonoBehaviour
         if (!pv.IsMine && PhotonNetwork.IsConnected)
             return;
 
-        // esc Ã¢ÀÌ ´ÝÇôÀÖÀ» ¶§¸¸ µ¿ÀÛ
-        if (!Camera.main.GetComponent<CameraRot>().popup_escMenu)
+        // esc Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ && ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        playerState.GetState(out state);
+        if (!CameraInfo.MainCam.GetComponent<CameraRot>().popup_escMenu && state == PlayerState.playerState.Survival)
         {
             HandleMovement();
             HandleDash();
@@ -39,7 +47,7 @@ public class PlayerDashJump : MonoBehaviour
 
     private void HandleMovement()
     {
-        // ±âº» ÀÌµ¿ ¹æÇâ ¼³Á¤
+        // ï¿½âº» ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
@@ -47,20 +55,33 @@ public class PlayerDashJump : MonoBehaviour
         direction.y = 0f;
         direction.Normalize();
 
-        // ´ë½¬ ÁßÀÌ ¾Æ´Ò ¶§¸¸ ÀÏ¹Ý ÀÌµ¿ Ã³¸®
+        // ï¿½ë½¬ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¹ï¿½ ï¿½Ìµï¿½ Ã³ï¿½ï¿½
         if (!isDashing)
         {
-            Vector3 mov = direction * dashSpeed * 0.5f; // ÀÏ¹Ý ¼Óµµ´Â ´ë½¬ ¼ÓµµÀÇ Àý¹ÝÀ¸·Î ¼³Á¤
+            Vector3 mov = direction * dashSpeed * 0.5f; // ï¿½Ï¹ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ë½¬ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             controller.Move(mov * Time.deltaTime);
         }
     }
 
     private void HandleDash()
     {
+        bool isHoldingItem = playerEquip != null && playerEquip.HasAnyEquippedItem(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+
         if (Input.GetKey(KeyManager.Run_Key) && controller.isGrounded && !isDashing)
         {
             isDashing = true;
-            animator.SetBool("isRunning", true); // ´Þ¸®±â ¾Ö´Ï¸ÞÀÌ¼Ç ½ÃÀÛ
+
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ù´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+            if (isHoldingItem)
+            {
+                animator.SetBool("isRunningWithItem", true);
+                animator.SetBool("isRunning", false);
+            }
+            else
+            {
+                animator.SetBool("isRunning", true); // ï¿½âº» ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+                animator.SetBool("isRunningWithItem", false);
+            }
         }
 
         if (isDashing)
@@ -69,31 +90,33 @@ public class PlayerDashJump : MonoBehaviour
             dashDirection.y = 0f;
             dashDirection.Normalize();
 
-            // ´ë½¬ Ã³¸®
+            // ï¿½ë½¬ Ã³ï¿½ï¿½
             controller.Move(dashDirection * dashSpeed * Time.deltaTime);
 
             if (Input.GetKeyUp(KeyManager.Run_Key))
             {
-                isDashing = false; // ´ë½¬ Á¾·á
-                animator.SetBool("isRunning", false); // ´Þ¸®±â ¾Ö´Ï¸ÞÀÌ¼Ç Á¾·á
+                isDashing = false; // ï¿½ë½¬ ï¿½ï¿½ï¿½ï¿½
+                animator.SetBool("isRunning", false); // ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+                animator.SetBool("isRunningWithItem", false); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ù±ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
         }
     }
 
     private void HandleJump()
     {
-        // Á¡ÇÁ Áß·Â ¹× Á¡ÇÁ Ã³¸®
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ß·ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
         if (controller.isGrounded)
         {
-            velocity.y = -2f; // ¹Ù´Ú¿¡ ÀÖÀ» ¶§ ¾à°£ÀÇ Áß·Â¸¸ Àû¿ë
-            animator.SetBool("isJumping", false); // Á¡ÇÁ ¾Ö´Ï¸ÞÀÌ¼Ç Á¾·á
+            velocity.y = -2f; // ï¿½Ù´Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ß·Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+            animator.SetBool("isJumping", false); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             if (Input.GetKeyDown(KeyManager.Jump_Key))
             {
                 velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-                animator.SetBool("isJumping", true); // Á¡ÇÁ ¾Ö´Ï¸ÞÀÌ¼Ç ½ÃÀÛ
-                isDashing = false; // ´ë½¬ Áß Á¡ÇÁÇÏ¸é ´ë½¬ Á¾·á
-                animator.SetBool("isRunning", false); // ´ë½¬ ¾Ö´Ï¸ÞÀÌ¼Ç Á¾·á
+                animator.SetBool("isJumping", true); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+                isDashing = false; // ï¿½ë½¬ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ë½¬ ï¿½ï¿½ï¿½ï¿½
+                animator.SetBool("isRunning", false); // ï¿½ë½¬ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+                animator.SetBool("isRunningWithItem", false); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ù±ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
         }
         else
@@ -101,7 +124,7 @@ public class PlayerDashJump : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         }
 
-        // Ä³¸¯ÅÍ ÀÌµ¿ Ã³¸®
+        // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ Ã³ï¿½ï¿½
         controller.Move(velocity * Time.deltaTime);
     }
 }

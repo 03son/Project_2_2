@@ -388,7 +388,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Occlusion",
     "m_StageCapability": 2,
-    "m_Value": 0.6200000047683716,
+    "m_Value": 1.5800000429153443,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }
@@ -750,9 +750,9 @@
     "m_ShaderOutputName": "Emission",
     "m_StageCapability": 2,
     "m_Value": {
-        "x": 0.10857955366373062,
-        "y": 0.1664293259382248,
-        "z": 0.18867921829223634
+        "x": 0.1105375587940216,
+        "y": 0.12175152450799942,
+        "z": 0.12735849618911744
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -2210,7 +2210,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Alpha",
     "m_StageCapability": 2,
-    "m_Value": 0.3400000035762787,
+    "m_Value": -0.7900000214576721,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }

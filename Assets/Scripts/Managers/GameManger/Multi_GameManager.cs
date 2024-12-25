@@ -2,18 +2,25 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using HashTable = ExitGames.Client.Photon.Hashtable;
+using Random = UnityEngine.Random;
 
 public class Multi_GameManager : GameManager
 {
-    //¸ÖÆ¼ÇÃ·¹ÀÌ °ÔÀÓ¸Å´ÏÀú
+   public static Multi_GameManager instance;
+    //ï¿½ï¿½Æ¼ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¸Å´ï¿½ï¿½ï¿½
 
     HashTable playerCP;
+    PhotonView pv;
 
     void Awake()
     {
-        if(!PhotonNetwork.IsConnected)
+        instance = this;
+
+        if (!PhotonNetwork.IsConnected)
             return;
 
         GetComponent<Multi_GameManager>().enabled = true;
@@ -22,11 +29,16 @@ public class Multi_GameManager : GameManager
         playerCP = PhotonNetwork.LocalPlayer.CustomProperties;
 
         CreatePlayer();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+           CreateEnemy();
+        }
     }
 
     public override void CreatePlayer()
     {
-        // ÃâÇö À§Ä¡ Á¤º¸¸¦ ¹è¿­¿¡ÀúÀå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Transform[] points =
         GameObject.Find("PlayerSpawnPointGroup").gameObject.GetComponentsInChildren<Transform>();
 
@@ -37,17 +49,42 @@ public class Multi_GameManager : GameManager
             Number[index] = player;
             index++;
         }
-        Array.Sort(Number);//¿À¸§Â÷¼øÀ¸·Î ¾×ÅÍ³Ñ¹ö¸¦ Á¤·Ä
+        Array.Sort(Number);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í³Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        int idx = 1;//0Àº PlayerSpawnPointGroup ¿ÀºêÁ§Æ®¿¡¼­ ½ºÆù µÊ
+        int idx = 1;//0ï¿½ï¿½ PlayerSpawnPointGroup ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         foreach (int playerNumber in Number)
         {
-            if (playerNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            if (playerNumber == PhotonNetwork.LocalPlayer.ActorNumber)//ë‚´ ìºë¦­í„° ìƒì„±
             {
-                PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
-               // PhotonNetwork.Instantiate($"Character/{playerCP["animalName"]}", points[idx].position, points[idx].rotation, 0);
+                if ((string)playerCP["animalName"] != "ë¬´ì‘ìœ„")
+                {
+                    PhotonNetwork.Instantiate($"Character/{playerCP["animalName"]}", points[idx].position, points[idx].rotation, 0);
+                }
+                else if ((string)playerCP["animalName"] == "ë¬´ì‘ìœ„")//ë¬´ì‘ìœ„ ì¼ ë•Œ
+                {
+                    string[] name = { "í† ë¼", "ëŠ‘ëŒ€", "ë¼ì¿¤", "ê³ ì–‘ì´" };
+                    int Index = Random.Range(0, name.Length);
+                    PhotonNetwork.Instantiate($"Character/{name[Index]}", points[idx].position, points[idx].rotation, 0);
+                }
             }
             idx++;
         }
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (player.GetComponent<PhotonView>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                pv = player.GetComponent<PhotonView>();
+            }
+        }
     }
+    
+    public override void CreateEnemy() //UIï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½
+    {
+        Transform[] points =
+        GameObject.Find("EnemySpawnPoint").gameObject.GetComponentsInChildren<Transform>();
+       // PhotonNetwork.Instantiate("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
+        PhotonNetwork.InstantiateRoomObject("UI_Resources_Enemy", points[1].position, points[1].rotation, 0);
+         
+    }
+
 }

@@ -1,0 +1,608 @@
+fileFormatVersion: 2
+guid: e61a52650d6ad9646a2dd5a7b0a2daa6
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 1
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: MOIdle(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pCube15
+      parentName: MOIdle(Clone)
+      position: {x: -0, y: 0.059360646, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 3.8041644, y: 3.8041644, z: 3.8041644}
+    - name: pCube1
+      parentName: pCube15
+      position: {x: 0.0000038228472, y: 0.0059469664, z: 0.0017825108}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.51555717, y: 0.54958415, z: 0.51555717}
+    - name: pCube56
+      parentName: pCube1
+      position: {x: -0.0010433847, y: 0.0023408632, z: 0.004721305}
+      rotation: {x: -0.28138876, y: -0.14431766, z: 0.14347754, w: 0.937767}
+      scale: {x: 0.040278573, y: 0.08179957, z: 0.008904539}
+    - name: pCube55
+      parentName: pCube1
+      position: {x: -0.000007414983, y: 0.0027277367, z: 0.004721305}
+      rotation: {x: -0.33735797, y: 0, z: -0, w: 0.94137645}
+      scale: {x: 0.07933936, y: 0.1601331, z: 0.017214712}
+    - name: pCube14
+      parentName: pCube1
+      position: {x: -0.003929541, y: 0.004722, z: -0.001627226}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.29189262, y: 0.27382034, z: 0.29189262}
+    - name: pSphere1
+      parentName: pCube1
+      position: {x: 0.0000054838124, y: -0.000059935446, z: 0.0027604245}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 0.25826418, y: 0.25826418, z: 0.242274}
+    - name: pCube6
+      parentName: pCube1
+      position: {x: -0.0028198736, y: -0.002318163, z: 0.003357579}
+      rotation: {x: 0, y: -0.41988292, z: -0, w: 0.9075783}
+      scale: {x: 0.074240394, y: 0.03582064, z: 0.05415188}
+    - name: pCube5
+      parentName: pCube1
+      position: {x: -0.0021666132, y: -0.0024078703, z: 0.0038851043}
+      rotation: {x: 0, y: -0.31844255, z: -0, w: 0.94794214}
+      scale: {x: 0.10469364, y: 0.050799116, z: 0.05415188}
+    - name: pCube13
+      parentName: pCube1
+      position: {x: -0.0024219332, y: -0.0020989503, z: 0.00349058}
+      rotation: {x: -0.55174184, y: -0.10639618, z: 0.8252917, w: 0.056164328}
+      scale: {x: 0.06484384, y: 0.050991308, z: 0.05410991}
+    - name: pCube12
+      parentName: pCube1
+      position: {x: -0.0015937361, y: -0.0024078703, z: 0.003910458}
+      rotation: {x: -0.026193185, y: -0.2041695, z: 0.9785698, w: -0.0054649645}
+      scale: {x: 0.06503871, y: 0.05129359, z: 0.053629857}
+    - name: pCube2
+      parentName: pCube1
+      position: {x: -0.001283562, y: -0.0024078703, z: 0.0042625186}
+      rotation: {x: 0, y: -0.18183312, z: -0, w: 0.9833294}
+      scale: {x: 0.10469364, y: 0.050799116, z: 0.05415188}
+    - name: pCube7
+      parentName: pCube1
+      position: {x: -0.00041498846, y: -0.0024078703, z: 0.004414953}
+      rotation: {x: 0, y: -0.026766725, z: -0, w: 0.9996417}
+      scale: {x: 0.10469364, y: 0.050799116, z: 0.05415188}
+    - name: pCube8
+      parentName: pCube1
+      position: {x: 0.00047065056, y: -0.0024078703, z: 0.004382523}
+      rotation: {x: 0, y: 0.07613756, z: -0, w: 0.9970974}
+      scale: {x: 0.10469364, y: 0.050799116, z: 0.05415188}
+    - name: pCube4
+      parentName: pCube1
+      position: {x: 0.0012499962, y: -0.0024078703, z: 0.004289705}
+      rotation: {x: 0, y: 0.09404305, z: -0, w: 0.99556816}
+      scale: {x: 0.10469364, y: 0.050799116, z: 0.05415188}
+    - name: pCube11
+      parentName: pCube1
+      position: {x: 0.00086823135, y: -0.0024078703, z: 0.0038849914}
+      rotation: {x: -0.026521193, y: -0.13248265, z: 0.9908241, w: -0.003546137}
+      scale: {x: 0.057134, y: 0.051010802, z: 0.05392716}
+    - name: pCube10
+      parentName: pCube1
+      position: {x: -0.000012350094, y: -0.0024078703, z: 0.004140099}
+      rotation: {x: -0.026261386, y: -0.19155169, z: 0.9811177, w: -0.005127226}
+      scale: {x: 0.07907926, y: 0.051235892, z: 0.053690247}
+    - name: pCube9
+      parentName: pCube1
+      position: {x: -0.00077438954, y: -0.0024078703, z: 0.003779183}
+      rotation: {x: -0.026521193, y: -0.13248265, z: 0.9908241, w: -0.003546137}
+      scale: {x: 0.06503871, y: 0.051010802, z: 0.05392716}
+    - name: pCylinder1
+      parentName: pCube1
+      position: {x: -0.000007414983, y: -0.0032038223, z: -0.00058952504}
+      rotation: {x: 0.21945311, y: 0.079462536, z: 0.014049286, w: 0.97228014}
+      scale: {x: 0.41509286, y: 0.11631497, z: 0.49598056}
+    - name: pSphere9
+      parentName: pCube15
+      position: {x: -0.0058534164, y: -0.009476082, z: 0.0016399437}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 0.09743487, y: 0.09743487, z: 0.09743487}
+    - name: pSphere8
+      parentName: pCube15
+      position: {x: -0.0058534164, y: -0.009476082, z: 0.0014232554}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 0.11189598, y: 0.11189598, z: 0.11189598}
+    - name: pSphere7
+      parentName: pCube15
+      position: {x: -0.0054019955, y: -0.0062556807, z: 0.0007381358}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 0.09743487, y: 0.09743487, z: 0.09743487}
+    - name: pSphere6
+      parentName: pCube15
+      position: {x: -0.0054019955, y: -0.0062556807, z: 0.00052144745}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 0.11189598, y: 0.11189598, z: 0.11189598}
+    - name: pSphere3
+      parentName: pCube15
+      position: {x: -0.005146038, y: -0.0028518941, z: 0.0017692548}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 0.09743487, y: 0.09743487, z: 0.09743487}
+    - name: pSphere5
+      parentName: pCube15
+      position: {x: -0.005146038, y: -0.0028518941, z: 0.0015525664}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 0.11189598, y: 0.11189598, z: 0.11189598}
+    - name: pCube36
+      parentName: pCube15
+      position: {x: -0.0035716302, y: -0.00050994096, z: 0.0034789692}
+      rotation: {x: 0.043060366, y: -0.4662034, z: 0.15452145, w: 0.8700134}
+      scale: {x: 0.016226104, y: 0.016226104, z: 0.016226104}
+    - name: pCube33
+      parentName: pCube15
+      position: {x: -0.003203756, y: -0.0006287385, z: 0.003597357}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube31
+      parentName: pCube15
+      position: {x: -0.0027217001, y: -0.0006287385, z: 0.0039651976}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube3
+      parentName: pCube15
+      position: {x: -0.0020282746, y: -0.00082191377, z: 0.004261936}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.06602464, y: 0.06602464, z: 0.06602464}
+    - name: pCube25
+      parentName: pCube15
+      position: {x: -0.001474812, y: -0.00015175912, z: 0.004261936}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube27
+      parentName: pCube15
+      position: {x: -0.0011665437, y: 0.0002589122, z: 0.0043547726}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube30
+      parentName: pCube15
+      position: {x: -0.0008951979, y: 0.0006022818, z: 0.0043773456}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube29
+      parentName: pCube15
+      position: {x: -0.00052275596, y: 0.0007193045, z: 0.0043291645}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube28
+      parentName: pCube15
+      position: {x: -0.0001469066, y: 0.00075080723, z: 0.004261936}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube26
+      parentName: pCube15
+      position: {x: 0.00047543267, y: 0.0003534731, z: 0.0040155547}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.037328888, y: 0.037328888, z: 0.037328888}
+    - name: pCube24
+      parentName: pCube15
+      position: {x: 0.001072034, y: 0.000303713, z: 0.003962167}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.048412208, y: 0.048412208, z: 0.048412208}
+    - name: pCube32
+      parentName: pCube15
+      position: {x: 0.0015775342, y: 0.0007277887, z: 0.0037041765}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.028194705, y: 0.028194705, z: 0.028194705}
+    - name: pCube34
+      parentName: pCube15
+      position: {x: 0.0019444695, y: 0.0011493036, z: 0.003479949}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.026553461, y: 0.026553461, z: 0.026553461}
+    - name: pCube35
+      parentName: pCube15
+      position: {x: 0.0022258244, y: 0.0013112534, z: 0.003327879}
+      rotation: {x: -0.034167983, y: -0.0054254103, z: 0.15672785, w: 0.98703575}
+      scale: {x: 0.016226104, y: 0.016226104, z: 0.016226104}
+    - name: pCube48
+      parentName: pCube15
+      position: {x: 0.0022622964, y: 0.0006780181, z: 0.0033976238}
+      rotation: {x: 0.0018740011, y: -0.069160126, z: 0.9885683, w: -0.13396305}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube47
+      parentName: pCube15
+      position: {x: 0.0019077368, y: 0.0005157341, z: 0.003565708}
+      rotation: {x: 0.0018740011, y: -0.069160126, z: 0.9885683, w: -0.13396305}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube45
+      parentName: pCube15
+      position: {x: 0.0014648011, y: 0.00022960249, z: 0.0037607558}
+      rotation: {x: 0.0018740011, y: -0.069160126, z: 0.9885683, w: -0.13396305}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube38
+      parentName: pCube15
+      position: {x: 0.0008829147, y: -0.0003127811, z: 0.004207319}
+      rotation: {x: 0.0018740011, y: -0.069160126, z: 0.9885683, w: -0.13396305}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube40
+      parentName: pCube15
+      position: {x: 0.0004520288, y: -0.0006334433, z: 0.0042998013}
+      rotation: {x: 0.0038192815, y: -0.069080025, z: 0.99194634, w: -0.10609376}
+      scale: {x: 0.037019394, y: 0.037019394, z: 0.037019394}
+    - name: pCube43
+      parentName: pCube15
+      position: {x: 0.000063066065, y: -0.0009180035, z: 0.0042998013}
+      rotation: {x: 0.0038192815, y: -0.069080025, z: 0.99194634, w: -0.10609376}
+      scale: {x: 0.028401809, y: 0.028401809, z: 0.028401809}
+    - name: pCube42
+      parentName: pCube15
+      position: {x: -0.00026764133, y: -0.0010735324, z: 0.0042998013}
+      rotation: {x: 0.0038192815, y: -0.069080025, z: 0.99194634, w: -0.10609376}
+      scale: {x: 0.028401809, y: 0.028401809, z: 0.028401809}
+    - name: pCube41
+      parentName: pCube15
+      position: {x: -0.00062407035, y: -0.0011611514, z: 0.0042998013}
+      rotation: {x: 0.0038192815, y: -0.069080025, z: 0.99194634, w: -0.10609376}
+      scale: {x: 0.028401809, y: 0.028401809, z: 0.028401809}
+    - name: pCube39
+      parentName: pCube15
+      position: {x: -0.0010554866, y: -0.0011366706, z: 0.0042998013}
+      rotation: {x: 0.0038192815, y: -0.069080025, z: 0.99194634, w: -0.10609376}
+      scale: {x: 0.037019394, y: 0.037019394, z: 0.037019394}
+    - name: pCube37
+      parentName: pCube15
+      position: {x: -0.0015615073, y: -0.0011366706, z: 0.004207319}
+      rotation: {x: 0.0038192815, y: -0.069080025, z: 0.99194634, w: -0.10609376}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube44
+      parentName: pCube15
+      position: {x: -0.002370961, y: -0.0010514788, z: 0.004207319}
+      rotation: {x: 0.0018740011, y: -0.069160126, z: 0.9885683, w: -0.13396305}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube46
+      parentName: pCube15
+      position: {x: -0.0028915727, y: -0.00092582405, z: 0.0037607558}
+      rotation: {x: 0.0018740011, y: -0.069160126, z: 0.9885683, w: -0.13396305}
+      scale: {x: 0.04052564, y: 0.04052564, z: 0.04052564}
+    - name: pCube49
+      parentName: pCube15
+      position: {x: -0.00032982614, y: -0.0011566444, z: 0.0034905642}
+      rotation: {x: -0.1083391, y: -0.01494708, z: 0.13585128, w: 0.9846744}
+      scale: {x: 0.2950208, y: 0.26191142, z: 0.076336876}
+    - name: pCube23
+      parentName: pCube15
+      position: {x: -0.0015541278, y: -0.014207824, z: -0.002699969}
+      rotation: {x: -0.6369991, y: 0.05111774, z: 0.0615262, w: 0.7667031}
+      scale: {x: 0.05070827, y: 0.05070827, z: 0.05070827}
+    - name: pCube22
+      parentName: pCube15
+      position: {x: -0.002072362, y: -0.014207824, z: -0.0023945898}
+      rotation: {x: -0.63890654, y: -0.01338979, z: -0.016116185, w: 0.768999}
+      scale: {x: 0.05070827, y: 0.05070827, z: 0.05070827}
+    - name: pCube21
+      parentName: pCube15
+      position: {x: -0.0026650107, y: -0.014207824, z: -0.0023945898}
+      rotation: {x: -0.63890654, y: -0.01338979, z: -0.016116185, w: 0.768999}
+      scale: {x: 0.05070827, y: 0.05070827, z: 0.05070827}
+    - name: pCube20
+      parentName: pCube15
+      position: {x: -0.0033036366, y: -0.014207824, z: -0.0029089223}
+      rotation: {x: -0.6368738, y: -0.052655227, z: -0.06337674, w: 0.76655245}
+      scale: {x: 0.05070827, y: 0.05070827, z: 0.05070827}
+    - name: pCube19
+      parentName: pCube15
+      position: {x: -0.0039128973, y: -0.013659632, z: 0.004681772}
+      rotation: {x: -0.63328457, y: 0.09344195, z: 0.14525273, w: 0.7544011}
+      scale: {x: 0.12145287, y: 0.12061196, z: 0.12145287}
+    - name: pCube16
+      parentName: pCube15
+      position: {x: -0.0055544744, y: -0.013691516, z: 0.005758443}
+      rotation: {x: -0.6570613, y: 0.011165331, z: 0.020861732, w: 0.7534658}
+      scale: {x: 0.14286123, y: 0.14286123, z: 0.14286123}
+    - name: pCube17
+      parentName: pCube15
+      position: {x: -0.0076127546, y: -0.013778936, z: 0.005758443}
+      rotation: {x: -0.646136, y: -0.03268381, z: -0.05459591, w: 0.76056516}
+      scale: {x: 0.14286123, y: 0.14286123, z: 0.14286123}
+    - name: pCube18
+      parentName: pCube15
+      position: {x: -0.009120983, y: -0.013517703, z: 0.004023121}
+      rotation: {x: -0.66426325, y: -0.037277337, z: -0.051488962, w: 0.74479103}
+      scale: {x: 0.12145287, y: 0.12061196, z: 0.12145287}
+    - name: pSphere2
+      parentName: pCube15
+      position: {x: 0.000006650066, y: 0.0058829943, z: 0.0032306497}
+      rotation: {x: 0.73135066, y: 0, z: 0, w: 0.68200165}
+      scale: {x: 0.122793846, y: 0.13314995, z: 0.14794439}
+    - name: group1
+      parentName: MOIdle(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint1
+      parentName: MOIdle(Clone)
+      position: {x: 0.0005543446, y: 0.034663506, z: -0.00175435}
+      rotation: {x: 0.37451315, y: -0.6483613, z: -0.3828529, w: 0.5411019}
+      scale: {x: 0.9999999, y: 1, z: 1}
+    - name: joint11
+      parentName: joint1
+      position: {x: 0.0041113775, y: 0.000053874526, z: 0.009285314}
+      rotation: {x: 0.0044541503, y: 0.0005848705, z: 0.9582845, w: 0.28578076}
+      scale: {x: 0.9999998, y: 0.99999964, z: 0.9999999}
+    - name: joint12
+      parentName: joint11
+      position: {x: -0.010472445, y: -0.0042746123, z: 3.5117932e-18}
+      rotation: {x: -0.0025442534, y: -0.0053775753, z: -0.19139747, w: 0.9814946}
+      scale: {x: 1.0000011, y: 0.99999976, z: 1.0000015}
+    - name: joint13
+      parentName: joint12
+      position: {x: -0.0079272725, y: -0.0006341818, z: -2.6329004e-18}
+      rotation: {x: 0.81976885, y: 0.57262313, z: -0.00829213, w: -0.003630417}
+      scale: {x: 1.0000015, y: 1.0000002, z: 1.0000012}
+    - name: joint14
+      parentName: joint13
+      position: {x: -0.013279519, y: -0.0010531464, z: 2.1987348e-18}
+      rotation: {x: -0.42970473, y: -0.56156385, z: -0.4297046, w: 0.5615638}
+      scale: {x: 0.9999997, y: 0.9999996, z: 0.9999998}
+    - name: joint51
+      parentName: joint1
+      position: {x: 0.004111341, y: 0.00005387106, z: -0.009285309}
+      rotation: {x: -0.0028239489, y: 0.02150637, z: -0.30063683, w: 0.95349205}
+      scale: {x: 0.9999999, y: 0.99999976, z: 0.9999999}
+    - name: joint52
+      parentName: joint51
+      position: {x: 0.010472469, y: 0.0042746696, z: 4.440892e-18}
+      rotation: {x: 0.014010324, y: 0.029612241, z: -0.1814763, w: 0.9828496}
+      scale: {x: 1.0000004, y: 1.0000012, z: 1.000001}
+    - name: joint53
+      parentName: joint52
+      position: {x: 0.007927286, y: 0.0006341658, z: 3.330669e-18}
+      rotation: {x: 0.81532013, y: 0.5770762, z: 0.042308535, w: 0.021124864}
+      scale: {x: 1.0000011, y: 1.0000011, z: 1.000001}
+    - name: joint54
+      parentName: joint53
+      position: {x: 0.013279506, y: 0.0010531916, z: 6.661338e-18}
+      rotation: {x: -0.42970473, y: -0.56156373, z: -0.42970476, w: 0.5615638}
+      scale: {x: 0.9999998, y: 1.0000004, z: 1.0000013}
+    - name: joint45
+      parentName: joint1
+      position: {x: 0.0036933008, y: -0.011316705, z: 1.4219906e-18}
+      rotation: {x: 0.000000029802322, y: -0.000000029802322, z: 0.75280774, w: 0.65824056}
+      scale: {x: 0.9999997, y: 0.9999997, z: 0.9999999}
+    - name: joint46
+      parentName: joint45
+      position: {x: -0.010435916, y: 0, z: 4.6344775e-18}
+      rotation: {x: -0.000000014194969, y: 0.000000039684505, z: -0.39900646, w: 0.91694814}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: joint47
+      parentName: joint46
+      position: {x: -0.017785592, y: 5.5511148e-18, z: 4.6610015e-18}
+      rotation: {x: 8.881784e-16, y: -5.3290705e-15, z: -0.34853712, w: 0.93729496}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1}
+    - name: joint48
+      parentName: joint47
+      position: {x: -0.013540848, y: -4.440892e-18, z: -5.232157e-19}
+      rotation: {x: -0.9579183, y: 0.28704125, z: 4.954331e-15, w: -5.9161715e-16}
+      scale: {x: 1.0000002, y: 1, z: 1.0000001}
+    - name: joint49
+      parentName: joint48
+      position: {x: -0.0125447, y: -2.220446e-18, z: 3.48077e-18}
+      rotation: {x: 0.000000023102269, y: -0.000000035251126, z: 0.44627336, w: 0.8948967}
+      scale: {x: 1.0000005, y: 1.0000002, z: 1.0000002}
+    - name: joint50
+      parentName: joint49
+      position: {x: -0.009525513, y: 1.7246221e-17, z: -0.0057864664}
+      rotation: {x: 0.08639654, y: -0.7018088, z: 0.08639657, w: 0.7018088}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+    - name: joint2
+      parentName: joint1
+      position: {x: -0.013726432, y: -1.769418e-18, z: -7.6197e-18}
+      rotation: {x: -0.98330665, y: 0.18195644, z: -0.000000029802322, w: -0.000000029802322}
+      scale: {x: 1.0000007, y: 1.0000006, z: 1.0000002}
+    - name: joint15
+      parentName: joint2
+      position: {x: -0.017544089, y: -0.0000000026651357, z: 8.745553e-18}
+      rotation: {x: -0.000000047282256, y: -0.0000000120559, z: 0.9614467, w: -0.27499154}
+      scale: {x: 1.0000029, y: 1.0000054, z: 1.0000036}
+    - name: joint19
+      parentName: joint15
+      position: {x: 0.0032676985, y: 0.0017600605, z: 0.0197053}
+      rotation: {x: 0.6153915, y: -0.32999972, z: 0.6539139, w: 0.2911876}
+      scale: {x: 1.0000033, y: 1.0000023, z: 1.0000024}
+    - name: joint20
+      parentName: joint19
+      position: {x: 0.02733413, y: 0.0000000014825768, z: 0.0040998}
+      rotation: {x: -0.9989067, y: -0.037261643, z: -0.015014341, w: 0.023909658}
+      scale: {x: 1.0000062, y: 0.99999684, z: 1.0000011}
+    - name: joint21
+      parentName: joint20
+      position: {x: 0.012514858, y: 0.0000000032693785, z: -0.0015374}
+      rotation: {x: 0.95354193, y: 0.30126038, z: -7.1054265e-15, w: 1.7763566e-15}
+      scale: {x: 0.9999922, y: 1.0000095, z: 1.0000007}
+    - name: joint22
+      parentName: joint21
+      position: {x: 0.01832655, y: 0.0000000064001133, z: -2.6645352e-17}
+      rotation: {x: -0.43213776, y: -0.55969375, z: -0.43213773, w: 0.55969363}
+      scale: {x: 0.9999998, y: 1.0000029, z: 1}
+    - name: joint16
+      parentName: joint15
+      position: {x: 0.009047205, y: 0.000000009684184, z: 2.5034154e-18}
+      rotation: {x: 0.00031483718, y: 0.0007790281, z: -0.27580053, w: 0.96121454}
+      scale: {x: 1.0000048, y: 1.0000042, z: 1.0000026}
+    - name: joint3
+      parentName: joint2
+      position: {x: -0.017544083, y: 5.5511148e-18, z: 8.7455515e-18}
+      rotation: {x: 0.000964004, y: 0.0038670343, z: 0.29239094, w: 0.95629054}
+      scale: {x: 1.0000079, y: 1.0000029, z: 1.0000095}
+    - name: joint56
+      parentName: joint3
+      position: {x: -0.010156348, y: -0.017218491, z: -7.694654e-18}
+      rotation: {x: 0.22832465, y: -0.6692294, z: 0.22832465, w: 0.6692293}
+      scale: {x: 0.9999997, y: 1.0000004, z: 0.999999}
+    - name: joint55
+      parentName: joint3
+      position: {x: -0.011237661, y: -0.01810072, z: -7.962195e-18}
+      rotation: {x: 0.22832465, y: -0.6692294, z: 0.22832465, w: 0.6692293}
+      scale: {x: 0.9999998, y: 1.0000004, z: 0.9999992}
+    - name: joint7
+      parentName: joint3
+      position: {x: -0.003267675, y: -0.001760098, z: -0.019705271}
+      rotation: {x: 0.42412972, y: -0.21651523, z: 0.7630195, w: 0.4370771}
+      scale: {x: 1.0000042, y: 1.0000038, z: 1.0000029}
+    - name: joint8
+      parentName: joint7
+      position: {x: -0.02733411, y: -3.38948e-18, z: -0.0040998096}
+      rotation: {x: -0.9888581, y: -0.029415514, z: -0.1371365, w: 0.049878668}
+      scale: {x: 0.9999942, y: 1.0000087, z: 1.0000031}
+    - name: joint9
+      parentName: joint8
+      position: {x: -0.012514849, y: -2.2909475e-11, z: 0.0015374286}
+      rotation: {x: 0.99570936, y: 0.053086206, z: -0.07227319, w: 0.02283468}
+      scale: {x: 1.0000174, y: 0.999987, z: 1.0000014}
+    - name: joint10
+      parentName: joint9
+      position: {x: -0.018326536, y: -2.7755574e-18, z: 1.5689613e-10}
+      rotation: {x: -0.43213782, y: -0.5596936, z: -0.43213776, w: 0.5596936}
+      scale: {x: 1.0000001, y: 0.99999684, z: 1.000002}
+    - name: joint4
+      parentName: joint3
+      position: {x: -0.009047214, y: -7.771561e-18, z: 1.5840193e-18}
+      rotation: {x: -0.001289637, y: -0.004641065, z: -0.29319513, w: 0.9560405}
+      scale: {x: 1.0000042, y: 1.0000002, z: 1.0000029}
+    - name: joint5
+      parentName: joint4
+      position: {x: -0.009921528, y: -4.440892e-18, z: 4.7450463e-18}
+      rotation: {x: -0.000000012340022, y: -0.00000003026798, z: 0.17963177, w: 0.9837339}
+      scale: {x: 0.99998397, y: 1.0000244, z: 1.0000044}
+    - name: joint6
+      parentName: joint5
+      position: {x: -0.0071524507, y: 8.326672e-18, z: 1.6988744e-18}
+      rotation: {x: 0.23504701, y: -0.66689795, z: 0.23504706, w: 0.6668981}
+      scale: {x: 0.99999994, y: 1.0000005, z: 0.99999887}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
